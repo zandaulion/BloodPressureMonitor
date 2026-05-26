@@ -7,4 +7,5 @@ data class BPReading(
     val diastolic: Int,
     val pulse: Int?,
     val category: BPCategory,
+    val notes: String? = null,
 )

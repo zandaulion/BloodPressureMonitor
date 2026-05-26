@@ -11,7 +11,7 @@ class BPCategoryConverter {
     @TypeConverter fun toCategory(value: String): BPCategory = BPCategory.valueOf(value)
 }
 
-@Database(entities = [BPReadingEntity::class], version = 1, exportSchema = false)
+@Database(entities = [BPReadingEntity::class], version = 2, exportSchema = false)
 @TypeConverters(BPCategoryConverter::class)
 abstract class BPDatabase : RoomDatabase() {
     abstract fun readingDao(): BPReadingDao

@@ -20,7 +20,9 @@ object DataModule {
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): BPDatabase =
-        Room.databaseBuilder(context, BPDatabase::class.java, "bp.db").build()
+        Room.databaseBuilder(context, BPDatabase::class.java, "bp.db")
+            .fallbackToDestructiveMigration()
+            .build()
 
     @Provides
     fun provideDao(db: BPDatabase): BPReadingDao = db.readingDao()

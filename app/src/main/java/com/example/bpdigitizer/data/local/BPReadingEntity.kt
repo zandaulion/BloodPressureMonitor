@@ -13,7 +13,8 @@ data class BPReadingEntity(
     val diastolic: Int,
     val pulse: Int?,
     val category: BPCategory,
+    val notes: String?,
 )
 
-fun BPReadingEntity.toDomain() = BPReading(id, timestamp, systolic, diastolic, pulse, category)
-fun BPReading.toEntity() = BPReadingEntity(id, timestamp, systolic, diastolic, pulse, category)
+fun BPReadingEntity.toDomain() = BPReading(id, timestamp, systolic, diastolic, pulse, category, notes)
+fun BPReading.toEntity() = BPReadingEntity(id, timestamp, systolic, diastolic, pulse, category, notes)
