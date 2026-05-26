@@ -55,6 +55,7 @@ import androidx.core.content.FileProvider
 import android.content.Intent
 import coil.compose.AsyncImage
 import com.example.bpdigitizer.presentation.capture.ocrDumpFileFor
+import com.example.bpdigitizer.presentation.capture.preprocFileFor
 import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -192,6 +193,17 @@ fun ValidationScreen(
                         Text("Share raw OCR (debug)")
                     }
                 }
+                val preprocFile = remember(state.imagePath) {
+                    preprocFileFor(state.imagePath!!).takeIf { it.exists() }
+                }
+                if (preprocFile != null) {
+                    OutlinedButton(
+                        onClick = { sharePreprocImage(context, preprocFile) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text("Share preprocessed image (debug)")
+                    }
+                }
             }
         }
     }
@@ -205,19 +217,32 @@ fun ValidationScreen(
 }
 
 private fun shareOcrDump(context: android.content.Context, file: File) {
+    shareDiagnosticFile(context, file, mime = "text/plain", subject = "BP Digitizer raw OCR output")
+}
+
+private fun sharePreprocImage(context: android.content.Context, file: File) {
+    shareDiagnosticFile(context, file, mime = "image/jpeg", subject = "BP Digitizer preprocessed image")
+}
+
+private fun shareDiagnosticFile(
+    context: android.content.Context,
+    file: File,
+    mime: String,
+    subject: String,
+) {
     val uri = FileProvider.getUriForFile(
         context,
         "${context.packageName}.fileprovider",
         file,
     )
     val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
+        type = mime
         putExtra(Intent.EXTRA_STREAM, uri)
-        putExtra(Intent.EXTRA_SUBJECT, "BP Digitizer raw OCR output")
+        putExtra(Intent.EXTRA_SUBJECT, subject)
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
     context.startActivity(
-        Intent.createChooser(intent, "Share raw OCR output").apply {
+        Intent.createChooser(intent, subject).apply {
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         },
     )

@@ -96,6 +96,7 @@ dependencies {
     implementation(libs.accompanist.permissions)
 
     implementation(libs.coil.compose)
+    implementation(libs.androidx.exifinterface)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)

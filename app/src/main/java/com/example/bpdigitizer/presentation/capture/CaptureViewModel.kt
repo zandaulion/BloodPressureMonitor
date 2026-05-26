@@ -11,6 +11,7 @@ import com.google.mlkit.vision.text.Text
 import com.google.mlkit.vision.text.TextRecognizer
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
 import java.io.File
 import javax.inject.Inject
 import kotlin.coroutines.resume
@@ -54,7 +56,10 @@ class CaptureViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isProcessing = true, error = null) }
             try {
-                val image = InputImage.fromFilePath(context, uri)
+                val preprocessed = withContext(Dispatchers.Default) {
+                    ImagePreprocessor.preprocess(File(path))
+                }
+                val image = InputImage.fromBitmap(preprocessed.bitmap, 0)
                 val text = recognizer.process(image).await()
                 runCatching { ocrDumpFileFor(path).writeText(dumpMlKitText(text)) }
                 val parsed = parseOcr(text)
