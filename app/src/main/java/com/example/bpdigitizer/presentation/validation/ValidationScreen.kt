@@ -50,7 +50,11 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.FileProvider
+import android.content.Intent
 import coil.compose.AsyncImage
+import com.example.bpdigitizer.presentation.capture.ocrDumpFileFor
 import java.io.File
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -175,6 +179,19 @@ fun ValidationScreen(
                 ) {
                     Text("Retake")
                 }
+
+                val context = LocalContext.current
+                val ocrDumpFile = remember(state.imagePath) {
+                    ocrDumpFileFor(state.imagePath!!).takeIf { it.exists() }
+                }
+                if (ocrDumpFile != null) {
+                    OutlinedButton(
+                        onClick = { shareOcrDump(context, ocrDumpFile) },
+                        modifier = Modifier.fillMaxWidth(),
+                    ) {
+                        Text("Share raw OCR (debug)")
+                    }
+                }
             }
         }
     }
@@ -185,6 +202,25 @@ fun ValidationScreen(
             FullscreenImageDialog(path = path, onDismiss = { fullscreenOpen = false })
         }
     }
+}
+
+private fun shareOcrDump(context: android.content.Context, file: File) {
+    val uri = FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file,
+    )
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_STREAM, uri)
+        putExtra(Intent.EXTRA_SUBJECT, "BP Digitizer raw OCR output")
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(
+        Intent.createChooser(intent, "Share raw OCR output").apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        },
+    )
 }
 
 @Composable

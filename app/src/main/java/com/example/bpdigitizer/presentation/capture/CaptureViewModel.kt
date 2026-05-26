@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
+import java.io.File
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -55,6 +56,7 @@ class CaptureViewModel @Inject constructor(
             try {
                 val image = InputImage.fromFilePath(context, uri)
                 val text = recognizer.process(image).await()
+                runCatching { ocrDumpFileFor(path).writeText(dumpMlKitText(text)) }
                 val parsed = parseOcr(text)
                 _events.send(
                     CaptureEvent.ParseComplete(
@@ -78,4 +80,9 @@ class CaptureViewModel @Inject constructor(
 private suspend fun <T> Task<T>.await(): T = suspendCancellableCoroutine { cont ->
     addOnSuccessListener { result -> cont.resume(result) }
     addOnFailureListener { e -> cont.resumeWithException(e) }
+}
+
+internal fun ocrDumpFileFor(imagePath: String): File {
+    val imageFile = File(imagePath)
+    return File(imageFile.parentFile, imageFile.nameWithoutExtension + ".ocr.txt")
 }

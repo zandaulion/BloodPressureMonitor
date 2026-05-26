@@ -35,7 +35,7 @@ class ParseOcrTextUseCase @Inject constructor() {
     }
 
     private fun extractNumericTokens(text: Text): List<NumberToken> {
-        val tokens = mutableListOf<NumberToken>()
+        val raw = mutableListOf<NumberToken>()
         for (block in text.textBlocks) {
             for (line in block.lines) {
                 for (element in line.elements) {
@@ -43,13 +43,18 @@ class ParseOcrTextUseCase @Inject constructor() {
                     NUMBER_REGEX.findAll(element.text).forEach { match ->
                         val value = match.value.toInt()
                         if (value in MIN_PLAUSIBLE..MAX_PLAUSIBLE) {
-                            tokens += NumberToken(value = value, top = box.top, height = box.height())
+                            raw += NumberToken(value = value, top = box.top, height = box.height())
                         }
                     }
                 }
             }
         }
-        return tokens
+        if (raw.isEmpty()) return raw
+        // Filter to only "large" digits — drops date/time headers and unit labels
+        // that share the screen with the main BP/pulse readout.
+        val maxHeight = raw.maxOf { it.height }
+        val minHeight = (maxHeight * MIN_HEIGHT_RATIO).toInt()
+        return raw.filter { it.height >= minHeight }
     }
 
     private fun groupByRows(tokens: List<NumberToken>): List<List<NumberToken>> {
@@ -77,5 +82,6 @@ class ParseOcrTextUseCase @Inject constructor() {
         const val MAX_PLAUSIBLE = 250
         const val ROW_THRESHOLD_RATIO = 0.6
         const val MIN_THRESHOLD_PX = 8
+        const val MIN_HEIGHT_RATIO = 0.6
     }
 }
