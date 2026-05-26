@@ -35,9 +35,10 @@ fun AppNavHost() {
     NavHost(navController = nav, startDestination = Routes.DASHBOARD) {
         composable(Routes.DASHBOARD) {
             DashboardScreen(
-                onAddManually = { nav.navigate(Routes.manualValidation()) },
-                onProfile     = { nav.navigate(Routes.PROFILE) },
-                onReminders   = { nav.navigate(Routes.REMINDERS) },
+                onAddViaCamera = { nav.navigate(Routes.CAPTURE) },
+                onAddManually  = { nav.navigate(Routes.manualValidation()) },
+                onProfile      = { nav.navigate(Routes.PROFILE) },
+                onReminders    = { nav.navigate(Routes.REMINDERS) },
             )
         }
         composable(Routes.PROFILE) {

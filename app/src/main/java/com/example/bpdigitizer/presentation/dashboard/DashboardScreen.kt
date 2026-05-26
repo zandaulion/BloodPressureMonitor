@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileDownload
@@ -28,6 +30,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -67,6 +70,7 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
+    onAddViaCamera: () -> Unit,
     onAddManually: () -> Unit,
     onProfile: () -> Unit,
     onReminders: () -> Unit,
@@ -180,8 +184,22 @@ fun DashboardScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(onClick = onAddManually) {
-                Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                if (ui.hasApiKey) {
+                    SmallFloatingActionButton(onClick = onAddManually) {
+                        Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
+                    }
+                    FloatingActionButton(onClick = onAddViaCamera) {
+                        Icon(Icons.Default.CameraAlt, contentDescription = "Scan reading with camera")
+                    }
+                } else {
+                    FloatingActionButton(onClick = onAddManually) {
+                        Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
+                    }
+                }
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },

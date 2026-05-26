@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bpdigitizer.domain.model.BPReading
 import com.example.bpdigitizer.domain.model.HealthAssessment
+import com.example.bpdigitizer.domain.repository.ApiKeyRepository
 import com.example.bpdigitizer.domain.repository.BPRepository
 import com.example.bpdigitizer.domain.repository.UserProfileRepository
 import com.example.bpdigitizer.domain.usecase.CalculateHealthRiskUseCase
@@ -46,6 +47,8 @@ data class DashboardUi(
     val selectedRange: ChartRange,
     /** Risk assessment for the most recent reading, null when there are no readings. */
     val healthAssessment: HealthAssessment?,
+    /** True when a Gemini API key is stored — controls camera FAB visibility. */
+    val hasApiKey: Boolean = false,
 )
 
 sealed interface DashboardEvent {
@@ -68,6 +71,7 @@ class DashboardViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: BPRepository,
     private val profileRepository: UserProfileRepository,
+    private val apiKeyRepository: ApiKeyRepository,
     private val exportReadings: ExportReadingsUseCase,
     private val importReadings: ImportReadingsUseCase,
     private val syncToHealthConnect: SyncToHealthConnectUseCase,
@@ -83,7 +87,8 @@ class DashboardViewModel @Inject constructor(
         selectedRange,
         pendingDeletions,
         profileRepository.observe(),
-    ) { all, range, pending, profile ->
+        apiKeyRepository.observeHasKey(),
+    ) { all, range, pending, profile, hasKey ->
         val visible = all.filterNot { it.id in pending }
         val chart = range.days?.let { days ->
             val cutoff = System.currentTimeMillis() - days * MILLIS_PER_DAY
@@ -91,11 +96,11 @@ class DashboardViewModel @Inject constructor(
         } ?: visible
         val latest = visible.maxByOrNull { it.timestamp }
         val assessment = latest?.let { calculateHealthRisk(it.category, profile) }
-        DashboardUi(visible, chart.sortedBy { it.timestamp }, range, assessment)
+        DashboardUi(visible, chart.sortedBy { it.timestamp }, range, assessment, hasKey)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        DashboardUi(emptyList(), emptyList(), ChartRange.THIRTY_DAYS, null),
+        DashboardUi(emptyList(), emptyList(), ChartRange.THIRTY_DAYS, null, false),
     )
 
     private val _events = Channel<DashboardEvent>(Channel.BUFFERED)

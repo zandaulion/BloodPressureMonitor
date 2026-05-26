@@ -8,15 +8,22 @@ import java.io.File
 import java.io.FileOutputStream
 
 private const val TAG = "BpOcr.Tesseract"
-private const val LANG = "eng"
+/**
+ * `ssd_int.traineddata` — community model trained specifically on
+ * seven-segment LCD digits (integers only).  Far more accurate on BP-monitor
+ * displays than the general-purpose `eng.traineddata`, which was trained on
+ * document fonts and routinely confuses 7-segment "0" / "8" / "B".
+ *
+ * Source: github.com/Shreeshrii/tessdata_ssd
+ */
+private const val LANG = "ssd_int"
 
 /**
  * Thin wrapper around Tesseract for digit-only recognition.
  *
- * Uses the fast English model (`eng.traineddata`, ~4 MB) with a digit-only
- * character whitelist so Tesseract interprets every mark as a numeral.  This
- * is far more suitable for 7-segment LCD displays than ML Kit's scene-text
- * CNN, which is trained on natural photographs of printed text.
+ * Uses a 7-segment-trained model with a digit-only character whitelist so
+ * Tesseract interprets every glyph as a numeral.  Suitable for the
+ * 7-segment LCD displays found on home BP monitors.
  *
  * The tessdata asset is copied to internal storage on first construction so
  * Tesseract can find it at its expected path.

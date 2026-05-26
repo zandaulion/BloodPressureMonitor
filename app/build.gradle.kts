@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -5,6 +7,11 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
+
+// Read secrets from local.properties (never committed to VCS)
+val localProps = Properties()
+rootProject.file("local.properties").takeIf { it.exists() }
+    ?.inputStream()?.use { localProps.load(it) }
 
 android {
     namespace = "com.example.bpdigitizer"
@@ -19,6 +26,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
+
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${localProps.getProperty("GEMINI_API_KEY", "")}\"",
+        )
     }
 
     buildTypes {
@@ -44,6 +57,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packaging {
@@ -97,6 +111,7 @@ dependencies {
 
     implementation(libs.health.connect.client)
     implementation(libs.accompanist.permissions)
+    implementation(libs.security.crypto)
 
     implementation(libs.coil.compose)
     implementation(libs.androidx.exifinterface)

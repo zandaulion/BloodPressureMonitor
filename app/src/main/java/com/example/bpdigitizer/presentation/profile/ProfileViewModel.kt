@@ -6,6 +6,7 @@ import com.example.bpdigitizer.domain.model.ActivityLevel
 import com.example.bpdigitizer.domain.model.BiologicalSex
 import com.example.bpdigitizer.domain.model.BmiCategory
 import com.example.bpdigitizer.domain.model.UserProfile
+import com.example.bpdigitizer.domain.repository.ApiKeyRepository
 import com.example.bpdigitizer.domain.repository.UserProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
@@ -18,6 +19,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ProfileFormState(
+    // ── API key ───────────────────────────────────────────────────────────────
+    /** Text currently typed into the API key input field. */
+    val apiKeyInput: String = "",
+    /** True when a key is already persisted in secure storage. */
+    val apiKeySaved: Boolean = false,
+    // ── Health profile ────────────────────────────────────────────────────────
     val ageText: String = "",
     val sex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
     val weightText: String = "",   // kg
@@ -88,6 +95,7 @@ sealed interface ProfileEvent {
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val repository: UserProfileRepository,
+    private val apiKeyRepository: ApiKeyRepository,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileFormState())
@@ -101,6 +109,7 @@ class ProfileViewModel @Inject constructor(
             val p = repository.observe().first()
             _state.update {
                 ProfileFormState(
+                    apiKeySaved = apiKeyRepository.getKey() != null,
                     ageText = p.age?.toString().orEmpty(),
                     sex = p.biologicalSex,
                     weightText = p.weightKg?.let { "%.1f".format(it) }.orEmpty(),
@@ -112,6 +121,20 @@ class ProfileViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun updateApiKeyInput(v: String) = _state.update { it.copy(apiKeyInput = v) }
+
+    fun saveApiKey() {
+        val key = _state.value.apiKeyInput.trim()
+        if (key.isBlank()) return
+        apiKeyRepository.saveKey(key)
+        _state.update { it.copy(apiKeySaved = true, apiKeyInput = "") }
+    }
+
+    fun clearApiKey() {
+        apiKeyRepository.clearKey()
+        _state.update { it.copy(apiKeySaved = false, apiKeyInput = "") }
     }
 
     fun updateAge(v: String)      = _state.update { it.copy(ageText = v.filter(Char::isDigit).take(3)) }
