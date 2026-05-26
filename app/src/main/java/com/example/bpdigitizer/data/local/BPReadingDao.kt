@@ -16,6 +16,9 @@ interface BPReadingDao {
     @Insert
     suspend fun insert(reading: BPReadingEntity): Long
 
+    @Query("SELECT * FROM bp_readings ORDER BY timestamp DESC LIMIT 1")
+    suspend fun getLatest(): BPReadingEntity?
+
     @Query("DELETE FROM bp_readings WHERE id = :id")
     suspend fun delete(id: Long)
 }

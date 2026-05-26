@@ -1,7 +1,6 @@
 package com.example.bpdigitizer.presentation.dashboard
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,10 +14,14 @@ import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
+import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun BPTrendChart(
@@ -37,8 +40,9 @@ fun BPTrendChart(
     }
 
     val modelProducer = remember { CartesianChartModelProducer() }
+
     LaunchedEffect(readings) {
-        val xs = readings.indices.map { it.toDouble() }
+        val xs  = readings.indices.map { it.toDouble() }
         val sys = readings.map { it.systolic.toDouble() }
         val dia = readings.map { it.diastolic.toDouble() }
         modelProducer.runTransaction {
@@ -49,13 +53,25 @@ fun BPTrendChart(
         }
     }
 
+    // Build date labels once per readings list change; captured by the formatter below.
+    val dateLabels = remember(readings) {
+        val fmt = SimpleDateFormat("M/d", Locale.getDefault())
+        readings.map { fmt.format(Date(it.timestamp)) }
+    }
+
+    val bottomFormatter = remember(dateLabels) {
+        CartesianValueFormatter { _, value, _ ->
+            dateLabels.getOrElse(value.toInt()) { "" }
+        }
+    }
+
     CartesianChartHost(
         modelProducer = modelProducer,
         modifier = modifier,
         chart = rememberCartesianChart(
             rememberLineCartesianLayer(),
             startAxis = VerticalAxis.rememberStart(),
-            bottomAxis = HorizontalAxis.rememberBottom(),
+            bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),
         ),
     )
 }

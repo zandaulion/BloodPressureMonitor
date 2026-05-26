@@ -1,7 +1,9 @@
 package com.example.bpdigitizer.domain.usecase
 
-import com.google.mlkit.vision.text.Text
+import android.util.Log
 import javax.inject.Inject
+
+private const val TAG = "BpOcr.Parse"
 
 data class ParsedReading(
     val systolic: Int?,
@@ -9,95 +11,57 @@ data class ParsedReading(
     val pulse: Int?,
 )
 
+/**
+ * Parses a plain-text string produced by Tesseract (digit-whitelist mode) into
+ * a [ParsedReading].
+ *
+ * Tesseract with PSM_SINGLE_BLOCK outputs the recognised digits in reading
+ * order (top → bottom on screen), so the first number is SYS, the second DIA,
+ * and the third PUL — exactly how a blood-pressure monitor lays out its display.
+ *
+ * If positional ordering yields an impossible SYS < DIA result (e.g. due to a
+ * missed digit), we fall back to magnitude-descending order.
+ */
 class ParseOcrTextUseCase @Inject constructor() {
 
-    operator fun invoke(text: Text): ParsedReading {
-        val tokens = extractNumericTokens(text)
-        if (tokens.isEmpty()) return ParsedReading(null, null, null)
+    operator fun invoke(ocrText: String): ParsedReading {
+        Log.d(TAG, "─── invoke  text=\"${ocrText.take(80).replace('\n', '↵')}\"")
 
-        val rowValues = groupByRows(tokens).map { row -> row.maxOf { it.value } }
-        val sys = rowValues.getOrNull(0)
-        val dia = rowValues.getOrNull(1)
-        val pulse = rowValues.getOrNull(2)
+        val numbers = NUMBER_REGEX.findAll(ocrText)
+            .map { it.value.toInt() }
+            .filter { it in MIN_PLAUSIBLE..MAX_PLAUSIBLE }
+            .toList()
 
-        // Primary path: Y-axis ordering yielded a valid Sys > Dia.
-        if (sys != null && dia != null && sys > dia) {
+        Log.d(TAG, "  numbers in range: $numbers")
+
+        if (numbers.isEmpty()) {
+            Log.d(TAG, "  → no usable numbers")
+            return ParsedReading(null, null, null)
+        }
+
+        // ── Positional path (top-to-bottom = SYS, DIA, PUL) ──────────────────
+        val sys   = numbers.getOrNull(0)
+        val dia   = numbers.getOrNull(1)
+        val pulse = numbers.getOrNull(2)
+
+        if (sys != null && dia != null && sys >= dia) {
+            Log.d(TAG, "  ✓ positional: sys=$sys  dia=$dia  pulse=$pulse")
             return ParsedReading(sys, dia, pulse)
         }
 
-        // Fallback: magnitude sort. Largest = Sys, next = Dia, smallest = Pulse.
-        val distinctSortedDesc = tokens.map { it.value }.distinct().sortedDescending()
+        // ── Magnitude fallback ────────────────────────────────────────────────
+        val desc = numbers.sortedDescending()
+        Log.d(TAG, "  ⚠ magnitude fallback: $desc")
         return ParsedReading(
-            systolic = distinctSortedDesc.getOrNull(0),
-            diastolic = distinctSortedDesc.getOrNull(1),
-            pulse = distinctSortedDesc.getOrNull(2),
+            systolic  = desc.getOrNull(0),
+            diastolic = desc.getOrNull(1),
+            pulse     = desc.getOrNull(2),
         )
     }
-
-    private fun extractNumericTokens(text: Text): List<NumberToken> {
-        val raw = mutableListOf<NumberToken>()
-        for (block in text.textBlocks) {
-            for (line in block.lines) {
-                for (element in line.elements) {
-                    val box = element.boundingBox ?: continue
-                    val normalized = normalizeSevenSegment(element.text)
-                    NUMBER_REGEX.findAll(normalized).forEach { match ->
-                        val value = match.value.toInt()
-                        if (value in MIN_PLAUSIBLE..MAX_PLAUSIBLE) {
-                            raw += NumberToken(value = value, top = box.top, height = box.height())
-                        }
-                    }
-                }
-            }
-        }
-        if (raw.isEmpty()) return raw
-        // Filter to only "large" digits — drops date/time headers and unit labels
-        // that share the screen with the main BP/pulse readout.
-        val maxHeight = raw.maxOf { it.height }
-        val minHeight = (maxHeight * MIN_HEIGHT_RATIO).toInt()
-        return raw.filter { it.height >= minHeight }
-    }
-
-    private fun groupByRows(tokens: List<NumberToken>): List<List<NumberToken>> {
-        val sortedByTop = tokens.sortedBy { it.top }
-        val avgHeight = tokens.sumOf { it.height }.toDouble() / tokens.size
-        val threshold = (avgHeight * ROW_THRESHOLD_RATIO).toInt().coerceAtLeast(MIN_THRESHOLD_PX)
-
-        val groups = mutableListOf<MutableList<NumberToken>>()
-        for (token in sortedByTop) {
-            val current = groups.lastOrNull()
-            if (current != null && (token.top - current.first().top) < threshold) {
-                current += token
-            } else {
-                groups += mutableListOf(token)
-            }
-        }
-        return groups
-    }
-
-    /**
-     * Maps characters ML Kit commonly mistakes for digits when looking at a
-     * 7-segment LCD into their intended digit. The "1" digit on a 7-segment is
-     * just the two right-hand vertical bars, which is shape-identical to a
-     * capital "I", so ML Kit often returns "I20" for "120" etc.
-     */
-    private fun normalizeSevenSegment(s: String): String = s.map { c ->
-        when (c) {
-            'I', 'l', '|' -> '1'
-            'O' -> '0'
-            'B' -> '8'
-            else -> c
-        }
-    }.joinToString("")
-
-    private data class NumberToken(val value: Int, val top: Int, val height: Int)
 
     private companion object {
         val NUMBER_REGEX = Regex("\\d{2,3}")
         const val MIN_PLAUSIBLE = 30
         const val MAX_PLAUSIBLE = 250
-        const val ROW_THRESHOLD_RATIO = 0.6
-        const val MIN_THRESHOLD_PX = 8
-        const val MIN_HEIGHT_RATIO = 0.5
     }
 }

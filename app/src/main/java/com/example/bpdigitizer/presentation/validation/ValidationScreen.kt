@@ -1,5 +1,6 @@
 package com.example.bpdigitizer.presentation.validation
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTransformGestures
@@ -12,22 +13,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,22 +51,21 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.core.content.FileProvider
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.FileProvider
-import android.content.Intent
 import coil.compose.AsyncImage
 import com.example.bpdigitizer.presentation.capture.ocrDumpFileFor
 import com.example.bpdigitizer.presentation.capture.preprocFileFor
 import java.io.File
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -91,13 +100,25 @@ fun ValidationScreen(
             )
         },
     ) { inner ->
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier.fillMaxSize().padding(inner),
+                contentAlignment = Alignment.Center,
+            ) {
+                CircularProgressIndicator()
+            }
+            return@Scaffold
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(inner)
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
+            // ── OCR image preview ──────────────────────────────────────────
             state.imagePath?.let { path ->
                 AsyncImage(
                     model = File(path),
@@ -105,65 +126,61 @@ fun ValidationScreen(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(120.dp)
+                        .height(110.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color.LightGray)
                         .clickable { fullscreenOpen = true },
                 )
                 Text(
-                    text = "Tap the image to enlarge",
-                    style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                    text = "Tap image to enlarge",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                OutlinedTextField(
-                    value = state.systolic,
-                    onValueChange = viewModel::updateSystolic,
-                    label = { Text("Systolic") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    modifier = Modifier.weight(1f),
-                )
-                OutlinedTextField(
-                    value = state.diastolic,
-                    onValueChange = viewModel::updateDiastolic,
-                    label = { Text("Diastolic") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    modifier = Modifier.weight(1f),
-                )
-                OutlinedTextField(
-                    value = state.pulse,
-                    onValueChange = viewModel::updatePulse,
-                    label = { Text("Pulse") },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    singleLine = true,
-                    modifier = Modifier.weight(1f),
-                )
-            }
+            // ── Value sliders ─────────────────────────────────────────────
+            BpValueSlider(
+                label = "SYS",
+                subtitle = "Systolic (mmHg)",
+                value = state.systolic,
+                onValueChange = viewModel::updateSystolic,
+                range = ValidationViewModel.SYS_RANGE,
+            )
+            BpValueSlider(
+                label = "DIA",
+                subtitle = "Diastolic (mmHg)",
+                value = state.diastolic,
+                onValueChange = viewModel::updateDiastolic,
+                range = ValidationViewModel.DIA_RANGE,
+            )
+            BpValueSlider(
+                label = "PUL",
+                subtitle = "Pulse (bpm)",
+                value = state.pulse,
+                onValueChange = viewModel::updatePulse,
+                range = ValidationViewModel.PUL_RANGE,
+            )
 
-            if (state.systolic.isNotEmpty() && state.diastolic.isNotEmpty() && !state.isValid) {
+            // ── Validation error ──────────────────────────────────────────
+            if (!state.isValid) {
                 Text(
                     text = "Systolic must be greater than Diastolic",
-                    color = androidx.compose.material3.MaterialTheme.colorScheme.error,
-                    style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error,
+                    style = MaterialTheme.typography.bodySmall,
                 )
             }
 
+            // ── Notes ─────────────────────────────────────────────────────
             OutlinedTextField(
                 value = state.notes,
                 onValueChange = viewModel::updateNotes,
                 label = { Text("Notes (optional)") },
-                placeholder = { Text("e.g. after exercise, morning before coffee") },
+                placeholder = { Text("e.g. after exercise, morning") },
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 3,
             )
 
-            Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(4.dp))
 
             Button(
                 onClick = viewModel::save,
@@ -173,6 +190,7 @@ fun ValidationScreen(
                 Text("Save Reading")
             }
 
+            // ── OCR-only actions ──────────────────────────────────────────
             if (state.imagePath != null) {
                 OutlinedButton(
                     onClick = onRetake,
@@ -187,7 +205,7 @@ fun ValidationScreen(
                 }
                 if (ocrDumpFile != null) {
                     OutlinedButton(
-                        onClick = { shareOcrDump(context, ocrDumpFile) },
+                        onClick = { shareDiagnosticFile(context, ocrDumpFile, "text/plain", "BP raw OCR output") },
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("Share raw OCR (debug)")
@@ -198,13 +216,15 @@ fun ValidationScreen(
                 }
                 if (preprocFile != null) {
                     OutlinedButton(
-                        onClick = { sharePreprocImage(context, preprocFile) },
+                        onClick = { shareDiagnosticFile(context, preprocFile, "image/jpeg", "BP preprocessed image") },
                         modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text("Share preprocessed image (debug)")
                     }
                 }
             }
+
+            Spacer(Modifier.height(16.dp))
         }
     }
 
@@ -216,37 +236,89 @@ fun ValidationScreen(
     }
 }
 
-private fun shareOcrDump(context: android.content.Context, file: File) {
-    shareDiagnosticFile(context, file, mime = "text/plain", subject = "BP Digitizer raw OCR output")
-}
+// ── Slider component ───────────────────────────────────────────────────────────
 
-private fun sharePreprocImage(context: android.content.Context, file: File) {
-    shareDiagnosticFile(context, file, mime = "image/jpeg", subject = "BP Digitizer preprocessed image")
-}
-
-private fun shareDiagnosticFile(
-    context: android.content.Context,
-    file: File,
-    mime: String,
-    subject: String,
+@Composable
+private fun BpValueSlider(
+    label: String,
+    subtitle: String,
+    value: Int,
+    onValueChange: (Int) -> Unit,
+    range: IntRange,
+    modifier: Modifier = Modifier,
 ) {
-    val uri = FileProvider.getUriForFile(
-        context,
-        "${context.packageName}.fileprovider",
-        file,
-    )
-    val intent = Intent(Intent.ACTION_SEND).apply {
-        type = mime
-        putExtra(Intent.EXTRA_STREAM, uri)
-        putExtra(Intent.EXTRA_SUBJECT, subject)
-        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                    Text(
+                        text = subtitle,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Text(
+                    text = value.toString(),
+                    style = MaterialTheme.typography.displaySmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                IconButton(
+                    onClick = { if (value > range.first) onValueChange(value - 1) },
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(Icons.Default.Remove, contentDescription = "Decrease $label")
+                }
+                Slider(
+                    value = value.toFloat(),
+                    onValueChange = { onValueChange(it.roundToInt()) },
+                    valueRange = range.first.toFloat()..range.last.toFloat(),
+                    modifier = Modifier.weight(1f),
+                )
+                IconButton(
+                    onClick = { if (value < range.last) onValueChange(value + 1) },
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Increase $label")
+                }
+            }
+
+            Text(
+                text = "${range.first} – ${range.last}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.align(Alignment.End),
+            )
+        }
     }
-    context.startActivity(
-        Intent.createChooser(intent, subject).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        },
-    )
 }
+
+// ── Fullscreen image ───────────────────────────────────────────────────────────
 
 @Composable
 private fun FullscreenImageDialog(path: String, onDismiss: () -> Unit) {
@@ -282,10 +354,38 @@ private fun FullscreenImageDialog(path: String, onDismiss: () -> Unit) {
             )
             IconButton(
                 onClick = onDismiss,
-                modifier = Modifier.align(Alignment.TopEnd).padding(8.dp),
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .padding(8.dp),
             ) {
                 Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.White)
             }
         }
     }
+}
+
+// ── Share helpers ──────────────────────────────────────────────────────────────
+
+private fun shareDiagnosticFile(
+    context: android.content.Context,
+    file: File,
+    mime: String,
+    subject: String,
+) {
+    val uri = FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file,
+    )
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = mime
+        putExtra(Intent.EXTRA_STREAM, uri)
+        putExtra(Intent.EXTRA_SUBJECT, subject)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(
+        Intent.createChooser(intent, subject).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        },
+    )
 }

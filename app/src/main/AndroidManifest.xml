@@ -4,6 +4,27 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-feature android:name="android.hardware.camera" android:required="true" />
 
+    <!-- Health Connect permissions -->
+    <uses-permission android:name="android.permission.health.WRITE_BLOOD_PRESSURE" />
+    <uses-permission android:name="android.permission.health.WRITE_HEART_RATE" />
+
+    <!-- Reminder / notification permissions -->
+    <!-- POST_NOTIFICATIONS: runtime permission on API 33+ -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <!-- SCHEDULE_EXACT_ALARM: requires runtime prompt on API 34+; use canScheduleExactAlarms() guard -->
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <!-- RECEIVE_BOOT_COMPLETED: allows BootReceiver to reschedule alarms after reboot -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <!--
+      Required on Android 11+ (API 30+) so PackageManager can see the Health Connect provider
+      package. Without this, HealthConnectClient.getSdkStatus() incorrectly returns
+      SDK_UNAVAILABLE even when Health Connect is installed or built-in.
+    -->
+    <queries>
+        <package android:name="com.google.android.apps.healthdata" />
+    </queries>
+
     <application
         android:name=".BpDigitizerApp"
         android:allowBackup="false"
@@ -23,6 +44,18 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- HC rationale on Android 13 and below -->
+            <intent-filter>
+                <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE" />
+            </intent-filter>
+            <!-- HC rationale on Android 14+ (API 34+) — required for the permission dialog to appear -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW_PERMISSION_USAGE" />
+                <category android:name="android.intent.category.HEALTH_PERMISSIONS" />
+            </intent-filter>
+            <meta-data
+                android:name="health_permissions"
+                android:resource="@array/health_permissions" />
         </activity>
 
         <provider
@@ -34,5 +67,24 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <!-- Reminder alarm receiver — internal only, triggered by AlarmManager -->
+        <receiver
+            android:name=".data.reminder.ReminderReceiver"
+            android:exported="false" />
+
+        <!-- Snooze action receiver — internal only, triggered from notification action -->
+        <receiver
+            android:name=".data.reminder.SnoozeReceiver"
+            android:exported="false" />
+
+        <!-- Boot receiver — must be exported so the OS can deliver BOOT_COMPLETED -->
+        <receiver
+            android:name=".data.reminder.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
     </application>
 </manifest>

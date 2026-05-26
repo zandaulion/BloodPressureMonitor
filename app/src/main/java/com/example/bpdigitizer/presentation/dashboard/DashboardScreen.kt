@@ -2,6 +2,10 @@ package com.example.bpdigitizer.presentation.dashboard
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.health.connect.client.PermissionController
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -13,10 +17,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.IosShare
+import androidx.compose.material.icons.filled.MonitorHeart
+import androidx.compose.material.icons.filled.NotificationsNone
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FloatingActionButton
@@ -25,7 +32,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallFloatingActionButton
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -52,6 +58,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.example.bpdigitizer.domain.model.BPReading
 import com.example.bpdigitizer.presentation.components.CategoryBadge
+import com.example.bpdigitizer.presentation.components.HealthRiskCard
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -60,14 +67,23 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
-    onAddViaCamera: () -> Unit,
     onAddManually: () -> Unit,
+    onProfile: () -> Unit,
+    onReminders: () -> Unit,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+
+    val importLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.OpenDocument(),
+    ) { uri -> uri?.let { viewModel.requestImport(it) } }
+
+    val hcPermLauncher = rememberLauncherForActivityResult(
+        PermissionController.createRequestPermissionResultContract(),
+    ) { granted -> viewModel.onHealthConnectPermissionsResult(granted) }
 
     LaunchedEffect(viewModel.events, lifecycleOwner) {
         viewModel.events.flowWithLifecycle(lifecycleOwner.lifecycle).collect { event ->
@@ -86,6 +102,48 @@ fun DashboardScreen(
                 DashboardEvent.ExportFailed -> {
                     snackbarHostState.showSnackbar("Export failed")
                 }
+                is DashboardEvent.ImportSucceeded -> {
+                    snackbarHostState.showSnackbar(
+                        message = if (event.count == 0) "No new readings to import"
+                                  else "Imported ${event.count} reading${if (event.count != 1) "s" else ""}",
+                    )
+                }
+                DashboardEvent.ImportFailed -> {
+                    snackbarHostState.showSnackbar("Import failed — make sure the file is a valid BP export")
+                }
+                is DashboardEvent.RequestHealthConnectPermissions -> {
+                    hcPermLauncher.launch(event.permissions)
+                }
+                is DashboardEvent.SyncToHealthConnectSucceeded -> {
+                    snackbarHostState.showSnackbar(
+                        "Synced ${event.count} reading${if (event.count != 1) "s" else ""} to Health Connect",
+                    )
+                }
+                DashboardEvent.SyncToHealthConnectFailed -> {
+                    snackbarHostState.showSnackbar("Sync to Health Connect failed")
+                }
+                DashboardEvent.HealthConnectInstallRequired -> {
+                    val result = snackbarHostState.showSnackbar(
+                        message = "Health Connect is not available on this device",
+                        actionLabel = "Install",
+                    )
+                    if (result == SnackbarResult.ActionPerformed) {
+                        val intent = Intent(Intent.ACTION_VIEW,
+                            Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.apps.healthdata"))
+                            .apply { setPackage("com.android.vending") }
+                        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+                    }
+                }
+                DashboardEvent.HealthConnectPermissionsDenied -> {
+                    val result = snackbarHostState.showSnackbar(
+                        message = "Please grant blood pressure permission in Health Connect",
+                        actionLabel = "Open Settings",
+                        withDismissAction = true,
+                    )
+                    if (result == SnackbarResult.ActionPerformed) {
+                        openHealthConnectSettings(context)
+                    }
+                }
             }
         }
     }
@@ -95,26 +153,35 @@ fun DashboardScreen(
             TopAppBar(
                 title = { Text("Blood Pressure") },
                 actions = {
+                    IconButton(onClick = onReminders) {
+                        Icon(Icons.Default.NotificationsNone, contentDescription = "Reminders")
+                    }
+                    IconButton(onClick = onProfile) {
+                        Icon(Icons.Default.Person, contentDescription = "Health profile")
+                    }
+                    IconButton(
+                        onClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
+                    ) {
+                        Icon(Icons.Default.FileDownload, contentDescription = "Import data")
+                    }
                     IconButton(
                         onClick = viewModel::requestExport,
                         enabled = ui.readings.isNotEmpty(),
                     ) {
                         Icon(Icons.Default.IosShare, contentDescription = "Export data")
                     }
+                    IconButton(
+                        onClick = viewModel::onSyncToHealthConnectClicked,
+                        enabled = ui.readings.isNotEmpty(),
+                    ) {
+                        Icon(Icons.Default.MonitorHeart, contentDescription = "Sync to Health Connect")
+                    }
                 },
             )
         },
         floatingActionButton = {
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                SmallFloatingActionButton(onClick = onAddManually) {
-                    Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
-                }
-                FloatingActionButton(onClick = onAddViaCamera) {
-                    Icon(Icons.Default.CameraAlt, contentDescription = "Scan reading with camera")
-                }
+            FloatingActionButton(onClick = onAddManually) {
+                Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
@@ -148,13 +215,24 @@ fun DashboardScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = "No readings yet. Tap the camera button to scan one, or the pencil to enter manually.",
+                        text = "No readings yet. Tap the pencil button to enter one, or the camera button to scan.",
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    // Risk assessment card — always first when there are readings
+                    ui.healthAssessment?.let { assessment ->
+                        item(key = "health_risk_card") {
+                            HealthRiskCard(
+                                assessment = assessment,
+                                onEditProfile = onProfile,
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                            )
+                        }
+                    }
                     items(items = ui.readings, key = { it.id }) { reading ->
                         SwipeableReadingRow(
                             reading = reading,
@@ -273,6 +351,31 @@ private fun ReadingRow(reading: BPReading) {
 private val ROW_DATE_FORMAT = SimpleDateFormat("MMM d, yyyy · HH:mm", Locale.getDefault())
 
 private fun formatTimestamp(ts: Long): String = ROW_DATE_FORMAT.format(Date(ts))
+
+/**
+ * Opens the Health Connect settings screen where the user can grant/revoke permissions for
+ * this app. Tries the dedicated HC settings action first, then falls back to launching the
+ * HC app directly.
+ */
+private fun openHealthConnectSettings(context: Context) {
+    // "android.health.connect.action.HEALTH_HOME_SETTINGS" is the stable action for opening
+    // the Health Connect settings / permissions management screen on Android 14+.
+    val tried = listOf(
+        "android.health.connect.action.HEALTH_HOME_SETTINGS",
+        "android.health.connect.action.MANAGE_HEALTH_DATA",
+    )
+    for (action in tried) {
+        runCatching {
+            context.startActivity(Intent(action).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            return
+        }
+    }
+    // Last resort: open the HC app itself
+    context.packageManager
+        .getLaunchIntentForPackage("com.google.android.apps.healthdata")
+        ?.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        ?.let { context.startActivity(it) }
+}
 
 private fun shareJsonFile(context: Context, file: File) {
     val uri = FileProvider.getUriForFile(

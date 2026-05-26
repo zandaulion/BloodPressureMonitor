@@ -4,9 +4,12 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Matrix
+import android.util.Log
 import androidx.exifinterface.media.ExifInterface
 import java.io.File
 import java.io.FileOutputStream
+
+private const val TAG = "BpOcr.Preproc"
 
 /**
  * Prepares a captured photo for ML Kit by:
@@ -24,24 +27,46 @@ import java.io.FileOutputStream
 internal object ImagePreprocessor {
 
     private const val MAX_DIM = 1280
-    private const val DILATION_RADIUS = 1
+    private const val DILATION_RADIUS = 2
 
     data class Result(val bitmap: Bitmap, val file: File)
 
-    fun preprocess(originalFile: File): Result {
+    /**
+     * Lightweight path: orient + downscale + grayscale, no binarisation.
+     *
+     * [maxDim] defaults to [MAX_DIM] (1280 px).  Pass a smaller value to force
+     * ML Kit to see proportionally smaller characters — large 7-segment LCD
+     * digits (≫ 100 px tall) are often outside ML Kit's detection sweet-spot
+     * and only become recognisable once the image is downscaled so each digit
+     * sits in the 20–70 px range.
+     */
+    fun preprocessLight(originalFile: File, maxDim: Int = MAX_DIM): Bitmap {
         val oriented = loadOriented(originalFile)
+        val scaled = downscale(oriented, maxDim)
+        Log.d(TAG, "  preprocessLight  maxDim=$maxDim → ${scaled.width}×${scaled.height}")
+        return toBitmap(toGrayscale(scaled))
+    }
+
+    fun preprocess(originalFile: File): Result {
+        Log.d(TAG, "─── preprocess START  file=${originalFile.name} size=${originalFile.length()} bytes")
+        val oriented = loadOriented(originalFile)
+        Log.d(TAG, "  oriented  ${oriented.width}×${oriented.height}")
         val scaled = downscale(oriented, MAX_DIM)
+        Log.d(TAG, "  scaled    ${scaled.width}×${scaled.height}")
         val gray = toGrayscale(scaled)
         val smoothed = boxBlur(gray)
         val threshold = otsuThreshold(smoothed.pixels)
+        Log.d(TAG, "  otsu threshold = $threshold")
         val binary = binarize(smoothed, threshold)
-        val dilated = dilateBlack(binary, DILATION_RADIUS)
+        val polarised = correctPolarity(binary)          // logs internally
+        val dilated = dilateBlack(polarised, DILATION_RADIUS)
         val output = toBitmap(dilated)
 
         val preprocFile = preprocFileFor(originalFile)
         FileOutputStream(preprocFile).use { stream ->
             output.compress(Bitmap.CompressFormat.JPEG, 90, stream)
         }
+        Log.d(TAG, "─── preprocess END  saved ${preprocFile.name}")
         return Result(output, preprocFile)
     }
 
@@ -183,6 +208,45 @@ internal object ImagePreprocessor {
             }
         }
         return GrayImage(w, h, dst)
+    }
+
+    /**
+     * Many LCD BP monitors have *bright* digits on a dark background.  After
+     * Otsu binarisation those digits end up white on black, which is the
+     * opposite of what ML Kit expects (dark ink on white paper).
+     *
+     * Heuristic: sample the central 50 % × 50 % of the binary image.  If
+     * more than 55 % of those pixels are black the image is almost certainly
+     * inverted — flip it before dilation so ML Kit sees dark text.
+     */
+    private fun correctPolarity(image: GrayImage): GrayImage {
+        val w = image.width
+        val h = image.height
+        val x0 = w / 4
+        val x1 = 3 * w / 4
+        val y0 = h / 4
+        val y1 = 3 * h / 4
+        var blackCount = 0
+        var total = 0
+        for (y in y0 until y1) {
+            val rowOff = y * w
+            for (x in x0 until x1) {
+                if (image.pixels[rowOff + x].toInt() and 0xFF == 0) blackCount++
+                total++
+            }
+        }
+        val ratio = if (total > 0) blackCount.toDouble() / total else 0.0
+        Log.d(TAG, "  polarity check  black=$blackCount / total=$total  ratio=${"%.3f".format(ratio)}")
+        return if (ratio > 0.55) {
+            Log.d(TAG, "  → image INVERTED (bright digits on dark BG) — flipping")
+            val inv = ByteArray(image.pixels.size) { i ->
+                if (image.pixels[i].toInt() and 0xFF == 0) 255.toByte() else 0.toByte()
+            }
+            GrayImage(w, h, inv)
+        } else {
+            Log.d(TAG, "  → polarity OK (dark digits on light BG) — no flip")
+            image
+        }
     }
 
     private fun toBitmap(gray: GrayImage): Bitmap {

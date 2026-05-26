@@ -16,18 +16,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 data class ValidationState(
-    val systolic: String = "",
-    val diastolic: String = "",
-    val pulse: String = "",
+    val systolic: Int = 120,
+    val diastolic: Int = 80,
+    val pulse: Int = 60,
     val notes: String = "",
     val imagePath: String? = null,
+    val isLoading: Boolean = true,
 ) {
-    val isValid: Boolean
-        get() {
-            val s = systolic.toIntOrNull() ?: return false
-            val d = diastolic.toIntOrNull() ?: return false
-            return s > d
-        }
+    val isValid: Boolean get() = systolic > diastolic
 }
 
 sealed interface ValidationEvent {
@@ -41,41 +37,71 @@ class ValidationViewModel @Inject constructor(
     private val calculateZone: CalculateBPZoneUseCase,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(
-        ValidationState(
-            systolic = savedState.get<String>("sys").orEmpty(),
-            diastolic = savedState.get<String>("dia").orEmpty(),
-            pulse = savedState.get<String>("pulse").orEmpty(),
-            imagePath = savedState.get<String>("img")?.takeIf { it.isNotBlank() },
-        ),
-    )
+    private val _state = MutableStateFlow(ValidationState())
     val state: StateFlow<ValidationState> = _state
 
     private val _events = Channel<ValidationEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
-    fun updateSystolic(v: String) = _state.update { it.copy(systolic = v.filter(Char::isDigit).take(3)) }
-    fun updateDiastolic(v: String) = _state.update { it.copy(diastolic = v.filter(Char::isDigit).take(3)) }
-    fun updatePulse(v: String) = _state.update { it.copy(pulse = v.filter(Char::isDigit).take(3)) }
-    fun updateNotes(v: String) = _state.update { it.copy(notes = v.take(200)) }
+    init {
+        val argSys   = savedState.get<String>("sys").orEmpty()
+        val argDia   = savedState.get<String>("dia").orEmpty()
+        val argPulse = savedState.get<String>("pulse").orEmpty()
+        val imagePath = savedState.get<String>("img")?.takeIf { it.isNotBlank() }
+
+        if (argSys.isNotEmpty() && argDia.isNotEmpty()) {
+            // OCR path — use detected values immediately
+            _state.value = ValidationState(
+                systolic  = argSys.toIntOrNull()?.coerceIn(SYS_RANGE) ?: DEFAULT_SYS,
+                diastolic = argDia.toIntOrNull()?.coerceIn(DIA_RANGE) ?: DEFAULT_DIA,
+                pulse     = argPulse.toIntOrNull()?.coerceIn(PUL_RANGE) ?: DEFAULT_PUL,
+                imagePath = imagePath,
+                isLoading = false,
+            )
+        } else {
+            // Manual entry — pre-populate from last saved reading (or hardcoded defaults)
+            viewModelScope.launch {
+                val prev = repository.getLatest()
+                _state.value = ValidationState(
+                    systolic  = prev?.systolic?.coerceIn(SYS_RANGE) ?: DEFAULT_SYS,
+                    diastolic = prev?.diastolic?.coerceIn(DIA_RANGE) ?: DEFAULT_DIA,
+                    pulse     = prev?.pulse?.coerceIn(PUL_RANGE)    ?: DEFAULT_PUL,
+                    imagePath = imagePath,
+                    isLoading = false,
+                )
+            }
+        }
+    }
+
+    fun updateSystolic(v: Int)  = _state.update { it.copy(systolic  = v.coerceIn(SYS_RANGE)) }
+    fun updateDiastolic(v: Int) = _state.update { it.copy(diastolic = v.coerceIn(DIA_RANGE)) }
+    fun updatePulse(v: Int)     = _state.update { it.copy(pulse     = v.coerceIn(PUL_RANGE)) }
+    fun updateNotes(v: String)  = _state.update { it.copy(notes     = v.take(200)) }
 
     fun save() {
         val current = _state.value
         if (!current.isValid) return
-        val sys = current.systolic.toInt()
-        val dia = current.diastolic.toInt()
         viewModelScope.launch {
             repository.insert(
                 BPReading(
                     timestamp = System.currentTimeMillis(),
-                    systolic = sys,
-                    diastolic = dia,
-                    pulse = current.pulse.toIntOrNull(),
-                    category = calculateZone(sys, dia),
-                    notes = current.notes.trim().takeIf { it.isNotEmpty() },
+                    systolic  = current.systolic,
+                    diastolic = current.diastolic,
+                    pulse     = current.pulse,
+                    category  = calculateZone(current.systolic, current.diastolic),
+                    notes     = current.notes.trim().takeIf { it.isNotEmpty() },
                 ),
             )
             _events.send(ValidationEvent.Saved)
         }
+    }
+
+    companion object {
+        val SYS_RANGE = 60..250
+        val DIA_RANGE = 40..160
+        val PUL_RANGE = 30..200
+        const val DEFAULT_SYS = 120
+        const val DEFAULT_DIA = 80
+        const val DEFAULT_PUL = 60
     }
 }

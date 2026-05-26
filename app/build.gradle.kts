@@ -1,6 +1,5 @@
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
@@ -9,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.bpdigitizer"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.example.bpdigitizer"
@@ -37,8 +36,10 @@ android {
         targetCompatibility = JavaVersion.VERSION_17
     }
 
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
 
     buildFeatures {
@@ -80,7 +81,12 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
 
-    implementation(libs.mlkit.text.recognition)
+    implementation(libs.tesseract4android) {
+        // The main artifact transitively depends on tesseract4android-openmp which
+        // contains identical classes → duplicate class conflict.  Exclude it and
+        // use the standard (non-OpenMP) native libraries only.
+        exclude(group = "com.github.adaptech-cz.Tesseract4Android", module = "tesseract4android-openmp")
+    }
 
     implementation(libs.vico.compose)
     implementation(libs.vico.compose.m3)
@@ -89,10 +95,12 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
 
+    implementation(libs.health.connect.client)
     implementation(libs.accompanist.permissions)
 
     implementation(libs.coil.compose)
     implementation(libs.androidx.exifinterface)
+    implementation(libs.androidx.datastore.preferences)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)

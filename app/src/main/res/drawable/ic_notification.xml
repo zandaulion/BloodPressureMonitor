@@ -1,0 +1,14 @@
+<!-- Simple heart-pulse notification icon (24 dp, mono white) -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M12,21.593c-5.63,-5.539 -11,-10.297 -11,-14.402
+            C1,3.543 4.068,2 6.281,2c1.312,0 2.61,0.516 3.62,1.401
+            L12,5.036l2.1,-1.635C15.107,2.516 16.406,2 17.719,2
+            C19.932,2 23,3.543 23,7.191
+            c0,4.105 -5.571,8.862 -11,14.402z" />
+</vector>

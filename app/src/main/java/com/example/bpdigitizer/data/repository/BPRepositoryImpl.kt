@@ -20,6 +20,9 @@ class BPRepositoryImpl @Inject constructor(
     override suspend fun getAll(): List<BPReading> =
         dao.getAll().map { it.toDomain() }
 
+    override suspend fun getLatest(): BPReading? =
+        dao.getLatest()?.toDomain()
+
     override suspend fun insert(reading: BPReading): Long =
         dao.insert(reading.toEntity())
 

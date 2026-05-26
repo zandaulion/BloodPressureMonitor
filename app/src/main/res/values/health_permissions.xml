@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="health_permissions">
+        <item>android.permission.health.WRITE_BLOOD_PRESSURE</item>
+        <item>android.permission.health.WRITE_HEART_RATE</item>
+    </array>
+</resources>

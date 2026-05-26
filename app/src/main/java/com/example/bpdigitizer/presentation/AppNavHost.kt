@@ -8,6 +8,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.bpdigitizer.presentation.capture.CaptureScreen
 import com.example.bpdigitizer.presentation.dashboard.DashboardScreen
+import com.example.bpdigitizer.presentation.profile.ProfileScreen
+import com.example.bpdigitizer.presentation.reminders.RemindersScreen
 import com.example.bpdigitizer.presentation.validation.ValidationScreen
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -15,6 +17,8 @@ import java.nio.charset.StandardCharsets
 object Routes {
     const val DASHBOARD = "dashboard"
     const val CAPTURE = "capture"
+    const val PROFILE = "profile"
+    const val REMINDERS = "reminders"
     const val VALIDATION = "validation?sys={sys}&dia={dia}&pulse={pulse}&img={img}"
 
     fun validation(sys: Int?, dia: Int?, pulse: Int?, imgPath: String?): String {
@@ -31,9 +35,16 @@ fun AppNavHost() {
     NavHost(navController = nav, startDestination = Routes.DASHBOARD) {
         composable(Routes.DASHBOARD) {
             DashboardScreen(
-                onAddViaCamera = { nav.navigate(Routes.CAPTURE) },
                 onAddManually = { nav.navigate(Routes.manualValidation()) },
+                onProfile     = { nav.navigate(Routes.PROFILE) },
+                onReminders   = { nav.navigate(Routes.REMINDERS) },
             )
+        }
+        composable(Routes.PROFILE) {
+            ProfileScreen(onBack = { nav.popBackStack() })
+        }
+        composable(Routes.REMINDERS) {
+            RemindersScreen(onBack = { nav.popBackStack() })
         }
         composable(Routes.CAPTURE) {
             CaptureScreen(

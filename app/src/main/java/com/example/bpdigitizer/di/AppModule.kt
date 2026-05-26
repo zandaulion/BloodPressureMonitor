@@ -1,14 +1,19 @@
 package com.example.bpdigitizer.di
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.example.bpdigitizer.data.local.BPDatabase
 import com.example.bpdigitizer.data.local.BPReadingDao
 import com.example.bpdigitizer.data.repository.BPRepositoryImpl
+import com.example.bpdigitizer.data.repository.ReminderRepositoryImpl
+import com.example.bpdigitizer.data.repository.UserProfileRepositoryImpl
 import com.example.bpdigitizer.domain.repository.BPRepository
-import com.google.mlkit.vision.text.TextRecognition
-import com.google.mlkit.vision.text.TextRecognizer
-import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import com.example.bpdigitizer.domain.repository.ReminderRepository
+import com.example.bpdigitizer.domain.repository.UserProfileRepository
+import com.example.bpdigitizer.data.ocr.TesseractRecognizer
 import kotlinx.serialization.json.Json
 import dagger.Binds
 import dagger.Module
@@ -16,6 +21,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import java.io.File
 import javax.inject.Singleton
 
 @Module
@@ -33,8 +39,8 @@ object DataModule {
 
     @Provides
     @Singleton
-    fun provideTextRecognizer(): TextRecognizer =
-        TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+    fun provideTesseractRecognizer(@ApplicationContext context: Context): TesseractRecognizer =
+        TesseractRecognizer(context)
 
     @Provides
     @Singleton
@@ -42,6 +48,13 @@ object DataModule {
         prettyPrint = true
         encodeDefaults = true
     }
+
+    @Provides
+    @Singleton
+    fun provideDataStore(@ApplicationContext context: Context): DataStore<Preferences> =
+        PreferenceDataStoreFactory.create(
+            produceFile = { File(context.filesDir, "datastore/user_profile.preferences_pb") },
+        )
 }
 
 @Module
@@ -49,5 +62,13 @@ object DataModule {
 abstract class RepositoryModule {
     @Binds
     @Singleton
-    abstract fun bindRepository(impl: BPRepositoryImpl): BPRepository
+    abstract fun bindBpRepository(impl: BPRepositoryImpl): BPRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserProfileRepository(impl: UserProfileRepositoryImpl): UserProfileRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindReminderRepository(impl: ReminderRepositoryImpl): ReminderRepository
 }
