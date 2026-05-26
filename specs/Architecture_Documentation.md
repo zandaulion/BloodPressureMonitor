@@ -45,6 +45,16 @@ com.example.bpdigitizer
 1.  **CameraX** streams `ImageProxy` frames to a custom `ImageAnalysis.Analyzer`.
 2.  **ML Kit** processes the frame and outputs a `Text` object.
 3.  **ParseOcrTextUseCase** extracts bounding boxes, sorts text blocks vertically, and extracts 2-3 digit integers.
-4.  Data is pushed to **ValidationViewModel** as `ValidationState(systolic, diastolic, pulse, imageUri)`.
-5.  User edits/confirms via **Jetpack Compose UI**.
+4.  Data is pushed to **ValidationViewModel** as `ValidationState(systolic, diastolic, pulse, notes, imageUri)`.
+5.  User edits/confirms via **Jetpack Compose UI** (also editing `notes` if desired).
 6.  **Repository** maps domain model to Entity and inserts it into **Room**.
+
+### Manual-Entry Data Flow
+The Dashboard exposes a secondary entry point that navigates directly to the Validation screen with blank state and `imageUri = null`. Steps 1–3 above are skipped; the user fills all fields manually and the same Repository → Room write path is used.
+
+## 1.5 Reactive Deletion Flow
+1.  User swipes a row in the dashboard `LazyColumn`.
+2.  **DashboardViewModel** removes the reading from local UI state immediately and emits a Snackbar event with an "Undo" action.
+3.  After a 5-second window with no undo, the ViewModel calls `repository.delete(id)`.
+4.  Room emission updates the `Flow<List<BPReading>>` and the UI converges.
+5.  If "Undo" is tapped within the window, the pending delete is cancelled and the UI state is restored without any DB write.

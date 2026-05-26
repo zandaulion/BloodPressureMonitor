@@ -13,6 +13,7 @@
 * `diastolic`: Int
 * `pulse`: Int (Nullable, in case monitor doesn't show it)
 * `category`: Enum (NORMAL, ELEVATED, STAGE_1, STAGE_2, HYPERTENSIVE_CRISIS)
+* `notes`: String (Nullable, free-text user context such as "after exercise", "morning before coffee")
 
 **BP Category Logic (AHA Guidelines)**
 * **Normal:** Systolic < 120 AND Diastolic < 80
@@ -25,11 +26,14 @@
 
 ### Screen 1: Dashboard (Home)
 * **UI Elements:**
-    * FAB (Floating Action Button) to "Add New Reading" (Navigates to Capture Screen).
-    * Vico Chart displaying a time-series line graph. Systolic and Diastolic plotted as two lines on the same Y-axis.
-    * LazyColumn displaying a history of recent readings, sorted by timestamp descending.
+    * FAB (Floating Action Button) to "Add New Reading via Camera" (Navigates to Capture Screen).
+    * Secondary icon-button next to the FAB for "Add Manually" (Navigates directly to Validation Screen with blank state and no thumbnail).
+    * Filter chips above the chart: `7d / 30d / 90d / All`, default `30d`. Chips scope only the chart, not the history list.
+    * Vico Chart displaying a time-series line graph. Systolic and Diastolic plotted as two lines on the same Y-axis. Data filtered by the active range chip.
+    * LazyColumn displaying the full history of readings, sorted by timestamp descending. Each row shows the numbers, category badge, and the `notes` text (if present).
+    * Swipe-to-delete on each history row: deleting shows an "Undo" Snackbar for 5 seconds; if not undone within that window, the row is permanently removed from Room.
     * "Export Data" button in the top App Bar.
-* **Behavior:** Reads a `Flow<List<BPReading>>` from Room. Updates automatically when new data is added.
+* **Behavior:** Reads a `Flow<List<BPReading>>` from Room. Updates automatically when new data is added or deleted.
 
 ### Screen 2: Capture (Camera)
 * **UI Elements:**
@@ -42,15 +46,17 @@
 
 ### Screen 3: Human Validation
 * **UI Elements:**
-    * Top: Cropped thumbnail of the captured image for user reference.
-    * Middle: Three `OutlinedTextField` components for Systolic, Diastolic, and Pulse. Pre-populated with OCR results.
-    * Keyboard Type: `KeyboardType.Number`.
-    * Bottom: "Save Reading" button.
+    * Top (camera path only): the full captured image scaled to ~120dp tall for user reference. Tapping it opens a fullscreen viewer with pinch-to-zoom. Hidden entirely on the manual-entry path.
+    * Three `OutlinedTextField` components for Systolic, Diastolic, and Pulse. Pre-populated with OCR results when arriving from Capture; blank when arriving from manual-entry.
+    * `OutlinedTextField` for `notes` (optional, single line, free text).
+    * Keyboard Type for numeric fields: `KeyboardType.Number`.
+    * Bottom: primary "Save Reading" button. Secondary "Retake" button shown only on the camera path — pops back to Capture, discarding current edits.
 * **Validation Rules (Must pass before Save is enabled):**
     * Systolic must not be empty.
     * Diastolic must not be empty.
     * Systolic MUST be strictly greater than Diastolic.
-* **Error Handling:** If ML Kit misses a number, the respective text field remains blank, forcing the user to type it.
+* **Error Handling:** If ML Kit misses a number, the respective text field remains blank, forcing the user to type it. If OCR returns nothing usable, the user can still proceed (all fields blank) or tap "Retake" to try the camera again.
+* **Behavior on Save:** Compute `category` via `CalculateBPZoneUseCase`, build a `BPReading` with current timestamp, insert via repository, then pop back to Dashboard.
 
 ## 2.3 System Features
 
@@ -66,7 +72,7 @@
 ### 2.3.2 JSON Export Specification
 * **Trigger:** User taps "Export" in the App Bar.
 * **Process:**
-    1. Fetch all records from Room.
-    2. Use `kotlinx.serialization` to convert `List<BPReading>` to a JSON string.
+    1. Fetch all records from Room (unfiltered — chart range chips do not affect export).
+    2. Use `kotlinx.serialization` to convert `List<BPReading>` to a JSON string. All fields including `notes` are emitted; null `pulse` and null `notes` are written as JSON `null`.
     3. Write string to a local temporary file (e.g., `bp_export_TIMESTAMP.json`) in the cache directory.
     4. Fire an `Intent.ACTION_SEND` with MIME type `application/json` utilizing `FileProvider` so the user can share it via Android's native share sheet.
