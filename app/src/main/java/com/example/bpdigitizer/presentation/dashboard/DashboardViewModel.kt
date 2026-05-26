@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.bpdigitizer.domain.model.BPReading
 import com.example.bpdigitizer.domain.repository.BPRepository
+import com.example.bpdigitizer.domain.usecase.ExportReadingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -33,11 +35,14 @@ data class DashboardUi(
 
 sealed interface DashboardEvent {
     data class ShowUndoSnackbar(val reading: BPReading) : DashboardEvent
+    data class ShareExport(val file: File) : DashboardEvent
+    data object ExportFailed : DashboardEvent
 }
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val repository: BPRepository,
+    private val exportReadings: ExportReadingsUseCase,
 ) : ViewModel() {
 
     private val selectedRange = MutableStateFlow(ChartRange.THIRTY_DAYS)
@@ -82,6 +87,14 @@ class DashboardViewModel @Inject constructor(
     fun undoDelete(reading: BPReading) {
         pendingJobs.remove(reading.id)?.cancel()
         pendingDeletions.update { it - reading.id }
+    }
+
+    fun requestExport() {
+        viewModelScope.launch {
+            runCatching { exportReadings() }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file)) }
+                .onFailure { _events.send(DashboardEvent.ExportFailed) }
+        }
     }
 
     private companion object {

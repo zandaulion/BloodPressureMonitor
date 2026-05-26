@@ -1,5 +1,7 @@
 package com.example.bpdigitizer.presentation.dashboard
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -39,6 +41,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.FileProvider
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -48,6 +52,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.example.bpdigitizer.domain.model.BPReading
 import com.example.bpdigitizer.presentation.components.CategoryBadge
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -57,12 +62,12 @@ import java.util.Locale
 fun DashboardScreen(
     onAddViaCamera: () -> Unit,
     onAddManually: () -> Unit,
-    onExport: () -> Unit = {},
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
 
     LaunchedEffect(viewModel.events, lifecycleOwner) {
         viewModel.events.flowWithLifecycle(lifecycleOwner.lifecycle).collect { event ->
@@ -77,6 +82,10 @@ fun DashboardScreen(
                         viewModel.undoDelete(event.reading)
                     }
                 }
+                is DashboardEvent.ShareExport -> shareJsonFile(context, event.file)
+                DashboardEvent.ExportFailed -> {
+                    snackbarHostState.showSnackbar("Export failed")
+                }
             }
         }
     }
@@ -86,7 +95,10 @@ fun DashboardScreen(
             TopAppBar(
                 title = { Text("Blood Pressure") },
                 actions = {
-                    IconButton(onClick = onExport, enabled = ui.readings.isNotEmpty()) {
+                    IconButton(
+                        onClick = viewModel::requestExport,
+                        enabled = ui.readings.isNotEmpty(),
+                    ) {
                         Icon(Icons.Default.IosShare, contentDescription = "Export data")
                     }
                 },
@@ -261,3 +273,19 @@ private fun ReadingRow(reading: BPReading) {
 private val ROW_DATE_FORMAT = SimpleDateFormat("MMM d, yyyy · HH:mm", Locale.getDefault())
 
 private fun formatTimestamp(ts: Long): String = ROW_DATE_FORMAT.format(Date(ts))
+
+private fun shareJsonFile(context: Context, file: File) {
+    val uri = FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        file,
+    )
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "application/json"
+        putExtra(Intent.EXTRA_STREAM, uri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+    }
+    context.startActivity(Intent.createChooser(intent, "Export BP readings").apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+    })
+}

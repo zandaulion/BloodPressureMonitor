@@ -1,5 +1,8 @@
 package com.example.bpdigitizer.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class BPCategory {
     NORMAL,
     ELEVATED,

@@ -9,6 +9,7 @@ import com.example.bpdigitizer.domain.repository.BPRepository
 import com.google.mlkit.vision.text.TextRecognition
 import com.google.mlkit.vision.text.TextRecognizer
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions
+import kotlinx.serialization.json.Json
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -34,6 +35,13 @@ object DataModule {
     @Singleton
     fun provideTextRecognizer(): TextRecognizer =
         TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
+
+    @Provides
+    @Singleton
+    fun provideJson(): Json = Json {
+        prettyPrint = true
+        encodeDefaults = true
+    }
 }
 
 @Module

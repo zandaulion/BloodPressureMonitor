@@ -1,5 +1,8 @@
 package com.example.bpdigitizer.domain.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class BPReading(
     val id: Long = 0L,
     val timestamp: Long,
