@@ -32,8 +32,9 @@ internal object ImagePreprocessor {
         val oriented = loadOriented(originalFile)
         val scaled = downscale(oriented, MAX_DIM)
         val gray = toGrayscale(scaled)
-        val threshold = otsuThreshold(gray.pixels)
-        val binary = binarize(gray, threshold)
+        val smoothed = boxBlur(gray)
+        val threshold = otsuThreshold(smoothed.pixels)
+        val binary = binarize(smoothed, threshold)
         val dilated = dilateBlack(binary, DILATION_RADIUS)
         val output = toBitmap(dilated)
 
@@ -88,6 +89,37 @@ internal object ImagePreprocessor {
             out[i] = y.toByte()
         }
         return GrayImage(w, h, out)
+    }
+
+    /**
+     * 3x3 box blur on the grayscale image. Smooths LCD "ghost" segments
+     * (faint shadows of unlit digit strokes) so they don't survive Otsu
+     * thresholding as noise specks that dilation would then amplify.
+     */
+    private fun boxBlur(input: GrayImage): GrayImage {
+        val w = input.width
+        val h = input.height
+        val src = input.pixels
+        val dst = ByteArray(w * h)
+        for (y in 0 until h) {
+            val yStart = (y - 1).coerceAtLeast(0)
+            val yEnd = (y + 1).coerceAtMost(h - 1)
+            for (x in 0 until w) {
+                val xStart = (x - 1).coerceAtLeast(0)
+                val xEnd = (x + 1).coerceAtMost(w - 1)
+                var sum = 0
+                var count = 0
+                for (ny in yStart..yEnd) {
+                    val rowOff = ny * w
+                    for (nx in xStart..xEnd) {
+                        sum += src[rowOff + nx].toInt() and 0xFF
+                        count++
+                    }
+                }
+                dst[y * w + x] = (sum / count).toByte()
+            }
+        }
+        return GrayImage(w, h, dst)
     }
 
     private fun otsuThreshold(pixels: ByteArray): Int {

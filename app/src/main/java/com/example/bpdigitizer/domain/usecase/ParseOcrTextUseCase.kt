@@ -40,7 +40,8 @@ class ParseOcrTextUseCase @Inject constructor() {
             for (line in block.lines) {
                 for (element in line.elements) {
                     val box = element.boundingBox ?: continue
-                    NUMBER_REGEX.findAll(element.text).forEach { match ->
+                    val normalized = normalizeSevenSegment(element.text)
+                    NUMBER_REGEX.findAll(normalized).forEach { match ->
                         val value = match.value.toInt()
                         if (value in MIN_PLAUSIBLE..MAX_PLAUSIBLE) {
                             raw += NumberToken(value = value, top = box.top, height = box.height())
@@ -74,6 +75,21 @@ class ParseOcrTextUseCase @Inject constructor() {
         return groups
     }
 
+    /**
+     * Maps characters ML Kit commonly mistakes for digits when looking at a
+     * 7-segment LCD into their intended digit. The "1" digit on a 7-segment is
+     * just the two right-hand vertical bars, which is shape-identical to a
+     * capital "I", so ML Kit often returns "I20" for "120" etc.
+     */
+    private fun normalizeSevenSegment(s: String): String = s.map { c ->
+        when (c) {
+            'I', 'l', '|' -> '1'
+            'O' -> '0'
+            'B' -> '8'
+            else -> c
+        }
+    }.joinToString("")
+
     private data class NumberToken(val value: Int, val top: Int, val height: Int)
 
     private companion object {
@@ -82,6 +98,6 @@ class ParseOcrTextUseCase @Inject constructor() {
         const val MAX_PLAUSIBLE = 250
         const val ROW_THRESHOLD_RATIO = 0.6
         const val MIN_THRESHOLD_PX = 8
-        const val MIN_HEIGHT_RATIO = 0.6
+        const val MIN_HEIGHT_RATIO = 0.5
     }
 }
