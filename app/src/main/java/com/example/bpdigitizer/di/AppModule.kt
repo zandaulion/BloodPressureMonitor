@@ -6,6 +6,9 @@ import com.example.bpdigitizer.data.local.BPDatabase
 import com.example.bpdigitizer.data.local.BPReadingDao
 import com.example.bpdigitizer.data.repository.BPRepositoryImpl
 import com.example.bpdigitizer.domain.repository.BPRepository
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -26,6 +29,11 @@ object DataModule {
 
     @Provides
     fun provideDao(db: BPDatabase): BPReadingDao = db.readingDao()
+
+    @Provides
+    @Singleton
+    fun provideTextRecognizer(): TextRecognizer =
+        TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
 }
 
 @Module

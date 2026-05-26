@@ -10,12 +10,72 @@ data class ParsedReading(
 )
 
 class ParseOcrTextUseCase @Inject constructor() {
+
     operator fun invoke(text: Text): ParsedReading {
-        // TODO: implement parsing per spec 2.3.1
-        //  1. Filter numeric tokens.
-        //  2. Group by Y-axis bounding box.
-        //  3. Sort top-to-bottom; assign Sys/Dia/Pulse.
-        //  4. Fallback to magnitude sort if Sys <= Dia.
-        return ParsedReading(null, null, null)
+        val tokens = extractNumericTokens(text)
+        if (tokens.isEmpty()) return ParsedReading(null, null, null)
+
+        val rowValues = groupByRows(tokens).map { row -> row.maxOf { it.value } }
+        val sys = rowValues.getOrNull(0)
+        val dia = rowValues.getOrNull(1)
+        val pulse = rowValues.getOrNull(2)
+
+        // Primary path: Y-axis ordering yielded a valid Sys > Dia.
+        if (sys != null && dia != null && sys > dia) {
+            return ParsedReading(sys, dia, pulse)
+        }
+
+        // Fallback: magnitude sort. Largest = Sys, next = Dia, smallest = Pulse.
+        val distinctSortedDesc = tokens.map { it.value }.distinct().sortedDescending()
+        return ParsedReading(
+            systolic = distinctSortedDesc.getOrNull(0),
+            diastolic = distinctSortedDesc.getOrNull(1),
+            pulse = distinctSortedDesc.getOrNull(2),
+        )
+    }
+
+    private fun extractNumericTokens(text: Text): List<NumberToken> {
+        val tokens = mutableListOf<NumberToken>()
+        for (block in text.textBlocks) {
+            for (line in block.lines) {
+                for (element in line.elements) {
+                    val box = element.boundingBox ?: continue
+                    NUMBER_REGEX.findAll(element.text).forEach { match ->
+                        val value = match.value.toInt()
+                        if (value in MIN_PLAUSIBLE..MAX_PLAUSIBLE) {
+                            tokens += NumberToken(value = value, top = box.top, height = box.height())
+                        }
+                    }
+                }
+            }
+        }
+        return tokens
+    }
+
+    private fun groupByRows(tokens: List<NumberToken>): List<List<NumberToken>> {
+        val sortedByTop = tokens.sortedBy { it.top }
+        val avgHeight = tokens.sumOf { it.height }.toDouble() / tokens.size
+        val threshold = (avgHeight * ROW_THRESHOLD_RATIO).toInt().coerceAtLeast(MIN_THRESHOLD_PX)
+
+        val groups = mutableListOf<MutableList<NumberToken>>()
+        for (token in sortedByTop) {
+            val current = groups.lastOrNull()
+            if (current != null && (token.top - current.first().top) < threshold) {
+                current += token
+            } else {
+                groups += mutableListOf(token)
+            }
+        }
+        return groups
+    }
+
+    private data class NumberToken(val value: Int, val top: Int, val height: Int)
+
+    private companion object {
+        val NUMBER_REGEX = Regex("\\d{2,3}")
+        const val MIN_PLAUSIBLE = 30
+        const val MAX_PLAUSIBLE = 250
+        const val ROW_THRESHOLD_RATIO = 0.6
+        const val MIN_THRESHOLD_PX = 8
     }
 }
