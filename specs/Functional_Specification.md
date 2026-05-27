@@ -45,7 +45,10 @@
 - Bell icon → Reminders screen
 - Person icon → Health Profile screen
 - Download icon → Import JSON file picker
-- Share icon → Export readings (disabled when list is empty)
+- Share icon → Export dropdown menu (disabled when list is empty):
+  - **Export as JSON** — full history
+  - **Export as CSV** — full history
+  - **Export as PDF** — multi-page document (see §2.3.5)
 - Heart monitor icon → Sync to Health Connect (disabled when list is empty)
 
 **Floating Action Buttons:**
@@ -54,7 +57,11 @@
 
 **Content:**
 - Range chips: `7d / 30d / 90d / All` (default `30d`). Scopes the chart only, not the history list.
-- Vico line chart: Systolic and Diastolic as two lines, x-axis labelled with dates (M/d format).
+- **Vico line chart:** Systolic and Diastolic as two colour-coded lines.
+  - Y-axis fixed at **40–180 mmHg** on both portrait sides.
+  - Dashed reference lines at **SYS 120** and **DIA 80** (AHA normal upper limits).
+  - X-axis labelled with dates (M/d format).
+  - **Landscape orientation** — chart expands to fill the entire screen; all other UI is hidden.
 - `HealthRiskCard` (shown when readings exist): personalised risk assessment based on the latest reading + user profile.
 - `LazyColumn` of all readings, newest first. Each row: date/time, `SYS/DIA · pulse bpm`, category badge, notes (italic). Swipe either direction to delete (5-second undo snackbar).
 
@@ -77,11 +84,15 @@
 - Notes `OutlinedTextField` (optional, single line).
 - "Save Reading" button (disabled until Systolic > Diastolic).
 
+After saving, the reading is automatically pushed to Health Connect in the background if permissions are already granted (see §2.3.7).
+
 ### Screen 4: Health Profile
 
 Accessible via person icon in Dashboard top bar. Scroll-able form covering:
 
-- **Basic Information:** Age (years), Biological sex (chips: Male / Female / Prefer not to say)
+- **Basic Information:**
+  - **Birth year** — 4-digit year (e.g. 1985); computed age shown as supporting text; defaults to `current year − 40`; validates range `(current year − 120)..(current year − 1)`
+  - Biological sex (chips: Male / Female / Prefer not to say)
 - **Body Measurements:** Weight (kg, lbs hint), Height (cm, ft″ hint), live BMI preview with category label
 - **Health Factors:** Current smoker toggle, Diabetes/pre-diabetes toggle
 - **Physical Activity:** Exercise level chips (Sedentary / Lightly active / Moderately active / Very active)
@@ -122,10 +133,10 @@ Notifications include "Log Now" (opens app) and "Snooze (15m)" actions. Alarms s
 
 ### 2.3.2 JSON Export
 
-- Triggered by the share icon in the Dashboard top bar.
+- One option in the **Export** dropdown (share icon, Dashboard top bar).
 - Fetches all readings from Room (unaffected by range chip filter).
 - Serialises to a JSON array via `kotlinx.serialization`. Each entry includes a human-readable `dateTime` field alongside `timestamp` for portability.
-- Writes to a temp file in cache dir, shares via `Intent.ACTION_SEND` + `FileProvider`.
+- Writes to a temp file in cache dir, shares via `Intent.ACTION_SEND` + `FileProvider` (`application/json`).
 
 ### 2.3.3 JSON Import
 
@@ -135,15 +146,61 @@ Notifications include "Log Now" (opens app) and "Snooze (15m)" actions. Alarms s
 - Deduplicates by exact timestamp — only readings not already in the database are inserted.
 - Shows a snackbar: "Imported N reading(s)" or "No new readings to import".
 
-### 2.3.4 Health Connect Sync
+### 2.3.4 Health Connect Sync (Bulk)
 
 - Triggered by the heart monitor icon in the Dashboard top bar.
 - Checks `HealthConnectClient.getSdkStatus()` first; prompts to install if unavailable.
 - Requests `WRITE_BLOOD_PRESSURE` + `WRITE_HEART_RATE` if not already granted.
 - Upserts all local readings using stable `clientRecordId` values — safe to run multiple times without creating duplicates.
 
-### 2.3.5 Health Risk Assessment
+### 2.3.5 PDF Export
+
+- One option in the **Export** dropdown.
+- Generated natively with `android.graphics.pdf.PdfDocument` (no extra dependency).
+- Shared via `Intent.ACTION_SEND` + `FileProvider` (`application/pdf`).
+- **Generation runs off the main thread** (`Dispatchers.Default`).
+
+**Page structure:**
+
+| Pages | Orientation | Contents |
+|---|---|---|
+| Up to 3 chart pages | Landscape A4 @ 2× (1684 × 1190 px) | One page per active time range: Last 7 Days · Last 30 Days · All Readings. A range page is omitted when fewer than 2 readings exist for it, or when its reading set is identical to the previous page. |
+| 1+ table pages | Portrait A4 @ 2× (1190 × 1684 px) | All readings from the **last 30 days**, newest first. |
+
+**Chart page contents:**
+- Title + date range + export date in header.
+- Y-axis: fixed 40–180 mmHg, grid lines every 20 units, labels on both the left and right sides.
+- Dashed reference lines at SYS 120 and DIA 80.
+- Rotated X-axis date labels (up to 10 evenly distributed).
+- Systolic (red) and Diastolic (blue) line series with dots. Dot size scales with reading count.
+- Numbered callout badges on dots where the reading has notes (max 12 per page).
+- Stats bar: average / min / max SYS and DIA.
+- Note legend (3 columns) listing badge number, date, and truncated note text.
+- Disclaimer footer on every page.
+
+**Table page contents:**
+- Columns: Date/Time · SYS · DIA · Pulse · Category (colour-coded) · Notes (truncated at 52 chars).
+- Alternating row shading; ~30 rows per page.
+- Continuation header on subsequent pages.
+
+### 2.3.6 CSV Export
+
+- One option in the **Export** dropdown.
+- Fetches all readings from Room (unaffected by range chip filter).
+- RFC 4180-compliant CSV with header row: `id, dateTime, timestamp, systolic, diastolic, pulse, category, notes`.
+- Fields containing commas, double-quotes, or newlines are wrapped in double-quotes with internal quotes doubled.
+- Shared via `Intent.ACTION_SEND` + `FileProvider` (`text/csv`).
+
+### 2.3.7 Health Connect Auto-Push (Per Reading)
+
+- Triggered automatically inside `ValidationViewModel.save()` immediately after a reading is persisted to Room.
+- Runs as a background coroutine — **does not delay navigation** back to Dashboard.
+- Silent best-effort: no-ops without prompting if Health Connect is not installed, not available, or write permissions have not yet been granted.
+- Uses the same stable `clientRecordId` scheme as the bulk sync — re-saving the same reading is idempotent.
+- Permission prompting remains exclusively on the manual sync button (§2.3.4).
+
+### 2.3.8 Health Risk Assessment
 
 Shown as a `HealthRiskCard` at the top of the reading list when at least one reading exists.
 
-Computed by `CalculateHealthRiskUseCase` from the most recent reading's `BPCategory` combined with the user's profile (age, sex, BMI, smoking, diabetes, activity level). Surfaces a risk level and contextual guidance. Purely informational; does not replace medical advice.
+Computed by `CalculateHealthRiskUseCase` from the most recent reading's `BPCategory` combined with the user's profile (birth year / age, sex, BMI, smoking, diabetes, activity level). Surfaces a risk level and contextual guidance attributed to AHA guidelines, prefixed with a disclaimer that it is informational only and not a substitute for medical advice.

@@ -36,6 +36,7 @@ The application follows **MVVM + Clean Architecture** with Single Source of Trut
 | Permissions | Accompanist Permissions 0.36+ |
 | Image | Coil Compose 2.7, ExifInterface 1.3 |
 | Reminders | Android `AlarmManager` (exact alarms) + `NotificationCompat` |
+| PDF | `android.graphics.pdf.PdfDocument` (built-in, no extra dependency) |
 
 ---
 
@@ -58,8 +59,11 @@ com.example.bpdigitizer
 │   ├── repository/         # BPRepository, UserProfileRepository,
 │   │                       # ReminderRepository, ApiKeyRepository
 │   └── usecase/            # ParseOcrTextUseCase, CalculateBPZoneUseCase,
-│                           # ExportReadingsUseCase, ImportReadingsUseCase,
-│                           # SyncToHealthConnectUseCase, CalculateHealthRiskUseCase
+│                           # ExportReadingsUseCase (JSON), ExportCsvUseCase,
+│                           # ExportPdfUseCase, ImportReadingsUseCase,
+│                           # SyncToHealthConnectUseCase,
+│                           # PushReadingToHealthConnectUseCase,
+│                           # CalculateHealthRiskUseCase
 └── presentation/
     ├── capture/            # CaptureScreen, CaptureViewModel, ImagePreprocessor
     ├── components/         # CategoryBadge, HealthRiskCard
@@ -82,6 +86,7 @@ com.example.bpdigitizer
 5. **`CaptureViewModel`** emits a `ParseComplete` event → Navigation pushes to Validation.
 6. **`ValidationScreen`** pre-populates sliders from OCR values (or from the last saved reading on the manual path). User corrects if needed.
 7. **`ValidationViewModel.save()`** computes `BPCategory`, builds a `BPReading`, inserts via **`BPRepository`** → Room.
+8. **`PushReadingToHealthConnectUseCase`** is launched in a child coroutine immediately after the DB insert — see §1.7.
 
 ### Manual-Entry Data Flow
 Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are pre-populated from the last saved reading (default 120/80/60 on first launch). Steps 1–4 are skipped entirely.
@@ -119,13 +124,23 @@ Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are p
 
 ---
 
-## 1.7 Health Connect Sync
+## 1.7 Health Connect Integration
 
-`SyncToHealthConnectUseCase` upserts all local readings as `BloodPressureRecord` + `HeartRateRecord` entries using stable `Metadata.manualEntry(clientRecordId)` — repeat syncs are idempotent.
+### Bulk Sync (`SyncToHealthConnectUseCase`)
+Upserts all local readings as `BloodPressureRecord` + `HeartRateRecord` entries using stable `Metadata.manualEntry(clientRecordId)` — repeat syncs are idempotent.
 
 Permission flow: `DashboardViewModel` checks `getSdkStatus()` → requests `WRITE_BLOOD_PRESSURE` + `WRITE_HEART_RATE` via `PermissionController.createRequestPermissionResultContract()`.
 
-Manifest requirements: `<queries>` for package visibility (API 30+), `VIEW_PERMISSION_USAGE + HEALTH_PERMISSIONS` intent filter (API 34+).
+### Per-Reading Auto-Push (`PushReadingToHealthConnectUseCase`)
+Called from `ValidationViewModel.save()` immediately after the new reading is persisted to Room.
+
+- Launched as a **child coroutine** of the save job — navigation back to Dashboard is not delayed.
+- **Best-effort, silent:** checks `getSdkStatus()` and `getGrantedPermissions()` before attempting to write; swallows all exceptions.
+- No permission prompting — if permissions have not yet been granted the push is silently skipped. Prompting is handled exclusively by the manual sync button.
+- Uses the same stable `clientRecordId` scheme as the bulk sync, so a subsequent bulk sync will upsert rather than duplicate.
+
+### Manifest requirements
+`<queries>` block for package visibility (API 30+); `VIEW_PERMISSION_USAGE + HEALTH_PERMISSIONS` intent filter (API 34+).
 
 ---
 
@@ -147,7 +162,61 @@ A `BuildConfig.GEMINI_API_KEY` populated from `local.properties` acts as a silen
 
 A single `DataStore<Preferences>` instance (`datastore/user_profile.preferences_pb`) holds two logical namespaces:
 
-| Key prefix | Owner | Fields |
+| Key | Owner | Type | Notes |
+|---|---|---|---|
+| `profile_birth_year` | `UserProfileRepositoryImpl` | `Int` | Absent when not set; age computed as `currentYear − birthYear` |
+| `profile_sex` | `UserProfileRepositoryImpl` | `String` | |
+| `profile_weight_kg` | `UserProfileRepositoryImpl` | `Float` | |
+| `profile_height_cm` | `UserProfileRepositoryImpl` | `Float` | |
+| `profile_is_smoker` | `UserProfileRepositoryImpl` | `Boolean` | |
+| `profile_has_diabetes` | `UserProfileRepositoryImpl` | `Boolean` | |
+| `profile_activity_level` | `UserProfileRepositoryImpl` | `String` | |
+| `reminder_is_enabled` | `ReminderRepositoryImpl` | `Boolean` | |
+| `reminder_morning_minutes` | `ReminderRepositoryImpl` | `Int` | Minutes since midnight |
+| `reminder_evening_minutes` | `ReminderRepositoryImpl` | `Int` | Minutes since midnight |
+
+---
+
+## 1.10 PDF Export Engine
+
+PDF generation is handled entirely by **`ExportPdfUseCase`** using `android.graphics.pdf.PdfDocument` (built-in Android API, no extra dependency). All drawing is done on `android.graphics.Canvas` because Vico is Compose-only and cannot render to an off-screen PDF canvas.
+
+**Execution context:** `withContext(Dispatchers.Default)` — never blocks the main thread.
+
+### Page types
+
+| Type | Dimensions | Count |
 |---|---|---|
-| *(none)* | `UserProfileRepositoryImpl` | `age`, `sex`, `weight_kg`, `height_cm`, `is_smoker`, `has_diabetes`, `activity_level` |
-| `reminder_*` | `ReminderRepositoryImpl` | `reminder_is_enabled`, `reminder_morning_minutes`, `reminder_evening_minutes` |
+| Landscape chart | 1684 × 1190 px (A4 @ 2×) | 0–3 (one per active time range) |
+| Portrait table | 1190 × 1684 px (A4 @ 2×) | ≥ 1 (if any readings in last 30 days) |
+
+### Chart page layout (bottom-up zones)
+```
+┌─ Header (title, date range, export date) ──────────────────────────┐
+│  Divider                                                            │
+│                                                                     │
+│  Chart area                                                         │
+│   - Grid lines every 20 mmHg (Y: 40–180)                           │
+│   - Y-axis labels on left (right-aligned) and right (left-aligned) │
+│   - Dashed reference lines at SYS 120 and DIA 80                   │
+│   - Rotated X-axis date labels (max 10)                            │
+│   - Systolic (red) + Diastolic (blue) line + dot series            │
+│   - Numbered callout badges on noted readings (max 12)             │
+│                                                                     │
+│  X-label space (55 px)                                              │
+│  Note legend (3 columns, ceil(notes/3) rows × 36 px/row)           │
+│  Stats bar (avg / min / max SYS and DIA with colour swatches)      │
+├─ Footer (disclaimer) ───────────────────────────────────────────────┤
+```
+
+### Chart page skip logic
+A range page is omitted when:
+- Fewer than 2 readings fall in the range, **or**
+- The reading set is identical to the previous page (e.g. "30 d" = "All" when all readings are recent).
+
+### Table pages
+- Readings from the **last 30 days**, newest-first.
+- ~30 rows per portrait page (computed dynamically from page height − margins).
+- Alternating row background; category labels are colour-coded to match the app theme.
+- Notes truncated at 52 characters.
+- "Last 30 Days" indicated in the page title.
