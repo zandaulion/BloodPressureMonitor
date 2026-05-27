@@ -79,6 +79,3 @@ See [`specs/Architecture_Documentation.md`](specs/Architecture_Documentation.md)
 
 ---
 
-## License
-
-[MIT](LICENSE) © 2026 Zandaulion
