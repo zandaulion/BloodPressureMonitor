@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -81,23 +80,20 @@ class DashboardViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val selectedRange = MutableStateFlow(ChartRange.THIRTY_DAYS)
-    private val pendingDeletions = MutableStateFlow<Set<Long>>(emptySet())
 
     val ui: StateFlow<DashboardUi> = combine(
         repository.observeAll(),
         selectedRange,
-        pendingDeletions,
         profileRepository.observe(),
         apiKeyRepository.observeHasKey(),
-    ) { all, range, pending, profile, hasKey ->
-        val visible = all.filterNot { it.id in pending }
+    ) { all, range, profile, hasKey ->
         val chart = range.days?.let { days ->
             val cutoff = System.currentTimeMillis() - days * MILLIS_PER_DAY
-            visible.filter { it.timestamp >= cutoff }
-        } ?: visible
-        val latest = visible.maxByOrNull { it.timestamp }
+            all.filter { it.timestamp >= cutoff }
+        } ?: all
+        val latest = all.maxByOrNull { it.timestamp }
         val assessment = latest?.let { calculateHealthRisk(it.category, profile) }
-        DashboardUi(visible, chart.sortedBy { it.timestamp }, range, assessment, hasKey)
+        DashboardUi(all, chart.sortedBy { it.timestamp }, range, assessment, hasKey)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
@@ -112,23 +108,17 @@ class DashboardViewModel @Inject constructor(
     }
 
     fun requestDelete(reading: BPReading) {
-        pendingDeletions.update { it + reading.id }
         viewModelScope.launch {
+            repository.delete(reading.id)
             _events.send(DashboardEvent.ShowUndoSnackbar(reading))
         }
     }
 
-    /** Called when the snackbar is dismissed without tapping Undo — commits the delete. */
-    fun confirmDelete(reading: BPReading) {
-        viewModelScope.launch {
-            repository.delete(reading.id)
-            pendingDeletions.update { it - reading.id }
-        }
-    }
-
-    /** Called when the user taps Undo — cancels the pending delete and restores the row. */
+    /** Re-inserts the reading with its original ID, restoring it after an undo. */
     fun undoDelete(reading: BPReading) {
-        pendingDeletions.update { it - reading.id }
+        viewModelScope.launch {
+            repository.insert(reading)
+        }
     }
 
     fun requestExport() {

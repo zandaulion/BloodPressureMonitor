@@ -109,12 +109,9 @@ fun DashboardScreen(
                         message = "Reading deleted",
                         actionLabel = "Undo",
                         withDismissAction = true,
-                        duration = SnackbarDuration.Long,
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         viewModel.undoDelete(event.reading)
-                    } else {
-                        viewModel.confirmDelete(event.reading)
                     }
                 }
                 is DashboardEvent.ShareExport -> shareFile(context, event.file, event.mimeType)
