@@ -50,8 +50,11 @@ class ExportPdfUseCase @Inject constructor(
             buildChartRanges(all).forEach { range ->
                 drawChartPage(doc, pageNum++, range)
             }
-            if (all.isNotEmpty()) {
-                drawTablePages(doc, pageNum, all.reversed()) // newest-first in table
+            // Table pages show only the last 30 days (newest-first)
+            val tableCutoff = System.currentTimeMillis() - 30L * MS_PER_DAY
+            val tableReadings = all.filter { it.timestamp >= tableCutoff }
+            if (tableReadings.isNotEmpty()) {
+                drawTablePages(doc, pageNum, tableReadings.reversed())
             }
             file.outputStream().use { doc.writeTo(it) }
         } finally {
@@ -266,8 +269,8 @@ class ExportPdfUseCase @Inject constructor(
             val c     = page.canvas
             c.drawColor(Color.WHITE)
 
-            val titleText = if (chunk == 0) "Blood Pressure Readings"
-                            else            "Blood Pressure Readings (cont.)"
+            val titleText = if (chunk == 0) "Blood Pressure Readings  ·  Last 30 Days"
+                            else            "Blood Pressure Readings  ·  Last 30 Days (cont.)"
             val rightText = if (chunk == 0)
                 "Exported: ${DATE_FMT.format(Date())}  ·  ${readings.size} readings"
             else
