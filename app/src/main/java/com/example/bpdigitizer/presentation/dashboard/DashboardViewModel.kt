@@ -23,9 +23,7 @@ import com.example.bpdigitizer.domain.usecase.SyncToHealthConnectUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -84,7 +82,6 @@ class DashboardViewModel @Inject constructor(
 
     private val selectedRange = MutableStateFlow(ChartRange.THIRTY_DAYS)
     private val pendingDeletions = MutableStateFlow<Set<Long>>(emptySet())
-    private val pendingJobs = mutableMapOf<Long, Job>()
 
     val ui: StateFlow<DashboardUi> = combine(
         repository.observeAll(),
@@ -116,17 +113,21 @@ class DashboardViewModel @Inject constructor(
 
     fun requestDelete(reading: BPReading) {
         pendingDeletions.update { it + reading.id }
-        pendingJobs[reading.id] = viewModelScope.launch {
+        viewModelScope.launch {
             _events.send(DashboardEvent.ShowUndoSnackbar(reading))
-            delay(UNDO_WINDOW_MILLIS)
-            repository.delete(reading.id)
-            pendingDeletions.update { it - reading.id }
-            pendingJobs.remove(reading.id)
         }
     }
 
+    /** Called when the snackbar is dismissed without tapping Undo — commits the delete. */
+    fun confirmDelete(reading: BPReading) {
+        viewModelScope.launch {
+            repository.delete(reading.id)
+            pendingDeletions.update { it - reading.id }
+        }
+    }
+
+    /** Called when the user taps Undo — cancels the pending delete and restores the row. */
     fun undoDelete(reading: BPReading) {
-        pendingJobs.remove(reading.id)?.cancel()
         pendingDeletions.update { it - reading.id }
     }
 
@@ -222,7 +223,6 @@ class DashboardViewModel @Inject constructor(
     private companion object {
         const val TAG = "BpDashboard"
         const val MILLIS_PER_DAY = 24L * 60 * 60 * 1000
-        const val UNDO_WINDOW_MILLIS = 5_000L
 
         val HC_PERMISSIONS = setOf(
             HealthPermission.getWritePermission(BloodPressureRecord::class),

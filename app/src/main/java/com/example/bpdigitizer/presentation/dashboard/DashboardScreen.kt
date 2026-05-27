@@ -44,6 +44,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -108,9 +109,12 @@ fun DashboardScreen(
                         message = "Reading deleted",
                         actionLabel = "Undo",
                         withDismissAction = true,
+                        duration = SnackbarDuration.Long,
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         viewModel.undoDelete(event.reading)
+                    } else {
+                        viewModel.confirmDelete(event.reading)
                     }
                 }
                 is DashboardEvent.ShareExport -> shareFile(context, event.file, event.mimeType)
