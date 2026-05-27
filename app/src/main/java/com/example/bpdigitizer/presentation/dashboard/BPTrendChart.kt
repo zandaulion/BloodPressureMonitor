@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,26 +52,6 @@ fun BPTrendChart(
             )
         }
         return
-    }
-
-    // Key the producer on the readings list so a fresh instance is created whenever the
-    // dataset changes. Reusing one producer across differently-sized datasets leaves Vico's
-    // internal layer state with stale bounds, causing an out-of-bounds crash the moment
-    // the chart renders before the new transaction has completed.
-    val modelProducer = remember(readings) { CartesianChartModelProducer() }
-
-    // LaunchedEffect keyed on the producer (which changes with readings) so the transaction
-    // always targets the correct, clean instance and is never cancelled mid-execution.
-    LaunchedEffect(modelProducer) {
-        val xs  = readings.indices.map { it.toDouble() }
-        val sys = readings.map { it.systolic.toDouble() }
-        val dia = readings.map { it.diastolic.toDouble() }
-        modelProducer.runTransaction {
-            lineSeries {
-                series(x = xs, y = sys)
-                series(x = xs, y = dia)
-            }
-        }
     }
 
     val dateLabels = remember(readings) {
@@ -128,22 +109,41 @@ fun BPTrendChart(
         )
     }
 
-    CartesianChartHost(
-        modelProducer = modelProducer,
-        modifier = modifier,
-        // diffAnimationSpec = null disables the transition animation between model updates.
-        // Vico 2.0's diff animation crashes when the new dataset is *smaller* than the old
-        // one (e.g. switching from 90 d → 30 d) because the animator tries to index the new
-        // shorter series with offsets from the old longer one. Going the other direction is
-        // safe. Disabling animation is the recommended workaround until a Vico patch lands.
-        animationSpec = null,
-        chart = rememberCartesianChart(
-            rememberLineCartesianLayer(
-                rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),
+    // key(readings.size) resets all Vico internal state whenever the dataset SIZE changes.
+    // This prevents the stale-bounds crash that occurs when going DOWN in range (e.g. 90d→30d):
+    // Vico's layer keeps bounds from the old (larger) dataset and crashes indexing the new
+    // shorter one before the next transaction lands.
+    //
+    // Within a given size, modelProducer is stable (plain remember {}), so content-only
+    // changes (same count, different values) just trigger LaunchedEffect(readings) and run
+    // a new transaction on the existing producer — no empty-producer flash.
+    key(readings.size) {
+        val modelProducer = remember { CartesianChartModelProducer() }
+
+        LaunchedEffect(readings) {
+            val xs  = readings.indices.map { it.toDouble() }
+            val sys = readings.map { it.systolic.toDouble() }
+            val dia = readings.map { it.diastolic.toDouble() }
+            modelProducer.runTransaction {
+                lineSeries {
+                    series(x = xs, y = sys)
+                    series(x = xs, y = dia)
+                }
+            }
+        }
+
+        CartesianChartHost(
+            modelProducer = modelProducer,
+            modifier = modifier,
+            animationSpec = null,
+            chart = rememberCartesianChart(
+                rememberLineCartesianLayer(
+                    rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),
+                ),
+                startAxis = VerticalAxis.rememberStart(),
+                bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),
+                decorations = listOf(sysRefLine, diaRefLine),
             ),
-            startAxis = VerticalAxis.rememberStart(),
-            bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),
-            decorations = listOf(sysRefLine, diaRefLine),
-        ),
-    )
+        )
+    }
 }
