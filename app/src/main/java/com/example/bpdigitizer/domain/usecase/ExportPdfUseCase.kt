@@ -113,8 +113,9 @@ class ExportPdfUseCase @Inject constructor(
 
         // --- compute vertical zones (bottom-up) ---
         val statsTop    = LH - M - FOOTER_H - STATS_H
+        val legendRows  = ceil(notedPairs.size / NOTE_COLS.toDouble()).toInt()
         val legendH     = if (notedPairs.isEmpty()) 0f
-                          else notedPairs.size * NOTE_ROW_H + 16f
+                          else legendRows * NOTE_ROW_H + 16f
         val legendTop   = statsTop - legendH
         val chartBottom = legendTop - X_LABEL_H
 
@@ -233,12 +234,17 @@ class ExportPdfUseCase @Inject constructor(
 
     private fun drawNoteLegend(c: Canvas, pairs: List<Pair<Int, BPReading>>, top: Float) {
         c.drawLine(CHART_L, top - 2f, CHART_R, top - 2f, pGrid)
+        val colW = (CHART_R - CHART_L) / NOTE_COLS.toFloat()
         pairs.forEachIndexed { ni, (_, r) ->
-            val rowY = top + NOTE_ROW_H * ni + NOTE_ROW_H * 0.72f
-            badge(c, CHART_L + BADGE_R + 2f, rowY - BADGE_R, ni + 1)
+            val col  = ni % NOTE_COLS
+            val row  = ni / NOTE_COLS
+            val colX = CHART_L + col * colW
+            val rowY = top + NOTE_ROW_H * row + NOTE_ROW_H * 0.72f
+            badge(c, colX + BADGE_R + 2f, rowY - BADGE_R, ni + 1)
+            val note = r.notes?.let { if (it.length > 25) it.take(22) + "…" else it }.orEmpty()
             c.drawText(
-                "${DATE_FMT.format(Date(r.timestamp))}  —  ${r.notes}",
-                CHART_L + BADGE_R * 2 + 14f, rowY, pNoteLegend,
+                "${DATE_FMT.format(Date(r.timestamp))}  —  $note",
+                colX + BADGE_R * 2 + 14f, rowY, pNoteLegend,
             )
         }
     }
@@ -452,6 +458,7 @@ class ExportPdfUseCase @Inject constructor(
         private const val TABLE_ROW_H = 46f
 
         private const val MAX_CALLOUTS = 12   // cap numbered callouts per chart page
+        private const val NOTE_COLS    = 3    // columns in the note legend
 
         private val SYS_COLOR = Color.rgb(211, 47, 47)
         private val DIA_COLOR = Color.rgb(25, 118, 210)
