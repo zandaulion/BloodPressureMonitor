@@ -5,6 +5,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -17,6 +19,8 @@ import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
+import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
+import com.patrykandpatrick.vico.compose.cartesian.rememberVicoZoomState
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
 import com.patrykandpatrick.vico.compose.common.fill
@@ -38,6 +42,8 @@ import java.util.Locale
 private const val NORMAL_SYSTOLIC  = 120.0
 private const val NORMAL_DIASTOLIC = 80.0
 
+private const val MILLIS_PER_DAY = 24L * 60 * 60 * 1_000
+
 @Composable
 fun BPTrendChart(
     readings: List<BPReading>,
@@ -54,14 +60,45 @@ fun BPTrendChart(
         return
     }
 
-    val dateLabels = remember(readings) {
-        val fmt = SimpleDateFormat("M/d", Locale.getDefault())
-        readings.map { fmt.format(Date(it.timestamp)) }
+    // Expose scroll/zoom state so we can derive the currently visible time window.
+    val scrollState = rememberVicoScrollState()
+    val zoomState   = rememberVicoZoomState()
+
+    // Reactively compute the time span currently visible in the viewport.
+    // Both VicoScrollState.value / maxValue and VicoZoomState.value are MutableFloatState,
+    // so derivedStateOf re-evaluates whenever zoom or scroll changes.
+    val visibleSpanMs by remember(readings) {
+        derivedStateOf {
+            val n = readings.size
+            if (n < 2) return@derivedStateOf 0L
+
+            // How many data-points fit in the current viewport.
+            val zoom        = zoomState.value.coerceAtLeast(1f)
+            val visibleCount = (n / zoom).toInt().coerceIn(1, n)
+
+            // Fraction of the way through the scrollable range → start index.
+            val maxScroll = scrollState.maxValue
+            val fraction  = if (maxScroll > 0f) scrollState.value / maxScroll else 0f
+            val startIdx  = ((n - visibleCount) * fraction).toInt().coerceIn(0, n - visibleCount)
+            val endIdx    = (startIdx + visibleCount - 1).coerceAtMost(n - 1)
+
+            readings[endIdx].timestamp - readings[startIdx].timestamp
+        }
     }
 
-    val bottomFormatter = remember(dateLabels) {
+    // Switch to hour-resolution labels when the visible window is narrower than a day.
+    val isSubDayView = visibleSpanMs < MILLIS_PER_DAY
+
+    val bottomFormatter = remember(readings, isSubDayView) {
+        val fmt = if (isSubDayView) {
+            SimpleDateFormat("M/d HH:mm", Locale.getDefault())
+        } else {
+            SimpleDateFormat("M/d", Locale.getDefault())
+        }
         CartesianValueFormatter { _, value, _ ->
-            dateLabels.getOrElse(value.toInt()) { "" }
+            val ts = readings.getOrNull(value.toInt())?.timestamp
+                ?: return@CartesianValueFormatter ""
+            fmt.format(Date(ts))
         }
     }
 
@@ -136,6 +173,8 @@ fun BPTrendChart(
             modelProducer = modelProducer,
             modifier = modifier,
             animationSpec = null,
+            scrollState = scrollState,
+            zoomState = zoomState,
             chart = rememberCartesianChart(
                 rememberLineCartesianLayer(
                     rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),

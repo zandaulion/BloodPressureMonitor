@@ -49,17 +49,19 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.core.content.FileProvider
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -362,18 +364,32 @@ private fun SwipeableReadingRow(
     reading: BPReading,
     onDelete: () -> Unit,
 ) {
-    val dismissState = rememberSwipeToDismissBoxState(
-        confirmValueChange = { value ->
-            if (value == SwipeToDismissBoxValue.EndToStart || value == SwipeToDismissBoxValue.StartToEnd) {
-                onDelete()
-                true
-            } else {
-                false
-            }
-        },
-    )
+    // Keep a stable reference to the latest onDelete so we can capture it in a
+    // remember-once lambda without forcing a new lambda object each recomposition.
+    // SwipeToDismissBox uses onDismiss as a LaunchedEffect key, so an unstable
+    // lambda would re-trigger the effect and double-fire the delete.
+    val currentOnDelete = rememberUpdatedState(onDelete)
+
+    // *** Use plain `remember`, NOT rememberSaveable. ***
+    // rememberSaveable would persist the dismissed offset across composition entries
+    // (keyed by reading.id in the LazyColumn). When an item is restored via Undo it
+    // would come back still visually dismissed, and — worse — SwipeToDismissBox's
+    // internal LaunchedEffect would see settledValue != Settled and immediately fire
+    // onDismiss again, re-deleting the reading right after restore.
+    val density = LocalDensity.current
+    val dismissState = remember {
+        SwipeToDismissBoxState(
+            initialValue = SwipeToDismissBoxValue.Settled,
+            positionalThreshold = with(density) { { 56.dp.toPx() } },
+        )
+    }
+
+    // Stable lambda — created once, reads the latest onDelete via the State wrapper.
+    val onDismissStable = remember { { _: SwipeToDismissBoxValue -> currentOnDelete.value() } }
+
     SwipeToDismissBox(
         state = dismissState,
+        onDismiss = onDismissStable,
         backgroundContent = {
             Box(
                 modifier = Modifier
