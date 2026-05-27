@@ -53,9 +53,15 @@ fun BPTrendChart(
         return
     }
 
-    val modelProducer = remember { CartesianChartModelProducer() }
+    // Key the producer on the readings list so a fresh instance is created whenever the
+    // dataset changes. Reusing one producer across differently-sized datasets leaves Vico's
+    // internal layer state with stale bounds, causing an out-of-bounds crash the moment
+    // the chart renders before the new transaction has completed.
+    val modelProducer = remember(readings) { CartesianChartModelProducer() }
 
-    LaunchedEffect(readings) {
+    // LaunchedEffect keyed on the producer (which changes with readings) so the transaction
+    // always targets the correct, clean instance and is never cancelled mid-execution.
+    LaunchedEffect(modelProducer) {
         val xs  = readings.indices.map { it.toDouble() }
         val sys = readings.map { it.systolic.toDouble() }
         val dia = readings.map { it.diastolic.toDouble() }
@@ -130,7 +136,7 @@ fun BPTrendChart(
         // one (e.g. switching from 90 d → 30 d) because the animator tries to index the new
         // shorter series with offsets from the old longer one. Going the other direction is
         // safe. Disabling animation is the recommended workaround until a Vico patch lands.
-        diffAnimationSpec = null,
+        animationSpec = null,
         chart = rememberCartesianChart(
             rememberLineCartesianLayer(
                 rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),
