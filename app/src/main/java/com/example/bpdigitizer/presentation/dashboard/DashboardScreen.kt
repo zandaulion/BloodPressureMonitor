@@ -44,6 +44,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -166,15 +167,20 @@ fun DashboardScreen(
         }
     }
 
-    // Landscape: show only the trend chart, full-screen
+    // Landscape: show only the trend chart, full-screen.
+    // Wrap in Surface so the chart gets the correct MaterialTheme background colour in
+    // both light and dark mode. Without it the raw window background is used, which
+    // doesn't follow the Material theme and ignores dynamic dark/light switching.
     if (isLandscape) {
-        BPTrendChart(
-            readings = ui.chartReadings,
-            modifier = Modifier
-                .fillMaxSize()
-                .safeDrawingPadding()
-                .padding(16.dp),
-        )
+        Surface(modifier = Modifier.fillMaxSize()) {
+            BPTrendChart(
+                readings = ui.chartReadings,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .safeDrawingPadding()
+                    .padding(16.dp),
+            )
+        }
         return
     }
 
