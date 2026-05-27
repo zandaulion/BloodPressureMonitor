@@ -136,7 +136,7 @@ class ExportPdfUseCase @Inject constructor(
     ) {
         val n    = readings.size
         val yMin = Y_FLOOR.toDouble()
-        val yMax = ceil(max(readings.maxOf { it.systolic } + 20, 200) / 20.0) * 20.0
+        val yMax = Y_CEIL.toDouble()
         val dotR = when { n > 100 -> 3f; n > 40 -> 5f; else -> 7f }
 
         // grid + Y labels (left and right)
@@ -444,6 +444,7 @@ class ExportPdfUseCase @Inject constructor(
         private const val CHART_R = 1524f   // LW - M - ref-label space
 
         private const val Y_FLOOR = 40
+        private const val Y_CEIL  = 180
 
         private const val TS_TITLE = 36f
         private const val TS_SUB   = 24f

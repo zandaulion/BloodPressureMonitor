@@ -127,7 +127,7 @@ fun BPTrendChart(
         modifier = modifier,
         chart = rememberCartesianChart(
             rememberLineCartesianLayer(
-                rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0),
+                rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),
             ),
             startAxis = VerticalAxis.rememberStart(),
             bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),
