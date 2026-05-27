@@ -93,17 +93,47 @@ Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are p
 
 ---
 
-## 1.5 Reactive Deletion Flow (5-second Undo)
+## 1.5 Reactive Deletion Flow (Instant Delete + Undo)
 
-1. User swipes a row → `DashboardViewModel.requestDelete()`.
-2. Row is immediately hidden in UI (removed from `pendingDeletions` filter).
-3. `ShowUndoSnackbar` event fires; 5-second coroutine delay starts.
-4. If "Undo" is tapped → job cancelled, row restored. No DB write.
-5. If delay elapses → `repository.delete(id)` called; Room emission confirms removal.
+1. User swipes a `SwipeableReadingRow` → `DashboardViewModel.requestDelete()` is called.
+2. `repository.delete(id)` removes the reading from Room immediately (no delay, no in-memory filter).
+3. Room's reactive `Flow` emits the updated list → `LazyColumn` removes the row.
+4. A `ShowUndoSnackbar` one-shot event fires; the Material 3 Snackbar shows with an **Undo** action.
+5. If **Undo** is tapped → `DashboardViewModel.undoDelete(reading)` calls `repository.insert(reading)` with the original ID; Room emits again and the row reappears.
+6. If the snackbar is dismissed or times out → nothing further happens (the record is already gone from Room).
+
+**Compose state note:** `SwipeableReadingRow` creates its `SwipeToDismissBoxState` with plain `remember` (not `rememberSaveable`). This is intentional — `rememberSaveable` would persist the dismissed offset across composition entries (keyed by `reading.id` in the `LazyColumn`). When an undo-restored item re-enters composition it would otherwise: (a) appear visually dismissed (only showing the trash-icon background), and (b) have `SwipeToDismissBox`'s internal `LaunchedEffect` fire `onDismiss` again, re-deleting the just-restored reading. The `onDismiss` lambda is wrapped in `rememberUpdatedState` to stay stable across recompositions and avoid spurious effect re-triggers.
 
 ---
 
-## 1.6 Reminder System
+## 1.6 Trend Chart (BPTrendChart)
+
+**Component:** `presentation/dashboard/BPTrendChart.kt`  
+**Library:** Vico 2.0 (`compose`, `compose-m3`, `core`)
+
+### Data mapping
+Readings are passed in as a time-sorted `List<BPReading>`. They are mapped to integer x-indices (0, 1, 2 …) and two y-series (systolic, diastolic) via `CartesianChartModelProducer`. A `key(readings.size)` wrapper resets all Vico internal state whenever the list length changes, preventing a stale-bounds crash when narrowing the range filter.
+
+### Zoom & scroll
+`VicoScrollState` and `VicoZoomState` are created outside the `key` block and passed explicitly to `CartesianChartHost`, enabling pinch-to-zoom and pan gestures. Both states are backed by `MutableFloatState` and are therefore observable from Compose.
+
+### Adaptive X-axis labels
+The X-axis label format switches between `M/d` (multi-day view) and `M/d HH:mm` (sub-day view) based on the **currently visible time span** in the viewport — not the full data range and not the zoom factor.
+
+The visible span is computed reactively inside `derivedStateOf`:
+
+```
+visibleFraction = chartWidth / (chartWidth + scrollState.maxValue)
+visibleCount    = n × visibleFraction
+startIdx        = (n − visibleCount) × (scroll / maxScroll)
+visibleSpanMs   = readings[endIdx].timestamp − readings[startIdx].timestamp
+```
+
+`chartWidth` is captured via `Modifier.onSizeChanged` on `CartesianChartHost` and stored in a `MutableFloatState`. Because `chartWidthState.floatValue`, `scrollState.value`, and `scrollState.maxValue` are all `MutableFloatState` reads inside `derivedStateOf`, the label format updates automatically on every pinch-zoom or scroll gesture.
+
+**Why not use `zoomState.value` directly?** Vico's initial zoom is `Zoom.Content` — the factor needed to fit all data — not `1.0`. A formula based on `n / zoom` produces the wrong count from the first frame. The geometry-based formula (`chartWidth / totalContentWidth`) is correct regardless of the starting zoom value.
+
+## 1.7 Reminder System
 
 **Mechanism:** `AlarmManager.setExactAndAllowWhileIdle()` (bypasses Doze mode).
 
@@ -124,7 +154,7 @@ Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are p
 
 ---
 
-## 1.7 Health Connect Integration
+## 1.8 Health Connect Integration
 
 ### Bulk Sync (`SyncToHealthConnectUseCase`)
 Upserts all local readings as `BloodPressureRecord` + `HeartRateRecord` entries using stable `Metadata.manualEntry(clientRecordId)` — repeat syncs are idempotent.
@@ -144,7 +174,7 @@ Called from `ValidationViewModel.save()` immediately after the new reading is pe
 
 ---
 
-## 1.8 API Key Secure Storage
+## 1.9 API Key Secure Storage
 
 The Gemini API key is **never baked into the APK binary**. It is:
 
@@ -158,7 +188,7 @@ A `BuildConfig.GEMINI_API_KEY` populated from `local.properties` acts as a silen
 
 ---
 
-## 1.9 DataStore Layout
+## 1.10 DataStore Layout
 
 A single `DataStore<Preferences>` instance (`datastore/user_profile.preferences_pb`) holds two logical namespaces:
 
@@ -177,7 +207,7 @@ A single `DataStore<Preferences>` instance (`datastore/user_profile.preferences_
 
 ---
 
-## 1.10 PDF Export Engine
+## 1.11 PDF Export Engine
 
 PDF generation is handled entirely by **`ExportPdfUseCase`** using `android.graphics.pdf.PdfDocument` (built-in Android API, no extra dependency). All drawing is done on `android.graphics.Canvas` because Vico is Compose-only and cannot render to an off-screen PDF canvas.
 

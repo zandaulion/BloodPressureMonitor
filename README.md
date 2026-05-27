@@ -11,7 +11,7 @@ Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read
 |---|---|
 | **AI-Assisted OCR** | Gemini 2.5 Flash reads SYS / DIA / Pulse from a photo of any digital BP monitor |
 | **Manual Entry** | Sliders pre-populated from the last saved reading |
-| **History & Trends** | Vico line chart (40–180 mmHg, Y-axis fixed); 7 d / 30 d / 90 d / All filters; dotted reference lines at 120 / 80 mmHg |
+| **History & Trends** | Vico line chart (40–180 mmHg, Y-axis fixed); 7 d / 30 d / 90 d / All filters; pinch-to-zoom with live scroll; dotted reference lines at 120 / 80 mmHg; X-axis labels switch to `M/d HH:mm` when the visible window is under 24 h |
 | **Landscape mode** | Full-screen trend chart when the device is rotated |
 | **Health Risk Card** | Personalised risk assessment (AHA-based) from the latest reading + user profile |
 | **Reminders** | Two configurable daily alarms (morning + evening) via `AlarmManager`; 15-min snooze action |
