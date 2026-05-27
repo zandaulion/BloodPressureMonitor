@@ -15,6 +15,7 @@ import com.example.bpdigitizer.domain.repository.ApiKeyRepository
 import com.example.bpdigitizer.domain.repository.BPRepository
 import com.example.bpdigitizer.domain.repository.UserProfileRepository
 import com.example.bpdigitizer.domain.usecase.CalculateHealthRiskUseCase
+import com.example.bpdigitizer.domain.usecase.ExportCsvUseCase
 import com.example.bpdigitizer.domain.usecase.ExportReadingsUseCase
 import com.example.bpdigitizer.domain.usecase.ImportReadingsUseCase
 import com.example.bpdigitizer.domain.usecase.SyncToHealthConnectUseCase
@@ -53,7 +54,7 @@ data class DashboardUi(
 
 sealed interface DashboardEvent {
     data class ShowUndoSnackbar(val reading: BPReading) : DashboardEvent
-    data class ShareExport(val file: File) : DashboardEvent
+    data class ShareExport(val file: File, val mimeType: String) : DashboardEvent
     data object ExportFailed : DashboardEvent
     data class ImportSucceeded(val count: Int) : DashboardEvent
     data object ImportFailed : DashboardEvent
@@ -73,6 +74,7 @@ class DashboardViewModel @Inject constructor(
     private val profileRepository: UserProfileRepository,
     private val apiKeyRepository: ApiKeyRepository,
     private val exportReadings: ExportReadingsUseCase,
+    private val exportCsv: ExportCsvUseCase,
     private val importReadings: ImportReadingsUseCase,
     private val syncToHealthConnect: SyncToHealthConnectUseCase,
     private val calculateHealthRisk: CalculateHealthRiskUseCase,
@@ -129,7 +131,15 @@ class DashboardViewModel @Inject constructor(
     fun requestExport() {
         viewModelScope.launch {
             runCatching { exportReadings() }
-                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file)) }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "application/json")) }
+                .onFailure { _events.send(DashboardEvent.ExportFailed) }
+        }
+    }
+
+    fun requestCsvExport() {
+        viewModelScope.launch {
+            runCatching { exportCsv() }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "text/csv")) }
                 .onFailure { _events.send(DashboardEvent.ExportFailed) }
         }
     }

@@ -17,6 +17,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -84,6 +88,7 @@ fun DashboardScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
+    var exportMenuExpanded by remember { mutableStateOf(false) }
 
     val importLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument(),
@@ -106,7 +111,7 @@ fun DashboardScreen(
                         viewModel.undoDelete(event.reading)
                     }
                 }
-                is DashboardEvent.ShareExport -> shareJsonFile(context, event.file)
+                is DashboardEvent.ShareExport -> shareFile(context, event.file, event.mimeType)
                 DashboardEvent.ExportFailed -> {
                     snackbarHostState.showSnackbar("Export failed")
                 }
@@ -184,11 +189,37 @@ fun DashboardScreen(
                     ) {
                         Icon(Icons.Default.FileDownload, contentDescription = "Import data")
                     }
-                    IconButton(
-                        onClick = viewModel::requestExport,
-                        enabled = ui.readings.isNotEmpty(),
-                    ) {
-                        Icon(Icons.Default.IosShare, contentDescription = "Export data")
+                    Box {
+                        IconButton(
+                            onClick = { exportMenuExpanded = true },
+                            enabled = ui.readings.isNotEmpty(),
+                        ) {
+                            Icon(Icons.Default.IosShare, contentDescription = "Export data")
+                        }
+                        DropdownMenu(
+                            expanded = exportMenuExpanded,
+                            onDismissRequest = { exportMenuExpanded = false },
+                        ) {
+                            DropdownMenuItem(
+                                text = { Text("Export as JSON") },
+                                onClick = {
+                                    exportMenuExpanded = false
+                                    viewModel.requestExport()
+                                },
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Export as CSV") },
+                                onClick = {
+                                    exportMenuExpanded = false
+                                    viewModel.requestCsvExport()
+                                },
+                            )
+                            DropdownMenuItem(
+                                text = { Text("Export as PDF") },
+                                onClick = { exportMenuExpanded = false },
+                                enabled = false,
+                            )
+                        }
                     }
                     IconButton(
                         onClick = viewModel::onSyncToHealthConnectClicked,
@@ -411,14 +442,14 @@ private fun openHealthConnectSettings(context: Context) {
         ?.let { context.startActivity(it) }
 }
 
-private fun shareJsonFile(context: Context, file: File) {
+private fun shareFile(context: Context, file: File, mimeType: String) {
     val uri = FileProvider.getUriForFile(
         context,
         "${context.packageName}.fileprovider",
         file,
     )
     val intent = Intent(Intent.ACTION_SEND).apply {
-        type = "application/json"
+        type = mimeType
         putExtra(Intent.EXTRA_STREAM, uri)
         addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
     }
