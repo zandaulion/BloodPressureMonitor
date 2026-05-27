@@ -16,6 +16,7 @@ import com.example.bpdigitizer.domain.repository.BPRepository
 import com.example.bpdigitizer.domain.repository.UserProfileRepository
 import com.example.bpdigitizer.domain.usecase.CalculateHealthRiskUseCase
 import com.example.bpdigitizer.domain.usecase.ExportCsvUseCase
+import com.example.bpdigitizer.domain.usecase.ExportPdfUseCase
 import com.example.bpdigitizer.domain.usecase.ExportReadingsUseCase
 import com.example.bpdigitizer.domain.usecase.ImportReadingsUseCase
 import com.example.bpdigitizer.domain.usecase.SyncToHealthConnectUseCase
@@ -75,6 +76,7 @@ class DashboardViewModel @Inject constructor(
     private val apiKeyRepository: ApiKeyRepository,
     private val exportReadings: ExportReadingsUseCase,
     private val exportCsv: ExportCsvUseCase,
+    private val exportPdf: ExportPdfUseCase,
     private val importReadings: ImportReadingsUseCase,
     private val syncToHealthConnect: SyncToHealthConnectUseCase,
     private val calculateHealthRisk: CalculateHealthRiskUseCase,
@@ -140,6 +142,14 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             runCatching { exportCsv() }
                 .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "text/csv")) }
+                .onFailure { _events.send(DashboardEvent.ExportFailed) }
+        }
+    }
+
+    fun requestPdfExport() {
+        viewModelScope.launch {
+            runCatching { exportPdf() }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "application/pdf")) }
                 .onFailure { _events.send(DashboardEvent.ExportFailed) }
         }
     }

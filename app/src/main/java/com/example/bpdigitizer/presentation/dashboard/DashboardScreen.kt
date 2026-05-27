@@ -216,8 +216,10 @@ fun DashboardScreen(
                             )
                             DropdownMenuItem(
                                 text = { Text("Export as PDF") },
-                                onClick = { exportMenuExpanded = false },
-                                enabled = false,
+                                onClick = {
+                                    exportMenuExpanded = false
+                                    viewModel.requestPdfExport()
+                                },
                             )
                         }
                     }
