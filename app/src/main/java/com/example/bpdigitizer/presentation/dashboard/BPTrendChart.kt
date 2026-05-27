@@ -125,6 +125,12 @@ fun BPTrendChart(
     CartesianChartHost(
         modelProducer = modelProducer,
         modifier = modifier,
+        // diffAnimationSpec = null disables the transition animation between model updates.
+        // Vico 2.0's diff animation crashes when the new dataset is *smaller* than the old
+        // one (e.g. switching from 90 d → 30 d) because the animator tries to index the new
+        // shorter series with offsets from the old longer one. Going the other direction is
+        // safe. Disabling animation is the recommended workaround until a Vico patch lands.
+        diffAnimationSpec = null,
         chart = rememberCartesianChart(
             rememberLineCartesianLayer(
                 rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),
