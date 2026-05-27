@@ -19,6 +19,7 @@ import com.patrykandpatrick.vico.core.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.core.cartesian.axis.VerticalAxis
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
+import com.patrykandpatrick.vico.core.cartesian.layer.CartesianLayerRangeProvider
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -69,7 +70,9 @@ fun BPTrendChart(
         modelProducer = modelProducer,
         modifier = modifier,
         chart = rememberCartesianChart(
-            rememberLineCartesianLayer(),
+            rememberLineCartesianLayer(
+                rangeProvider = CartesianLayerRangeProvider.fixed(minY = 60.0),
+            ),
             startAxis = VerticalAxis.rememberStart(),
             bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),
         ),
