@@ -167,19 +167,32 @@ fun DashboardScreen(
         }
     }
 
-    // Landscape: show only the trend chart, full-screen.
+    // Landscape: chart + range chips, full-screen.
     // Wrap in Surface so the chart gets the correct MaterialTheme background colour in
     // both light and dark mode. Without it the raw window background is used, which
     // doesn't follow the Material theme and ignores dynamic dark/light switching.
     if (isLandscape) {
         Surface(modifier = Modifier.fillMaxSize()) {
-            BPTrendChart(
-                readings = ui.chartReadings,
+            Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .safeDrawingPadding()
-                    .padding(16.dp),
-            )
+                    .padding(horizontal = 16.dp),
+            ) {
+                RangeChipRow(
+                    selected = ui.selectedRange,
+                    onSelect = viewModel::selectRange,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                )
+                BPTrendChart(
+                    readings = ui.chartReadings,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                )
+            }
         }
         return
     }
