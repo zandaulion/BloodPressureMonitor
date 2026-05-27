@@ -8,9 +8,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.bpdigitizer.domain.model.BPReading
@@ -60,33 +62,41 @@ fun BPTrendChart(
         return
     }
 
-    // Expose scroll/zoom state so we can derive the currently visible time window.
     val scrollState = rememberVicoScrollState()
     val zoomState   = rememberVicoZoomState()
 
-    // Reactively compute the time span currently visible in the viewport.
-    // Both VicoScrollState.value / maxValue and VicoZoomState.value are MutableFloatState,
-    // so derivedStateOf re-evaluates whenever zoom or scroll changes.
+    // Track the actual rendered chart width (pixels) so we can compute visibleFraction
+    // without relying on the zoom factor (whose initial value is Zoom.Content, not 1.0).
+    val chartWidthState = remember { mutableFloatStateOf(0f) }
+
+    // Vico's maxScroll = totalContentWidth − chartWidth, so:
+    //   visibleFraction = chartWidth / (chartWidth + maxScroll)
+    // This is purely geometric and is correct regardless of the zoom starting point.
+    // Both chartWidthState and scrollState fields are MutableFloatState, so derivedStateOf
+    // re-evaluates automatically on every scroll or layout-width change.
     val visibleSpanMs by remember(readings) {
         derivedStateOf {
             val n = readings.size
             if (n < 2) return@derivedStateOf 0L
 
-            // How many data-points fit in the current viewport.
-            val zoom        = zoomState.value.coerceAtLeast(1f)
-            val visibleCount = (n / zoom).toInt().coerceIn(1, n)
-
-            // Fraction of the way through the scrollable range → start index.
+            val w         = chartWidthState.floatValue
             val maxScroll = scrollState.maxValue
-            val fraction  = if (maxScroll > 0f) scrollState.value / maxScroll else 0f
-            val startIdx  = ((n - visibleCount) * fraction).toInt().coerceIn(0, n - visibleCount)
-            val endIdx    = (startIdx + visibleCount - 1).coerceAtMost(n - 1)
+            val total     = w + maxScroll
+
+            val visibleFraction = if (total > 0f) w / total else 1f
+            val visibleCount    = (n * visibleFraction).toInt().coerceIn(1, n)
+
+            // Map scroll offset to a start-index into the readings list.
+            val scrollFraction = if (maxScroll > 0f) scrollState.value / maxScroll else 0f
+            val startIdx = ((n - visibleCount) * scrollFraction).toInt()
+                .coerceIn(0, n - visibleCount)
+            val endIdx = (startIdx + visibleCount - 1).coerceAtMost(n - 1)
 
             readings[endIdx].timestamp - readings[startIdx].timestamp
         }
     }
 
-    // Switch to hour-resolution labels when the visible window is narrower than a day.
+    // When the visible window is narrower than a day, include the hour in labels.
     val isSubDayView = visibleSpanMs < MILLIS_PER_DAY
 
     val bottomFormatter = remember(readings, isSubDayView) {
@@ -171,7 +181,9 @@ fun BPTrendChart(
 
         CartesianChartHost(
             modelProducer = modelProducer,
-            modifier = modifier,
+            // onSizeChanged captures the rendered pixel width so derivedStateOf can
+            // compute the visible fraction correctly.
+            modifier = modifier.onSizeChanged { chartWidthState.floatValue = it.width.toFloat() },
             animationSpec = null,
             scrollState = scrollState,
             zoomState = zoomState,
