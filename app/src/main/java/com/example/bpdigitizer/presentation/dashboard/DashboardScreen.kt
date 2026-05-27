@@ -29,6 +29,7 @@ import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileDownload
+import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.IosShare
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsNone
@@ -81,6 +82,7 @@ fun DashboardScreen(
     onAddManually: () -> Unit,
     onProfile: () -> Unit,
     onReminders: () -> Unit,
+    onHelp: () -> Unit,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
@@ -228,6 +230,9 @@ fun DashboardScreen(
                         enabled = ui.readings.isNotEmpty(),
                     ) {
                         Icon(Icons.Default.MonitorHeart, contentDescription = "Sync to Health Connect")
+                    }
+                    IconButton(onClick = onHelp) {
+                        Icon(Icons.Default.HelpOutline, contentDescription = "Help")
                     }
                 },
             )
