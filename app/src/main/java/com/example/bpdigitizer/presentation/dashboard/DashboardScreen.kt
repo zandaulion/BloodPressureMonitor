@@ -415,9 +415,14 @@ private fun SwipeableReadingRow(
 
 @Composable
 private fun ReadingRow(reading: BPReading) {
+    // SwipeToDismissBox renders the background (trash icon) at matchParentSize below this
+    // composable. Without an opaque background here the icon bleeds through wherever the
+    // foreground is transparent — most visibly on tall rows where the icon's CenterEnd
+    // position sits below the CategoryBadge.
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         Row(
