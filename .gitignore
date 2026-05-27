@@ -13,3 +13,4 @@ captures/
 *.keystore
 google-services.json
 release/
+SampleData/
