@@ -184,7 +184,7 @@ fun DashboardScreen(
                     .statusBarsPadding(),
             ) {
                 Text(
-                    text = "Blood Pressure",
+                    text = "Blood Pressure Tracking",
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 4.dp),
                 )
