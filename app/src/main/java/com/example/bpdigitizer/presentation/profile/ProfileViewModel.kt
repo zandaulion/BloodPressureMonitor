@@ -123,7 +123,8 @@ class ProfileViewModel @Inject constructor(
             _state.update {
                 ProfileFormState(
                     apiKeySaved = apiKeyRepository.getKey() != null,
-                    birthYearText = p.birthYear?.toString().orEmpty(),
+                    birthYearText = p.birthYear?.toString()
+                        ?: (java.time.Year.now().value - 40).toString(),
                     sex = p.biologicalSex,
                     weightText = p.weightKg?.let { "%.1f".format(it) }.orEmpty(),
                     heightText = p.heightCm?.let { "%.1f".format(it) }.orEmpty(),
