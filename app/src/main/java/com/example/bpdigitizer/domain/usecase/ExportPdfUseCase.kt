@@ -138,20 +138,21 @@ class ExportPdfUseCase @Inject constructor(
         val yMax = ceil(max(readings.maxOf { it.systolic } + 20, 200) / 20.0) * 20.0
         val dotR = when { n > 100 -> 3f; n > 40 -> 5f; else -> 7f }
 
-        // grid + Y labels
+        // grid + Y labels (left and right)
         var gv = Y_FLOOR
         while (gv <= yMax) {
             val gy = yC(gv.toDouble(), yMin, yMax, top, bottom)
             c.drawLine(left, gy, right, gy, pGrid)
-            c.drawText(gv.toString(), left - 8f, gy + 6f, pAxisLabel)
+            c.drawText(gv.toString(), left - 8f,  gy + 6f, pAxisLabel)
+            c.drawText(gv.toString(), right + 8f, gy + 6f, pAxisLabelRight)
             gv += 20
         }
 
-        // reference lines
+        // reference lines (labels offset further right to clear the axis numbers)
         fun refLine(yVal: Double, label: String) {
             val ry = yC(yVal, yMin, yMax, top, bottom)
             c.drawLine(left, ry, right, ry, pRefLine)
-            c.drawText(label, right + 6f, ry + 5f, pRefLabel)
+            c.drawText(label, right + 62f, ry + 5f, pRefLabel)
         }
         refLine(120.0, "SYS 120")
         refLine(80.0,  "DIA 80")
@@ -395,8 +396,9 @@ class ExportPdfUseCase @Inject constructor(
     private val pTitle      = tp(TS_TITLE, Color.rgb(20, 20, 20), bold = true)
     private val pSub        = tp(TS_SUB,   Color.rgb(60, 60, 60))
     private val pRight      = tp(TS_SMALL, Color.rgb(100, 100, 100), align = Paint.Align.RIGHT)
-    private val pAxisLabel  = tp(TS_SMALL, Color.rgb(100, 100, 100), align = Paint.Align.RIGHT)
-    private val pXLabel     = tp(TS_SMALL, Color.rgb(100, 100, 100))
+    private val pAxisLabel      = tp(TS_SMALL, Color.rgb(100, 100, 100), align = Paint.Align.RIGHT)
+    private val pAxisLabelRight = tp(TS_SMALL, Color.rgb(100, 100, 100), align = Paint.Align.LEFT)
+    private val pXLabel         = tp(TS_SMALL, Color.rgb(100, 100, 100))
     private val pRefLabel   = tp(TS_SMALL - 2f, Color.rgb(140, 140, 140))
     private val pStatsLabel = tp(TS_SMALL, Color.rgb(60, 60, 60))
     private val pStatsVal   = tp(TS_SMALL, Color.rgb(20, 20, 20), mono = true)
