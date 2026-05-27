@@ -1,7 +1,7 @@
 package com.example.bpdigitizer.domain.model
 
 data class UserProfile(
-    val age: Int? = null,
+    val birthYear: Int? = null,
     val biologicalSex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
     val weightKg: Float? = null,
     val heightCm: Float? = null,
@@ -9,6 +9,10 @@ data class UserProfile(
     val hasDiabetes: Boolean = false,
     val activityLevel: ActivityLevel = ActivityLevel.MODERATELY_ACTIVE,
 ) {
+    /** Age derived from [birthYear] and the current calendar year. Null if birth year is unset. */
+    val age: Int?
+        get() = birthYear?.let { java.time.Year.now().value - it }
+
     /** Null until both weight and height are provided. */
     val bmi: Float?
         get() {
@@ -29,8 +33,8 @@ data class UserProfile(
             }
         }
 
-    /** True when at least age is filled — minimum for a meaningful risk tweak. */
-    val isComplete: Boolean get() = age != null
+    /** True when at least birth year is filled — minimum for a meaningful risk tweak. */
+    val isComplete: Boolean get() = birthYear != null
 }
 
 enum class BiologicalSex(val label: String) {

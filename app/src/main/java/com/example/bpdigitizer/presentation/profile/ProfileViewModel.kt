@@ -25,7 +25,7 @@ data class ProfileFormState(
     /** True when a key is already persisted in secure storage. */
     val apiKeySaved: Boolean = false,
     // ── Health profile ────────────────────────────────────────────────────────
-    val ageText: String = "",
+    val birthYearText: String = "",
     val sex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
     val weightText: String = "",   // kg
     val heightText: String = "",   // cm
@@ -34,8 +34,21 @@ data class ProfileFormState(
     val activityLevel: ActivityLevel = ActivityLevel.MODERATELY_ACTIVE,
     val isLoaded: Boolean = false,
 ) {
-    val ageError: Boolean
-        get() = ageText.isNotEmpty() && ageText.toIntOrNull()?.let { it !in 1..120 } != false
+    val birthYearError: Boolean
+        get() {
+            if (birthYearText.isEmpty()) return false
+            val year = birthYearText.toIntOrNull() ?: return true
+            val currentYear = java.time.Year.now().value
+            return year !in (currentYear - 120)..(currentYear - 1)
+        }
+
+    /** Computed age shown as supporting text; null until a valid birth year is entered. */
+    val computedAge: Int?
+        get() {
+            val year = birthYearText.toIntOrNull() ?: return null
+            val age = java.time.Year.now().value - year
+            return if (age in 1..120) age else null
+        }
 
     val weightError: Boolean
         get() = weightText.isNotEmpty() &&
@@ -78,7 +91,7 @@ data class ProfileFormState(
         }
 
     fun toUserProfile() = UserProfile(
-        age = ageText.toIntOrNull(),
+        birthYear = birthYearText.toIntOrNull(),
         biologicalSex = sex,
         weightKg = weightText.toFloatOrNull()?.takeIf { it > 0f },
         heightCm = heightText.toFloatOrNull()?.takeIf { it > 0f },
@@ -110,7 +123,7 @@ class ProfileViewModel @Inject constructor(
             _state.update {
                 ProfileFormState(
                     apiKeySaved = apiKeyRepository.getKey() != null,
-                    ageText = p.age?.toString().orEmpty(),
+                    birthYearText = p.birthYear?.toString().orEmpty(),
                     sex = p.biologicalSex,
                     weightText = p.weightKg?.let { "%.1f".format(it) }.orEmpty(),
                     heightText = p.heightCm?.let { "%.1f".format(it) }.orEmpty(),
@@ -137,7 +150,7 @@ class ProfileViewModel @Inject constructor(
         _state.update { it.copy(apiKeySaved = false, apiKeyInput = "") }
     }
 
-    fun updateAge(v: String)      = _state.update { it.copy(ageText = v.filter(Char::isDigit).take(3)) }
+    fun updateBirthYear(v: String) = _state.update { it.copy(birthYearText = v.filter(Char::isDigit).take(4)) }
     fun updateSex(v: BiologicalSex) = _state.update { it.copy(sex = v) }
     fun updateWeight(v: String)   = _state.update { it.copy(weightText = sanitiseDecimal(v, maxLen = 6)) }
     fun updateHeight(v: String)   = _state.update { it.copy(heightText = sanitiseDecimal(v, maxLen = 6)) }
@@ -147,7 +160,7 @@ class ProfileViewModel @Inject constructor(
 
     fun save() {
         val s = _state.value
-        if (s.ageError || s.weightError || s.heightError) return
+        if (s.birthYearError || s.weightError || s.heightError) return
         viewModelScope.launch {
             repository.save(s.toUserProfile())
             _events.send(ProfileEvent.Saved)

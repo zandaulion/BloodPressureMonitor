@@ -23,7 +23,7 @@ class UserProfileRepositoryImpl @Inject constructor(
 
     override fun observe(): Flow<UserProfile> = dataStore.data.map { prefs ->
         UserProfile(
-            age = prefs[Keys.AGE],
+            birthYear = prefs[Keys.BIRTH_YEAR],
             biologicalSex = prefs[Keys.SEX]
                 ?.let { runCatching { BiologicalSex.valueOf(it) }.getOrNull() }
                 ?: BiologicalSex.PREFER_NOT_TO_SAY,
@@ -39,8 +39,8 @@ class UserProfileRepositoryImpl @Inject constructor(
 
     override suspend fun save(profile: UserProfile) {
         dataStore.edit { prefs ->
-            if (profile.age != null) prefs[Keys.AGE] = profile.age
-            else prefs.remove(Keys.AGE)
+            if (profile.birthYear != null) prefs[Keys.BIRTH_YEAR] = profile.birthYear
+            else prefs.remove(Keys.BIRTH_YEAR)
 
             prefs[Keys.SEX] = profile.biologicalSex.name
 
@@ -57,7 +57,7 @@ class UserProfileRepositoryImpl @Inject constructor(
     }
 
     private object Keys {
-        val AGE            = intPreferencesKey("profile_age")
+        val BIRTH_YEAR     = intPreferencesKey("profile_birth_year")
         val SEX            = stringPreferencesKey("profile_sex")
         val WEIGHT_KG      = floatPreferencesKey("profile_weight_kg")
         val HEIGHT_CM      = floatPreferencesKey("profile_height_cm")

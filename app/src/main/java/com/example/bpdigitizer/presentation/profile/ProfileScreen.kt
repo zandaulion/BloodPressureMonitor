@@ -81,7 +81,7 @@ fun ProfileScreen(
                 actions = {
                     TextButton(
                         onClick = viewModel::save,
-                        enabled = !state.ageError && !state.weightError && !state.heightError,
+                        enabled = !state.birthYearError && !state.weightError && !state.heightError,
                     ) {
                         Text("Save")
                     }
@@ -111,15 +111,19 @@ fun ProfileScreen(
             SectionHeader("Basic Information")
 
             OutlinedTextField(
-                value = state.ageText,
-                onValueChange = viewModel::updateAge,
-                label = { Text("Age") },
-                suffix = { Text("years") },
+                value = state.birthYearText,
+                onValueChange = viewModel::updateBirthYear,
+                label = { Text("Birth year") },
+                placeholder = { Text("e.g. 1985") },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                isError = state.ageError,
-                supportingText = if (state.ageError) {
-                    { Text("Enter a value between 1 and 120") }
-                } else null,
+                isError = state.birthYearError,
+                supportingText = when {
+                    state.birthYearError ->
+                        { { Text("Enter a valid birth year") } }
+                    state.computedAge != null ->
+                        { { Text("Age: ${state.computedAge} years") } }
+                    else -> null
+                },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
             )
