@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.bpdigitizer.domain.model.BPReading
 import com.example.bpdigitizer.domain.repository.BPRepository
 import com.example.bpdigitizer.domain.usecase.CalculateBPZoneUseCase
+import com.example.bpdigitizer.domain.usecase.PushReadingToHealthConnectUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +36,7 @@ class ValidationViewModel @Inject constructor(
     savedState: SavedStateHandle,
     private val repository: BPRepository,
     private val calculateZone: CalculateBPZoneUseCase,
+    private val pushToHealthConnect: PushReadingToHealthConnectUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ValidationState())
@@ -82,16 +84,18 @@ class ValidationViewModel @Inject constructor(
         val current = _state.value
         if (!current.isValid) return
         viewModelScope.launch {
-            repository.insert(
-                BPReading(
-                    timestamp = System.currentTimeMillis(),
-                    systolic  = current.systolic,
-                    diastolic = current.diastolic,
-                    pulse     = current.pulse,
-                    category  = calculateZone(current.systolic, current.diastolic),
-                    notes     = current.notes.trim().takeIf { it.isNotEmpty() },
-                ),
+            val reading = BPReading(
+                timestamp = System.currentTimeMillis(),
+                systolic  = current.systolic,
+                diastolic = current.diastolic,
+                pulse     = current.pulse,
+                category  = calculateZone(current.systolic, current.diastolic),
+                notes     = current.notes.trim().takeIf { it.isNotEmpty() },
             )
+            val id = repository.insert(reading)
+            // Best-effort push to Health Connect — runs in the background so navigation
+            // is not delayed. Silent no-op when HC is unavailable or not yet authorised.
+            launch { pushToHealthConnect(reading.copy(id = id)) }
             _events.send(ValidationEvent.Saved)
         }
     }
