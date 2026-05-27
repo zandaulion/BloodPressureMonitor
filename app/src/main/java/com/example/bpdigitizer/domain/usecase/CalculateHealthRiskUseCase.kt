@@ -82,39 +82,40 @@ class CalculateHealthRiskUseCase @Inject constructor() {
     // ── contextual notes ─────────────────────────────────────────────────────
 
     private fun buildNotes(category: BPCategory, p: UserProfile): List<String> = buildList {
+        // Always include a disclaimer first
+        add("Disclaimer: This information is based on general AHA guidelines and is not medical advice. Always consult your doctor.")
+
         // BP-category guidance comes first so it's always visible
         when (category) {
             BPCategory.HYPERTENSIVE_CRISIS ->
-                add("Seek medical attention promptly if this reading is confirmed on a retake.")
+                add("According to AHA guidelines, readings above 180/120 indicate a hypertensive crisis. Please consult a healthcare professional immediately.")
             BPCategory.STAGE_2 ->
-                add("Stage 2 hypertension often requires medication alongside lifestyle changes.")
+                add("According to AHA guidelines, Stage 2 hypertension often requires medical consultation.")
             BPCategory.STAGE_1 ->
-                add("Lifestyle changes (DASH diet, exercise, reduced sodium) are very effective at this stage.")
+                add("According to AHA guidelines, Stage 1 hypertension is often managed with lifestyle modifications under a doctor's supervision.")
             BPCategory.ELEVATED ->
-                add("Reducing sodium and regular aerobic exercise can bring elevated BP back to normal.")
+                add("According to AHA guidelines, elevated blood pressure can often be managed with lifestyle modifications.")
             BPCategory.NORMAL -> Unit
         }
         // Profile-driven notes ordered by impact
         if (p.isSmoker) {
-            add("Quitting smoking is the single highest-impact change for cardiovascular risk.")
+            add("Public health guidelines note that quitting smoking reduces cardiovascular risk.")
         }
         if (p.hasDiabetes) {
-            add("Diabetes and high BP together significantly raise cardiovascular risk — close monitoring is important.")
+            add("The AHA notes that diabetes combined with high blood pressure increases cardiovascular risk.")
         }
         when (p.bmiCategory) {
-            BmiCategory.OBESE ->
-                add("Reducing BMI toward normal range can lower systolic BP by 5–20 mmHg.")
-            BmiCategory.OVERWEIGHT ->
-                add("Even 5–10 % weight loss can meaningfully lower BP.")
+            BmiCategory.OBESE, BmiCategory.OVERWEIGHT ->
+                add("According to general guidelines, managing weight can help support healthy blood pressure.")
             BmiCategory.UNDERWEIGHT ->
-                add("Low body weight may indicate other health concerns worth discussing with a doctor.")
+                add("Low body weight can be associated with other health considerations. Please discuss with your doctor.")
             else -> Unit
         }
         if (p.activityLevel == ActivityLevel.SEDENTARY) {
-            add("Adding 30 min of moderate aerobic activity most days can lower systolic BP by 4–9 mmHg.")
+            add("The AHA recommends regular aerobic activity to help support cardiovascular health.")
         }
         p.age?.let { age ->
-            if (age >= 65) add("For adults over 65 a systolic target below 130 mmHg is often recommended.")
+            if (age >= 65) add("For older adults, blood pressure targets may vary. Please consult your doctor for personalized advice.")
         }
     }
 }
