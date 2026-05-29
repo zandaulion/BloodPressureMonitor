@@ -12,7 +12,7 @@ The application follows **MVVM + Clean Architecture** with Single Source of Trut
 
 * **UI Layer:** Jetpack Compose (Material 3) + `StateFlow` / one-shot `Channel` events
 * **Domain Layer:** Use cases, repository interfaces, domain models
-* **Data Layer:** Room (readings), DataStore Preferences (user profile + reminders), EncryptedSharedPreferences (API key), AlarmManager (reminders)
+* **Data Layer:** Room (readings), DataStore Preferences (user profile + reminders), AlarmManager (reminders)
 * **DI:** Hilt (`@HiltAndroidApp`, `@HiltViewModel`, `@AndroidEntryPoint`)
 
 ---
@@ -31,7 +31,7 @@ The application follows **MVVM + Clean Architecture** with Single Source of Trut
 | DI | Hilt 2.59+ |
 | Navigation | Navigation Compose 2.8+ |
 | Preferences | AndroidX DataStore Preferences 1.1+ |
-| Secure Storage | AndroidX Security Crypto 1.1 (`EncryptedSharedPreferences`) |
+| AI / OCR | Vertex AI (Gemini 2.5 Flash) |
 | Health | AndroidX Health Connect 1.1-rc+ |
 | Permissions | Accompanist Permissions 0.36+ |
 | Image | Coil Compose 2.7, ExifInterface 1.3 |
@@ -50,14 +50,14 @@ com.example.bpdigitizer
 │   ├── reminder/           # ReminderType, ReminderScheduler, NotificationHelper
 │   │                       # ReminderReceiver, BootReceiver, SnoozeReceiver
 │   └── repository/         # BPRepositoryImpl, UserProfileRepositoryImpl,
-│                           # ReminderRepositoryImpl, ApiKeyRepositoryImpl
+│                           # ReminderRepositoryImpl
 ├── di/
 │   └── AppModule.kt        # Hilt modules (DataModule, RepositoryModule)
 ├── domain/
 │   ├── model/              # BPReading, BPCategory, UserProfile, HealthAssessment,
 │   │                       # ReminderSettings
 │   ├── repository/         # BPRepository, UserProfileRepository,
-│   │                       # ReminderRepository, ApiKeyRepository
+│   │                       # ReminderRepository
 │   └── usecase/            # ParseOcrTextUseCase, CalculateBPZoneUseCase,
 │                           # ExportReadingsUseCase (JSON), ExportCsvUseCase,
 │                           # ExportPdfUseCase, ImportReadingsUseCase,
@@ -174,17 +174,9 @@ Called from `ValidationViewModel.save()` immediately after the new reading is pe
 
 ---
 
-## 1.9 API Key Secure Storage
+## 1.9 AI / OCR Backend
 
-The Gemini API key is **never baked into the APK binary**. It is:
-
-1. Entered once by the user in the Profile screen.
-2. Stored in `EncryptedSharedPreferences` (AES-256-GCM, backed by Android Keystore).
-3. Read at runtime by `GeminiOcrRecognizer` via `ApiKeyRepository`.
-
-A `BuildConfig.GEMINI_API_KEY` populated from `local.properties` acts as a silent dev-time fallback only.
-
-`ApiKeyRepository.observeHasKey(): Flow<Boolean>` is observed by `DashboardViewModel` to show/hide the camera FAB in real time.
+OCR is powered by **Vertex AI (Gemini 2.5 Flash)** as a paid service. No user-supplied API key is required or accepted. `GeminiOcrRecognizer` calls the Vertex AI endpoint directly using application credentials baked into the server-side configuration.
 
 ---
 

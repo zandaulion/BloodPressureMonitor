@@ -52,8 +52,8 @@
 - Heart monitor icon → Sync to Health Connect (disabled when list is empty)
 
 **Floating Action Buttons:**
-- *No API key saved:* single large pencil FAB → manual entry
-- *API key saved:* small pencil FAB (left) + large camera FAB (right) → camera scan
+- Small pencil FAB (left) → manual entry
+- Large camera FAB (right) → camera scan via Vertex AI
 
 **Content:**
 - Range chips: `7d / 30d / 90d / All` (default `30d`). Scopes the chart only, not the history list.
@@ -97,8 +97,7 @@ Accessible via person icon in Dashboard top bar. Scroll-able form covering:
 - **Health Factors:** Current smoker toggle, Diabetes/pre-diabetes toggle
 - **Physical Activity:** Exercise level chips (Sedentary / Lightly active / Moderately active / Very active)
 - **AI Scan:**
-  - *No key:* description text with tappable link to `aistudio.google.com/apikey`, password-style input field, "Save API Key" button
-  - *Key saved:* check icon + "Gemini API key saved / Camera scan is enabled", "Clear" button
+  - Camera scan is always available via Vertex AI; no user API key required
 
 Top bar "Save" button persists profile; navigates back on success.
 
@@ -129,7 +128,7 @@ Notifications include "Log Now" (opens app) and "Snooze (15m)" actions. Alarms s
 3. Prompt instructs the model to return only `{"systolic": <int>, "diastolic": <int>, "pulse": <int>}`, omitting any value it cannot read with confidence.
 4. Response is parsed; nulls for missing keys are passed to the Validation screen as blank sliders (user fills manually).
 
-**API key management:** User pastes their key in the Health Profile screen. Stored in `EncryptedSharedPreferences` (Android Keystore). Camera FAB is hidden until a key is present.
+**AI backend:** Powered by Vertex AI (Gemini 2.5 Flash). No user API key required.
 
 ### 2.3.2 JSON Export
 

@@ -19,7 +19,7 @@ Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read
 | **Import** | JSON import with timestamp-based deduplication |
 | **Health Connect** | Bulk sync + automatic per-reading push after each save (when permissions are granted) |
 | **Health Profile** | Birth year, biological sex, weight / height (with BMI preview), smoker, diabetes, activity level |
-| **Secure API Key** | Stored in `EncryptedSharedPreferences` (Android Keystore); never baked into the APK |
+| **AI-Powered OCR** | Camera scan powered by Vertex AI (Gemini 2.5 Flash); no user API key required |
 
 ---
 
@@ -28,21 +28,12 @@ Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read
 ### Prerequisites
 - Android Studio Iguana or later
 - Android device or emulator running API 26+
-- A free [Google AI Studio API key](https://aistudio.google.com/apikey) *(required for camera scan; manual entry works without one)*
 
 ### Build
 ```bash
 git clone https://github.com/zandaulion/BloodPressureMonitor.git
 cd BloodPressureMonitor
 ./gradlew assembleDebug
-```
-
-No `local.properties` entry is required to build. The API key is entered by the user at runtime via the Health Profile screen.
-
-### Optional dev-time key
-Add the following to `local.properties` to pre-fill the key during development:
-```
-GEMINI_API_KEY=your_key_here
 ```
 
 ---
@@ -71,7 +62,6 @@ See [`specs/Architecture_Documentation.md`](specs/Architecture_Documentation.md)
 | OCR | Gemini 2.5 Flash REST API |
 | Database | Room |
 | Preferences | AndroidX DataStore |
-| Secure Storage | AndroidX Security Crypto (`EncryptedSharedPreferences`) |
 | Health | AndroidX Health Connect |
 | DI | Hilt |
 | Navigation | Navigation Compose |
