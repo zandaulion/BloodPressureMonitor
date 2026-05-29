@@ -1,6 +1,6 @@
 # BP Digitizer
 
-An open-source Android app for logging, visualising, and exporting blood pressure readings.
+A privacy-respecting, local-first Android app for logging, visualising, and exporting blood pressure readings.
 Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read the numbers for you — or enter them manually.
 
 ---
