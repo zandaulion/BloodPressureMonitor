@@ -42,11 +42,13 @@ private val HELP_SECTIONS = listOf(
     HelpSection(
         title = "Scanning with Camera",
         body  = """
+Camera scanning is a Premium feature, available with an active subscription.
+
 Tap the camera button (bottom-right) to open the live preview. Frame your blood pressure monitor's display inside the on-screen guide, then tap Capture.
 
-The photo is sent to Gemini 2.5 Flash, which reads the Systolic, Diastolic, and Pulse values. You can review and correct them before saving.
+The photo is sent to Gemini 2.5 Flash, which reads the Systolic, Diastolic, and Pulse values. You can review and correct them on the next screen before saving.
 
-A Gemini API key is required for camera scanning. Get a free key at aistudio.google.com/apikey and paste it in the Health Profile screen (Person icon → AI Scan section). The key is stored securely on-device and never leaves it.
+If you don't have an active subscription, tapping the camera button will open the upgrade screen where you can subscribe or restore a previous purchase.
         """.trimIndent(),
     ),
     HelpSection(

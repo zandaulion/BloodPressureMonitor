@@ -8,9 +8,11 @@ import androidx.room.Room
 import com.zandaulion.bpdigitized.data.local.BPDatabase
 import com.zandaulion.bpdigitized.data.local.BPReadingDao
 import com.zandaulion.bpdigitized.data.repository.BPRepositoryImpl
+import com.zandaulion.bpdigitized.data.repository.OnboardingRepositoryImpl
 import com.zandaulion.bpdigitized.data.repository.ReminderRepositoryImpl
 import com.zandaulion.bpdigitized.data.repository.UserProfileRepositoryImpl
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
+import com.zandaulion.bpdigitized.domain.repository.OnboardingRepository
 import com.zandaulion.bpdigitized.domain.repository.ReminderRepository
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import com.zandaulion.bpdigitized.data.ocr.TesseractRecognizer
@@ -71,4 +73,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindReminderRepository(impl: ReminderRepositoryImpl): ReminderRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindOnboardingRepository(impl: OnboardingRepositoryImpl): OnboardingRepository
 }

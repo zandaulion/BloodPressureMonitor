@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.health.connect.client.PermissionController
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,7 +16,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.DropdownMenu
@@ -38,6 +42,7 @@ import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.IosShare
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.filled.Person
@@ -66,6 +71,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
@@ -290,14 +296,31 @@ fun DashboardScreen(
                 SmallFloatingActionButton(onClick = onAddManually) {
                     Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
                 }
-                FloatingActionButton(onClick = {
-                    if (ui.isProUser) {
-                        onAddViaCamera()
-                    } else {
-                        displayPaywall = true
+                Box {
+                    FloatingActionButton(onClick = {
+                        if (ui.isProUser) {
+                            onAddViaCamera()
+                        } else {
+                            displayPaywall = true
+                        }
+                    }) {
+                        Icon(Icons.Default.CameraAlt, contentDescription = "Scan reading with camera")
                     }
-                }) {
-                    Icon(Icons.Default.CameraAlt, contentDescription = "Scan reading with camera")
+                    if (!ui.isProUser) {
+                        Icon(
+                            imageVector = Icons.Default.Lock,
+                            contentDescription = "Premium feature",
+                            tint = MaterialTheme.colorScheme.onPrimary,
+                            modifier = Modifier
+                                .align(Alignment.TopEnd)
+                                .offset(x = 6.dp, y = (-6).dp)
+                                .size(20.dp)
+                                .clip(CircleShape)
+                                .background(MaterialTheme.colorScheme.primary)
+                                .border(1.5.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
+                                .padding(3.dp),
+                        )
+                    }
                 }
             }
         },

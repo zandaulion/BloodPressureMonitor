@@ -1,6 +1,9 @@
 package com.zandaulion.bpdigitized.presentation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +12,8 @@ import androidx.navigation.navArgument
 import com.zandaulion.bpdigitized.presentation.capture.CaptureScreen
 import com.zandaulion.bpdigitized.presentation.dashboard.DashboardScreen
 import com.zandaulion.bpdigitized.presentation.help.HelpScreen
+import com.zandaulion.bpdigitized.presentation.onboarding.OnboardingScreen
+import com.zandaulion.bpdigitized.presentation.onboarding.OnboardingViewModel
 import com.zandaulion.bpdigitized.presentation.profile.ProfileScreen
 import com.zandaulion.bpdigitized.presentation.reminders.RemindersScreen
 import com.zandaulion.bpdigitized.presentation.validation.ValidationScreen
@@ -16,6 +21,7 @@ import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
 object Routes {
+    const val ONBOARDING = "onboarding"
     const val DASHBOARD = "dashboard"
     const val CAPTURE = "capture"
     const val PROFILE = "profile"
@@ -32,9 +38,30 @@ object Routes {
 }
 
 @Composable
-fun AppNavHost() {
+fun AppNavHost(
+    onboardingViewModel: OnboardingViewModel = hiltViewModel(),
+) {
+    val hasSeenOnboarding by onboardingViewModel.hasSeenOnboarding.collectAsStateWithLifecycle()
+
+    // Wait until the persisted flag is loaded before choosing where to start,
+    // so the intro is shown exactly once (on first launch).
+    val seen = hasSeenOnboarding ?: return
+
     val nav = rememberNavController()
-    NavHost(navController = nav, startDestination = Routes.DASHBOARD) {
+    NavHost(
+        navController = nav,
+        startDestination = if (seen) Routes.DASHBOARD else Routes.ONBOARDING,
+    ) {
+        composable(Routes.ONBOARDING) {
+            OnboardingScreen(
+                onFinish = {
+                    onboardingViewModel.markSeen()
+                    nav.navigate(Routes.DASHBOARD) {
+                        popUpTo(Routes.ONBOARDING) { inclusive = true }
+                    }
+                },
+            )
+        }
         composable(Routes.DASHBOARD) {
             DashboardScreen(
                 onAddViaCamera = { nav.navigate(Routes.CAPTURE) },
