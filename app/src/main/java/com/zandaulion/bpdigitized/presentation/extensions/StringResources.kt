@@ -8,6 +8,7 @@ import com.zandaulion.bpdigitized.domain.model.BmiCategory
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.CardiovascularRisk
 import com.zandaulion.bpdigitized.presentation.dashboard.ChartRange
+import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
 
 // ── Domain enum → string resource ID mappings ─────────────────────────────────
 // Keep the domain layer free of Android imports. All UI-facing string lookups
@@ -70,4 +71,10 @@ import com.zandaulion.bpdigitized.presentation.dashboard.ChartRange
     ChartRange.THIRTY_DAYS  -> R.string.chart_range_30d
     ChartRange.NINETY_DAYS  -> R.string.chart_range_90d
     ChartRange.ALL          -> R.string.chart_range_all
+}
+
+@StringRes fun ExportType.labelRes(): Int = when (this) {
+    ExportType.JSON -> R.string.export_type_json
+    ExportType.CSV  -> R.string.export_type_csv
+    ExportType.PDF  -> R.string.export_type_pdf
 }

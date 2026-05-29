@@ -6,6 +6,11 @@ import android.content.res.Configuration
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.health.connect.client.PermissionController
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -89,6 +94,7 @@ import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import kotlinx.coroutines.delay
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -111,6 +117,15 @@ fun DashboardScreen(
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     var exportMenuExpanded by remember { mutableStateOf(false) }
     var displayPaywall by remember { mutableStateOf(false) }
+    var exportedMessage by remember { mutableStateOf<String?>(null) }
+
+    // Auto-clear the export confirmation after 1 second.
+    LaunchedEffect(exportedMessage) {
+        if (exportedMessage != null) {
+            delay(1_000)
+            exportedMessage = null
+        }
+    }
 
     val importLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument(),
@@ -133,7 +148,13 @@ fun DashboardScreen(
                         viewModel.undoDelete(event.reading)
                     }
                 }
-                is DashboardEvent.ShareExport -> shareFile(context, event.file, event.mimeType)
+                is DashboardEvent.ShareExport -> {
+                    exportedMessage = context.getString(
+                        R.string.dashboard_snack_export_success,
+                        context.getString(event.exportType.labelRes()),
+                    )
+                    shareFile(context, event.file, event.mimeType)
+                }
                 DashboardEvent.ExportFailed -> {
                     snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_export_failed))
                 }
@@ -357,10 +378,13 @@ fun DashboardScreen(
             )
         }
         
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(inner),
+        ) {
+        Column(
+            modifier = Modifier.fillMaxSize(),
         ) {
             RangeChipRow(
                 selected = ui.selectedRange,
@@ -413,7 +437,31 @@ fun DashboardScreen(
                     }
                 }
             }
+        } // Column
+
+        // ── Export confirmation pill ───────────────────────────────────────
+        AnimatedVisibility(
+            visible = exportedMessage != null,
+            enter = fadeIn() + slideInVertically { it / 2 },
+            exit  = fadeOut() + slideOutVertically { it / 2 },
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+                .padding(bottom = 96.dp),
+        ) {
+            Surface(
+                shape = MaterialTheme.shapes.extraLarge,
+                color = MaterialTheme.colorScheme.inverseSurface,
+                tonalElevation = 4.dp,
+            ) {
+                Text(
+                    text = exportedMessage ?: "",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.inverseOnSurface,
+                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+                )
+            }
         }
+        } // Box
     }
 }
 

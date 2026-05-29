@@ -50,9 +50,11 @@ data class DashboardUi(
     val isProUser: Boolean = false,
 )
 
+enum class ExportType { JSON, CSV, PDF }
+
 sealed interface DashboardEvent {
     data class ShowUndoSnackbar(val reading: BPReading) : DashboardEvent
-    data class ShareExport(val file: File, val mimeType: String) : DashboardEvent
+    data class ShareExport(val file: File, val mimeType: String, val exportType: ExportType) : DashboardEvent
     data object ExportFailed : DashboardEvent
     data class ImportSucceeded(val count: Int) : DashboardEvent
     data object ImportFailed : DashboardEvent
@@ -124,7 +126,7 @@ class DashboardViewModel @Inject constructor(
     fun requestExport() {
         viewModelScope.launch {
             runCatching { exportReadings() }
-                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "application/json")) }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "application/json", ExportType.JSON)) }
                 .onFailure { _events.send(DashboardEvent.ExportFailed) }
         }
     }
@@ -132,7 +134,7 @@ class DashboardViewModel @Inject constructor(
     fun requestCsvExport() {
         viewModelScope.launch {
             runCatching { exportCsv() }
-                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "text/csv")) }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "text/csv", ExportType.CSV)) }
                 .onFailure { _events.send(DashboardEvent.ExportFailed) }
         }
     }
@@ -140,7 +142,7 @@ class DashboardViewModel @Inject constructor(
     fun requestPdfExport() {
         viewModelScope.launch {
             runCatching { exportPdf() }
-                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "application/pdf")) }
+                .onSuccess { file -> _events.send(DashboardEvent.ShareExport(file, "application/pdf", ExportType.PDF)) }
                 .onFailure { _events.send(DashboardEvent.ExportFailed) }
         }
     }

@@ -85,6 +85,12 @@
     <string name="dashboard_snack_hc_install">Install</string>
     <string name="dashboard_snack_hc_permission">Please grant blood pressure permission in Health Connect</string>
     <string name="dashboard_snack_hc_sync_failed">Sync to Health Connect failed</string>
+    <!-- %s = export type label (JSON / CSV / PDF) -->
+    <string name="dashboard_snack_export_success">%s file exported</string>
+    <!-- Export type labels -->
+    <string name="export_type_json">JSON</string>
+    <string name="export_type_csv">CSV</string>
+    <string name="export_type_pdf">PDF</string>
     <!-- %d = pulse value -->
     <string name="dashboard_reading_pulse_format"> · %d bpm</string>
 
