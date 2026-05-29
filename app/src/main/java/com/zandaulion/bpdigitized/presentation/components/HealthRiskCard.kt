@@ -24,11 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
-import com.zandaulion.bpdigitized.domain.model.BPCategory
+import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.CardiovascularRisk
 import com.zandaulion.bpdigitized.domain.model.HealthAssessment
+import com.zandaulion.bpdigitized.presentation.extensions.displayLabelRes
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 import com.zandaulion.bpdigitized.presentation.theme.CategoryCrisis
 import com.zandaulion.bpdigitized.presentation.theme.CategoryElevated
 import com.zandaulion.bpdigitized.presentation.theme.CategoryNormal
@@ -39,14 +42,6 @@ private fun CardiovascularRisk.badgeColor(): Color = when (this) {
     CardiovascularRisk.MODERATE  -> CategoryElevated
     CardiovascularRisk.HIGH      -> CategoryStage2
     CardiovascularRisk.VERY_HIGH -> CategoryCrisis
-}
-
-private fun BPCategory.displayLabel() = when (this) {
-    BPCategory.NORMAL              -> "Normal BP"
-    BPCategory.ELEVATED            -> "Elevated BP"
-    BPCategory.STAGE_1             -> "Stage 1 Hypertension"
-    BPCategory.STAGE_2             -> "Stage 2 Hypertension"
-    BPCategory.HYPERTENSIVE_CRISIS -> "Hypertensive Crisis"
 }
 
 /** Max notes shown collapsed; tap "Show more" to reveal the rest. */
@@ -74,10 +69,13 @@ fun HealthRiskCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
-                Text("Risk Assessment", style = MaterialTheme.typography.titleSmall)
+                Text(stringResource(R.string.risk_card_title), style = MaterialTheme.typography.titleSmall)
                 TextButton(onClick = onEditProfile) {
                     Text(
-                        if (assessment.profileComplete) "Edit Profile" else "Set Up Profile",
+                        stringResource(
+                            if (assessment.profileComplete) R.string.risk_card_edit_profile
+                            else R.string.risk_card_setup_profile,
+                        ),
                         style = MaterialTheme.typography.labelMedium,
                     )
                 }
@@ -91,11 +89,14 @@ fun HealthRiskCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 RiskBadge(
-                    text = "${assessment.cardiovascularRisk.label} Risk",
+                    text = stringResource(
+                        R.string.risk_card_risk_badge,
+                        stringResource(assessment.cardiovascularRisk.labelRes()),
+                    ),
                     color = assessment.cardiovascularRisk.badgeColor(),
                 )
                 Text(
-                    text = assessment.bpCategory.displayLabel(),
+                    text = stringResource(assessment.bpCategory.displayLabelRes()),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -105,7 +106,11 @@ fun HealthRiskCard(
             if (assessment.bmi != null && assessment.bmiCategory != null) {
                 Spacer(Modifier.height(4.dp))
                 Text(
-                    text = "BMI ${"%.1f".format(assessment.bmi)} · ${assessment.bmiCategory.label}",
+                    text = stringResource(
+                        R.string.risk_card_bmi,
+                        "%.1f".format(assessment.bmi),
+                        stringResource(assessment.bmiCategory.labelRes()),
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
@@ -115,7 +120,7 @@ fun HealthRiskCard(
             if (!assessment.profileComplete) {
                 Spacer(Modifier.height(8.dp))
                 Text(
-                    text = "Add your age, weight, height, and lifestyle details for a personalised assessment.",
+                    text = stringResource(R.string.risk_card_incomplete_profile),
                     style = MaterialTheme.typography.bodySmall,
                     fontStyle = FontStyle.Italic,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -143,8 +148,14 @@ fun HealthRiskCard(
                         modifier = Modifier.align(Alignment.End),
                     ) {
                         Text(
-                            if (expanded) "Show less"
-                            else "Show ${assessment.contextNotes.size - COLLAPSED_NOTES} more…",
+                            text = if (expanded) {
+                                stringResource(R.string.risk_card_show_less)
+                            } else {
+                                stringResource(
+                                    R.string.risk_card_show_more,
+                                    assessment.contextNotes.size - COLLAPSED_NOTES,
+                                )
+                            },
                             style = MaterialTheme.typography.labelSmall,
                         )
                     }

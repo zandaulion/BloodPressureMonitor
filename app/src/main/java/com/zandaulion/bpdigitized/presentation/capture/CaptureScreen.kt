@@ -39,6 +39,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
@@ -50,6 +51,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
+import com.zandaulion.bpdigitized.R
 import java.io.File
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -141,7 +143,11 @@ private fun CameraContent(
                 .statusBarsPadding()
                 .padding(8.dp),
         ) {
-            Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = Color.White)
+            Icon(
+                Icons.Default.ArrowBack,
+                contentDescription = stringResource(R.string.action_back),
+                tint = Color.White,
+            )
         }
 
         FloatingActionButton(
@@ -161,7 +167,7 @@ private fun CameraContent(
                 .padding(bottom = 32.dp)
                 .size(72.dp),
         ) {
-            Icon(Icons.Default.CameraAlt, contentDescription = "Capture")
+            Icon(Icons.Default.CameraAlt, contentDescription = stringResource(R.string.capture_cd_capture))
         }
 
         if (isProcessing) {
@@ -173,12 +179,16 @@ private fun CameraContent(
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     CircularProgressIndicator(color = Color.White)
-                    Text("Reading numbers...", color = Color.White, modifier = Modifier.padding(top = 16.dp))
+                    Text(
+                        stringResource(R.string.capture_reading_numbers),
+                        color = Color.White,
+                        modifier = Modifier.padding(top = 16.dp),
+                    )
                 }
             }
         }
 
-        error?.let {
+        error?.let { errorMsg ->
             Box(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
@@ -188,11 +198,11 @@ private fun CameraContent(
                     .padding(12.dp),
             ) {
                 Text(
-                    text = "OCR error: $it",
+                    text = stringResource(R.string.capture_ocr_error, errorMsg),
                     color = MaterialTheme.colorScheme.onErrorContainer,
                 )
             }
-            LaunchedEffect(it) {
+            LaunchedEffect(errorMsg) {
                 kotlinx.coroutines.delay(3000)
                 onDismissError()
             }
@@ -208,15 +218,15 @@ private fun PermissionRationale(onRequest: () -> Unit, onBack: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "Camera access is required to scan readings.",
+            text = stringResource(R.string.capture_permission_rationale),
             color = Color.White,
             style = MaterialTheme.typography.bodyLarge,
         )
         Button(onClick = onRequest, modifier = Modifier.padding(top = 16.dp)) {
-            Text("Grant camera permission")
+            Text(stringResource(R.string.capture_grant_permission))
         }
         Button(onClick = onBack, modifier = Modifier.padding(top = 8.dp)) {
-            Text("Back")
+            Text(stringResource(R.string.action_back))
         }
     }
 }

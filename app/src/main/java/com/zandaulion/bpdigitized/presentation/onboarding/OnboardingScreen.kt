@@ -1,5 +1,6 @@
 package com.zandaulion.bpdigitized.presentation.onboarding
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -32,36 +33,38 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.zandaulion.bpdigitized.R
 import kotlinx.coroutines.launch
 
 private data class OnboardingPage(
     val icon: ImageVector,
-    val overlay: String,
-    val title: String,
-    val body: String,
+    @StringRes val overlayRes: Int,
+    @StringRes val titleRes: Int,
+    @StringRes val bodyRes: Int,
 )
 
 private val onboardingPages = listOf(
     OnboardingPage(
-        icon = Icons.Default.MonitorHeart,
-        overlay = "Clarity",
-        title = "Know your numbers",
-        body = "Log your readings and instantly see what they mean, with clear blood-pressure category insights.",
+        icon       = Icons.Default.MonitorHeart,
+        overlayRes = R.string.onboarding_page1_overlay,
+        titleRes   = R.string.onboarding_page1_title,
+        bodyRes    = R.string.onboarding_page1_body,
     ),
     OnboardingPage(
-        icon = Icons.Default.PhotoCamera,
-        overlay = "1-Tap",
-        title = "Effortless logging",
-        body = "Snap a photo of your monitor and let the app read it for you (Premium) — or enter readings manually in seconds.",
+        icon       = Icons.Default.PhotoCamera,
+        overlayRes = R.string.onboarding_page2_overlay,
+        titleRes   = R.string.onboarding_page2_title,
+        bodyRes    = R.string.onboarding_page2_body,
     ),
     OnboardingPage(
-        icon = Icons.Default.NotificationsActive,
-        overlay = "On Track",
-        title = "Stay consistent",
-        body = "Daily reminders, trend charts, and Health Connect sync keep your progress on track over time.",
+        icon       = Icons.Default.NotificationsActive,
+        overlayRes = R.string.onboarding_page3_overlay,
+        titleRes   = R.string.onboarding_page3_title,
+        bodyRes    = R.string.onboarding_page3_body,
     ),
 )
 
@@ -89,7 +92,7 @@ fun OnboardingScreen(
             ) {
                 if (!isLastPage) {
                     TextButton(onClick = onFinish) {
-                        Text("Skip")
+                        Text(stringResource(R.string.action_skip))
                     }
                 }
             }
@@ -125,7 +128,11 @@ fun OnboardingScreen(
                     .padding(bottom = 24.dp)
                     .height(52.dp),
             ) {
-                Text(if (isLastPage) "Get Started" else "Next")
+                Text(
+                    stringResource(
+                        if (isLastPage) R.string.onboarding_get_started else R.string.onboarding_next,
+                    ),
+                )
             }
         }
     }
@@ -142,7 +149,7 @@ private fun OnboardingPageContent(page: OnboardingPage) {
     ) {
         // Bold overlay word above the icon circle.
         Text(
-            text = page.overlay,
+            text = stringResource(page.overlayRes),
             style = MaterialTheme.typography.displaySmall,
             fontWeight = FontWeight.ExtraBold,
             color = MaterialTheme.colorScheme.primary,
@@ -168,7 +175,7 @@ private fun OnboardingPageContent(page: OnboardingPage) {
         Spacer(Modifier.height(40.dp))
 
         Text(
-            text = page.title,
+            text = stringResource(page.titleRes),
             style = MaterialTheme.typography.headlineMedium,
             color = MaterialTheme.colorScheme.onSurface,
             textAlign = TextAlign.Center,
@@ -177,7 +184,7 @@ private fun OnboardingPageContent(page: OnboardingPage) {
         Spacer(Modifier.height(16.dp))
 
         Text(
-            text = page.body,
+            text = stringResource(page.bodyRes),
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,

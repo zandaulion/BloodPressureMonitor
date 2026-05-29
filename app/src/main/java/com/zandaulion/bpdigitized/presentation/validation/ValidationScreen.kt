@@ -52,6 +52,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -62,6 +63,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
+import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.presentation.capture.ocrDumpFileFor
 import com.zandaulion.bpdigitized.presentation.capture.preprocFileFor
 import java.io.File
@@ -91,10 +93,20 @@ fun ValidationScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (state.imagePath != null) "Confirm Reading" else "New Reading") },
+                title = {
+                    Text(
+                        stringResource(
+                            if (state.imagePath != null) R.string.validation_title_confirm
+                            else R.string.validation_title_new,
+                        ),
+                    )
+                },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back),
+                        )
                     }
                 },
             )
@@ -122,7 +134,7 @@ fun ValidationScreen(
             state.imagePath?.let { path ->
                 AsyncImage(
                     model = File(path),
-                    contentDescription = "Captured reading",
+                    contentDescription = stringResource(R.string.validation_cd_captured_image),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -132,30 +144,34 @@ fun ValidationScreen(
                         .clickable { fullscreenOpen = true },
                 )
                 Text(
-                    text = "Tap image to enlarge",
+                    text = stringResource(R.string.validation_hint_enlarge),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
             // ── Value sliders ─────────────────────────────────────────────
+            val labelSys = stringResource(R.string.validation_label_sys)
+            val labelDia = stringResource(R.string.validation_label_dia)
+            val labelPul = stringResource(R.string.validation_label_pul)
+
             BpValueSlider(
-                label = "SYS",
-                subtitle = "Systolic (mmHg)",
+                label = labelSys,
+                subtitle = stringResource(R.string.validation_subtitle_sys),
                 value = state.systolic,
                 onValueChange = viewModel::updateSystolic,
                 range = ValidationViewModel.SYS_RANGE,
             )
             BpValueSlider(
-                label = "DIA",
-                subtitle = "Diastolic (mmHg)",
+                label = labelDia,
+                subtitle = stringResource(R.string.validation_subtitle_dia),
                 value = state.diastolic,
                 onValueChange = viewModel::updateDiastolic,
                 range = ValidationViewModel.DIA_RANGE,
             )
             BpValueSlider(
-                label = "PUL",
-                subtitle = "Pulse (bpm)",
+                label = labelPul,
+                subtitle = stringResource(R.string.validation_subtitle_pul),
                 value = state.pulse,
                 onValueChange = viewModel::updatePulse,
                 range = ValidationViewModel.PUL_RANGE,
@@ -164,7 +180,7 @@ fun ValidationScreen(
             // ── Validation error ──────────────────────────────────────────
             if (!state.isValid) {
                 Text(
-                    text = "Systolic must be greater than Diastolic",
+                    text = stringResource(R.string.validation_error_sys_dia),
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
                 )
@@ -174,8 +190,8 @@ fun ValidationScreen(
             OutlinedTextField(
                 value = state.notes,
                 onValueChange = viewModel::updateNotes,
-                label = { Text("Notes (optional)") },
-                placeholder = { Text("e.g. after exercise, morning") },
+                label = { Text(stringResource(R.string.validation_notes_label)) },
+                placeholder = { Text(stringResource(R.string.validation_notes_placeholder)) },
                 modifier = Modifier.fillMaxWidth(),
                 maxLines = 3,
             )
@@ -187,7 +203,7 @@ fun ValidationScreen(
                 enabled = state.isValid,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text("Save Reading")
+                Text(stringResource(R.string.validation_save))
             }
 
             // ── OCR-only actions ──────────────────────────────────────────
@@ -196,7 +212,7 @@ fun ValidationScreen(
                     onClick = onRetake,
                     modifier = Modifier.fillMaxWidth(),
                 ) {
-                    Text("Retake")
+                    Text(stringResource(R.string.validation_retake))
                 }
 
                 val context = LocalContext.current
@@ -205,10 +221,15 @@ fun ValidationScreen(
                 }
                 if (ocrDumpFile != null) {
                     OutlinedButton(
-                        onClick = { shareDiagnosticFile(context, ocrDumpFile, "text/plain", "BP raw OCR output") },
+                        onClick = {
+                            shareDiagnosticFile(
+                                context, ocrDumpFile, "text/plain",
+                                context.getString(R.string.validation_debug_ocr),
+                            )
+                        },
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text("Share raw OCR (debug)")
+                        Text(stringResource(R.string.validation_debug_ocr))
                     }
                 }
                 val preprocFile = remember(state.imagePath) {
@@ -216,10 +237,15 @@ fun ValidationScreen(
                 }
                 if (preprocFile != null) {
                     OutlinedButton(
-                        onClick = { shareDiagnosticFile(context, preprocFile, "image/jpeg", "BP preprocessed image") },
+                        onClick = {
+                            shareDiagnosticFile(
+                                context, preprocFile, "image/jpeg",
+                                context.getString(R.string.validation_debug_preproc),
+                            )
+                        },
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Text("Share preprocessed image (debug)")
+                        Text(stringResource(R.string.validation_debug_preproc))
                     }
                 }
             }
@@ -292,7 +318,10 @@ private fun BpValueSlider(
                     onClick = { if (value > range.first) onValueChange(value - 1) },
                     modifier = Modifier.size(40.dp),
                 ) {
-                    Icon(Icons.Default.Remove, contentDescription = "Decrease $label")
+                    Icon(
+                        Icons.Default.Remove,
+                        contentDescription = stringResource(R.string.validation_cd_decrease, label),
+                    )
                 }
                 Slider(
                     value = value.toFloat(),
@@ -304,7 +333,10 @@ private fun BpValueSlider(
                     onClick = { if (value < range.last) onValueChange(value + 1) },
                     modifier = Modifier.size(40.dp),
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = "Increase $label")
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = stringResource(R.string.validation_cd_increase, label),
+                    )
                 }
             }
 
@@ -335,7 +367,7 @@ private fun FullscreenImageDialog(path: String, onDismiss: () -> Unit) {
         ) {
             AsyncImage(
                 model = File(path),
-                contentDescription = "Captured reading (fullscreen)",
+                contentDescription = stringResource(R.string.validation_cd_captured_fullscreen),
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxSize()
@@ -358,7 +390,11 @@ private fun FullscreenImageDialog(path: String, onDismiss: () -> Unit) {
                     .align(Alignment.TopEnd)
                     .padding(8.dp),
             ) {
-                Icon(Icons.Default.Close, contentDescription = "Close", tint = Color.White)
+                Icon(
+                    Icons.Default.Close,
+                    contentDescription = stringResource(R.string.action_cancel),
+                    tint = Color.White,
+                )
             }
         }
     }

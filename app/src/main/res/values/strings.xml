@@ -1,4 +1,232 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- App name -->
     <string name="app_name">BP Digitizer</string>
+
+    <!-- ── Common ─────────────────────────────────────────────────────────── -->
+    <string name="action_back">Back</string>
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_ok">OK</string>
+    <string name="action_skip">Skip</string>
+    <string name="action_open_settings">Open Settings</string>
+
+    <!-- ── BP category badge labels ───────────────────────────────────────── -->
+    <string name="bp_category_normal">Normal</string>
+    <string name="bp_category_elevated">Elevated</string>
+    <string name="bp_category_stage1">Stage 1</string>
+    <string name="bp_category_stage2">Stage 2</string>
+    <string name="bp_category_crisis">Crisis</string>
+
+    <!-- ── BP category display labels (Health Risk card) ──────────────────── -->
+    <string name="bp_display_normal">Normal BP</string>
+    <string name="bp_display_elevated">Elevated BP</string>
+    <string name="bp_display_stage1">Stage 1 Hypertension</string>
+    <string name="bp_display_stage2">Stage 2 Hypertension</string>
+    <string name="bp_display_crisis">Hypertensive Crisis</string>
+
+    <!-- ── Cardiovascular risk labels ─────────────────────────────────────── -->
+    <string name="cv_risk_low">Low</string>
+    <string name="cv_risk_moderate">Moderate</string>
+    <string name="cv_risk_high">High</string>
+    <string name="cv_risk_very_high">Very High</string>
+
+    <!-- ── Biological sex labels ──────────────────────────────────────────── -->
+    <string name="sex_male">Male</string>
+    <string name="sex_female">Female</string>
+    <string name="sex_prefer_not_to_say">N/A</string>
+
+    <!-- ── Activity level labels ──────────────────────────────────────────── -->
+    <string name="activity_sedentary">Sedentary</string>
+    <string name="activity_lightly_active">Light</string>
+    <string name="activity_moderately_active">Moderate</string>
+    <string name="activity_very_active">Very active</string>
+
+    <!-- ── Activity level descriptions ───────────────────────────────────── -->
+    <string name="activity_desc_sedentary">Little or no exercise</string>
+    <string name="activity_desc_lightly_active">Light exercise 1–3 days/wk</string>
+    <string name="activity_desc_moderately_active">Moderate exercise 3–5 days/wk</string>
+    <string name="activity_desc_very_active">Hard exercise 6–7 days/wk</string>
+
+    <!-- ── BMI category labels ────────────────────────────────────────────── -->
+    <string name="bmi_underweight">Underweight</string>
+    <string name="bmi_normal">Normal</string>
+    <string name="bmi_overweight">Overweight</string>
+    <string name="bmi_obese">Obese</string>
+
+    <!-- ── Chart range labels ─────────────────────────────────────────────── -->
+    <string name="chart_range_7d">7d</string>
+    <string name="chart_range_30d">30d</string>
+    <string name="chart_range_90d">90d</string>
+    <string name="chart_range_all">All</string>
+
+    <!-- ── Dashboard ──────────────────────────────────────────────────────── -->
+    <string name="dashboard_title">Blood Pressure Tracking</string>
+    <string name="dashboard_cd_reminders">Reminders</string>
+    <string name="dashboard_cd_profile">Health profile</string>
+    <string name="dashboard_cd_import">Import data</string>
+    <string name="dashboard_cd_export">Export data</string>
+    <string name="dashboard_cd_sync_hc">Sync to Health Connect</string>
+    <string name="dashboard_cd_help">Help</string>
+    <string name="dashboard_cd_add_manually">Add reading manually</string>
+    <string name="dashboard_cd_scan">Scan reading with camera</string>
+    <string name="dashboard_cd_premium">Premium feature</string>
+    <string name="dashboard_cd_delete">Delete</string>
+    <string name="dashboard_export_json">Export as JSON</string>
+    <string name="dashboard_export_csv">Export as CSV</string>
+    <string name="dashboard_export_pdf">Export as PDF</string>
+    <string name="dashboard_empty">No readings yet. Tap the pencil button to enter one, or the camera button to scan.</string>
+    <string name="dashboard_snack_deleted">Reading deleted</string>
+    <string name="dashboard_snack_undo">Undo</string>
+    <string name="dashboard_snack_export_failed">Export failed</string>
+    <string name="dashboard_snack_import_none">No new readings to import</string>
+    <string name="dashboard_snack_import_failed">Import failed — make sure the file is a valid BP export</string>
+    <string name="dashboard_snack_hc_unavailable">Health Connect is not available on this device</string>
+    <string name="dashboard_snack_hc_install">Install</string>
+    <string name="dashboard_snack_hc_permission">Please grant blood pressure permission in Health Connect</string>
+    <string name="dashboard_snack_hc_sync_failed">Sync to Health Connect failed</string>
+    <!-- %d = pulse value -->
+    <string name="dashboard_reading_pulse_format"> · %d bpm</string>
+
+    <!-- ── Dashboard plurals ──────────────────────────────────────────────── -->
+    <plurals name="dashboard_snack_imported">
+        <item quantity="one">Imported %d reading</item>
+        <item quantity="other">Imported %d readings</item>
+    </plurals>
+    <plurals name="dashboard_snack_synced">
+        <item quantity="one">Synced %d reading to Health Connect</item>
+        <item quantity="other">Synced %d readings to Health Connect</item>
+    </plurals>
+
+    <!-- ── Capture ────────────────────────────────────────────────────────── -->
+    <string name="capture_cd_capture">Capture</string>
+    <string name="capture_reading_numbers">Reading numbers…</string>
+    <!-- %s = error message from the OCR call -->
+    <string name="capture_ocr_error">OCR error: %s</string>
+    <string name="capture_permission_rationale">Camera access is required to scan readings.</string>
+    <string name="capture_grant_permission">Grant camera permission</string>
+
+    <!-- ── Validation ─────────────────────────────────────────────────────── -->
+    <string name="validation_title_confirm">Confirm Reading</string>
+    <string name="validation_title_new">New Reading</string>
+    <string name="validation_cd_captured_image">Captured reading</string>
+    <string name="validation_cd_captured_fullscreen">Captured reading (fullscreen)</string>
+    <string name="validation_hint_enlarge">Tap image to enlarge</string>
+    <string name="validation_label_sys">SYS</string>
+    <string name="validation_subtitle_sys">Systolic (mmHg)</string>
+    <string name="validation_label_dia">DIA</string>
+    <string name="validation_subtitle_dia">Diastolic (mmHg)</string>
+    <string name="validation_label_pul">PUL</string>
+    <string name="validation_subtitle_pul">Pulse (bpm)</string>
+    <string name="validation_error_sys_dia">Systolic must be greater than Diastolic</string>
+    <string name="validation_notes_label">Notes (optional)</string>
+    <string name="validation_notes_placeholder">e.g. after exercise, morning</string>
+    <string name="validation_save">Save Reading</string>
+    <string name="validation_retake">Retake</string>
+    <string name="validation_debug_ocr">Share raw OCR (debug)</string>
+    <string name="validation_debug_preproc">Share preprocessed image (debug)</string>
+    <!-- %s = slider label (SYS / DIA / PUL) -->
+    <string name="validation_cd_decrease">Decrease %s</string>
+    <string name="validation_cd_increase">Increase %s</string>
+
+    <!-- ── Profile ────────────────────────────────────────────────────────── -->
+    <string name="profile_title">Health Profile</string>
+    <string name="profile_info">This information helps tailor your blood pressure risk assessment. All data stays on your device.</string>
+    <string name="profile_section_basic">Basic Information</string>
+    <string name="profile_birth_year_label">Birth year</string>
+    <string name="profile_birth_year_placeholder">e.g. 1985</string>
+    <string name="profile_birth_year_error">Enter a valid birth year</string>
+    <!-- %d = computed age -->
+    <string name="profile_age">Age: %d years</string>
+    <string name="profile_sex_label">Biological sex</string>
+    <string name="profile_section_body">Body Measurements</string>
+    <string name="profile_weight_label">Weight</string>
+    <string name="profile_weight_suffix">kg</string>
+    <string name="profile_weight_error">Enter a value > 0</string>
+    <string name="profile_height_label">Height</string>
+    <string name="profile_height_suffix">cm</string>
+    <string name="profile_height_error">Enter a value > 0</string>
+    <string name="profile_bmi">BMI</string>
+    <string name="profile_section_health">Health Factors</string>
+    <string name="profile_smoker_label">Current smoker</string>
+    <string name="profile_smoker_desc">Doubles cardiovascular risk</string>
+    <string name="profile_diabetes_label">Diabetes / pre-diabetes</string>
+    <string name="profile_diabetes_desc">Significantly raises risk when combined with high BP</string>
+    <string name="profile_section_activity">Physical Activity</string>
+    <string name="profile_activity_level_label">Typical exercise level</string>
+    <string name="profile_section_subscriptions">Subscriptions</string>
+    <string name="profile_subscriptions_desc">Manage your Pro subscription to unlock the AI Camera Scanner.</string>
+    <string name="profile_restore_purchases">Restore Purchases</string>
+    <string name="profile_restoring">Restoring…</string>
+    <string name="profile_restore_success">Purchases restored successfully.</string>
+    <string name="profile_restore_error">Failed to restore purchases.</string>
+    <string name="profile_disclaimer">ⓘ  This assessment is informational and does not replace medical advice.</string>
+
+    <!-- ── Reminders ──────────────────────────────────────────────────────── -->
+    <string name="reminders_title">Reminders</string>
+    <string name="reminders_notif_perm_title">Notification permission required</string>
+    <string name="reminders_notif_perm_desc">Allow notifications so reminders can reach you.</string>
+    <string name="reminders_notif_perm_button">Grant Permission</string>
+    <string name="reminders_exact_alarm_title">Exact alarm permission required</string>
+    <string name="reminders_exact_alarm_desc">For precise reminders, allow this app to schedule exact alarms.</string>
+    <string name="reminders_exact_alarm_button">Open Settings</string>
+    <string name="reminders_enable_label">Enable Reminders</string>
+    <string name="reminders_enable_desc">Morning and evening BP check notifications</string>
+    <string name="reminders_morning_label">Morning Check</string>
+    <string name="reminders_morning_desc">Taken ~30 min after waking, before coffee or medication</string>
+    <string name="reminders_evening_label">Evening Check</string>
+    <string name="reminders_evening_desc">Taken while relaxing in the evening</string>
+    <string name="reminders_footer">Tap a time to change it. Reminders fire each day at the chosen time and reschedule automatically.</string>
+    <string name="reminders_set_time">Set time</string>
+
+    <!-- ── Health Risk Card ───────────────────────────────────────────────── -->
+    <string name="risk_card_title">Risk Assessment</string>
+    <string name="risk_card_edit_profile">Edit Profile</string>
+    <string name="risk_card_setup_profile">Set Up Profile</string>
+    <!-- %s = risk level label (Low / Moderate / High / Very High) -->
+    <string name="risk_card_risk_badge">%s Risk</string>
+    <!-- %1$s = BMI value, %2$s = BMI category label -->
+    <string name="risk_card_bmi">BMI %1$s · %2$s</string>
+    <string name="risk_card_incomplete_profile">Add your age, weight, height, and lifestyle details for a personalised assessment.</string>
+    <string name="risk_card_show_less">Show less</string>
+    <!-- %d = number of hidden notes -->
+    <string name="risk_card_show_more">Show %d more…</string>
+
+    <!-- ── Onboarding ─────────────────────────────────────────────────────── -->
+    <string name="onboarding_next">Next</string>
+    <string name="onboarding_get_started">Get Started</string>
+    <string name="onboarding_page1_overlay">Clarity</string>
+    <string name="onboarding_page1_title">Know your numbers</string>
+    <string name="onboarding_page1_body">Log your readings and instantly see what they mean, with clear blood-pressure category insights.</string>
+    <string name="onboarding_page2_overlay">1-Tap</string>
+    <string name="onboarding_page2_title">Effortless logging</string>
+    <string name="onboarding_page2_body">Snap a photo of your monitor and let the app read it for you (Premium) — or enter readings manually in seconds.</string>
+    <string name="onboarding_page3_overlay">On Track</string>
+    <string name="onboarding_page3_title">Stay consistent</string>
+    <string name="onboarding_page3_body">Daily reminders, trend charts, and Health Connect sync keep your progress on track over time.</string>
+
+    <!-- ── Help – section titles ──────────────────────────────────────────── -->
+    <string name="help_title">Help</string>
+    <string name="help_camera_title">Scanning with Camera</string>
+    <string name="help_manual_title">Manual Entry</string>
+    <string name="help_trends_title">Trends Chart</string>
+    <string name="help_history_title">Reading History</string>
+    <string name="help_profile_title">Health Profile</string>
+    <string name="help_risk_title">Health Risk Assessment</string>
+    <string name="help_reminders_title">Reminders</string>
+    <string name="help_export_title">Exporting Data</string>
+    <string name="help_import_title">Importing Data</string>
+    <string name="help_hc_title">Health Connect</string>
+
+    <!-- ── Help – section bodies ──────────────────────────────────────────── -->
+    <string name="help_camera_body">Camera scanning is a Premium feature, available with an active subscription.\n\nTap the camera button (bottom-right) to open the live preview. Frame your blood pressure monitor\'s display inside the on-screen guide, then tap Capture.\n\nThe photo is sent to Gemini 2.5 Flash, which reads the Systolic, Diastolic, and Pulse values. You can review and correct them on the next screen before saving.\n\nIf you don\'t have an active subscription, tapping the camera button will open the upgrade screen where you can subscribe or restore a previous purchase.</string>
+    <string name="help_manual_body">Tap the pencil button to enter a reading without taking a photo. The sliders are pre-filled with your last saved reading (defaults: 120 / 80 / 60 on first launch).\n\nAdjust Systolic, Diastolic, and Pulse using the slider or the ± buttons. Add an optional note, then tap Save Reading.\n\nThe Save button is disabled until Systolic is greater than Diastolic.</string>
+    <string name="help_trends_body">The chart on the Dashboard plots Systolic (red) and Diastolic (blue) readings over time. Use the chips above the chart to filter the view:\n\n• 7d — last 7 days\n• 30d — last 30 days (default)\n• 90d — last 90 days\n• All — complete history\n\nThe Y-axis is fixed at 40–180 mmHg. Dashed reference lines mark the AHA normal upper limits: SYS 120 and DIA 80.\n\nRotate the phone to landscape for a full-screen chart view.</string>
+    <string name="help_history_body">All readings are listed below the chart, newest first. Each row shows:\n\n• Date and time\n• SYS / DIA · pulse (bpm)\n• A colour-coded BP category badge (Normal / Elevated / Stage 1 / Stage 2 / Crisis)\n• Any note you added (shown in italics)\n\nSwipe a row left or right to delete it. A snackbar appears at the bottom with an Undo button — you have 5 seconds to reverse the deletion before it is permanent.</string>
+    <string name="help_profile_body">Tap the Person icon to open your Health Profile. Filling it in allows the app to personalise the Health Risk card.\n\nFields available:\n\n• Birth year — used to compute your age\n• Biological sex\n• Weight (kg) and Height (cm) — live BMI preview shown\n• Current smoker toggle\n• Diabetes / pre-diabetes toggle\n• Physical activity level\n\nAll data stays on-device (DataStore Preferences). The profile is optional; the app works fully without it.</string>
+    <string name="help_risk_body">When at least one reading exists, a Health Risk card appears at the top of the reading list. It combines your latest BP category with your health profile to surface contextual guidance.\n\nGuidance is drawn from AHA (American Heart Association) guidelines and is prefixed with a disclaimer. It is informational only and does not replace advice from a qualified healthcare professional.\n\nTap \"Edit profile\" on the card to complete or update your health profile.</string>
+    <string name="help_reminders_body">Tap the Bell icon to configure daily measurement reminders.\n\n1. Grant the notification permission if prompted.\n2. Enable the master switch.\n3. Set a Morning time (ideally 30 minutes after waking, before coffee or medication).\n4. Set an Evening time (when you are relaxed and at rest).\n\nNotifications include a Log Now shortcut that opens the app, and a Snooze (15m) action. Alarms are re-scheduled automatically each day and survive device reboots.\n\nIf the exact-alarm permission is not available on your device, the app will direct you to the system settings to enable it.</string>
+    <string name="help_export_body">Tap the Share icon in the top bar to export your data. A dropdown offers three formats:\n\n• JSON — your complete reading history. Can be imported back into the app.\n• CSV — your complete history in spreadsheet format, compatible with Excel or Google Sheets.\n• PDF — a multi-page document containing:\n  – Landscape trend charts for the last 7 days, 30 days, and all time. Each chart includes reference lines, numbered note callouts, and a stats bar (avg / min / max).\n  – A portrait table of readings from the last 30 days with colour-coded categories.\n\nThe export is shared via Android\'s standard share sheet.</string>
+    <string name="help_import_body">Tap the Download icon (top bar) to import readings from a JSON file previously exported from this app.\n\nThe app opens a file picker. Select your JSON export file. Only readings whose timestamps do not already exist in the database are inserted — re-importing the same file is safe.\n\nA snackbar confirms how many new readings were added, or tells you there was nothing new to import.</string>
+    <string name="help_hc_body">Health Connect is Google\'s on-device health data platform. This app can write your readings as Blood Pressure and Heart Rate records.\n\nBulk sync: tap the heart-monitor icon in the top bar. You will be asked to grant write permissions the first time. All existing readings are uploaded (safe to repeat — existing records are updated, not duplicated).\n\nAuto-push: every time you save a new reading, it is automatically pushed to Health Connect in the background — provided you have already granted permissions. No extra action is needed.\n\nIf Health Connect is not installed on your device, the app will offer a link to the Play Store to install it.</string>
 </resources>

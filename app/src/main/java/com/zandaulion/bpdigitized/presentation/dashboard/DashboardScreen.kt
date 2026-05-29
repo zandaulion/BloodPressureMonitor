@@ -75,6 +75,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.FileProvider
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -83,9 +84,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -122,8 +125,8 @@ fun DashboardScreen(
             when (event) {
                 is DashboardEvent.ShowUndoSnackbar -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = "Reading deleted",
-                        actionLabel = "Undo",
+                        message = context.getString(R.string.dashboard_snack_deleted),
+                        actionLabel = context.getString(R.string.dashboard_snack_undo),
                         withDismissAction = true,
                     )
                     if (result == SnackbarResult.ActionPerformed) {
@@ -132,32 +135,38 @@ fun DashboardScreen(
                 }
                 is DashboardEvent.ShareExport -> shareFile(context, event.file, event.mimeType)
                 DashboardEvent.ExportFailed -> {
-                    snackbarHostState.showSnackbar("Export failed")
+                    snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_export_failed))
                 }
                 is DashboardEvent.ImportSucceeded -> {
-                    snackbarHostState.showSnackbar(
-                        message = if (event.count == 0) "No new readings to import"
-                                  else "Imported ${event.count} reading${if (event.count != 1) "s" else ""}",
-                    )
+                    val msg = if (event.count == 0) {
+                        context.getString(R.string.dashboard_snack_import_none)
+                    } else {
+                        context.resources.getQuantityString(
+                            R.plurals.dashboard_snack_imported, event.count, event.count,
+                        )
+                    }
+                    snackbarHostState.showSnackbar(message = msg)
                 }
                 DashboardEvent.ImportFailed -> {
-                    snackbarHostState.showSnackbar("Import failed — make sure the file is a valid BP export")
+                    snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_import_failed))
                 }
                 is DashboardEvent.RequestHealthConnectPermissions -> {
                     hcPermLauncher.launch(event.permissions)
                 }
                 is DashboardEvent.SyncToHealthConnectSucceeded -> {
                     snackbarHostState.showSnackbar(
-                        "Synced ${event.count} reading${if (event.count != 1) "s" else ""} to Health Connect",
+                        context.resources.getQuantityString(
+                            R.plurals.dashboard_snack_synced, event.count, event.count,
+                        ),
                     )
                 }
                 DashboardEvent.SyncToHealthConnectFailed -> {
-                    snackbarHostState.showSnackbar("Sync to Health Connect failed")
+                    snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_hc_sync_failed))
                 }
                 DashboardEvent.HealthConnectInstallRequired -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = "Health Connect is not available on this device",
-                        actionLabel = "Install",
+                        message = context.getString(R.string.dashboard_snack_hc_unavailable),
+                        actionLabel = context.getString(R.string.dashboard_snack_hc_install),
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         val intent = Intent(Intent.ACTION_VIEW,
@@ -168,8 +177,8 @@ fun DashboardScreen(
                 }
                 DashboardEvent.HealthConnectPermissionsDenied -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = "Please grant blood pressure permission in Health Connect",
-                        actionLabel = "Open Settings",
+                        message = context.getString(R.string.dashboard_snack_hc_permission),
+                        actionLabel = context.getString(R.string.action_open_settings),
                         withDismissAction = true,
                     )
                     if (result == SnackbarResult.ActionPerformed) {
@@ -219,7 +228,7 @@ fun DashboardScreen(
                     .statusBarsPadding(),
             ) {
                 Text(
-                    text = "Blood Pressure Tracking",
+                    text = stringResource(R.string.dashboard_title),
                     style = MaterialTheme.typography.titleLarge,
                     modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 14.dp, bottom = 4.dp),
                 )
@@ -231,43 +240,43 @@ fun DashboardScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(onClick = onReminders) {
-                        Icon(Icons.Default.NotificationsNone, contentDescription = "Reminders")
+                        Icon(Icons.Default.NotificationsNone, contentDescription = stringResource(R.string.dashboard_cd_reminders))
                     }
                     IconButton(onClick = onProfile) {
-                        Icon(Icons.Default.Person, contentDescription = "Health profile")
+                        Icon(Icons.Default.Person, contentDescription = stringResource(R.string.dashboard_cd_profile))
                     }
                     IconButton(
                         onClick = { importLauncher.launch(arrayOf("application/json", "*/*")) },
                     ) {
-                        Icon(Icons.Default.FileDownload, contentDescription = "Import data")
+                        Icon(Icons.Default.FileDownload, contentDescription = stringResource(R.string.dashboard_cd_import))
                     }
                     Box {
                         IconButton(
                             onClick = { exportMenuExpanded = true },
                             enabled = ui.readings.isNotEmpty(),
                         ) {
-                            Icon(Icons.Default.IosShare, contentDescription = "Export data")
+                            Icon(Icons.Default.IosShare, contentDescription = stringResource(R.string.dashboard_cd_export))
                         }
                         DropdownMenu(
                             expanded = exportMenuExpanded,
                             onDismissRequest = { exportMenuExpanded = false },
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Export as JSON") },
+                                text = { Text(stringResource(R.string.dashboard_export_json)) },
                                 onClick = {
                                     exportMenuExpanded = false
                                     viewModel.requestExport()
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Export as CSV") },
+                                text = { Text(stringResource(R.string.dashboard_export_csv)) },
                                 onClick = {
                                     exportMenuExpanded = false
                                     viewModel.requestCsvExport()
                                 },
                             )
                             DropdownMenuItem(
-                                text = { Text("Export as PDF") },
+                                text = { Text(stringResource(R.string.dashboard_export_pdf)) },
                                 onClick = {
                                     exportMenuExpanded = false
                                     viewModel.requestPdfExport()
@@ -279,10 +288,10 @@ fun DashboardScreen(
                         onClick = viewModel::onSyncToHealthConnectClicked,
                         enabled = ui.readings.isNotEmpty(),
                     ) {
-                        Icon(Icons.Default.MonitorHeart, contentDescription = "Sync to Health Connect")
+                        Icon(Icons.Default.MonitorHeart, contentDescription = stringResource(R.string.dashboard_cd_sync_hc))
                     }
                     IconButton(onClick = onHelp) {
-                        Icon(Icons.Default.HelpOutline, contentDescription = "Help")
+                        Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.dashboard_cd_help))
                     }
                 }
                 HorizontalDivider()
@@ -294,7 +303,7 @@ fun DashboardScreen(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 SmallFloatingActionButton(onClick = onAddManually) {
-                    Icon(Icons.Default.Edit, contentDescription = "Add reading manually")
+                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.dashboard_cd_add_manually))
                 }
                 Box {
                     FloatingActionButton(onClick = {
@@ -304,12 +313,12 @@ fun DashboardScreen(
                             displayPaywall = true
                         }
                     }) {
-                        Icon(Icons.Default.CameraAlt, contentDescription = "Scan reading with camera")
+                        Icon(Icons.Default.CameraAlt, contentDescription = stringResource(R.string.dashboard_cd_scan))
                     }
                     if (!ui.isProUser) {
                         Icon(
                             imageVector = Icons.Default.Lock,
-                            contentDescription = "Premium feature",
+                            contentDescription = stringResource(R.string.dashboard_cd_premium),
                             tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier
                                 .align(Alignment.TopEnd)
@@ -377,7 +386,7 @@ fun DashboardScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = "No readings yet. Tap the pencil button to enter one, or the camera button to scan.",
+                        text = stringResource(R.string.dashboard_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
@@ -423,7 +432,7 @@ private fun RangeChipRow(
             FilterChip(
                 selected = range == selected,
                 onClick = { onSelect(range) },
-                label = { Text(range.label) },
+                label = { Text(stringResource(range.labelRes())) },
             )
         }
     }
@@ -474,7 +483,7 @@ private fun SwipeableReadingRow(
             ) {
                 Icon(
                     imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
+                    contentDescription = stringResource(R.string.dashboard_cd_delete),
                     tint = MaterialTheme.colorScheme.error,
                 )
             }
@@ -506,11 +515,11 @@ private fun ReadingRow(reading: BPReading) {
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                val pulseSuffix = if (reading.pulse != null) {
+                    stringResource(R.string.dashboard_reading_pulse_format, reading.pulse)
+                } else ""
                 Text(
-                    text = buildString {
-                        append(reading.systolic).append('/').append(reading.diastolic)
-                        reading.pulse?.let { append(" · ").append(it).append(" bpm") }
-                    },
+                    text = "${reading.systolic}/${reading.diastolic}$pulseSuffix",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                 )

@@ -42,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
@@ -50,6 +51,7 @@ import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.zandaulion.bpdigitized.R
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
@@ -105,10 +107,13 @@ fun RemindersScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Reminders") },
+                title = { Text(stringResource(R.string.reminders_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back),
+                        )
                     }
                 },
             )
@@ -126,9 +131,9 @@ fun RemindersScreen(
             // ── Notification permission banner ────────────────────────────────
             if (notifPermState != null && !notifPermState.status.isGranted) {
                 PermissionBanner(
-                    title       = "Notification permission required",
-                    description = "Allow notifications so reminders can reach you.",
-                    buttonText  = "Grant Permission",
+                    title       = stringResource(R.string.reminders_notif_perm_title),
+                    description = stringResource(R.string.reminders_notif_perm_desc),
+                    buttonText  = stringResource(R.string.reminders_notif_perm_button),
                     onClick     = { notifPermState.launchPermissionRequest() },
                 )
             }
@@ -136,9 +141,9 @@ fun RemindersScreen(
             // ── Exact-alarm permission banner ─────────────────────────────────
             if (ui.needsExactAlarmPermission) {
                 PermissionBanner(
-                    title       = "Exact alarm permission required",
-                    description = "For precise reminders, allow this app to schedule exact alarms.",
-                    buttonText  = "Open Settings",
+                    title       = stringResource(R.string.reminders_exact_alarm_title),
+                    description = stringResource(R.string.reminders_exact_alarm_desc),
+                    buttonText  = stringResource(R.string.reminders_exact_alarm_button),
                     onClick     = {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                             context.startActivity(
@@ -159,9 +164,12 @@ fun RemindersScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
-                        Text("Enable Reminders", style = MaterialTheme.typography.titleMedium)
                         Text(
-                            "Morning and evening BP check notifications",
+                            stringResource(R.string.reminders_enable_label),
+                            style = MaterialTheme.typography.titleMedium,
+                        )
+                        Text(
+                            stringResource(R.string.reminders_enable_desc),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -175,8 +183,8 @@ fun RemindersScreen(
 
             // ── Morning trigger ───────────────────────────────────────────────
             TimeCard(
-                label       = "Morning Check",
-                description = "Taken ~30 min after waking, before coffee or medication",
+                label       = stringResource(R.string.reminders_morning_label),
+                description = stringResource(R.string.reminders_morning_desc),
                 minutes     = ui.morningMinutes,
                 enabled     = ui.isEnabled,
                 onClick     = { if (ui.isEnabled) showMorningPicker = true },
@@ -184,8 +192,8 @@ fun RemindersScreen(
 
             // ── Evening trigger ───────────────────────────────────────────────
             TimeCard(
-                label       = "Evening Check",
-                description = "Taken while relaxing in the evening",
+                label       = stringResource(R.string.reminders_evening_label),
+                description = stringResource(R.string.reminders_evening_desc),
                 minutes     = ui.eveningMinutes,
                 enabled     = ui.isEnabled,
                 onClick     = { if (ui.isEnabled) showEveningPicker = true },
@@ -194,7 +202,7 @@ fun RemindersScreen(
             HorizontalDivider(modifier = Modifier.padding(top = 4.dp))
 
             Text(
-                text  = "Tap a time to change it. Reminders fire each day at the chosen time and reschedule automatically.",
+                text  = stringResource(R.string.reminders_footer),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -271,17 +279,21 @@ private fun TimePickerDialog(
     )
     AlertDialog(
         onDismissRequest = onDismiss,
-        title    = { Text("Set time") },
+        title    = { Text(stringResource(R.string.reminders_set_time)) },
         text     = {
             Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxWidth()) {
                 TimePicker(state = state)
             }
         },
         confirmButton = {
-            TextButton(onClick = { onConfirm(state.hour * 60 + state.minute) }) { Text("OK") }
+            TextButton(onClick = { onConfirm(state.hour * 60 + state.minute) }) {
+                Text(stringResource(R.string.action_ok))
+            }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.action_cancel))
+            }
         },
     )
 }

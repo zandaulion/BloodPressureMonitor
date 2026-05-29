@@ -18,10 +18,13 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/** Outcome of a "Restore Purchases" attempt — resolved to a string in the UI layer. */
+enum class RestoreState { Success, Error }
+
 data class ProfileFormState(
     // ── Billing ───────────────────────────────────────────────────────────────
     val isRestoring: Boolean = false,
-    val restoreMessage: String? = null,
+    val restoreResult: RestoreState? = null,
     // ── Health profile ────────────────────────────────────────────────────────
     val birthYearText: String = "",
     val sex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
@@ -135,18 +138,18 @@ class ProfileViewModel @Inject constructor(
     }
 
     fun restorePurchases() {
-        _state.update { it.copy(isRestoring = true, restoreMessage = null) }
-        billingManager.restorePurchases { success, errorMsg ->
+        _state.update { it.copy(isRestoring = true, restoreResult = null) }
+        billingManager.restorePurchases { success, _ ->
             _state.update {
                 it.copy(
                     isRestoring = false,
-                    restoreMessage = if (success) "Purchases restored successfully." else errorMsg ?: "Failed to restore purchases."
+                    restoreResult = if (success) RestoreState.Success else RestoreState.Error,
                 )
             }
         }
     }
-    
-    fun dismissRestoreMessage() = _state.update { it.copy(restoreMessage = null) }
+
+    fun dismissRestoreResult() = _state.update { it.copy(restoreResult = null) }
 
     fun updateBirthYear(v: String) = _state.update { it.copy(birthYearText = v.filter(Char::isDigit).take(4)) }
     fun updateSex(v: BiologicalSex) = _state.update { it.copy(sex = v) }

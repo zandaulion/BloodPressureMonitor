@@ -36,6 +36,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
@@ -43,9 +44,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.ActivityLevel
 import com.zandaulion.bpdigitized.domain.model.BiologicalSex
 import com.zandaulion.bpdigitized.domain.model.BmiCategory
+import com.zandaulion.bpdigitized.presentation.extensions.descriptionRes
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,10 +71,13 @@ fun ProfileScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Health Profile") },
+                title = { Text(stringResource(R.string.profile_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(
+                            Icons.Default.ArrowBack,
+                            contentDescription = stringResource(R.string.action_back),
+                        )
                     }
                 },
                 actions = {
@@ -78,7 +85,7 @@ fun ProfileScreen(
                         onClick = viewModel::save,
                         enabled = !state.birthYearError && !state.weightError && !state.heightError,
                     ) {
-                        Text("Save")
+                        Text(stringResource(R.string.action_save))
                     }
                 },
             )
@@ -94,8 +101,7 @@ fun ProfileScreen(
             verticalArrangement = Arrangement.spacedBy(4.dp),
         ) {
             Text(
-                text = "This information helps tailor your blood pressure risk assessment. " +
-                    "All data stays on your device.",
+                text = stringResource(R.string.profile_info),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -103,20 +109,20 @@ fun ProfileScreen(
             Spacer(Modifier.height(8.dp))
 
             // ── Basic information ─────────────────────────────────────────────
-            SectionHeader("Basic Information")
+            SectionHeader(stringResource(R.string.profile_section_basic))
 
             OutlinedTextField(
                 value = state.birthYearText,
                 onValueChange = viewModel::updateBirthYear,
-                label = { Text("Birth year") },
-                placeholder = { Text("e.g. 1985") },
+                label = { Text(stringResource(R.string.profile_birth_year_label)) },
+                placeholder = { Text(stringResource(R.string.profile_birth_year_placeholder)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 isError = state.birthYearError,
                 supportingText = when {
                     state.birthYearError ->
-                        { { Text("Enter a valid birth year") } }
+                        { { Text(stringResource(R.string.profile_birth_year_error)) } }
                     state.computedAge != null ->
-                        { { Text("Age: ${state.computedAge} years") } }
+                        { { Text(stringResource(R.string.profile_age, state.computedAge!!)) } }
                     else -> null
                 },
                 singleLine = true,
@@ -124,7 +130,7 @@ fun ProfileScreen(
             )
 
             Text(
-                text = "Biological sex",
+                text = stringResource(R.string.profile_sex_label),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp),
             )
@@ -133,7 +139,7 @@ fun ProfileScreen(
                     FilterChip(
                         selected = state.sex == sex,
                         onClick = { viewModel.updateSex(sex) },
-                        label = { Text(sex.label) },
+                        label = { Text(stringResource(sex.labelRes())) },
                     )
                 }
             }
@@ -141,7 +147,7 @@ fun ProfileScreen(
             Spacer(Modifier.height(8.dp))
 
             // ── Body measurements ─────────────────────────────────────────────
-            SectionHeader("Body Measurements")
+            SectionHeader(stringResource(R.string.profile_section_body))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -150,12 +156,12 @@ fun ProfileScreen(
                 OutlinedTextField(
                     value = state.weightText,
                     onValueChange = viewModel::updateWeight,
-                    label = { Text("Weight") },
-                    suffix = { Text("kg") },
+                    label = { Text(stringResource(R.string.profile_weight_label)) },
+                    suffix = { Text(stringResource(R.string.profile_weight_suffix)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     isError = state.weightError,
                     supportingText = when {
-                        state.weightError -> { { Text("Enter a value > 0") } }
+                        state.weightError -> { { Text(stringResource(R.string.profile_weight_error)) } }
                         state.weightLbs != null -> { { Text(state.weightLbs!!) } }
                         else -> null
                     },
@@ -165,12 +171,12 @@ fun ProfileScreen(
                 OutlinedTextField(
                     value = state.heightText,
                     onValueChange = viewModel::updateHeight,
-                    label = { Text("Height") },
-                    suffix = { Text("cm") },
+                    label = { Text(stringResource(R.string.profile_height_label)) },
+                    suffix = { Text(stringResource(R.string.profile_height_suffix)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     isError = state.heightError,
                     supportingText = when {
-                        state.heightError -> { { Text("Enter a value > 0") } }
+                        state.heightError -> { { Text(stringResource(R.string.profile_height_error)) } }
                         state.heightImperial != null -> { { Text(state.heightImperial!!) } }
                         else -> null
                     },
@@ -200,7 +206,7 @@ fun ProfileScreen(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        Text("BMI", style = MaterialTheme.typography.bodyMedium)
+                        Text(stringResource(R.string.profile_bmi), style = MaterialTheme.typography.bodyMedium)
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(8.dp),
                             verticalAlignment = Alignment.CenterVertically,
@@ -211,7 +217,7 @@ fun ProfileScreen(
                             )
                             if (cat != null) {
                                 Text(
-                                    text = cat.label,
+                                    text = stringResource(cat.labelRes()),
                                     style = MaterialTheme.typography.labelMedium,
                                     color = catColor,
                                 )
@@ -224,18 +230,18 @@ fun ProfileScreen(
             Spacer(Modifier.height(8.dp))
 
             // ── Health factors ────────────────────────────────────────────────
-            SectionHeader("Health Factors")
+            SectionHeader(stringResource(R.string.profile_section_health))
 
             ToggleRow(
-                label = "Current smoker",
-                description = "Doubles cardiovascular risk",
+                label = stringResource(R.string.profile_smoker_label),
+                description = stringResource(R.string.profile_smoker_desc),
                 checked = state.isSmoker,
                 onChecked = viewModel::updateSmoker,
             )
             HorizontalDivider()
             ToggleRow(
-                label = "Diabetes / pre-diabetes",
-                description = "Significantly raises risk when combined with high BP",
+                label = stringResource(R.string.profile_diabetes_label),
+                description = stringResource(R.string.profile_diabetes_desc),
                 checked = state.hasDiabetes,
                 onChecked = viewModel::updateDiabetes,
             )
@@ -243,10 +249,10 @@ fun ProfileScreen(
             Spacer(Modifier.height(8.dp))
 
             // ── Physical activity ─────────────────────────────────────────────
-            SectionHeader("Physical Activity")
+            SectionHeader(stringResource(R.string.profile_section_activity))
 
             Text(
-                text = "Typical exercise level",
+                text = stringResource(R.string.profile_activity_level_label),
                 style = MaterialTheme.typography.bodyMedium,
                 modifier = Modifier.padding(top = 4.dp),
             )
@@ -258,7 +264,7 @@ fun ProfileScreen(
                             FilterChip(
                                 selected = state.activityLevel == level,
                                 onClick = { viewModel.updateActivity(level) },
-                                label = { Text(level.label) },
+                                label = { Text(stringResource(level.labelRes())) },
                                 modifier = Modifier.weight(1f),
                             )
                         }
@@ -267,7 +273,7 @@ fun ProfileScreen(
             }
             // Description of the selected level
             Text(
-                text = state.activityLevel.description,
+                text = stringResource(state.activityLevel.descriptionRes()),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.padding(top = 2.dp),
@@ -275,11 +281,11 @@ fun ProfileScreen(
 
             Spacer(Modifier.height(8.dp))
 
-            // ── Subscriptions ───────────────────────────────────────────────────────
-            SectionHeader("Subscriptions")
+            // ── Subscriptions ─────────────────────────────────────────────────
+            SectionHeader(stringResource(R.string.profile_section_subscriptions))
 
             Text(
-                text = "Manage your Pro subscription to unlock the AI Camera Scanner.",
+                text = stringResource(R.string.profile_subscriptions_desc),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -289,22 +295,32 @@ fun ProfileScreen(
                 enabled = !state.isRestoring,
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                Text(if (state.isRestoring) "Restoring..." else "Restore Purchases")
-            }
-            
-            state.restoreMessage?.let { message ->
                 Text(
-                    text = message,
+                    stringResource(
+                        if (state.isRestoring) R.string.profile_restoring
+                        else R.string.profile_restore_purchases,
+                    ),
+                )
+            }
+
+            state.restoreResult?.let { result ->
+                Text(
+                    text = stringResource(
+                        when (result) {
+                            RestoreState.Success -> R.string.profile_restore_success
+                            RestoreState.Error   -> R.string.profile_restore_error
+                        },
+                    ),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp),
                 )
             }
 
             Spacer(Modifier.height(24.dp))
 
             Text(
-                text = "ⓘ  This assessment is informational and does not replace medical advice.",
+                text = stringResource(R.string.profile_disclaimer),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
