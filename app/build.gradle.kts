@@ -1,5 +1,3 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -9,11 +7,6 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
-// Read secrets from local.properties (never committed to VCS)
-val localProps = Properties()
-rootProject.file("local.properties").takeIf { it.exists() }
-    ?.inputStream()?.use { localProps.load(it) }
-
 android {
     namespace = "com.zandaulion.bpdigitized"
     compileSdk = 36
@@ -22,17 +15,11 @@ android {
         applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 3
+        versionName = "0.3.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
-
-        buildConfigField(
-            "String",
-            "GEMINI_API_KEY",
-            "\"${localProps.getProperty("GEMINI_API_KEY", "")}\"",
-        )
     }
 
     buildTypes {
@@ -112,7 +99,6 @@ dependencies {
 
     implementation(libs.health.connect.client)
     implementation(libs.accompanist.permissions)
-    implementation(libs.security.crypto)
 
     implementation(libs.coil.compose)
     implementation(libs.androidx.exifinterface)
