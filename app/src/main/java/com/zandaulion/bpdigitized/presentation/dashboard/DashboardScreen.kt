@@ -25,6 +25,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
 import com.revenuecat.purchases.ui.revenuecatui.PaywallDialog
 import com.revenuecat.purchases.ui.revenuecatui.PaywallDialogOptions
+import com.revenuecat.purchases.ui.revenuecatui.PaywallListener
+import com.revenuecat.purchases.CustomerInfo
+import com.revenuecat.purchases.PurchasesError
+import com.revenuecat.purchases.models.StoreTransaction
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -305,6 +309,18 @@ fun DashboardScreen(
                     .setRequiredEntitlementIdentifier("pro")
                     .setShouldDisplayDismissButton(true)
                     .setDismissRequest { displayPaywall = false }
+                    .setListener(object : PaywallListener {
+                        override fun onPurchaseStarted(rcPackage: com.revenuecat.purchases.Package) {}
+                        override fun onPurchaseCompleted(customerInfo: CustomerInfo, storeTransaction: StoreTransaction) {
+                            displayPaywall = false
+                            onAddViaCamera()
+                        }
+                        override fun onPurchaseError(error: PurchasesError) {}
+                        override fun onPurchaseCancelled() {}
+                        override fun onRestoreStarted() {}
+                        override fun onRestoreCompleted(customerInfo: CustomerInfo) {}
+                        override fun onRestoreError(error: PurchasesError) {}
+                    })
                     .build()
             )
         }
