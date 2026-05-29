@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.google.services)
 }
 
 // Read secrets from local.properties (never committed to VCS)
@@ -14,15 +15,15 @@ rootProject.file("local.properties").takeIf { it.exists() }
     ?.inputStream()?.use { localProps.load(it) }
 
 android {
-    namespace = "com.example.bpdigitizer"
+    namespace = "com.zandaulion.bpdigitized"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.example.bpdigitizer"
+        applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
@@ -116,6 +117,14 @@ dependencies {
     implementation(libs.coil.compose)
     implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.datastore.preferences)
+
+    // Firebase & Vertex AI
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.vertexai)
+
+    // RevenueCat
+    implementation(libs.revenuecat.purchases)
+    implementation(libs.revenuecat.purchases.ui)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.junit)
