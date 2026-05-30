@@ -14,8 +14,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
+import androidx.compose.material.icons.filled.FileDownload
+import androidx.compose.material.icons.filled.IosShare
+import androidx.compose.material.icons.filled.MonitorHeart
+import androidx.compose.material.icons.filled.NotificationsNone
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -31,6 +38,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -42,19 +50,20 @@ import com.zandaulion.bpdigitized.R
 private data class HelpSection(
     @StringRes val titleRes: Int,
     @StringRes val bodyRes: Int,
+    val icon: ImageVector? = null,
 )
 
 private val HELP_SECTIONS = listOf(
-    HelpSection(R.string.help_camera_title,    R.string.help_camera_body),
-    HelpSection(R.string.help_manual_title,    R.string.help_manual_body),
+    HelpSection(R.string.help_camera_title,    R.string.help_camera_body, Icons.Default.CameraAlt),
+    HelpSection(R.string.help_manual_title,    R.string.help_manual_body, Icons.Default.Edit),
     HelpSection(R.string.help_trends_title,    R.string.help_trends_body),
     HelpSection(R.string.help_history_title,   R.string.help_history_body),
-    HelpSection(R.string.help_profile_title,   R.string.help_profile_body),
+    HelpSection(R.string.help_profile_title,   R.string.help_profile_body, Icons.Default.Person),
     HelpSection(R.string.help_risk_title,      R.string.help_risk_body),
-    HelpSection(R.string.help_reminders_title, R.string.help_reminders_body),
-    HelpSection(R.string.help_export_title,    R.string.help_export_body),
-    HelpSection(R.string.help_import_title,    R.string.help_import_body),
-    HelpSection(R.string.help_hc_title,        R.string.help_hc_body),
+    HelpSection(R.string.help_reminders_title, R.string.help_reminders_body, Icons.Default.NotificationsNone),
+    HelpSection(R.string.help_export_title,    R.string.help_export_body, Icons.Default.IosShare),
+    HelpSection(R.string.help_import_title,    R.string.help_import_body, Icons.Default.FileDownload),
+    HelpSection(R.string.help_hc_title,        R.string.help_hc_body, Icons.Default.MonitorHeart),
 )
 
 // ── Screen ────────────────────────────────────────────────────────────────────
@@ -105,6 +114,14 @@ private fun HelpCard(section: HelpSection) {
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                if (section.icon != null) {
+                    Icon(
+                        imageVector = section.icon,
+                        contentDescription = null,
+                        modifier = Modifier.padding(end = 12.dp),
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
                 Text(
                     text = stringResource(section.titleRes),
                     style = MaterialTheme.typography.titleMedium,
