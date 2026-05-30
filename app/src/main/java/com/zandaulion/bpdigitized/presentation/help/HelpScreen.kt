@@ -121,6 +121,10 @@ private fun HelpCard(section: HelpSection) {
                         modifier = Modifier.padding(end = 12.dp),
                         tint = MaterialTheme.colorScheme.primary,
                     )
+                } else {
+                    androidx.compose.foundation.layout.Spacer(
+                        modifier = androidx.compose.foundation.layout.width(36.dp)
+                    )
                 }
                 Text(
                     text = stringResource(section.titleRes),
