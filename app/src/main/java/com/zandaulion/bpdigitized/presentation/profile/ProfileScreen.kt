@@ -242,6 +242,7 @@ fun ProfileScreen(
                         suffix = { Text(stringResource(R.string.profile_height_suffix_ft)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         isError = state.heightError,
+                        supportingText = heightHelper?.let { { Text(" ") } },
                         singleLine = true,
                         modifier = Modifier.weight(1f),
                     )
