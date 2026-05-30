@@ -249,6 +249,7 @@ fun ProfileScreen(
                     OutlinedTextField(
                         value = state.heightInText,
                         onValueChange = viewModel::updateHeightIn,
+                        label = { Text(" ") },
                         suffix = { Text(stringResource(R.string.profile_height_suffix_in)) },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         isError = state.heightError,
