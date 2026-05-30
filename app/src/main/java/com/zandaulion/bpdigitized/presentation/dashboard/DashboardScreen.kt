@@ -411,12 +411,12 @@ fun DashboardScreen(
                             tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier
                                 .align(Alignment.TopEnd)
-                                .offset(x = 6.dp, y = (-6).dp)
-                                .size(20.dp)
+                                .offset(x = 8.dp, y = (-8).dp)
+                                .size(40.dp)
                                 .clip(CircleShape)
                                 .background(MaterialTheme.colorScheme.primary)
-                                .border(1.5.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
-                                .padding(3.dp),
+                                .border(3.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
+                                .padding(6.dp),
                         )
                     }
                 }
