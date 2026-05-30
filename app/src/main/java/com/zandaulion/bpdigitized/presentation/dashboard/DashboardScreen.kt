@@ -341,18 +341,32 @@ fun DashboardScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                SmallFloatingActionButton(onClick = onAddManually) {
-                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.dashboard_cd_add_manually))
+                SmallFloatingActionButton(
+                    onClick = onAddManually,
+                    modifier = Modifier.size(60.dp),
+                ) {
+                    Icon(
+                        Icons.Default.Edit,
+                        contentDescription = stringResource(R.string.dashboard_cd_add_manually),
+                        modifier = Modifier.size(36.dp),
+                    )
                 }
                 Box {
-                    FloatingActionButton(onClick = {
-                        if (ui.isProUser) {
-                            onAddViaCamera()
-                        } else {
-                            displayPaywall = true
-                        }
-                    }) {
-                        Icon(Icons.Default.CameraAlt, contentDescription = stringResource(R.string.dashboard_cd_scan))
+                    FloatingActionButton(
+                        onClick = {
+                            if (ui.isProUser) {
+                                onAddViaCamera()
+                            } else {
+                                displayPaywall = true
+                            }
+                        },
+                        modifier = Modifier.size(84.dp),
+                    ) {
+                        Icon(
+                            Icons.Default.CameraAlt,
+                            contentDescription = stringResource(R.string.dashboard_cd_scan),
+                            modifier = Modifier.size(36.dp),
+                        )
                     }
                     if (!ui.isProUser) {
                         Icon(
