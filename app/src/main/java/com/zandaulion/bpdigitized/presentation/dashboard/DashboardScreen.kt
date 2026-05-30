@@ -70,6 +70,7 @@ import androidx.compose.material3.SwipeToDismissBoxState
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -86,6 +87,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
@@ -117,7 +120,22 @@ fun DashboardScreen(
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     var exportMenuExpanded by remember { mutableStateOf(false) }
     var displayPaywall by remember { mutableStateOf(false) }
+    // Set when an export completes; promoted to exportedMessage on the next ON_RESUME
+    // (i.e. when the user dismisses the Android share sheet and returns to the app).
+    var pendingExportMessage by remember { mutableStateOf<String?>(null) }
     var exportedMessage by remember { mutableStateOf<String?>(null) }
+
+    // Promote the pending message once the user returns from the share sheet.
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME && pendingExportMessage != null) {
+                exportedMessage = pendingExportMessage
+                pendingExportMessage = null
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
 
     // Auto-clear the export confirmation after 1 second.
     LaunchedEffect(exportedMessage) {
@@ -149,7 +167,7 @@ fun DashboardScreen(
                     }
                 }
                 is DashboardEvent.ShareExport -> {
-                    exportedMessage = context.getString(
+                    pendingExportMessage = context.getString(
                         R.string.dashboard_snack_export_success,
                         context.getString(event.exportType.labelRes()),
                     )
