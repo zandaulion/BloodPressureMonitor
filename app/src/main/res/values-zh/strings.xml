@@ -126,6 +126,15 @@
     <string name="profile_age">年龄：%d 岁</string>
     <string name="profile_sex_label">生理性别</string>
     <string name="profile_section_body">身体测量</string>
+    <string name="unit_metric">公制</string>
+    <string name="unit_imperial">英制</string>
+    <string name="profile_weight_suffix_lb">lb</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_weight_label">体重</string>
     <string name="profile_weight_suffix">kg</string>
     <string name="profile_weight_error">请输入大于 0 的值</string>

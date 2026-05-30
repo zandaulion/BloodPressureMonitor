@@ -1,5 +1,6 @@
 package com.zandaulion.bpdigitized.presentation.profile
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zandaulion.bpdigitized.domain.model.ActivityLevel
@@ -9,6 +10,7 @@ import com.zandaulion.bpdigitized.domain.model.UserProfile
 import com.zandaulion.bpdigitized.domain.billing.BillingManager
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,10 +18,22 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 import javax.inject.Inject
 
 /** Outcome of a "Restore Purchases" attempt — resolved to a string in the UI layer. */
 enum class RestoreState { Success, Error }
+
+/** Measurement unit system for the body-measurement fields. Storage stays metric. */
+enum class UnitSystem { METRIC, IMPERIAL }
+
+// Conversion constants.
+private const val LB_PER_KG = 2.20462f
+private const val CM_PER_IN = 2.54f
+private const val IN_PER_FT = 12
+
+/** Always formats with a '.' separator so the value round-trips through toFloatOrNull. */
+private fun fmtUs(value: Float): String = "%.1f".format(java.util.Locale.US, value)
 
 data class ProfileFormState(
     // ── Billing ───────────────────────────────────────────────────────────────
@@ -28,8 +42,11 @@ data class ProfileFormState(
     // ── Health profile ────────────────────────────────────────────────────────
     val birthYearText: String = "",
     val sex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
-    val weightText: String = "",   // kg
-    val heightText: String = "",   // cm
+    val unitSystem: UnitSystem = UnitSystem.METRIC,
+    val weightText: String = "",      // kg in metric mode, lb in imperial mode
+    val heightText: String = "",      // cm — metric mode only
+    val heightFtText: String = "",    // ft — imperial mode only
+    val heightInText: String = "",    // in — imperial mode only
     val isSmoker: Boolean = false,
     val hasDiabetes: Boolean = false,
     val activityLevel: ActivityLevel = ActivityLevel.MODERATELY_ACTIVE,
@@ -51,19 +68,47 @@ data class ProfileFormState(
             return if (age in 1..120) age else null
         }
 
+    /** Canonical weight in kilograms derived from the active-unit text. Null if blank/invalid/≤0. */
+    val weightKg: Float?
+        get() {
+            val v = weightText.toFloatOrNull()?.takeIf { it > 0f } ?: return null
+            return if (unitSystem == UnitSystem.METRIC) v else v / LB_PER_KG
+        }
+
+    /** Canonical height in centimetres derived from the active-unit text. Null if blank/invalid/≤0. */
+    val heightCm: Float?
+        get() = if (unitSystem == UnitSystem.METRIC) {
+            heightText.toFloatOrNull()?.takeIf { it > 0f }
+        } else {
+            val ft = heightFtText.toFloatOrNull() ?: 0f
+            val inch = heightInText.toFloatOrNull() ?: 0f
+            ((ft * IN_PER_FT + inch) * CM_PER_IN).takeIf { it > 0f }
+        }
+
     val weightError: Boolean
-        get() = weightText.isNotEmpty() &&
-            weightText.toFloatOrNull()?.let { it <= 0f || it > 500f } != false
+        get() {
+            if (weightText.isBlank()) return false
+            val kg = weightKg ?: return true            // non-empty but unparseable/≤0
+            return kg > 500f
+        }
 
     val heightError: Boolean
-        get() = heightText.isNotEmpty() &&
-            heightText.toFloatOrNull()?.let { it <= 0f || it > 280f } != false
+        get() {
+            val hasInput = if (unitSystem == UnitSystem.METRIC) {
+                heightText.isNotBlank()
+            } else {
+                heightFtText.isNotBlank() || heightInText.isNotBlank()
+            }
+            if (!hasInput) return false
+            val cm = heightCm ?: return true
+            return cm > 280f
+        }
 
-    /** Live BMI from the form fields, null until both weight + height are valid numbers. */
+    /** Live BMI from the canonical values, null until both weight + height are valid. */
     val bmi: Float?
         get() {
-            val w = weightText.toFloatOrNull()?.takeIf { it > 0f } ?: return null
-            val h = heightText.toFloatOrNull()?.takeIf { it > 0f } ?: return null
+            val w = weightKg ?: return null
+            val h = heightCm ?: return null
             val hm = h / 100f
             return w / (hm * hm)
         }
@@ -78,24 +123,11 @@ data class ProfileFormState(
             }
         }
 
-    /** Imperial helper shown as supporting text under the weight field. */
-    val weightLbs: String?
-        get() = weightText.toFloatOrNull()?.let { "≈ ${"%.1f".format(it * 2.20462f)} lbs" }
-
-    /** Imperial helper shown as supporting text under the height field. */
-    val heightImperial: String?
-        get() = heightText.toFloatOrNull()?.let { cm ->
-            val totalIn = cm / 2.54f
-            val ft = (totalIn / 12).toInt()
-            val inch = (totalIn % 12).toInt()
-            "≈ ${ft}′${inch}″"
-        }
-
     fun toUserProfile() = UserProfile(
         birthYear = birthYearText.toIntOrNull(),
         biologicalSex = sex,
-        weightKg = weightText.toFloatOrNull()?.takeIf { it > 0f },
-        heightCm = heightText.toFloatOrNull()?.takeIf { it > 0f },
+        weightKg = weightKg,
+        heightCm = heightCm,
         isSmoker = isSmoker,
         hasDiabetes = hasDiabetes,
         activityLevel = activityLevel,
@@ -108,6 +140,7 @@ sealed interface ProfileEvent {
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val repository: UserProfileRepository,
     private val billingManager: BillingManager,
 ) : ViewModel() {
@@ -121,20 +154,18 @@ class ProfileViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             val p = repository.observe().first()
+            val unit = UnitPrefs.get(context)
             _state.update {
                 ProfileFormState(
                     birthYearText = p.birthYear?.toString()
                         ?: (java.time.Year.now().value - 40).toString(),
                     sex = p.biologicalSex,
-                    // Force a '.' decimal separator (Locale.US) so the editable text always
-                    // parses with toFloatOrNull, regardless of the active UI language.
-                    weightText = p.weightKg?.let { "%.1f".format(java.util.Locale.US, it) }.orEmpty(),
-                    heightText = p.heightCm?.let { "%.1f".format(java.util.Locale.US, it) }.orEmpty(),
                     isSmoker = p.isSmoker,
                     hasDiabetes = p.hasDiabetes,
                     activityLevel = p.activityLevel,
+                    unitSystem = unit,
                     isLoaded = true,
-                )
+                ).withMeasurements(p.weightKg, p.heightCm, unit)
             }
         }
     }
@@ -157,9 +188,23 @@ class ProfileViewModel @Inject constructor(
     fun updateSex(v: BiologicalSex) = _state.update { it.copy(sex = v) }
     fun updateWeight(v: String)   = _state.update { it.copy(weightText = sanitiseDecimal(v, maxLen = 6)) }
     fun updateHeight(v: String)   = _state.update { it.copy(heightText = sanitiseDecimal(v, maxLen = 6)) }
+    fun updateHeightFt(v: String) = _state.update { it.copy(heightFtText = v.filter(Char::isDigit).take(1)) }
+    fun updateHeightIn(v: String) = _state.update { it.copy(heightInText = v.filter(Char::isDigit).take(2)) }
     fun updateSmoker(v: Boolean)  = _state.update { it.copy(isSmoker = v) }
     fun updateDiabetes(v: Boolean) = _state.update { it.copy(hasDiabetes = v) }
     fun updateActivity(v: ActivityLevel) = _state.update { it.copy(activityLevel = v) }
+
+    /** Switches unit system, converting the currently-entered values into the new unit. */
+    fun updateUnitSystem(target: UnitSystem) {
+        _state.update { s ->
+            if (s.unitSystem == target) return@update s
+            // Read canonical values from the *current* unit, then re-fill in the target unit.
+            val kg = s.weightKg
+            val cm = s.heightCm
+            s.copy(unitSystem = target).withMeasurements(kg, cm, target)
+        }
+        UnitPrefs.set(context, target)
+    }
 
     fun save() {
         val s = _state.value
@@ -183,4 +228,37 @@ class ProfileViewModel @Inject constructor(
             "$intPart.$decPart"
         }
     }
+}
+
+/** Fills the editable measurement text fields from canonical kg/cm in the given unit. */
+private fun ProfileFormState.withMeasurements(
+    kg: Float?,
+    cm: Float?,
+    unit: UnitSystem,
+): ProfileFormState = when (unit) {
+    UnitSystem.METRIC -> copy(
+        weightText   = kg?.let { fmtUs(it) }.orEmpty(),
+        heightText   = cm?.let { fmtUs(it) }.orEmpty(),
+        heightFtText = "",
+        heightInText = "",
+    )
+    UnitSystem.IMPERIAL -> {
+        val (ft, inch) = cm.toFeetInches()
+        copy(
+            weightText   = kg?.let { fmtUs(it * LB_PER_KG) }.orEmpty(),
+            heightText   = "",
+            heightFtText = ft,
+            heightInText = inch,
+        )
+    }
+}
+
+/** Converts centimetres to whole feet + inches as text. Carries 12″ up to the next foot. */
+private fun Float?.toFeetInches(): Pair<String, String> {
+    if (this == null) return "" to ""
+    val totalIn = this / CM_PER_IN
+    var ft = (totalIn / IN_PER_FT).toInt()
+    var inch = (totalIn % IN_PER_FT).roundToInt()
+    if (inch == IN_PER_FT) { ft += 1; inch = 0 }
+    return ft.toString() to inch.toString()
 }

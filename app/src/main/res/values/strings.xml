@@ -148,12 +148,23 @@
     <string name="profile_age">Age: %d years</string>
     <string name="profile_sex_label">Biological sex</string>
     <string name="profile_section_body">Body Measurements</string>
+    <string name="unit_metric">Metric</string>
+    <string name="unit_imperial">Imperial</string>
     <string name="profile_weight_label">Weight</string>
     <string name="profile_weight_suffix">kg</string>
+    <string name="profile_weight_suffix_lb">lb</string>
     <string name="profile_weight_error">Enter a value > 0</string>
     <string name="profile_height_label">Height</string>
     <string name="profile_height_suffix">cm</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
     <string name="profile_height_error">Enter a value > 0</string>
+    <!-- %s = converted value in the opposite unit -->
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <!-- %1$d = feet, %2$d = inches -->
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_bmi">BMI</string>
     <string name="profile_section_health">Health Factors</string>
     <string name="profile_smoker_label">Current smoker</string>

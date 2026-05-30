@@ -126,6 +126,15 @@
     <string name="profile_age">나이: %d세</string>
     <string name="profile_sex_label">생물학적 성별</string>
     <string name="profile_section_body">신체 측정</string>
+    <string name="unit_metric">미터법</string>
+    <string name="unit_imperial">야드파운드법</string>
+    <string name="profile_weight_suffix_lb">lb</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_weight_label">체중</string>
     <string name="profile_weight_suffix">kg</string>
     <string name="profile_weight_error">0보다 큰 값을 입력하세요</string>

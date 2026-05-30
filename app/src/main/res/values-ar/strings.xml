@@ -136,6 +136,15 @@
     <string name="profile_age">العمر: %d سنة</string>
     <string name="profile_sex_label">الجنس البيولوجي</string>
     <string name="profile_section_body">القياسات الجسدية</string>
+    <string name="unit_metric">متري</string>
+    <string name="unit_imperial">إمبراطوري</string>
+    <string name="profile_weight_suffix_lb">lb</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_weight_label">الوزن</string>
     <string name="profile_weight_suffix">كجم</string>
     <string name="profile_weight_error">أدخل قيمة أكبر من 0</string>

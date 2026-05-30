@@ -50,6 +50,8 @@ import com.zandaulion.bpdigitized.domain.model.BiologicalSex
 import com.zandaulion.bpdigitized.domain.model.BmiCategory
 import com.zandaulion.bpdigitized.presentation.extensions.descriptionRes
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import java.util.Locale
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -149,40 +151,111 @@ fun ProfileScreen(
             // ── Body measurements ─────────────────────────────────────────────
             SectionHeader(stringResource(R.string.profile_section_body))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
+            // Unit-system toggle (display only — values are always stored in metric)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(
+                    selected = state.unitSystem == UnitSystem.METRIC,
+                    onClick = { viewModel.updateUnitSystem(UnitSystem.METRIC) },
+                    label = { Text(stringResource(R.string.unit_metric)) },
+                )
+                FilterChip(
+                    selected = state.unitSystem == UnitSystem.IMPERIAL,
+                    onClick = { viewModel.updateUnitSystem(UnitSystem.IMPERIAL) },
+                    label = { Text(stringResource(R.string.unit_imperial)) },
+                )
+            }
+
+            Spacer(Modifier.height(4.dp))
+
+            // Supporting text under each field: the equivalent value in the opposite unit,
+            // or the validation error when present.
+            val weightHelper: String? = when {
+                state.weightError -> stringResource(R.string.profile_weight_error)
+                state.weightKg != null && state.unitSystem == UnitSystem.METRIC ->
+                    stringResource(R.string.profile_weight_approx_lb, fmtApprox(state.weightKg!! * 2.20462f))
+                state.weightKg != null ->
+                    stringResource(R.string.profile_weight_approx_kg, fmtApprox(state.weightKg!!))
+                else -> null
+            }
+            val heightHelper: String? = when {
+                state.heightError -> stringResource(R.string.profile_height_error)
+                state.heightCm != null && state.unitSystem == UnitSystem.METRIC -> {
+                    val totalIn = state.heightCm!! / 2.54f
+                    var ft = (totalIn / 12).toInt()
+                    var inch = (totalIn % 12).roundToInt()
+                    if (inch == 12) { ft++; inch = 0 }
+                    stringResource(R.string.profile_height_approx_imperial, ft, inch)
+                }
+                state.heightCm != null ->
+                    stringResource(R.string.profile_height_approx_cm, fmtApprox(state.heightCm!!))
+                else -> null
+            }
+
+            if (state.unitSystem == UnitSystem.METRIC) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    OutlinedTextField(
+                        value = state.weightText,
+                        onValueChange = viewModel::updateWeight,
+                        label = { Text(stringResource(R.string.profile_weight_label)) },
+                        suffix = { Text(stringResource(R.string.profile_weight_suffix)) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                        isError = state.weightError,
+                        supportingText = weightHelper?.let { { Text(it) } },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                    )
+                    OutlinedTextField(
+                        value = state.heightText,
+                        onValueChange = viewModel::updateHeight,
+                        label = { Text(stringResource(R.string.profile_height_label)) },
+                        suffix = { Text(stringResource(R.string.profile_height_suffix)) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                        isError = state.heightError,
+                        supportingText = heightHelper?.let { { Text(it) } },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
+            } else {
                 OutlinedTextField(
                     value = state.weightText,
                     onValueChange = viewModel::updateWeight,
                     label = { Text(stringResource(R.string.profile_weight_label)) },
-                    suffix = { Text(stringResource(R.string.profile_weight_suffix)) },
+                    suffix = { Text(stringResource(R.string.profile_weight_suffix_lb)) },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     isError = state.weightError,
-                    supportingText = when {
-                        state.weightError -> { { Text(stringResource(R.string.profile_weight_error)) } }
-                        state.weightLbs != null -> { { Text(state.weightLbs!!) } }
-                        else -> null
-                    },
+                    supportingText = weightHelper?.let { { Text(it) } },
                     singleLine = true,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier.fillMaxWidth(),
                 )
-                OutlinedTextField(
-                    value = state.heightText,
-                    onValueChange = viewModel::updateHeight,
-                    label = { Text(stringResource(R.string.profile_height_label)) },
-                    suffix = { Text(stringResource(R.string.profile_height_suffix)) },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    isError = state.heightError,
-                    supportingText = when {
-                        state.heightError -> { { Text(stringResource(R.string.profile_height_error)) } }
-                        state.heightImperial != null -> { { Text(state.heightImperial!!) } }
-                        else -> null
-                    },
-                    singleLine = true,
-                    modifier = Modifier.weight(1f),
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                ) {
+                    OutlinedTextField(
+                        value = state.heightFtText,
+                        onValueChange = viewModel::updateHeightFt,
+                        label = { Text(stringResource(R.string.profile_height_label)) },
+                        suffix = { Text(stringResource(R.string.profile_height_suffix_ft)) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        isError = state.heightError,
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                    )
+                    OutlinedTextField(
+                        value = state.heightInText,
+                        onValueChange = viewModel::updateHeightIn,
+                        suffix = { Text(stringResource(R.string.profile_height_suffix_in)) },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                        isError = state.heightError,
+                        supportingText = heightHelper?.let { { Text(it) } },
+                        singleLine = true,
+                        modifier = Modifier.weight(1f),
+                    )
+                }
             }
 
             // Live BMI preview
@@ -366,3 +439,6 @@ private fun ToggleRow(
         Switch(checked = checked, onCheckedChange = onChecked)
     }
 }
+
+/** One-decimal display format for the opposite-unit approximation (locale-aware). */
+private fun fmtApprox(value: Float): String = String.format(Locale.getDefault(), "%.1f", value)

@@ -127,6 +127,15 @@
     <string name="profile_age">Idade: %d anos</string>
     <string name="profile_sex_label">Sexo biológico</string>
     <string name="profile_section_body">Medidas corporais</string>
+    <string name="unit_metric">Métrico</string>
+    <string name="unit_imperial">Imperial</string>
+    <string name="profile_weight_suffix_lb">lb</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_weight_label">Peso</string>
     <string name="profile_weight_suffix">kg</string>
     <string name="profile_weight_error">Insira um valor > 0</string>

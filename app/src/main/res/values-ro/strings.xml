@@ -129,6 +129,15 @@
     <string name="profile_age">Vârstă: %d ani</string>
     <string name="profile_sex_label">Sex biologic</string>
     <string name="profile_section_body">Măsurători corporale</string>
+    <string name="unit_metric">Metric</string>
+    <string name="unit_imperial">Imperial</string>
+    <string name="profile_weight_suffix_lb">lb</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_weight_label">Greutate</string>
     <string name="profile_weight_suffix">kg</string>
     <string name="profile_weight_error">Introdu o valoare > 0</string>

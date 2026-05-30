@@ -126,6 +126,15 @@
     <string name="profile_age">年齢：%d歳</string>
     <string name="profile_sex_label">生物学的性別</string>
     <string name="profile_section_body">体格測定</string>
+    <string name="unit_metric">メートル法</string>
+    <string name="unit_imperial">ヤード・ポンド法</string>
+    <string name="profile_weight_suffix_lb">lb</string>
+    <string name="profile_height_suffix_ft">ft</string>
+    <string name="profile_height_suffix_in">in</string>
+    <string name="profile_weight_approx_lb">≈ %s lb</string>
+    <string name="profile_weight_approx_kg">≈ %s kg</string>
+    <string name="profile_height_approx_imperial">≈ %1$d′ %2$d″</string>
+    <string name="profile_height_approx_cm">≈ %s cm</string>
     <string name="profile_weight_label">体重</string>
     <string name="profile_weight_suffix">kg</string>
     <string name="profile_weight_error">0より大きい値を入力してください</string>
