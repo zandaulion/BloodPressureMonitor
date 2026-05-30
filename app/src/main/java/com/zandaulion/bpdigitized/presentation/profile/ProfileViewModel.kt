@@ -51,6 +51,8 @@ data class ProfileFormState(
     val hasDiabetes: Boolean = false,
     val activityLevel: ActivityLevel = ActivityLevel.MODERATELY_ACTIVE,
     val isLoaded: Boolean = false,
+    val backingWeightKg: Float? = null,
+    val backingHeightCm: Float? = null,
 ) {
     val birthYearError: Boolean
         get() {
@@ -71,18 +73,22 @@ data class ProfileFormState(
     /** Canonical weight in kilograms derived from the active-unit text. Null if blank/invalid/≤0. */
     val weightKg: Float?
         get() {
+            if (backingWeightKg != null) return backingWeightKg
             val v = weightText.toFloatOrNull()?.takeIf { it > 0f } ?: return null
             return if (unitSystem == UnitSystem.METRIC) v else v / LB_PER_KG
         }
 
     /** Canonical height in centimetres derived from the active-unit text. Null if blank/invalid/≤0. */
     val heightCm: Float?
-        get() = if (unitSystem == UnitSystem.METRIC) {
-            heightText.toFloatOrNull()?.takeIf { it > 0f }
-        } else {
-            val ft = heightFtText.toFloatOrNull() ?: 0f
-            val inch = heightInText.toFloatOrNull() ?: 0f
-            ((ft * IN_PER_FT + inch) * CM_PER_IN).takeIf { it > 0f }
+        get() {
+            if (backingHeightCm != null) return backingHeightCm
+            return if (unitSystem == UnitSystem.METRIC) {
+                heightText.toFloatOrNull()?.takeIf { it > 0f }
+            } else {
+                val ft = heightFtText.toFloatOrNull() ?: 0f
+                val inch = heightInText.toFloatOrNull() ?: 0f
+                ((ft * IN_PER_FT + inch) * CM_PER_IN).takeIf { it > 0f }
+            }
         }
 
     val weightError: Boolean
@@ -165,6 +171,8 @@ class ProfileViewModel @Inject constructor(
                     activityLevel = p.activityLevel,
                     unitSystem = unit,
                     isLoaded = true,
+                    backingWeightKg = p.weightKg,
+                    backingHeightCm = p.heightCm,
                 ).withMeasurements(p.weightKg, p.heightCm, unit)
             }
         }
@@ -186,10 +194,10 @@ class ProfileViewModel @Inject constructor(
 
     fun updateBirthYear(v: String) = _state.update { it.copy(birthYearText = v.filter(Char::isDigit).take(4)) }
     fun updateSex(v: BiologicalSex) = _state.update { it.copy(sex = v) }
-    fun updateWeight(v: String)   = _state.update { it.copy(weightText = sanitiseDecimal(v, maxLen = 6)) }
-    fun updateHeight(v: String)   = _state.update { it.copy(heightText = sanitiseDecimal(v, maxLen = 6)) }
-    fun updateHeightFt(v: String) = _state.update { it.copy(heightFtText = v.filter(Char::isDigit).take(1)) }
-    fun updateHeightIn(v: String) = _state.update { it.copy(heightInText = v.filter(Char::isDigit).take(2)) }
+    fun updateWeight(v: String)   = _state.update { it.copy(weightText = sanitiseDecimal(v, maxLen = 6), backingWeightKg = null) }
+    fun updateHeight(v: String)   = _state.update { it.copy(heightText = sanitiseDecimal(v, maxLen = 6), backingHeightCm = null) }
+    fun updateHeightFt(v: String) = _state.update { it.copy(heightFtText = v.filter(Char::isDigit).take(1), backingHeightCm = null) }
+    fun updateHeightIn(v: String) = _state.update { it.copy(heightInText = v.filter(Char::isDigit).take(2), backingHeightCm = null) }
     fun updateSmoker(v: Boolean)  = _state.update { it.copy(isSmoker = v) }
     fun updateDiabetes(v: Boolean) = _state.update { it.copy(hasDiabetes = v) }
     fun updateActivity(v: ActivityLevel) = _state.update { it.copy(activityLevel = v) }
@@ -201,7 +209,11 @@ class ProfileViewModel @Inject constructor(
             // Read canonical values from the *current* unit, then re-fill in the target unit.
             val kg = s.weightKg
             val cm = s.heightCm
-            s.copy(unitSystem = target).withMeasurements(kg, cm, target)
+            s.copy(
+                unitSystem = target,
+                backingWeightKg = kg,
+                backingHeightCm = cm,
+            ).withMeasurements(kg, cm, target)
         }
         UnitPrefs.set(context, target)
     }
