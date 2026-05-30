@@ -401,7 +401,7 @@ fun DashboardScreen(
                         Icon(
                             Icons.Default.CameraAlt,
                             contentDescription = stringResource(R.string.dashboard_cd_scan),
-                            modifier = Modifier.size(36.dp),
+                            modifier = Modifier.size(54.dp),
                         )
                     }
                     if (!ui.isProUser) {
