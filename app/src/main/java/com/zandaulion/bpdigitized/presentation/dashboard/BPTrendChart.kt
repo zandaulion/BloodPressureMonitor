@@ -23,6 +23,7 @@ import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLa
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoZoomState
+import com.patrykandpatrick.vico.core.scroll.Scroll
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
 import com.patrykandpatrick.vico.compose.common.fill
@@ -62,7 +63,7 @@ fun BPTrendChart(
         return
     }
 
-    val scrollState = rememberVicoScrollState()
+    val scrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
     val zoomState   = rememberVicoZoomState()
 
     // Track the actual rendered chart width (pixels) so we can compute visibleFraction
