@@ -6,7 +6,6 @@ import androidx.lifecycle.viewModelScope
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.usecase.CalculateBPZoneUseCase
-import com.zandaulion.bpdigitized.domain.usecase.PushReadingToHealthConnectUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -36,7 +35,6 @@ class ValidationViewModel @Inject constructor(
     savedState: SavedStateHandle,
     private val repository: BPRepository,
     private val calculateZone: CalculateBPZoneUseCase,
-    private val pushToHealthConnect: PushReadingToHealthConnectUseCase,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ValidationState())
@@ -93,9 +91,6 @@ class ValidationViewModel @Inject constructor(
                 notes     = current.notes.trim().takeIf { it.isNotEmpty() },
             )
             val id = repository.insert(reading)
-            // Best-effort push to Health Connect — runs in the background so navigation
-            // is not delayed. Silent no-op when HC is unavailable or not yet authorised.
-            launch { pushToHealthConnect(reading.copy(id = id)) }
             _events.send(ValidationEvent.Saved)
         }
     }

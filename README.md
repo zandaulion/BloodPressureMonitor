@@ -17,7 +17,7 @@ Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read
 | **Reminders** | Two configurable daily alarms (morning + evening) via `AlarmManager`; 15-min snooze action |
 | **Export** | JSON · CSV · multi-page PDF (landscape charts + portrait table of last 30 days) |
 | **Import** | JSON import with timestamp-based deduplication |
-| **Health Connect** | Bulk sync + automatic per-reading push after each save (when permissions are granted) |
+| **Health Connect** | Bulk sync reading history to Google Health Connect |
 | **Health Profile** | Birth year, biological sex, weight / height (with BMI preview), smoker, diabetes, activity level |
 | **AI-Powered OCR** | Camera scan powered by Vertex AI (Gemini 2.5 Flash); no user API key required |
 | **Localization** | Fully translated into 12 languages: English, Arabic, Chinese, French, German, Hindi, Japanese, Korean, Portuguese, Romanian, Spanish, and Ukrainian |
