@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BP Digitizer</string>
+
+    <string name="action_back">戻る</string>
+    <string name="action_save">保存</string>
+    <string name="action_cancel">キャンセル</string>
+    <string name="action_ok">OK</string>
+    <string name="action_skip">スキップ</string>
+    <string name="action_open_settings">設定を開く</string>
+
+    <string name="bp_category_normal">正常</string>
+    <string name="bp_category_elevated">正常高値</string>
+    <string name="bp_category_stage1">高血圧1度</string>
+    <string name="bp_category_stage2">高血圧2度</string>
+    <string name="bp_category_crisis">緊急</string>
+
+    <string name="bp_display_normal">正常血圧</string>
+    <string name="bp_display_elevated">正常高値血圧</string>
+    <string name="bp_display_stage1">高血圧1度</string>
+    <string name="bp_display_stage2">高血圧2度</string>
+    <string name="bp_display_crisis">高血圧緊急症</string>
+
+    <string name="cv_risk_low">低</string>
+    <string name="cv_risk_moderate">中等度</string>
+    <string name="cv_risk_high">高</string>
+    <string name="cv_risk_very_high">非常に高い</string>
+
+    <string name="sex_male">男性</string>
+    <string name="sex_female">女性</string>
+    <string name="sex_prefer_not_to_say">無回答</string>
+
+    <string name="activity_sedentary">座位中心</string>
+    <string name="activity_lightly_active">軽い</string>
+    <string name="activity_moderately_active">中程度</string>
+    <string name="activity_very_active">活発</string>
+
+    <string name="activity_desc_sedentary">ほとんど運動しない</string>
+    <string name="activity_desc_lightly_active">週1〜3日の軽い運動</string>
+    <string name="activity_desc_moderately_active">週3〜5日の中程度の運動</string>
+    <string name="activity_desc_very_active">週6〜7日の激しい運動</string>
+
+    <string name="bmi_underweight">低体重</string>
+    <string name="bmi_normal">普通体重</string>
+    <string name="bmi_overweight">過体重</string>
+    <string name="bmi_obese">肥満</string>
+
+    <string name="chart_range_7d">7日</string>
+    <string name="chart_range_30d">30日</string>
+    <string name="chart_range_90d">90日</string>
+    <string name="chart_range_all">全期間</string>
+
+    <string name="dashboard_title">血圧記録</string>
+    <string name="dashboard_cd_reminders">リマインダー</string>
+    <string name="dashboard_cd_profile">健康プロフィール</string>
+    <string name="dashboard_cd_import">データをインポート</string>
+    <string name="dashboard_cd_export">データをエクスポート</string>
+    <string name="dashboard_cd_sync_hc">Health Connectに同期</string>
+    <string name="dashboard_cd_help">ヘルプ</string>
+    <string name="dashboard_cd_language">言語を変更</string>
+    <string name="language_system">システムのデフォルト</string>
+    <string name="dashboard_cd_add_manually">手動で記録を追加</string>
+    <string name="dashboard_cd_scan">カメラでスキャン</string>
+    <string name="dashboard_cd_premium">プレミアム機能</string>
+    <string name="dashboard_cd_delete">削除</string>
+    <string name="dashboard_export_json">JSONでエクスポート</string>
+    <string name="dashboard_export_csv">CSVでエクスポート</string>
+    <string name="dashboard_export_pdf">PDFでエクスポート</string>
+    <string name="dashboard_empty">記録がありません。鉛筆ボタンで入力するか、カメラボタンでスキャンしてください。</string>
+    <string name="dashboard_snack_deleted">記録を削除しました</string>
+    <string name="dashboard_snack_undo">元に戻す</string>
+    <string name="dashboard_snack_export_failed">エクスポートに失敗しました</string>
+    <string name="dashboard_snack_import_none">インポートする新しい記録はありません</string>
+    <string name="dashboard_snack_import_failed">インポートに失敗しました — 有効なBPエクスポートファイルか確認してください</string>
+    <string name="dashboard_snack_hc_unavailable">Health Connectはこのデバイスでは利用できません</string>
+    <string name="dashboard_snack_hc_install">インストール</string>
+    <string name="dashboard_snack_hc_permission">Health Connectで血圧の権限を許可してください</string>
+    <string name="dashboard_snack_hc_sync_failed">Health Connectへの同期に失敗しました</string>
+    <string name="dashboard_snack_export_success">%sファイルをエクスポートしました</string>
+    <string name="export_type_json">JSON</string>
+    <string name="export_type_csv">CSV</string>
+    <string name="export_type_pdf">PDF</string>
+    <string name="dashboard_reading_pulse_format"> · %d bpm</string>
+
+    <!-- Japanese does not distinguish singular/plural grammatically -->
+    <plurals name="dashboard_snack_imported">
+        <item quantity="other">%d件の記録をインポートしました</item>
+    </plurals>
+    <plurals name="dashboard_snack_synced">
+        <item quantity="other">%d件の記録をHealth Connectに同期しました</item>
+    </plurals>
+
+    <string name="capture_cd_capture">撮影</string>
+    <string name="capture_reading_numbers">数値を読み取り中…</string>
+    <string name="capture_ocr_error">OCRエラー: %s</string>
+    <string name="capture_permission_rationale">スキャンにはカメラへのアクセスが必要です。</string>
+    <string name="capture_grant_permission">カメラの使用を許可する</string>
+
+    <string name="validation_title_confirm">記録の確認</string>
+    <string name="validation_title_new">新しい記録</string>
+    <string name="validation_cd_captured_image">撮影した記録</string>
+    <string name="validation_cd_captured_fullscreen">撮影した記録（全画面）</string>
+    <string name="validation_hint_enlarge">タップして拡大</string>
+    <string name="validation_label_sys">SYS</string>
+    <string name="validation_subtitle_sys">収縮期血圧 (mmHg)</string>
+    <string name="validation_label_dia">DIA</string>
+    <string name="validation_subtitle_dia">拡張期血圧 (mmHg)</string>
+    <string name="validation_label_pul">PUL</string>
+    <string name="validation_subtitle_pul">脈拍 (bpm)</string>
+    <string name="validation_error_sys_dia">収縮期血圧は拡張期血圧より大きくなければなりません</string>
+    <string name="validation_notes_label">メモ（任意）</string>
+    <string name="validation_notes_placeholder">例：運動後、朝</string>
+    <string name="validation_save">記録を保存</string>
+    <string name="validation_retake">撮り直す</string>
+    <string name="validation_debug_ocr">OCR生データを共有（デバッグ）</string>
+    <string name="validation_debug_preproc">前処理画像を共有（デバッグ）</string>
+    <string name="validation_cd_decrease">%sを下げる</string>
+    <string name="validation_cd_increase">%sを上げる</string>
+
+    <string name="profile_title">健康プロフィール</string>
+    <string name="profile_info">この情報は心血管リスク評価をパーソナライズするために使用されます。すべてのデータはデバイス内に保存されます。</string>
+    <string name="profile_section_basic">基本情報</string>
+    <string name="profile_birth_year_label">生年</string>
+    <string name="profile_birth_year_placeholder">例：1985</string>
+    <string name="profile_birth_year_error">有効な生年を入力してください</string>
+    <string name="profile_age">年齢：%d歳</string>
+    <string name="profile_sex_label">生物学的性別</string>
+    <string name="profile_section_body">体格測定</string>
+    <string name="profile_weight_label">体重</string>
+    <string name="profile_weight_suffix">kg</string>
+    <string name="profile_weight_error">0より大きい値を入力してください</string>
+    <string name="profile_height_label">身長</string>
+    <string name="profile_height_suffix">cm</string>
+    <string name="profile_height_error">0より大きい値を入力してください</string>
+    <string name="profile_bmi">BMI</string>
+    <string name="profile_section_health">健康上の要因</string>
+    <string name="profile_smoker_label">現在喫煙者</string>
+    <string name="profile_smoker_desc">心血管リスクが2倍になります</string>
+    <string name="profile_diabetes_label">糖尿病・前糖尿病</string>
+    <string name="profile_diabetes_desc">高血圧と組み合わさるとリスクが大幅に上昇します</string>
+    <string name="profile_section_activity">身体活動</string>
+    <string name="profile_activity_level_label">通常の運動レベル</string>
+    <string name="profile_section_subscriptions">サブスクリプション</string>
+    <string name="profile_subscriptions_desc">AIカメラスキャナーを使用するにはProサブスクリプションを管理してください。</string>
+    <string name="profile_restore_purchases">購入を復元</string>
+    <string name="profile_restoring">復元中…</string>
+    <string name="profile_restore_success">購入が正常に復元されました。</string>
+    <string name="profile_restore_error">購入の復元に失敗しました。</string>
+    <string name="profile_disclaimer">ⓘ  この評価は情報提供を目的としており、医師のアドバイスに代わるものではありません。</string>
+
+    <string name="reminders_title">リマインダー</string>
+    <string name="reminders_notif_perm_title">通知の許可が必要です</string>
+    <string name="reminders_notif_perm_desc">リマインダーを受け取るには通知を許可してください。</string>
+    <string name="reminders_notif_perm_button">許可する</string>
+    <string name="reminders_exact_alarm_title">正確なアラームの許可が必要です</string>
+    <string name="reminders_exact_alarm_desc">正確なリマインダーのために、正確なアラームを許可してください。</string>
+    <string name="reminders_exact_alarm_button">設定を開く</string>
+    <string name="reminders_enable_label">リマインダーを有効にする</string>
+    <string name="reminders_enable_desc">朝と夜の血圧測定通知</string>
+    <string name="reminders_morning_label">朝の測定</string>
+    <string name="reminders_morning_desc">起床後約30分、コーヒーや薬の前に測定</string>
+    <string name="reminders_evening_label">夜の測定</string>
+    <string name="reminders_evening_desc">夜にリラックスした状態で測定</string>
+    <string name="reminders_footer">時刻をタップして変更できます。リマインダーは毎日自動的に再設定されます。</string>
+    <string name="reminders_set_time">時刻を設定</string>
+
+    <string name="risk_card_title">リスク評価</string>
+    <string name="risk_card_edit_profile">プロフィールを編集</string>
+    <string name="risk_card_setup_profile">プロフィールを設定</string>
+    <string name="risk_card_risk_badge">%sリスク</string>
+    <string name="risk_card_bmi">BMI %1$s · %2$s</string>
+    <string name="risk_card_incomplete_profile">パーソナライズされた評価のために、年齢、体重、身長、生活習慣を追加してください。</string>
+    <string name="risk_card_show_less">少なく表示</string>
+    <string name="risk_card_show_more">さらに%d件表示…</string>
+
+    <string name="onboarding_next">次へ</string>
+    <string name="onboarding_get_started">始める</string>
+    <string name="onboarding_page1_overlay">把握</string>
+    <string name="onboarding_page1_title">自分の数値を知ろう</string>
+    <string name="onboarding_page1_body">記録を入力すると、血圧カテゴリの明確な情報とともに、その意味を即座に確認できます。</string>
+    <string name="onboarding_page2_overlay">1タップ</string>
+    <string name="onboarding_page2_title">簡単な記録</string>
+    <string name="onboarding_page2_body">血圧計の写真を撮るだけで数値を自動読み取り（プレミアム）—または数秒で手動入力。</string>
+    <string name="onboarding_page3_overlay">継続</string>
+    <string name="onboarding_page3_title">習慣を続けよう</string>
+    <string name="onboarding_page3_body">毎日のリマインダー、トレンドグラフ、Health Connect同期で継続的な健康管理をサポートします。</string>
+
+    <string name="help_title">ヘルプ</string>
+    <string name="help_camera_title">カメラでスキャン</string>
+    <string name="help_manual_title">手動入力</string>
+    <string name="help_trends_title">トレンドグラフ</string>
+    <string name="help_history_title">測定履歴</string>
+    <string name="help_profile_title">健康プロフィール</string>
+    <string name="help_risk_title">リスク評価</string>
+    <string name="help_reminders_title">リマインダー</string>
+    <string name="help_export_title">データのエクスポート</string>
+    <string name="help_import_title">データのインポート</string>
+    <string name="help_hc_title">Health Connect</string>
+
+    <string name="help_camera_body">カメラスキャンは有効なサブスクリプションが必要なプレミアム機能です。\n\nカメラボタン（右下）をタップしてライブプレビューを開きます。血圧計の画面をガイド内に合わせて「撮影」をタップします。\n\n写真はGemini 2.5 Flashに送信され、収縮期・拡張期・脈拍の値を読み取ります。次の画面で確認・修正してから保存できます。\n\nアクティブなサブスクリプションがない場合、カメラボタンをタップするとアップグレード画面が表示されます。</string>
+    <string name="help_manual_body">鉛筆ボタンをタップして、写真なしで記録を入力します。スライダーは最後に保存した記録で事前入力されます（初回起動時のデフォルト：120 / 80 / 60）。\n\n収縮期・拡張期・脈拍をスライダーまたは±ボタンで調整します。任意のメモを追加して「記録を保存」をタップします。\n\n収縮期が拡張期より大きくなるまで保存ボタンは無効です。</string>
+    <string name="help_trends_body">グラフには収縮期（赤）と拡張期（青）の測定値が時系列で表示されます。フィルターで表示期間を変更できます：\n\n• 7日 — 直近7日間\n• 30日 — 直近30日間（デフォルト）\n• 90日 — 直近90日間\n• 全期間 — 完全な履歴\n\nY軸は40〜180 mmHgで固定されています。AHA正常上限（SYS 120、DIA 80）の参照線が表示されます。\n\n横向きにすると全画面グラフが表示されます。</string>
+    <string name="help_history_body">すべての記録がグラフの下に新しい順で表示されます。各行には以下が表示されます：\n\n• 日時\n• SYS / DIA · 脈拍（bpm）\n• 色分けされた血圧カテゴリバッジ\n• 追加したメモ（斜体）\n\n行を左右にスワイプして削除できます。削除取り消しボタン付きのスナックバーが5秒間表示されます。</string>
+    <string name="help_profile_body">人物アイコンをタップして健康プロフィールを開きます。入力するとリスクカードがパーソナライズされます。\n\n入力可能なフィールド：\n\n• 生年 — 年齢計算に使用\n• 生物学的性別\n• 体重（kg）と身長（cm） — BMIリアルタイム表示\n• 現在喫煙者の設定\n• 糖尿病・前糖尿病の設定\n• 身体活動レベル\n\nすべてのデータはデバイスに保存されます。プロフィールは任意です。</string>
+    <string name="help_risk_body">記録が1件以上あると、リスト上部にリスクカードが表示されます。最新の血圧カテゴリとプロフィールを組み合わせた情報が表示されます。\n\nガイダンスはAHA（米国心臓協会）のガイドラインに基づいており、情報提供のみを目的としています。\n\nカード上の「プロフィールを編集」をタップして健康プロフィールを更新できます。</string>
+    <string name="help_reminders_body">ベルアイコンをタップして毎日の測定リマインダーを設定します。\n\n1. 求められた場合は通知の許可を与えます。\n2. メインスイッチを有効にします。\n3. 朝の時刻を設定します（起床後30分、コーヒーや薬の前が理想的）。\n4. 夜の時刻を設定します（安静時）。\n\n通知には今すぐ記録するショートカットとスヌーズ（15分）アクションが含まれます。アラームは毎日自動的に再設定されます。\n\n正確なアラームが利用できない場合、アプリがシステム設定に案内します。</string>
+    <string name="help_export_body">上部バーの共有アイコンをタップしてデータをエクスポートします。3つの形式から選択できます：\n\n• JSON — 完全な測定履歴。アプリに再インポートできます。\n• CSV — スプレッドシート形式。ExcelやGoogleスプレッドシートに対応。\n• PDF — グラフと表を含む複数ページの文書。\n\nエクスポートはAndroidの共有シートを通じて共有されます。</string>
+    <string name="help_import_body">上部バーのダウンロードアイコンをタップして、以前エクスポートしたJSONファイルから記録をインポートします。\n\nファイルピッカーが開きます。JSONエクスポートファイルを選択します。データベースに存在しないタイムスタンプの記録のみが追加されます。\n\n追加された新しい記録の数が通知されます。</string>
+    <string name="help_hc_body">Health ConnectはGoogleのデバイス上の健康データプラットフォームです。このアプリは血圧と心拍数のレコードとして記録を書き込めます。\n\n一括同期：上部バーの心拍モニターアイコンをタップします。初回は書き込み許可が求められます。\n\n自動プッシュ：新しい記録を保存するたびに、バックグラウンドでHealth Connectに自動的に送信されます。\n\nHealth Connectがインストールされていない場合、Play StoreへのリンクがアプリC表示されます。</string>
+</resources>

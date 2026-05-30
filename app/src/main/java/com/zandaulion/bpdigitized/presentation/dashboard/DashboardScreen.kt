@@ -1,5 +1,6 @@
 package com.zandaulion.bpdigitized.presentation.dashboard
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -42,11 +43,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CameraAlt
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.IosShare
+import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsNone
@@ -97,6 +100,7 @@ import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.locale.LocalePrefs
 import kotlinx.coroutines.delay
 import java.io.File
 import java.text.SimpleDateFormat
@@ -119,7 +123,9 @@ fun DashboardScreen(
     val context = LocalContext.current
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     var exportMenuExpanded by remember { mutableStateOf(false) }
+    var languageMenuExpanded by remember { mutableStateOf(false) }
     var displayPaywall by remember { mutableStateOf(false) }
+    val currentLocaleCode = remember { LocalePrefs.getLocale(context) }
     // Set when an export completes; promoted to exportedMessage on the next ON_RESUME
     // (i.e. when the user dismisses the Android share sheet and returns to the app).
     var pendingExportMessage by remember { mutableStateOf<String?>(null) }
@@ -331,6 +337,36 @@ fun DashboardScreen(
                     }
                     IconButton(onClick = onHelp) {
                         Icon(Icons.Default.HelpOutline, contentDescription = stringResource(R.string.dashboard_cd_help))
+                    }
+                    Box {
+                        IconButton(onClick = { languageMenuExpanded = true }) {
+                            Icon(Icons.Default.Language, contentDescription = stringResource(R.string.dashboard_cd_language))
+                        }
+                        DropdownMenu(
+                            expanded = languageMenuExpanded,
+                            onDismissRequest = { languageMenuExpanded = false },
+                        ) {
+                            LANGUAGES.forEach { lang ->
+                                val label = if (lang.code.isEmpty()) {
+                                    stringResource(R.string.language_system)
+                                } else {
+                                    lang.nativeName
+                                }
+                                DropdownMenuItem(
+                                    text = { Text(label) },
+                                    trailingIcon = if (lang.code == currentLocaleCode) {
+                                        { Icon(Icons.Default.Check, contentDescription = null) }
+                                    } else null,
+                                    onClick = {
+                                        languageMenuExpanded = false
+                                        if (lang.code != currentLocaleCode) {
+                                            LocalePrefs.setLocale(context, lang.code)
+                                            (context as? Activity)?.recreate()
+                                        }
+                                    },
+                                )
+                            }
+                        }
                     }
                 }
                 HorizontalDivider()
@@ -662,3 +698,19 @@ private fun shareFile(context: Context, file: File, mimeType: String) {
         addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     })
 }
+
+// ── Language options ───────────────────────────────────────────────────────────
+
+private data class LangOption(val code: String, val nativeName: String)
+
+/** Language names are always in their native script so users can recognise
+ *  their language regardless of the currently active app locale. */
+private val LANGUAGES = listOf(
+    LangOption("",   ""),          // label resolved from R.string.language_system
+    LangOption("en", "English"),
+    LangOption("es", "Español"),
+    LangOption("fr", "Français"),
+    LangOption("pt", "Português"),
+    LangOption("de", "Deutsch"),
+    LangOption("ja", "日本語"),
+)

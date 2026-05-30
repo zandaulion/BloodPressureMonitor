@@ -68,6 +68,8 @@
     <string name="dashboard_cd_export">Export data</string>
     <string name="dashboard_cd_sync_hc">Sync to Health Connect</string>
     <string name="dashboard_cd_help">Help</string>
+    <string name="dashboard_cd_language">Change language</string>
+    <string name="language_system">System default</string>
     <string name="dashboard_cd_add_manually">Add reading manually</string>
     <string name="dashboard_cd_scan">Scan reading with camera</string>
     <string name="dashboard_cd_premium">Premium feature</string>

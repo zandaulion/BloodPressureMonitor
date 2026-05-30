@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BP Digitizer</string>
+
+    <string name="action_back">Atrás</string>
+    <string name="action_save">Guardar</string>
+    <string name="action_cancel">Cancelar</string>
+    <string name="action_ok">Aceptar</string>
+    <string name="action_skip">Omitir</string>
+    <string name="action_open_settings">Abrir ajustes</string>
+
+    <string name="bp_category_normal">Normal</string>
+    <string name="bp_category_elevated">Elevada</string>
+    <string name="bp_category_stage1">Grado 1</string>
+    <string name="bp_category_stage2">Grado 2</string>
+    <string name="bp_category_crisis">Crisis</string>
+
+    <string name="bp_display_normal">Tensión normal</string>
+    <string name="bp_display_elevated">Tensión elevada</string>
+    <string name="bp_display_stage1">Hipertensión grado 1</string>
+    <string name="bp_display_stage2">Hipertensión grado 2</string>
+    <string name="bp_display_crisis">Crisis hipertensiva</string>
+
+    <string name="cv_risk_low">Bajo</string>
+    <string name="cv_risk_moderate">Moderado</string>
+    <string name="cv_risk_high">Alto</string>
+    <string name="cv_risk_very_high">Muy alto</string>
+
+    <string name="sex_male">Masculino</string>
+    <string name="sex_female">Femenino</string>
+    <string name="sex_prefer_not_to_say">N/D</string>
+
+    <string name="activity_sedentary">Sedentario</string>
+    <string name="activity_lightly_active">Ligero</string>
+    <string name="activity_moderately_active">Moderado</string>
+    <string name="activity_very_active">Muy activo</string>
+
+    <string name="activity_desc_sedentary">Sin ejercicio o muy poco</string>
+    <string name="activity_desc_lightly_active">Ejercicio ligero 1–3 días/sem</string>
+    <string name="activity_desc_moderately_active">Ejercicio moderado 3–5 días/sem</string>
+    <string name="activity_desc_very_active">Ejercicio intenso 6–7 días/sem</string>
+
+    <string name="bmi_underweight">Bajo peso</string>
+    <string name="bmi_normal">Normal</string>
+    <string name="bmi_overweight">Sobrepeso</string>
+    <string name="bmi_obese">Obesidad</string>
+
+    <string name="chart_range_7d">7d</string>
+    <string name="chart_range_30d">30d</string>
+    <string name="chart_range_90d">90d</string>
+    <string name="chart_range_all">Todo</string>
+
+    <string name="dashboard_title">Seguimiento de tensión</string>
+    <string name="dashboard_cd_reminders">Recordatorios</string>
+    <string name="dashboard_cd_profile">Perfil de salud</string>
+    <string name="dashboard_cd_import">Importar datos</string>
+    <string name="dashboard_cd_export">Exportar datos</string>
+    <string name="dashboard_cd_sync_hc">Sincronizar con Health Connect</string>
+    <string name="dashboard_cd_help">Ayuda</string>
+    <string name="dashboard_cd_language">Cambiar idioma</string>
+    <string name="language_system">Idioma del sistema</string>
+    <string name="dashboard_cd_add_manually">Añadir lectura manualmente</string>
+    <string name="dashboard_cd_scan">Escanear lectura con cámara</string>
+    <string name="dashboard_cd_premium">Función premium</string>
+    <string name="dashboard_cd_delete">Eliminar</string>
+    <string name="dashboard_export_json">Exportar como JSON</string>
+    <string name="dashboard_export_csv">Exportar como CSV</string>
+    <string name="dashboard_export_pdf">Exportar como PDF</string>
+    <string name="dashboard_empty">Sin lecturas. Toca el lápiz para introducir una o la cámara para escanear.</string>
+    <string name="dashboard_snack_deleted">Lectura eliminada</string>
+    <string name="dashboard_snack_undo">Deshacer</string>
+    <string name="dashboard_snack_export_failed">Error al exportar</string>
+    <string name="dashboard_snack_import_none">No hay nuevas lecturas para importar</string>
+    <string name="dashboard_snack_import_failed">Error al importar — asegúrate de que el archivo es una exportación BP válida</string>
+    <string name="dashboard_snack_hc_unavailable">Health Connect no está disponible en este dispositivo</string>
+    <string name="dashboard_snack_hc_install">Instalar</string>
+    <string name="dashboard_snack_hc_permission">Concede el permiso de tensión arterial en Health Connect</string>
+    <string name="dashboard_snack_hc_sync_failed">Error al sincronizar con Health Connect</string>
+    <string name="dashboard_snack_export_success">Archivo %s exportado</string>
+    <string name="export_type_json">JSON</string>
+    <string name="export_type_csv">CSV</string>
+    <string name="export_type_pdf">PDF</string>
+    <string name="dashboard_reading_pulse_format"> · %d ppm</string>
+
+    <plurals name="dashboard_snack_imported">
+        <item quantity="one">%d lectura importada</item>
+        <item quantity="other">%d lecturas importadas</item>
+    </plurals>
+    <plurals name="dashboard_snack_synced">
+        <item quantity="one">%d lectura sincronizada con Health Connect</item>
+        <item quantity="other">%d lecturas sincronizadas con Health Connect</item>
+    </plurals>
+
+    <string name="capture_cd_capture">Capturar</string>
+    <string name="capture_reading_numbers">Leyendo valores…</string>
+    <string name="capture_ocr_error">Error OCR: %s</string>
+    <string name="capture_permission_rationale">Se necesita acceso a la cámara para escanear.</string>
+    <string name="capture_grant_permission">Conceder permiso de cámara</string>
+
+    <string name="validation_title_confirm">Confirmar lectura</string>
+    <string name="validation_title_new">Nueva lectura</string>
+    <string name="validation_cd_captured_image">Lectura capturada</string>
+    <string name="validation_cd_captured_fullscreen">Lectura capturada (pantalla completa)</string>
+    <string name="validation_hint_enlarge">Toca la imagen para ampliar</string>
+    <string name="validation_label_sys">SYS</string>
+    <string name="validation_subtitle_sys">Sistólica (mmHg)</string>
+    <string name="validation_label_dia">DIA</string>
+    <string name="validation_subtitle_dia">Diastólica (mmHg)</string>
+    <string name="validation_label_pul">PUL</string>
+    <string name="validation_subtitle_pul">Pulso (ppm)</string>
+    <string name="validation_error_sys_dia">La sistólica debe ser mayor que la diastólica</string>
+    <string name="validation_notes_label">Notas (opcional)</string>
+    <string name="validation_notes_placeholder">p. ej. tras ejercicio, mañana</string>
+    <string name="validation_save">Guardar lectura</string>
+    <string name="validation_retake">Repetir</string>
+    <string name="validation_debug_ocr">Compartir OCR en bruto (depuración)</string>
+    <string name="validation_debug_preproc">Compartir imagen preprocesada (depuración)</string>
+    <string name="validation_cd_decrease">Disminuir %s</string>
+    <string name="validation_cd_increase">Aumentar %s</string>
+
+    <string name="profile_title">Perfil de salud</string>
+    <string name="profile_info">Esta información ayuda a personalizar tu evaluación de riesgo cardiovascular. Todos los datos permanecen en el dispositivo.</string>
+    <string name="profile_section_basic">Información básica</string>
+    <string name="profile_birth_year_label">Año de nacimiento</string>
+    <string name="profile_birth_year_placeholder">p. ej. 1985</string>
+    <string name="profile_birth_year_error">Introduce un año de nacimiento válido</string>
+    <string name="profile_age">Edad: %d años</string>
+    <string name="profile_sex_label">Sexo biológico</string>
+    <string name="profile_section_body">Medidas corporales</string>
+    <string name="profile_weight_label">Peso</string>
+    <string name="profile_weight_suffix">kg</string>
+    <string name="profile_weight_error">Introduce un valor > 0</string>
+    <string name="profile_height_label">Altura</string>
+    <string name="profile_height_suffix">cm</string>
+    <string name="profile_height_error">Introduce un valor > 0</string>
+    <string name="profile_bmi">IMC</string>
+    <string name="profile_section_health">Factores de salud</string>
+    <string name="profile_smoker_label">Fumador activo</string>
+    <string name="profile_smoker_desc">Duplica el riesgo cardiovascular</string>
+    <string name="profile_diabetes_label">Diabetes / prediabetes</string>
+    <string name="profile_diabetes_desc">Aumenta significativamente el riesgo con TA alta</string>
+    <string name="profile_section_activity">Actividad física</string>
+    <string name="profile_activity_level_label">Nivel de ejercicio habitual</string>
+    <string name="profile_section_subscriptions">Suscripciones</string>
+    <string name="profile_subscriptions_desc">Gestiona tu suscripción Pro para desbloquear el escáner de cámara IA.</string>
+    <string name="profile_restore_purchases">Restaurar compras</string>
+    <string name="profile_restoring">Restaurando…</string>
+    <string name="profile_restore_success">Compras restauradas correctamente.</string>
+    <string name="profile_restore_error">No se pudieron restaurar las compras.</string>
+    <string name="profile_disclaimer">ⓘ  Esta evaluación es informativa y no sustituye el consejo médico.</string>
+
+    <string name="reminders_title">Recordatorios</string>
+    <string name="reminders_notif_perm_title">Permiso de notificaciones requerido</string>
+    <string name="reminders_notif_perm_desc">Permite las notificaciones para recibir recordatorios.</string>
+    <string name="reminders_notif_perm_button">Conceder permiso</string>
+    <string name="reminders_exact_alarm_title">Permiso de alarma exacta requerido</string>
+    <string name="reminders_exact_alarm_desc">Para recordatorios precisos, permite alarmas exactas a esta app.</string>
+    <string name="reminders_exact_alarm_button">Abrir ajustes</string>
+    <string name="reminders_enable_label">Activar recordatorios</string>
+    <string name="reminders_enable_desc">Notificaciones de control de tensión por la mañana y la noche</string>
+    <string name="reminders_morning_label">Control matutino</string>
+    <string name="reminders_morning_desc">~30 min tras despertar, antes del café o medicación</string>
+    <string name="reminders_evening_label">Control vespertino</string>
+    <string name="reminders_evening_desc">Tomado relajado por la tarde-noche</string>
+    <string name="reminders_footer">Toca una hora para cambiarla. Los recordatorios se reprograman automáticamente cada día.</string>
+    <string name="reminders_set_time">Establecer hora</string>
+
+    <string name="risk_card_title">Evaluación de riesgo</string>
+    <string name="risk_card_edit_profile">Editar perfil</string>
+    <string name="risk_card_setup_profile">Configurar perfil</string>
+    <string name="risk_card_risk_badge">Riesgo %s</string>
+    <string name="risk_card_bmi">IMC %1$s · %2$s</string>
+    <string name="risk_card_incomplete_profile">Añade tu edad, peso, altura y estilo de vida para una evaluación personalizada.</string>
+    <string name="risk_card_show_less">Ver menos</string>
+    <string name="risk_card_show_more">Ver %d más…</string>
+
+    <string name="onboarding_next">Siguiente</string>
+    <string name="onboarding_get_started">Empezar</string>
+    <string name="onboarding_page1_overlay">Claridad</string>
+    <string name="onboarding_page1_title">Conoce tus valores</string>
+    <string name="onboarding_page1_body">Registra tus lecturas y descubre al instante su significado, con información clara sobre tu categoría de tensión arterial.</string>
+    <string name="onboarding_page2_overlay">1 toque</string>
+    <string name="onboarding_page2_title">Registro sin esfuerzo</string>
+    <string name="onboarding_page2_body">Fotografía tu tensiómetro y deja que la app lea los valores (Premium) — o introdúcelos manualmente en segundos.</string>
+    <string name="onboarding_page3_overlay">Constancia</string>
+    <string name="onboarding_page3_title">Mantén el ritmo</string>
+    <string name="onboarding_page3_body">Los recordatorios diarios, los gráficos de tendencia y la sincronización con Health Connect mantienen tu progreso en marcha.</string>
+
+    <string name="help_title">Ayuda</string>
+    <string name="help_camera_title">Escanear con cámara</string>
+    <string name="help_manual_title">Entrada manual</string>
+    <string name="help_trends_title">Gráfico de tendencias</string>
+    <string name="help_history_title">Historial de lecturas</string>
+    <string name="help_profile_title">Perfil de salud</string>
+    <string name="help_risk_title">Evaluación de riesgo</string>
+    <string name="help_reminders_title">Recordatorios</string>
+    <string name="help_export_title">Exportar datos</string>
+    <string name="help_import_title">Importar datos</string>
+    <string name="help_hc_title">Health Connect</string>
+
+    <string name="help_camera_body">El escaneo con cámara es una función Premium disponible con una suscripción activa.\n\nToca el botón de cámara (abajo a la derecha) para abrir la vista previa en vivo. Encuadra la pantalla del tensiómetro dentro de la guía y toca Capturar.\n\nLa foto se envía a Gemini 2.5 Flash, que lee los valores de Sistólica, Diastólica y Pulso. Puedes revisarlos en la siguiente pantalla antes de guardar.\n\nSi no tienes una suscripción activa, al tocar el botón de cámara se abrirá la pantalla de actualización donde podrás suscribirte o restaurar una compra anterior.</string>
+    <string name="help_manual_body">Toca el botón de lápiz para introducir una lectura sin fotografía. Los controles deslizantes se rellenan con tu última lectura guardada (valores por defecto: 120 / 80 / 60 en el primer inicio).\n\nAjusta Sistólica, Diastólica y Pulso con el control deslizante o los botones ±. Añade una nota opcional y toca Guardar lectura.\n\nEl botón Guardar se desactiva hasta que la Sistólica sea mayor que la Diastólica.</string>
+    <string name="help_trends_body">El gráfico muestra las lecturas Sistólica (rojo) y Diastólica (azul) a lo largo del tiempo. Usa los filtros para cambiar el período:\n\n• 7d — últimos 7 días\n• 30d — últimos 30 días (por defecto)\n• 90d — últimos 90 días\n• Todo — historial completo\n\nEl eje Y está fijo entre 40–180 mmHg. Líneas de referencia marcan los límites normales de la AHA: SYS 120 y DIA 80.\n\nGira el teléfono a horizontal para ver el gráfico a pantalla completa.</string>
+    <string name="help_history_body">Todas las lecturas aparecen debajo del gráfico, con las más recientes primero. Cada fila muestra:\n\n• Fecha y hora\n• SYS / DIA · pulso (ppm)\n• Una insignia de categoría de tensión con código de color\n• Cualquier nota añadida (en cursiva)\n\nDesliza una fila a izquierda o derecha para eliminarla. Aparece una barra de acción con el botón Deshacer — tienes 5 segundos para revertir la eliminación.</string>
+    <string name="help_profile_body">Toca el icono de persona para abrir tu Perfil de salud. Completarlo permite a la app personalizar la tarjeta de riesgo.\n\nCampos disponibles:\n\n• Año de nacimiento — para calcular tu edad\n• Sexo biológico\n• Peso (kg) y Altura (cm) — vista previa del IMC en vivo\n• Indicador de fumador activo\n• Indicador de diabetes / prediabetes\n• Nivel de actividad física\n\nTodos los datos permanecen en el dispositivo. El perfil es opcional.</string>
+    <string name="help_risk_body">Cuando existe al menos una lectura, aparece una tarjeta de riesgo al inicio de la lista. Combina tu última categoría de tensión con tu perfil para mostrar orientación contextual.\n\nLa orientación se basa en las directrices de la AHA (American Heart Association) y es solo informativa.\n\nToca \"Editar perfil\" en la tarjeta para completar o actualizar tu perfil de salud.</string>
+    <string name="help_reminders_body">Toca el icono de campana para configurar recordatorios de medición diarios.\n\n1. Concede el permiso de notificaciones si se solicita.\n2. Activa el interruptor principal.\n3. Establece una hora matutina (idealmente 30 minutos tras despertar, antes del café o medicación).\n4. Establece una hora vespertina (cuando estés relajado).\n\nLas notificaciones incluyen un acceso directo Registrar ahora y una acción Posponer (15 min). Las alarmas se reprograman automáticamente cada día.\n\nSi el permiso de alarma exacta no está disponible, la app te dirigirá a los ajustes del sistema.</string>
+    <string name="help_export_body">Toca el icono de compartir en la barra superior para exportar tus datos. El menú ofrece tres formatos:\n\n• JSON — historial completo de lecturas. Se puede reimportar.\n• CSV — historial en formato de hoja de cálculo, compatible con Excel o Google Sheets.\n• PDF — documento de varias páginas con gráficos de tendencia y tabla de lecturas.\n\nLa exportación se comparte a través de la hoja de compartición de Android.</string>
+    <string name="help_import_body">Toca el icono de descarga (barra superior) para importar lecturas desde un archivo JSON exportado anteriormente.\n\nLa app abre un selector de archivos. Selecciona tu archivo de exportación JSON. Solo se insertan las lecturas cuyas marcas de tiempo no existen ya en la base de datos.\n\nAparece una confirmación con el número de nuevas lecturas añadidas.</string>
+    <string name="help_hc_body">Health Connect es la plataforma de datos de salud local de Google. Esta app puede escribir tus lecturas como registros de Tensión Arterial y Frecuencia Cardíaca.\n\nSincronización masiva: toca el icono de monitor cardíaco en la barra superior. Se te pedirán permisos la primera vez.\n\nEnvío automático: cada vez que guardas una nueva lectura, se envía automáticamente a Health Connect en segundo plano.\n\nSi Health Connect no está instalado, la app ofrecerá un enlace a Play Store para instalarlo.</string>
+</resources>
