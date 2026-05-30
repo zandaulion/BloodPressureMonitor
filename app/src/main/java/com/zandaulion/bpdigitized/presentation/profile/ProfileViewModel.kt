@@ -126,8 +126,10 @@ class ProfileViewModel @Inject constructor(
                     birthYearText = p.birthYear?.toString()
                         ?: (java.time.Year.now().value - 40).toString(),
                     sex = p.biologicalSex,
-                    weightText = p.weightKg?.let { "%.1f".format(it) }.orEmpty(),
-                    heightText = p.heightCm?.let { "%.1f".format(it) }.orEmpty(),
+                    // Force a '.' decimal separator (Locale.US) so the editable text always
+                    // parses with toFloatOrNull, regardless of the active UI language.
+                    weightText = p.weightKg?.let { "%.1f".format(java.util.Locale.US, it) }.orEmpty(),
+                    heightText = p.heightCm?.let { "%.1f".format(java.util.Locale.US, it) }.orEmpty(),
                     isSmoker = p.isSmoker,
                     hasDiabetes = p.hasDiabetes,
                     activityLevel = p.activityLevel,
@@ -169,7 +171,9 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun sanitiseDecimal(raw: String, maxLen: Int): String {
-        val filtered = raw.filter { it.isDigit() || it == '.' }
+        // Locale decimal keyboards (e.g. Romanian) emit ',' — normalise it to '.' so the
+        // value is always stored and parsed with a period separator.
+        val filtered = raw.replace(',', '.').filter { it.isDigit() || it == '.' }
         val dotIndex = filtered.indexOf('.')
         return if (dotIndex == -1) filtered.take(maxLen)
         else filtered.take(maxLen).let { s ->
