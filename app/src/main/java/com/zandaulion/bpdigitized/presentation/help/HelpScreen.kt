@@ -7,9 +7,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -122,9 +124,7 @@ private fun HelpCard(section: HelpSection) {
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 } else {
-                    androidx.compose.foundation.layout.Spacer(
-                        modifier = androidx.compose.foundation.layout.width(36.dp)
-                    )
+                    Spacer(modifier = Modifier.width(36.dp))
                 }
                 Text(
                     text = stringResource(section.titleRes),

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.zandaulion.bpdigitized.data.ocr.GeminiOcrRecognizer
+import com.zandaulion.bpdigitized.data.ocr.OcrRateLimiter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -39,6 +40,7 @@ sealed interface CaptureEvent {
 class CaptureViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val gemini: GeminiOcrRecognizer,
+    private val rateLimiter: OcrRateLimiter,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(CaptureState())
@@ -52,6 +54,10 @@ class CaptureViewModel @Inject constructor(
             _state.update { it.copy(isProcessing = true, error = null) }
             try {
                 Log.d(TAG, "════ processCapturedImage  path=$path")
+
+                if (!rateLimiter.tryConsume()) {
+                    throw RuntimeException("Daily limit of 200 AI scans reached. Please use manual entry instead.")
+                }
 
                 // Resize to 1024 px max-dim; Gemini handles the rest.
                 val bitmap = withContext(Dispatchers.Default) {
