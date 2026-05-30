@@ -713,4 +713,10 @@ private val LANGUAGES = listOf(
     LangOption("pt", "Português"),
     LangOption("de", "Deutsch"),
     LangOption("ja", "日本語"),
+    LangOption("zh", "简体中文"),
+    LangOption("hi", "हिन्दी"),
+    LangOption("ar", "العربية"),
+    LangOption("uk", "Українська"),
+    LangOption("ko", "한국어"),
+    LangOption("ro", "Română"),
 )

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BP Digitizer</string>
+
+    <string name="action_back">Назад</string>
+    <string name="action_save">Зберегти</string>
+    <string name="action_cancel">Скасувати</string>
+    <string name="action_ok">OK</string>
+    <string name="action_skip">Пропустити</string>
+    <string name="action_open_settings">Відкрити налаштування</string>
+
+    <string name="bp_category_normal">Нормальний</string>
+    <string name="bp_category_elevated">Підвищений</string>
+    <string name="bp_category_stage1">Ступінь 1</string>
+    <string name="bp_category_stage2">Ступінь 2</string>
+    <string name="bp_category_crisis">Криза</string>
+
+    <string name="bp_display_normal">Нормальний АТ</string>
+    <string name="bp_display_elevated">Підвищений АТ</string>
+    <string name="bp_display_stage1">Гіпертензія 1 ступеня</string>
+    <string name="bp_display_stage2">Гіпертензія 2 ступеня</string>
+    <string name="bp_display_crisis">Гіпертонічний криз</string>
+
+    <string name="cv_risk_low">Низький</string>
+    <string name="cv_risk_moderate">Помірний</string>
+    <string name="cv_risk_high">Високий</string>
+    <string name="cv_risk_very_high">Дуже високий</string>
+
+    <string name="sex_male">Чоловіча</string>
+    <string name="sex_female">Жіноча</string>
+    <string name="sex_prefer_not_to_say">Не вказано</string>
+
+    <string name="activity_sedentary">Малорухливий</string>
+    <string name="activity_lightly_active">Легкий</string>
+    <string name="activity_moderately_active">Помірний</string>
+    <string name="activity_very_active">Дуже активний</string>
+
+    <string name="activity_desc_sedentary">Мало або зовсім без фізичних навантажень</string>
+    <string name="activity_desc_lightly_active">Легкі вправи 1–3 дні/тиж</string>
+    <string name="activity_desc_moderately_active">Помірні вправи 3–5 днів/тиж</string>
+    <string name="activity_desc_very_active">Інтенсивні вправи 6–7 днів/тиж</string>
+
+    <string name="bmi_underweight">Недостатня вага</string>
+    <string name="bmi_normal">Норма</string>
+    <string name="bmi_overweight">Надмірна вага</string>
+    <string name="bmi_obese">Ожиріння</string>
+
+    <string name="chart_range_7d">7д</string>
+    <string name="chart_range_30d">30д</string>
+    <string name="chart_range_90d">90д</string>
+    <string name="chart_range_all">Усі</string>
+
+    <string name="dashboard_title">Контроль тиску</string>
+    <string name="dashboard_cd_reminders">Нагадування</string>
+    <string name="dashboard_cd_profile">Профіль здоровʼя</string>
+    <string name="dashboard_cd_import">Імпорт даних</string>
+    <string name="dashboard_cd_export">Експорт даних</string>
+    <string name="dashboard_cd_sync_hc">Синхронізувати з Health Connect</string>
+    <string name="dashboard_cd_help">Довідка</string>
+    <string name="dashboard_cd_language">Змінити мову</string>
+    <string name="language_system">Мова системи</string>
+    <string name="dashboard_cd_add_manually">Додати вимірювання вручну</string>
+    <string name="dashboard_cd_scan">Сканувати камерою</string>
+    <string name="dashboard_cd_premium">Преміум-функція</string>
+    <string name="dashboard_cd_delete">Видалити</string>
+    <string name="dashboard_export_json">Експорт у JSON</string>
+    <string name="dashboard_export_csv">Експорт у CSV</string>
+    <string name="dashboard_export_pdf">Експорт у PDF</string>
+    <string name="dashboard_empty">Ще немає вимірювань. Натисніть олівець, щоб ввести, або камеру, щоб сканувати.</string>
+    <string name="dashboard_snack_deleted">Вимірювання видалено</string>
+    <string name="dashboard_snack_undo">Скасувати</string>
+    <string name="dashboard_snack_export_failed">Помилка експорту</string>
+    <string name="dashboard_snack_import_none">Немає нових вимірювань для імпорту</string>
+    <string name="dashboard_snack_import_failed">Помилка імпорту — переконайтеся, що файл є дійсним експортом BP</string>
+    <string name="dashboard_snack_hc_unavailable">Health Connect недоступний на цьому пристрої</string>
+    <string name="dashboard_snack_hc_install">Встановити</string>
+    <string name="dashboard_snack_hc_permission">Надайте дозвіл на артеріальний тиск у Health Connect</string>
+    <string name="dashboard_snack_hc_sync_failed">Помилка синхронізації з Health Connect</string>
+    <string name="dashboard_snack_export_success">Файл %s експортовано</string>
+    <string name="export_type_json">JSON</string>
+    <string name="export_type_csv">CSV</string>
+    <string name="export_type_pdf">PDF</string>
+    <string name="dashboard_reading_pulse_format"> · %d уд/хв</string>
+
+    <plurals name="dashboard_snack_imported">
+        <item quantity="one">Імпортовано %d вимірювання</item>
+        <item quantity="few">Імпортовано %d вимірювання</item>
+        <item quantity="many">Імпортовано %d вимірювань</item>
+        <item quantity="other">Імпортовано %d вимірювань</item>
+    </plurals>
+    <plurals name="dashboard_snack_synced">
+        <item quantity="one">Синхронізовано %d вимірювання з Health Connect</item>
+        <item quantity="few">Синхронізовано %d вимірювання з Health Connect</item>
+        <item quantity="many">Синхронізовано %d вимірювань з Health Connect</item>
+        <item quantity="other">Синхронізовано %d вимірювань з Health Connect</item>
+    </plurals>
+
+    <string name="capture_cd_capture">Зняти</string>
+    <string name="capture_reading_numbers">Зчитування значень…</string>
+    <string name="capture_ocr_error">Помилка OCR: %s</string>
+    <string name="capture_permission_rationale">Для сканування потрібен доступ до камери.</string>
+    <string name="capture_grant_permission">Надати доступ до камери</string>
+
+    <string name="validation_title_confirm">Підтвердити вимірювання</string>
+    <string name="validation_title_new">Нове вимірювання</string>
+    <string name="validation_cd_captured_image">Зняте вимірювання</string>
+    <string name="validation_cd_captured_fullscreen">Зняте вимірювання (на весь екран)</string>
+    <string name="validation_hint_enlarge">Торкніться зображення, щоб збільшити</string>
+    <string name="validation_label_sys">СИС</string>
+    <string name="validation_subtitle_sys">Систолічний (mmHg)</string>
+    <string name="validation_label_dia">ДІА</string>
+    <string name="validation_subtitle_dia">Діастолічний (mmHg)</string>
+    <string name="validation_label_pul">ПУЛ</string>
+    <string name="validation_subtitle_pul">Пульс (уд/хв)</string>
+    <string name="validation_error_sys_dia">Систолічний має бути більшим за діастолічний</string>
+    <string name="validation_notes_label">Нотатки (необовʼязково)</string>
+    <string name="validation_notes_placeholder">напр. після вправ, зранку</string>
+    <string name="validation_save">Зберегти вимірювання</string>
+    <string name="validation_retake">Перезняти</string>
+    <string name="validation_debug_ocr">Поділитися сирим OCR (налагодження)</string>
+    <string name="validation_debug_preproc">Поділитися обробленим зображенням (налагодження)</string>
+    <string name="validation_cd_decrease">Зменшити %s</string>
+    <string name="validation_cd_increase">Збільшити %s</string>
+
+    <string name="profile_title">Профіль здоровʼя</string>
+    <string name="profile_info">Ця інформація допомагає персоналізувати оцінку ризику. Усі дані залишаються на вашому пристрої.</string>
+    <string name="profile_section_basic">Основна інформація</string>
+    <string name="profile_birth_year_label">Рік народження</string>
+    <string name="profile_birth_year_placeholder">напр. 1985</string>
+    <string name="profile_birth_year_error">Введіть дійсний рік народження</string>
+    <string name="profile_age">Вік: %d р.</string>
+    <string name="profile_sex_label">Біологічна стать</string>
+    <string name="profile_section_body">Тілесні вимірювання</string>
+    <string name="profile_weight_label">Вага</string>
+    <string name="profile_weight_suffix">кг</string>
+    <string name="profile_weight_error">Введіть значення > 0</string>
+    <string name="profile_height_label">Зріст</string>
+    <string name="profile_height_suffix">см</string>
+    <string name="profile_height_error">Введіть значення > 0</string>
+    <string name="profile_bmi">ІМТ</string>
+    <string name="profile_section_health">Чинники здоровʼя</string>
+    <string name="profile_smoker_label">Активний курець</string>
+    <string name="profile_smoker_desc">Подвоює серцево-судинний ризик</string>
+    <string name="profile_diabetes_label">Діабет / переддіабет</string>
+    <string name="profile_diabetes_desc">Значно підвищує ризик у поєднанні з високим тиском</string>
+    <string name="profile_section_activity">Фізична активність</string>
+    <string name="profile_activity_level_label">Звичайний рівень навантаження</string>
+    <string name="profile_section_subscriptions">Підписки</string>
+    <string name="profile_subscriptions_desc">Керуйте підпискою Pro, щоб розблокувати ШІ-сканер камери.</string>
+    <string name="profile_restore_purchases">Відновити покупки</string>
+    <string name="profile_restoring">Відновлення…</string>
+    <string name="profile_restore_success">Покупки успішно відновлено.</string>
+    <string name="profile_restore_error">Не вдалося відновити покупки.</string>
+    <string name="profile_disclaimer">ⓘ  Ця оцінка має інформаційний характер і не замінює медичної консультації.</string>
+
+    <string name="reminders_title">Нагадування</string>
+    <string name="reminders_notif_perm_title">Потрібен дозвіл на сповіщення</string>
+    <string name="reminders_notif_perm_desc">Дозвольте сповіщення, щоб отримувати нагадування.</string>
+    <string name="reminders_notif_perm_button">Надати дозвіл</string>
+    <string name="reminders_exact_alarm_title">Потрібен дозвіл на точні будильники</string>
+    <string name="reminders_exact_alarm_desc">Для точних нагадувань дозвольте додатку планувати точні будильники.</string>
+    <string name="reminders_exact_alarm_button">Відкрити налаштування</string>
+    <string name="reminders_enable_label">Увімкнути нагадування</string>
+    <string name="reminders_enable_desc">Ранкові та вечірні сповіщення про вимірювання тиску</string>
+    <string name="reminders_morning_label">Ранкова перевірка</string>
+    <string name="reminders_morning_desc">Через ~30 хв після пробудження, до кави чи ліків</string>
+    <string name="reminders_evening_label">Вечірня перевірка</string>
+    <string name="reminders_evening_desc">У спокійному стані ввечері</string>
+    <string name="reminders_footer">Торкніться часу, щоб змінити його. Нагадування спрацьовують щодня у вибраний час і переплановуються автоматично.</string>
+    <string name="reminders_set_time">Встановити час</string>
+
+    <string name="risk_card_title">Оцінка ризику</string>
+    <string name="risk_card_edit_profile">Редагувати профіль</string>
+    <string name="risk_card_setup_profile">Налаштувати профіль</string>
+    <string name="risk_card_risk_badge">Ризик: %s</string>
+    <string name="risk_card_bmi">ІМТ %1$s · %2$s</string>
+    <string name="risk_card_incomplete_profile">Додайте вік, вагу, зріст і спосіб життя для персоналізованої оцінки.</string>
+    <string name="risk_card_show_less">Згорнути</string>
+    <string name="risk_card_show_more">Показати ще %d…</string>
+
+    <string name="onboarding_next">Далі</string>
+    <string name="onboarding_get_started">Почати</string>
+    <string name="onboarding_page1_overlay">Ясність</string>
+    <string name="onboarding_page1_title">Знайте свої показники</string>
+    <string name="onboarding_page1_body">Записуйте вимірювання та миттєво дізнавайтесь їхнє значення з чіткою інформацією про категорію тиску.</string>
+    <string name="onboarding_page2_overlay">1 дотик</string>
+    <string name="onboarding_page2_title">Легке внесення</string>
+    <string name="onboarding_page2_body">Сфотографуйте свій тонометр і дозвольте додатку зчитати показники (Преміум) — або введіть їх вручну за секунди.</string>
+    <string name="onboarding_page3_overlay">Послідовність</string>
+    <string name="onboarding_page3_title">Будьте послідовними</string>
+    <string name="onboarding_page3_body">Щоденні нагадування, графіки тенденцій і синхронізація з Health Connect тримають ваш прогрес на правильному шляху.</string>
+
+    <string name="help_title">Довідка</string>
+    <string name="help_camera_title">Сканування камерою</string>
+    <string name="help_manual_title">Ручне введення</string>
+    <string name="help_trends_title">Графік тенденцій</string>
+    <string name="help_history_title">Історія вимірювань</string>
+    <string name="help_profile_title">Профіль здоровʼя</string>
+    <string name="help_risk_title">Оцінка ризику для здоровʼя</string>
+    <string name="help_reminders_title">Нагадування</string>
+    <string name="help_export_title">Експорт даних</string>
+    <string name="help_import_title">Імпорт даних</string>
+    <string name="help_hc_title">Health Connect</string>
+
+    <string name="help_camera_body">Сканування камерою — це преміум-функція, доступна з активною підпискою.\n\nНатисніть кнопку камери (внизу праворуч), щоб відкрити перегляд у реальному часі. Розмістіть дисплей тонометра в межах екранної рамки та натисніть Зняти.\n\nФото надсилається до Gemini 2.5 Flash, який зчитує систолічний, діастолічний тиск і пульс. Ви можете переглянути та виправити їх на наступному екрані перед збереженням.\n\nЯкщо у вас немає активної підписки, натискання кнопки камери відкриє екран оновлення, де можна підписатися чи відновити попередню покупку.</string>
+    <string name="help_manual_body">Натисніть кнопку олівця, щоб ввести вимірювання без фото. Повзунки заповнюються вашим останнім збереженим вимірюванням (за замовчуванням: 120 / 80 / 60 при першому запуску).\n\nНалаштуйте систолічний, діастолічний тиск і пульс повзунком або кнопками ±. Додайте необовʼязкову нотатку та натисніть Зберегти вимірювання.\n\nКнопка збереження вимкнена, доки систолічний не перевищить діастолічний.</string>
+    <string name="help_trends_body">Графік на головному екрані відображає систолічні (червоний) і діастолічні (синій) вимірювання в часі. Використовуйте фільтри над графіком:\n\n• 7д — останні 7 днів\n• 30д — останні 30 днів (за замовчуванням)\n• 90д — останні 90 днів\n• Усі — повна історія\n\nВісь Y зафіксована на 40–180 mmHg. Пунктирні лінії позначають нормальні межі AHA: СИС 120 і ДІА 80.\n\nПоверніть телефон горизонтально для повноекранного графіка.</string>
+    <string name="help_history_body">Усі вимірювання перелічені під графіком, найновіші зверху. Кожен рядок показує:\n\n• Дату й час\n• СИС / ДІА · пульс (уд/хв)\n• Кольорову позначку категорії тиску\n• Будь-яку додану нотатку (курсивом)\n\nПроведіть рядком ліворуч або праворуч, щоб видалити. Знизу зʼявляється панель із кнопкою Скасувати — у вас є 5 секунд, щоб скасувати видалення.</string>
+    <string name="help_profile_body">Натисніть значок людини, щоб відкрити профіль здоровʼя. Його заповнення дозволяє персоналізувати картку ризику.\n\nДоступні поля:\n\n• Рік народження — для обчислення віку\n• Біологічна стать\n• Вага (кг) і зріст (см) — з живим переглядом ІМТ\n• Перемикач активного курця\n• Перемикач діабету / переддіабету\n• Рівень фізичної активності\n\nУсі дані залишаються на пристрої. Профіль необовʼязковий; додаток повністю працює без нього.</string>
+    <string name="help_risk_body">Коли існує принаймні одне вимірювання, угорі списку зʼявляється картка ризику. Вона поєднує вашу останню категорію тиску з профілем здоровʼя для контекстних порад.\n\nПоради ґрунтуються на рекомендаціях AHA (Американської кардіологічної асоціації) і мають лише інформаційний характер; вони не замінюють поради кваліфікованого фахівця.\n\nНатисніть «Редагувати профіль» на картці, щоб заповнити чи оновити профіль здоровʼя.</string>
+    <string name="help_reminders_body">Натисніть значок дзвіночка, щоб налаштувати щоденні нагадування про вимірювання.\n\n1. Надайте дозвіл на сповіщення, якщо буде запит.\n2. Увімкніть головний перемикач.\n3. Встановіть ранковий час (бажано через 30 хвилин після пробудження, до кави чи ліків).\n4. Встановіть вечірній час (коли ви відпочиваєте).\n\nСповіщення містять ярлик «Записати зараз», що відкриває додаток, і дію «Відкласти (15 хв)». Будильники переплановуються щодня автоматично та зберігаються після перезавантаження.\n\nЯкщо дозвіл на точні будильники недоступний, додаток спрямує вас до системних налаштувань для його ввімкнення.</string>
+    <string name="help_export_body">Натисніть значок поширення у верхній панелі, щоб експортувати дані. Випадне меню пропонує три формати:\n\n• JSON — повна історія вимірювань. Можна повторно імпортувати в додаток.\n• CSV — повна історія у форматі таблиці, сумісна з Excel чи Google Таблицями.\n• PDF — багатосторінковий документ із графіками й таблицею вимірювань.\n\nЕкспорт надсилається через стандартну панель поширення Android.</string>
+    <string name="help_import_body">Натисніть значок завантаження (верхня панель), щоб імпортувати вимірювання з файлу JSON, раніше експортованого з цього додатка.\n\nДодаток відкриває вибір файлів. Виберіть свій файл JSON. Додаються лише вимірювання, чиї позначки часу ще не існують у базі — повторний імпорт того ж файлу безпечний.\n\nПанель підтверджує, скільки нових вимірювань додано, або повідомляє, що нового для імпорту немає.</string>
+    <string name="help_hc_body">Health Connect — це платформа даних про здоровʼя від Google на пристрої. Цей додаток може записувати ваші вимірювання як записи артеріального тиску та частоти серцевих скорочень.\n\nМасова синхронізація: натисніть значок монітора серця у верхній панелі. Першого разу буде запитано дозвіл на запис. Усі наявні вимірювання завантажуються (безпечно повторювати — наявні записи оновлюються, а не дублюються).\n\nАвтоматична відправка: щоразу, коли ви зберігаєте нове вимірювання, воно автоматично надсилається до Health Connect у фоні — за умови, що дозволи вже надано.\n\nЯкщо Health Connect не встановлено, додаток запропонує посилання на Play Store для встановлення.</string>
+</resources>

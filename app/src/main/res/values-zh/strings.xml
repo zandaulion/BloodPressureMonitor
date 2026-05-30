@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BP Digitizer</string>
+
+    <string name="action_back">返回</string>
+    <string name="action_save">保存</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_ok">确定</string>
+    <string name="action_skip">跳过</string>
+    <string name="action_open_settings">打开设置</string>
+
+    <string name="bp_category_normal">正常</string>
+    <string name="bp_category_elevated">偏高</string>
+    <string name="bp_category_stage1">1级</string>
+    <string name="bp_category_stage2">2级</string>
+    <string name="bp_category_crisis">危象</string>
+
+    <string name="bp_display_normal">血压正常</string>
+    <string name="bp_display_elevated">血压偏高</string>
+    <string name="bp_display_stage1">高血压1级</string>
+    <string name="bp_display_stage2">高血压2级</string>
+    <string name="bp_display_crisis">高血压危象</string>
+
+    <string name="cv_risk_low">低</string>
+    <string name="cv_risk_moderate">中等</string>
+    <string name="cv_risk_high">高</string>
+    <string name="cv_risk_very_high">极高</string>
+
+    <string name="sex_male">男性</string>
+    <string name="sex_female">女性</string>
+    <string name="sex_prefer_not_to_say">不愿透露</string>
+
+    <string name="activity_sedentary">久坐</string>
+    <string name="activity_lightly_active">轻度</string>
+    <string name="activity_moderately_active">中度</string>
+    <string name="activity_very_active">高度活跃</string>
+
+    <string name="activity_desc_sedentary">很少或不运动</string>
+    <string name="activity_desc_lightly_active">每周1-3天轻度运动</string>
+    <string name="activity_desc_moderately_active">每周3-5天中度运动</string>
+    <string name="activity_desc_very_active">每周6-7天剧烈运动</string>
+
+    <string name="bmi_underweight">偏瘦</string>
+    <string name="bmi_normal">正常</string>
+    <string name="bmi_overweight">超重</string>
+    <string name="bmi_obese">肥胖</string>
+
+    <string name="chart_range_7d">7天</string>
+    <string name="chart_range_30d">30天</string>
+    <string name="chart_range_90d">90天</string>
+    <string name="chart_range_all">全部</string>
+
+    <string name="dashboard_title">血压记录</string>
+    <string name="dashboard_cd_reminders">提醒</string>
+    <string name="dashboard_cd_profile">健康档案</string>
+    <string name="dashboard_cd_import">导入数据</string>
+    <string name="dashboard_cd_export">导出数据</string>
+    <string name="dashboard_cd_sync_hc">同步到 Health Connect</string>
+    <string name="dashboard_cd_help">帮助</string>
+    <string name="dashboard_cd_language">更改语言</string>
+    <string name="language_system">系统默认</string>
+    <string name="dashboard_cd_add_manually">手动添加记录</string>
+    <string name="dashboard_cd_scan">用相机扫描记录</string>
+    <string name="dashboard_cd_premium">高级功能</string>
+    <string name="dashboard_cd_delete">删除</string>
+    <string name="dashboard_export_json">导出为 JSON</string>
+    <string name="dashboard_export_csv">导出为 CSV</string>
+    <string name="dashboard_export_pdf">导出为 PDF</string>
+    <string name="dashboard_empty">暂无记录。点击铅笔按钮手动输入，或点击相机按钮扫描。</string>
+    <string name="dashboard_snack_deleted">记录已删除</string>
+    <string name="dashboard_snack_undo">撤销</string>
+    <string name="dashboard_snack_export_failed">导出失败</string>
+    <string name="dashboard_snack_import_none">没有可导入的新记录</string>
+    <string name="dashboard_snack_import_failed">导入失败 — 请确认文件是有效的 BP 导出文件</string>
+    <string name="dashboard_snack_hc_unavailable">此设备不支持 Health Connect</string>
+    <string name="dashboard_snack_hc_install">安装</string>
+    <string name="dashboard_snack_hc_permission">请在 Health Connect 中授予血压权限</string>
+    <string name="dashboard_snack_hc_sync_failed">同步到 Health Connect 失败</string>
+    <string name="dashboard_snack_export_success">已导出 %s 文件</string>
+    <string name="export_type_json">JSON</string>
+    <string name="export_type_csv">CSV</string>
+    <string name="export_type_pdf">PDF</string>
+    <string name="dashboard_reading_pulse_format"> · %d 次/分</string>
+
+    <!-- Chinese does not distinguish singular/plural grammatically -->
+    <plurals name="dashboard_snack_imported">
+        <item quantity="other">已导入 %d 条记录</item>
+    </plurals>
+    <plurals name="dashboard_snack_synced">
+        <item quantity="other">已将 %d 条记录同步到 Health Connect</item>
+    </plurals>
+
+    <string name="capture_cd_capture">拍摄</string>
+    <string name="capture_reading_numbers">正在读取数值…</string>
+    <string name="capture_ocr_error">OCR 错误：%s</string>
+    <string name="capture_permission_rationale">扫描需要相机访问权限。</string>
+    <string name="capture_grant_permission">授予相机权限</string>
+
+    <string name="validation_title_confirm">确认记录</string>
+    <string name="validation_title_new">新记录</string>
+    <string name="validation_cd_captured_image">已拍摄的记录</string>
+    <string name="validation_cd_captured_fullscreen">已拍摄的记录（全屏）</string>
+    <string name="validation_hint_enlarge">点击图片放大</string>
+    <string name="validation_label_sys">收缩压</string>
+    <string name="validation_subtitle_sys">收缩压 (mmHg)</string>
+    <string name="validation_label_dia">舒张压</string>
+    <string name="validation_subtitle_dia">舒张压 (mmHg)</string>
+    <string name="validation_label_pul">脉搏</string>
+    <string name="validation_subtitle_pul">脉搏 (次/分)</string>
+    <string name="validation_error_sys_dia">收缩压必须大于舒张压</string>
+    <string name="validation_notes_label">备注（可选）</string>
+    <string name="validation_notes_placeholder">例如：运动后、早晨</string>
+    <string name="validation_save">保存记录</string>
+    <string name="validation_retake">重拍</string>
+    <string name="validation_debug_ocr">分享原始 OCR（调试）</string>
+    <string name="validation_debug_preproc">分享预处理图片（调试）</string>
+    <string name="validation_cd_decrease">减少 %s</string>
+    <string name="validation_cd_increase">增加 %s</string>
+
+    <string name="profile_title">健康档案</string>
+    <string name="profile_info">此信息有助于为您定制血压风险评估。所有数据均保存在您的设备上。</string>
+    <string name="profile_section_basic">基本信息</string>
+    <string name="profile_birth_year_label">出生年份</string>
+    <string name="profile_birth_year_placeholder">例如：1985</string>
+    <string name="profile_birth_year_error">请输入有效的出生年份</string>
+    <string name="profile_age">年龄：%d 岁</string>
+    <string name="profile_sex_label">生理性别</string>
+    <string name="profile_section_body">身体测量</string>
+    <string name="profile_weight_label">体重</string>
+    <string name="profile_weight_suffix">kg</string>
+    <string name="profile_weight_error">请输入大于 0 的值</string>
+    <string name="profile_height_label">身高</string>
+    <string name="profile_height_suffix">cm</string>
+    <string name="profile_height_error">请输入大于 0 的值</string>
+    <string name="profile_bmi">BMI</string>
+    <string name="profile_section_health">健康因素</string>
+    <string name="profile_smoker_label">当前吸烟者</string>
+    <string name="profile_smoker_desc">使心血管风险增加一倍</string>
+    <string name="profile_diabetes_label">糖尿病 / 糖尿病前期</string>
+    <string name="profile_diabetes_desc">与高血压并存时显著增加风险</string>
+    <string name="profile_section_activity">身体活动</string>
+    <string name="profile_activity_level_label">日常运动水平</string>
+    <string name="profile_section_subscriptions">订阅</string>
+    <string name="profile_subscriptions_desc">管理您的 Pro 订阅以解锁 AI 相机扫描器。</string>
+    <string name="profile_restore_purchases">恢复购买</string>
+    <string name="profile_restoring">正在恢复…</string>
+    <string name="profile_restore_success">购买已成功恢复。</string>
+    <string name="profile_restore_error">恢复购买失败。</string>
+    <string name="profile_disclaimer">ⓘ  本评估仅供参考，不能替代医疗建议。</string>
+
+    <string name="reminders_title">提醒</string>
+    <string name="reminders_notif_perm_title">需要通知权限</string>
+    <string name="reminders_notif_perm_desc">请允许通知，以便提醒能够送达。</string>
+    <string name="reminders_notif_perm_button">授予权限</string>
+    <string name="reminders_exact_alarm_title">需要精确闹钟权限</string>
+    <string name="reminders_exact_alarm_desc">为了精确提醒，请允许此应用安排精确闹钟。</string>
+    <string name="reminders_exact_alarm_button">打开设置</string>
+    <string name="reminders_enable_label">启用提醒</string>
+    <string name="reminders_enable_desc">早晚血压检查通知</string>
+    <string name="reminders_morning_label">早晨检查</string>
+    <string name="reminders_morning_desc">起床后约 30 分钟，在喝咖啡或服药前测量</string>
+    <string name="reminders_evening_label">晚间检查</string>
+    <string name="reminders_evening_desc">晚间放松时测量</string>
+    <string name="reminders_footer">点击时间即可更改。提醒每天在所选时间触发并自动重新安排。</string>
+    <string name="reminders_set_time">设置时间</string>
+
+    <string name="risk_card_title">风险评估</string>
+    <string name="risk_card_edit_profile">编辑档案</string>
+    <string name="risk_card_setup_profile">设置档案</string>
+    <string name="risk_card_risk_badge">%s风险</string>
+    <string name="risk_card_bmi">BMI %1$s · %2$s</string>
+    <string name="risk_card_incomplete_profile">添加您的年龄、体重、身高和生活方式信息以获得个性化评估。</string>
+    <string name="risk_card_show_less">收起</string>
+    <string name="risk_card_show_more">显示另外 %d 项…</string>
+
+    <string name="onboarding_next">下一步</string>
+    <string name="onboarding_get_started">开始使用</string>
+    <string name="onboarding_page1_overlay">清晰</string>
+    <string name="onboarding_page1_title">了解您的数值</string>
+    <string name="onboarding_page1_body">记录您的血压，即可立即了解其含义，并获得清晰的血压类别信息。</string>
+    <string name="onboarding_page2_overlay">一键</string>
+    <string name="onboarding_page2_title">轻松记录</string>
+    <string name="onboarding_page2_body">拍摄血压计照片，让应用为您读取数值（高级版）— 或在几秒内手动输入。</string>
+    <string name="onboarding_page3_overlay">坚持</string>
+    <string name="onboarding_page3_title">保持规律</string>
+    <string name="onboarding_page3_body">每日提醒、趋势图表和 Health Connect 同步让您的健康管理持续进行。</string>
+
+    <string name="help_title">帮助</string>
+    <string name="help_camera_title">用相机扫描</string>
+    <string name="help_manual_title">手动输入</string>
+    <string name="help_trends_title">趋势图表</string>
+    <string name="help_history_title">记录历史</string>
+    <string name="help_profile_title">健康档案</string>
+    <string name="help_risk_title">健康风险评估</string>
+    <string name="help_reminders_title">提醒</string>
+    <string name="help_export_title">导出数据</string>
+    <string name="help_import_title">导入数据</string>
+    <string name="help_hc_title">Health Connect</string>
+
+    <string name="help_camera_body">相机扫描是高级功能，需要有效订阅。\n\n点击相机按钮（右下角）打开实时预览。将血压计显示屏对准屏幕引导框，然后点击拍摄。\n\n照片将发送至 Gemini 2.5 Flash，读取收缩压、舒张压和脉搏值。您可以在下一屏幕查看并修正后再保存。\n\n如果您没有有效订阅，点击相机按钮将打开升级页面，您可以在此订阅或恢复之前的购买。</string>
+    <string name="help_manual_body">点击铅笔按钮即可无需拍照输入记录。滑块会预填您上次保存的记录（首次启动默认值：120 / 80 / 60）。\n\n使用滑块或 ± 按钮调整收缩压、舒张压和脉搏。添加可选备注，然后点击保存记录。\n\n在收缩压大于舒张压之前，保存按钮将被禁用。</string>
+    <string name="help_trends_body">仪表板上的图表按时间显示收缩压（红色）和舒张压（蓝色）。使用图表上方的筛选器更改视图：\n\n• 7天 — 最近 7 天\n• 30天 — 最近 30 天（默认）\n• 90天 — 最近 90 天\n• 全部 — 完整历史\n\nY 轴固定为 40-180 mmHg。虚线参考线标示 AHA 正常上限：收缩压 120、舒张压 80。\n\n将手机旋转为横向以查看全屏图表。</string>
+    <string name="help_history_body">所有记录列在图表下方，最新的在前。每行显示：\n\n• 日期和时间\n• 收缩压 / 舒张压 · 脉搏（次/分）\n• 彩色编码的血压类别标签\n• 您添加的任何备注（以斜体显示）\n\n向左或向右滑动一行即可删除。底部会出现带撤销按钮的提示条 — 您有 5 秒时间撤销删除。</string>
+    <string name="help_profile_body">点击人物图标打开您的健康档案。填写后可让应用个性化健康风险卡片。\n\n可用字段：\n\n• 出生年份 — 用于计算年龄\n• 生理性别\n• 体重 (kg) 和身高 (cm) — 显示实时 BMI 预览\n• 当前吸烟者开关\n• 糖尿病 / 糖尿病前期开关\n• 身体活动水平\n\n所有数据均保存在设备上。档案为可选项；不填写应用也可完整使用。</string>
+    <string name="help_risk_body">当存在至少一条记录时，记录列表顶部会出现健康风险卡片。它结合您最新的血压类别与健康档案，提供情境指导。\n\n指导基于 AHA（美国心脏协会）指南，仅供参考，不能替代合格医疗专业人员的建议。\n\n点击卡片上的"编辑档案"以完善或更新您的健康档案。</string>
+    <string name="help_reminders_body">点击铃铛图标配置每日测量提醒。\n\n1. 如有提示，请授予通知权限。\n2. 启用主开关。\n3. 设置早晨时间（理想为起床后 30 分钟，喝咖啡或服药前）。\n4. 设置晚间时间（放松休息时）。\n\n通知包含打开应用的"立即记录"快捷方式和"稍后提醒（15分钟）"操作。闹钟每天自动重新安排并在设备重启后保留。\n\n如果您的设备不支持精确闹钟权限，应用会引导您前往系统设置启用。</string>
+    <string name="help_export_body">点击顶栏的分享图标导出数据。下拉菜单提供三种格式：\n\n• JSON — 您的完整记录历史，可重新导入应用。\n• CSV — 电子表格格式的完整历史，兼容 Excel 或 Google 表格。\n• PDF — 包含趋势图表和记录表格的多页文档。\n\n导出通过 Android 标准分享面板共享。</string>
+    <string name="help_import_body">点击下载图标（顶栏）从之前从本应用导出的 JSON 文件导入记录。\n\n应用会打开文件选择器。选择您的 JSON 导出文件。仅插入数据库中尚不存在时间戳的记录 — 重新导入同一文件是安全的。\n\n提示条会确认添加了多少条新记录，或告知没有可导入的新内容。</string>
+    <string name="help_hc_body">Health Connect 是 Google 的设备端健康数据平台。本应用可将您的记录写入为血压和心率记录。\n\n批量同步：点击顶栏的心率监测图标。首次会要求您授予写入权限。所有现有记录都会上传（可安全重复 — 现有记录会更新而非重复）。\n\n自动推送：每次保存新记录时，只要您已授予权限，它都会在后台自动推送到 Health Connect。无需额外操作。\n\n如果您的设备未安装 Health Connect，应用会提供前往 Play 商店安装的链接。</string>
+</resources>

@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BP Digitizer</string>
+
+    <string name="action_back">رجوع</string>
+    <string name="action_save">حفظ</string>
+    <string name="action_cancel">إلغاء</string>
+    <string name="action_ok">موافق</string>
+    <string name="action_skip">تخطّي</string>
+    <string name="action_open_settings">فتح الإعدادات</string>
+
+    <string name="bp_category_normal">طبيعي</string>
+    <string name="bp_category_elevated">مرتفع</string>
+    <string name="bp_category_stage1">المرحلة 1</string>
+    <string name="bp_category_stage2">المرحلة 2</string>
+    <string name="bp_category_crisis">أزمة</string>
+
+    <string name="bp_display_normal">ضغط دم طبيعي</string>
+    <string name="bp_display_elevated">ضغط دم مرتفع</string>
+    <string name="bp_display_stage1">ارتفاع ضغط الدم المرحلة 1</string>
+    <string name="bp_display_stage2">ارتفاع ضغط الدم المرحلة 2</string>
+    <string name="bp_display_crisis">أزمة ارتفاع ضغط الدم</string>
+
+    <string name="cv_risk_low">منخفض</string>
+    <string name="cv_risk_moderate">متوسط</string>
+    <string name="cv_risk_high">مرتفع</string>
+    <string name="cv_risk_very_high">مرتفع جدًا</string>
+
+    <string name="sex_male">ذكر</string>
+    <string name="sex_female">أنثى</string>
+    <string name="sex_prefer_not_to_say">غير محدد</string>
+
+    <string name="activity_sedentary">خامل</string>
+    <string name="activity_lightly_active">خفيف</string>
+    <string name="activity_moderately_active">معتدل</string>
+    <string name="activity_very_active">نشيط جدًا</string>
+
+    <string name="activity_desc_sedentary">قليل من التمارين أو بدونها</string>
+    <string name="activity_desc_lightly_active">تمارين خفيفة 1–3 أيام/أسبوع</string>
+    <string name="activity_desc_moderately_active">تمارين معتدلة 3–5 أيام/أسبوع</string>
+    <string name="activity_desc_very_active">تمارين شاقة 6–7 أيام/أسبوع</string>
+
+    <string name="bmi_underweight">نقص الوزن</string>
+    <string name="bmi_normal">طبيعي</string>
+    <string name="bmi_overweight">زيادة الوزن</string>
+    <string name="bmi_obese">سمنة</string>
+
+    <string name="chart_range_7d">7ي</string>
+    <string name="chart_range_30d">30ي</string>
+    <string name="chart_range_90d">90ي</string>
+    <string name="chart_range_all">الكل</string>
+
+    <string name="dashboard_title">تتبّع ضغط الدم</string>
+    <string name="dashboard_cd_reminders">التذكيرات</string>
+    <string name="dashboard_cd_profile">الملف الصحي</string>
+    <string name="dashboard_cd_import">استيراد البيانات</string>
+    <string name="dashboard_cd_export">تصدير البيانات</string>
+    <string name="dashboard_cd_sync_hc">المزامنة مع Health Connect</string>
+    <string name="dashboard_cd_help">المساعدة</string>
+    <string name="dashboard_cd_language">تغيير اللغة</string>
+    <string name="language_system">لغة النظام</string>
+    <string name="dashboard_cd_add_manually">إضافة قراءة يدويًا</string>
+    <string name="dashboard_cd_scan">مسح القراءة بالكاميرا</string>
+    <string name="dashboard_cd_premium">ميزة مميّزة</string>
+    <string name="dashboard_cd_delete">حذف</string>
+    <string name="dashboard_export_json">تصدير بصيغة JSON</string>
+    <string name="dashboard_export_csv">تصدير بصيغة CSV</string>
+    <string name="dashboard_export_pdf">تصدير بصيغة PDF</string>
+    <string name="dashboard_empty">لا توجد قراءات بعد. اضغط زر القلم للإدخال، أو زر الكاميرا للمسح.</string>
+    <string name="dashboard_snack_deleted">تم حذف القراءة</string>
+    <string name="dashboard_snack_undo">تراجع</string>
+    <string name="dashboard_snack_export_failed">فشل التصدير</string>
+    <string name="dashboard_snack_import_none">لا توجد قراءات جديدة للاستيراد</string>
+    <string name="dashboard_snack_import_failed">فشل الاستيراد — تأكد من أن الملف هو تصدير BP صالح</string>
+    <string name="dashboard_snack_hc_unavailable">Health Connect غير متوفر على هذا الجهاز</string>
+    <string name="dashboard_snack_hc_install">تثبيت</string>
+    <string name="dashboard_snack_hc_permission">يُرجى منح إذن ضغط الدم في Health Connect</string>
+    <string name="dashboard_snack_hc_sync_failed">فشلت المزامنة مع Health Connect</string>
+    <string name="dashboard_snack_export_success">تم تصدير ملف %s</string>
+    <string name="export_type_json">JSON</string>
+    <string name="export_type_csv">CSV</string>
+    <string name="export_type_pdf">PDF</string>
+    <string name="dashboard_reading_pulse_format"> · %d نبضة/د</string>
+
+    <!-- Arabic has rich plural rules; Android selects the correct form -->
+    <plurals name="dashboard_snack_imported">
+        <item quantity="zero">لم يتم استيراد أي قراءة</item>
+        <item quantity="one">تم استيراد قراءة واحدة</item>
+        <item quantity="two">تم استيراد قراءتين</item>
+        <item quantity="few">تم استيراد %d قراءات</item>
+        <item quantity="many">تم استيراد %d قراءة</item>
+        <item quantity="other">تم استيراد %d قراءة</item>
+    </plurals>
+    <plurals name="dashboard_snack_synced">
+        <item quantity="zero">لم تتم مزامنة أي قراءة مع Health Connect</item>
+        <item quantity="one">تمت مزامنة قراءة واحدة مع Health Connect</item>
+        <item quantity="two">تمت مزامنة قراءتين مع Health Connect</item>
+        <item quantity="few">تمت مزامنة %d قراءات مع Health Connect</item>
+        <item quantity="many">تمت مزامنة %d قراءة مع Health Connect</item>
+        <item quantity="other">تمت مزامنة %d قراءة مع Health Connect</item>
+    </plurals>
+
+    <string name="capture_cd_capture">التقاط</string>
+    <string name="capture_reading_numbers">جارٍ قراءة الأرقام…</string>
+    <string name="capture_ocr_error">خطأ OCR: %s</string>
+    <string name="capture_permission_rationale">يلزم الوصول إلى الكاميرا لمسح القراءات.</string>
+    <string name="capture_grant_permission">منح إذن الكاميرا</string>
+
+    <string name="validation_title_confirm">تأكيد القراءة</string>
+    <string name="validation_title_new">قراءة جديدة</string>
+    <string name="validation_cd_captured_image">القراءة الملتقطة</string>
+    <string name="validation_cd_captured_fullscreen">القراءة الملتقطة (ملء الشاشة)</string>
+    <string name="validation_hint_enlarge">اضغط على الصورة للتكبير</string>
+    <string name="validation_label_sys">الانقباضي</string>
+    <string name="validation_subtitle_sys">الانقباضي (mmHg)</string>
+    <string name="validation_label_dia">الانبساطي</string>
+    <string name="validation_subtitle_dia">الانبساطي (mmHg)</string>
+    <string name="validation_label_pul">النبض</string>
+    <string name="validation_subtitle_pul">النبض (نبضة/د)</string>
+    <string name="validation_error_sys_dia">يجب أن يكون الانقباضي أكبر من الانبساطي</string>
+    <string name="validation_notes_label">ملاحظات (اختياري)</string>
+    <string name="validation_notes_placeholder">مثال: بعد التمرين، صباحًا</string>
+    <string name="validation_save">حفظ القراءة</string>
+    <string name="validation_retake">إعادة الالتقاط</string>
+    <string name="validation_debug_ocr">مشاركة OCR الخام (تصحيح)</string>
+    <string name="validation_debug_preproc">مشاركة الصورة المعالجة مسبقًا (تصحيح)</string>
+    <string name="validation_cd_decrease">إنقاص %s</string>
+    <string name="validation_cd_increase">زيادة %s</string>
+
+    <string name="profile_title">الملف الصحي</string>
+    <string name="profile_info">تساعد هذه المعلومات في تخصيص تقييم مخاطر ضغط الدم. تبقى جميع البيانات على جهازك.</string>
+    <string name="profile_section_basic">المعلومات الأساسية</string>
+    <string name="profile_birth_year_label">سنة الميلاد</string>
+    <string name="profile_birth_year_placeholder">مثال: 1985</string>
+    <string name="profile_birth_year_error">أدخل سنة ميلاد صحيحة</string>
+    <string name="profile_age">العمر: %d سنة</string>
+    <string name="profile_sex_label">الجنس البيولوجي</string>
+    <string name="profile_section_body">القياسات الجسدية</string>
+    <string name="profile_weight_label">الوزن</string>
+    <string name="profile_weight_suffix">كجم</string>
+    <string name="profile_weight_error">أدخل قيمة أكبر من 0</string>
+    <string name="profile_height_label">الطول</string>
+    <string name="profile_height_suffix">سم</string>
+    <string name="profile_height_error">أدخل قيمة أكبر من 0</string>
+    <string name="profile_bmi">مؤشر كتلة الجسم</string>
+    <string name="profile_section_health">العوامل الصحية</string>
+    <string name="profile_smoker_label">مدخّن حالي</string>
+    <string name="profile_smoker_desc">يضاعف مخاطر القلب والأوعية الدموية</string>
+    <string name="profile_diabetes_label">السكري / ما قبل السكري</string>
+    <string name="profile_diabetes_desc">يرفع المخاطر بشكل كبير عند اقترانه بارتفاع ضغط الدم</string>
+    <string name="profile_section_activity">النشاط البدني</string>
+    <string name="profile_activity_level_label">مستوى التمرين المعتاد</string>
+    <string name="profile_section_subscriptions">الاشتراكات</string>
+    <string name="profile_subscriptions_desc">أدر اشتراك Pro لإلغاء قفل ماسح الكاميرا بالذكاء الاصطناعي.</string>
+    <string name="profile_restore_purchases">استعادة المشتريات</string>
+    <string name="profile_restoring">جارٍ الاستعادة…</string>
+    <string name="profile_restore_success">تمت استعادة المشتريات بنجاح.</string>
+    <string name="profile_restore_error">فشلت استعادة المشتريات.</string>
+    <string name="profile_disclaimer">ⓘ  هذا التقييم لأغراض إعلامية ولا يغني عن استشارة الطبيب.</string>
+
+    <string name="reminders_title">التذكيرات</string>
+    <string name="reminders_notif_perm_title">إذن الإشعارات مطلوب</string>
+    <string name="reminders_notif_perm_desc">اسمح بالإشعارات حتى تصلك التذكيرات.</string>
+    <string name="reminders_notif_perm_button">منح الإذن</string>
+    <string name="reminders_exact_alarm_title">إذن المنبه الدقيق مطلوب</string>
+    <string name="reminders_exact_alarm_desc">للحصول على تذكيرات دقيقة، اسمح لهذا التطبيق بجدولة منبهات دقيقة.</string>
+    <string name="reminders_exact_alarm_button">فتح الإعدادات</string>
+    <string name="reminders_enable_label">تفعيل التذكيرات</string>
+    <string name="reminders_enable_desc">إشعارات فحص ضغط الدم صباحًا ومساءً</string>
+    <string name="reminders_morning_label">الفحص الصباحي</string>
+    <string name="reminders_morning_desc">بعد ~30 دقيقة من الاستيقاظ، قبل القهوة أو الدواء</string>
+    <string name="reminders_evening_label">الفحص المسائي</string>
+    <string name="reminders_evening_desc">أثناء الاسترخاء في المساء</string>
+    <string name="reminders_footer">اضغط على الوقت لتغييره. تنطلق التذكيرات يوميًا في الوقت المحدد وتُعاد جدولتها تلقائيًا.</string>
+    <string name="reminders_set_time">ضبط الوقت</string>
+
+    <string name="risk_card_title">تقييم المخاطر</string>
+    <string name="risk_card_edit_profile">تعديل الملف</string>
+    <string name="risk_card_setup_profile">إعداد الملف</string>
+    <string name="risk_card_risk_badge">مخاطر %s</string>
+    <string name="risk_card_bmi">مؤشر كتلة الجسم %1$s · %2$s</string>
+    <string name="risk_card_incomplete_profile">أضف عمرك ووزنك وطولك وتفاصيل نمط حياتك للحصول على تقييم مخصّص.</string>
+    <string name="risk_card_show_less">عرض أقل</string>
+    <string name="risk_card_show_more">عرض %d أخرى…</string>
+
+    <string name="onboarding_next">التالي</string>
+    <string name="onboarding_get_started">ابدأ الآن</string>
+    <string name="onboarding_page1_overlay">وضوح</string>
+    <string name="onboarding_page1_title">اعرف أرقامك</string>
+    <string name="onboarding_page1_body">سجّل قراءاتك واعرف معناها فورًا، مع معلومات واضحة عن فئة ضغط الدم.</string>
+    <string name="onboarding_page2_overlay">لمسة واحدة</string>
+    <string name="onboarding_page2_title">تسجيل بلا عناء</string>
+    <string name="onboarding_page2_body">التقط صورة لجهازك ودع التطبيق يقرأها لك (مميّز) — أو أدخل القراءات يدويًا في ثوانٍ.</string>
+    <string name="onboarding_page3_overlay">استمرارية</string>
+    <string name="onboarding_page3_title">حافظ على الانتظام</string>
+    <string name="onboarding_page3_body">التذكيرات اليومية ومخططات الاتجاهات ومزامنة Health Connect تُبقي تقدّمك في المسار الصحيح.</string>
+
+    <string name="help_title">المساعدة</string>
+    <string name="help_camera_title">المسح بالكاميرا</string>
+    <string name="help_manual_title">الإدخال اليدوي</string>
+    <string name="help_trends_title">مخطط الاتجاهات</string>
+    <string name="help_history_title">سجل القراءات</string>
+    <string name="help_profile_title">الملف الصحي</string>
+    <string name="help_risk_title">تقييم المخاطر الصحية</string>
+    <string name="help_reminders_title">التذكيرات</string>
+    <string name="help_export_title">تصدير البيانات</string>
+    <string name="help_import_title">استيراد البيانات</string>
+    <string name="help_hc_title">Health Connect</string>
+
+    <string name="help_camera_body">المسح بالكاميرا ميزة مميّزة متوفرة مع اشتراك نشط.\n\nاضغط زر الكاميرا (أسفل اليمين) لفتح المعاينة المباشرة. ضع شاشة جهاز قياس ضغط الدم داخل الدليل على الشاشة، ثم اضغط التقاط.\n\nتُرسل الصورة إلى Gemini 2.5 Flash الذي يقرأ قيم الانقباضي والانبساطي والنبض. يمكنك مراجعتها وتصحيحها في الشاشة التالية قبل الحفظ.\n\nإذا لم يكن لديك اشتراك نشط، فإن الضغط على زر الكاميرا سيفتح شاشة الترقية حيث يمكنك الاشتراك أو استعادة عملية شراء سابقة.</string>
+    <string name="help_manual_body">اضغط زر القلم لإدخال قراءة دون التقاط صورة. تُملأ أشرطة التمرير مسبقًا بآخر قراءة محفوظة (القيم الافتراضية: 120 / 80 / 60 عند أول تشغيل).\n\nاضبط الانقباضي والانبساطي والنبض باستخدام شريط التمرير أو أزرار ±. أضف ملاحظة اختيارية، ثم اضغط حفظ القراءة.\n\nيظل زر الحفظ معطّلًا حتى يصبح الانقباضي أكبر من الانبساطي.</string>
+    <string name="help_trends_body">يعرض المخطط في لوحة المعلومات قراءات الانقباضي (أحمر) والانبساطي (أزرق) عبر الزمن. استخدم الرقاقات أعلى المخطط لتصفية العرض:\n\n• 7ي — آخر 7 أيام\n• 30ي — آخر 30 يومًا (افتراضي)\n• 90ي — آخر 90 يومًا\n• الكل — السجل الكامل\n\nالمحور الرأسي ثابت عند 40–180 mmHg. تشير الخطوط المرجعية المتقطعة إلى الحدود الطبيعية وفق AHA: الانقباضي 120 والانبساطي 80.\n\nأدر الهاتف أفقيًا لعرض المخطط بملء الشاشة.</string>
+    <string name="help_history_body">تُدرج جميع القراءات أسفل المخطط، الأحدث أولًا. يعرض كل صف:\n\n• التاريخ والوقت\n• الانقباضي / الانبساطي · النبض (نبضة/د)\n• شارة فئة ضغط دم ملوّنة\n• أي ملاحظة أضفتها (بخط مائل)\n\nاسحب الصف يمينًا أو يسارًا لحذفه. يظهر شريط في الأسفل بزر تراجع — لديك 5 ثوانٍ لإلغاء الحذف قبل أن يصبح نهائيًا.</string>
+    <string name="help_profile_body">اضغط أيقونة الشخص لفتح ملفك الصحي. تعبئته تتيح للتطبيق تخصيص بطاقة المخاطر الصحية.\n\nالحقول المتاحة:\n\n• سنة الميلاد — لحساب عمرك\n• الجنس البيولوجي\n• الوزن (كجم) والطول (سم) — مع معاينة مباشرة لمؤشر كتلة الجسم\n• مفتاح المدخّن الحالي\n• مفتاح السكري / ما قبل السكري\n• مستوى النشاط البدني\n\nتبقى جميع البيانات على الجهاز. الملف اختياري؛ يعمل التطبيق بالكامل بدونه.</string>
+    <string name="help_risk_body">عند وجود قراءة واحدة على الأقل، تظهر بطاقة مخاطر صحية أعلى قائمة القراءات. تجمع بين أحدث فئة لضغط دمك وملفك الصحي لتقديم إرشادات سياقية.\n\nتُستمد الإرشادات من إرشادات AHA (جمعية القلب الأمريكية) وهي للمعلومات فقط ولا تحل محل نصيحة أخصائي رعاية صحية مؤهل.\n\nاضغط "تعديل الملف" على البطاقة لإكمال أو تحديث ملفك الصحي.</string>
+    <string name="help_reminders_body">اضغط أيقونة الجرس لإعداد تذكيرات القياس اليومية.\n\n1. امنح إذن الإشعارات إذا طُلب منك.\n2. فعّل المفتاح الرئيسي.\n3. اضبط وقت الصباح (يُفضّل بعد 30 دقيقة من الاستيقاظ، قبل القهوة أو الدواء).\n4. اضبط وقت المساء (عندما تكون مسترخيًا).\n\nتتضمن الإشعارات اختصار "سجّل الآن" الذي يفتح التطبيق، وإجراء "تأجيل (15 دقيقة)". يُعاد جدولة المنبهات تلقائيًا كل يوم وتبقى بعد إعادة تشغيل الجهاز.\n\nإذا لم يكن إذن المنبه الدقيق متاحًا على جهازك، فسيوجّهك التطبيق إلى إعدادات النظام لتفعيله.</string>
+    <string name="help_export_body">اضغط أيقونة المشاركة في الشريط العلوي لتصدير بياناتك. توفّر القائمة المنسدلة ثلاث صيغ:\n\n• JSON — سجل القراءات الكامل. يمكن استيراده مجددًا إلى التطبيق.\n• CSV — سجلك الكامل بصيغة جدول بيانات، متوافق مع Excel أو Google Sheets.\n• PDF — مستند متعدد الصفحات يحتوي على مخططات الاتجاهات وجدول القراءات.\n\nتُشارك عملية التصدير عبر ورقة المشاركة القياسية في Android.</string>
+    <string name="help_import_body">اضغط أيقونة التنزيل (الشريط العلوي) لاستيراد القراءات من ملف JSON صُدّر سابقًا من هذا التطبيق.\n\nيفتح التطبيق منتقي الملفات. اختر ملف تصدير JSON. تُدرج فقط القراءات التي لا توجد طوابعها الزمنية مسبقًا في قاعدة البيانات — إعادة استيراد الملف نفسه آمنة.\n\nيؤكد شريط عدد القراءات الجديدة المُضافة، أو يخبرك بعدم وجود جديد للاستيراد.</string>
+    <string name="help_hc_body">Health Connect هي منصة بيانات صحية على الجهاز من Google. يمكن لهذا التطبيق كتابة قراءاتك كسجلات لضغط الدم ومعدل ضربات القلب.\n\nمزامنة جماعية: اضغط أيقونة مراقبة القلب في الشريط العلوي. سيُطلب منك منح أذونات الكتابة في المرة الأولى. تُرفع جميع القراءات الحالية (آمن للتكرار — تُحدّث السجلات الموجودة ولا تُكرّر).\n\nدفع تلقائي: في كل مرة تحفظ فيها قراءة جديدة، تُدفع تلقائيًا إلى Health Connect في الخلفية — شريطة أن تكون قد منحت الأذونات. لا حاجة لأي إجراء إضافي.\n\nإذا لم يكن Health Connect مثبتًا على جهازك، فسيوفّر التطبيق رابطًا إلى Play Store لتثبيته.</string>
+</resources>
