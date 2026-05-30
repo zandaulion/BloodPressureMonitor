@@ -20,6 +20,7 @@ Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read
 | **Health Connect** | Bulk sync + automatic per-reading push after each save (when permissions are granted) |
 | **Health Profile** | Birth year, biological sex, weight / height (with BMI preview), smoker, diabetes, activity level |
 | **AI-Powered OCR** | Camera scan powered by Vertex AI (Gemini 2.5 Flash); no user API key required |
+| **Localization** | Fully translated into 12 languages: English, Arabic, Chinese, French, German, Hindi, Japanese, Korean, Portuguese, Romanian, Spanish, and Ukrainian |
 
 ---
 
