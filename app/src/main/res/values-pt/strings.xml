@@ -183,6 +183,18 @@
     <string name="risk_card_show_less">Ver menos</string>
     <string name="risk_card_show_more">Ver mais %d…</string>
 
+    <string name="risk_note_disclaimer">Esta informação baseia-se nas diretrizes gerais da AHA e não constitui aconselhamento médico. Consulte sempre o seu médico.</string>
+    <string name="risk_note_bp_crisis">De acordo com as diretrizes da AHA, leituras acima de 180/120 indicam uma crise hipertensiva. Consulte imediatamente um profissional de saúde.</string>
+    <string name="risk_note_bp_stage2">De acordo com as diretrizes da AHA, a hipertensão estágio 2 frequentemente requer consulta médica.</string>
+    <string name="risk_note_bp_stage1">De acordo com as diretrizes da AHA, a hipertensão estágio 1 é frequentemente gerida com modificações do estilo de vida sob supervisão médica.</string>
+    <string name="risk_note_bp_elevated">De acordo com as diretrizes da AHA, a pressão arterial elevada pode frequentemente ser gerida com modificações do estilo de vida.</string>
+    <string name="risk_note_smoker">As diretrizes de saúde pública indicam que parar de fumar reduz o risco cardiovascular.</string>
+    <string name="risk_note_diabetes">A AHA observa que a diabetes combinada com pressão arterial elevada aumenta o risco cardiovascular.</string>
+    <string name="risk_note_bmi_elevated">De acordo com as diretrizes gerais, gerir o peso pode ajudar a manter uma pressão arterial saudável.</string>
+    <string name="risk_note_bmi_underweight">O baixo peso corporal pode estar associado a outras considerações de saúde. Por favor, discuta com o seu médico.</string>
+    <string name="risk_note_sedentary">A AHA recomenda atividade aeróbica regular para ajudar a apoiar a saúde cardiovascular.</string>
+    <string name="risk_note_older_adult">Para adultos mais velhos, os objetivos de pressão arterial podem variar. Consulte o seu médico para aconselhamento personalizado.</string>
+
     <string name="onboarding_next">Próximo</string>
     <string name="onboarding_get_started">Começar</string>
     <string name="onboarding_page1_overlay">Clareza</string>

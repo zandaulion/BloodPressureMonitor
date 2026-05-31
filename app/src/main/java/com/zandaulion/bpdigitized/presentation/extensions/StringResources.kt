@@ -7,6 +7,7 @@ import com.zandaulion.bpdigitized.domain.model.BiologicalSex
 import com.zandaulion.bpdigitized.domain.model.BmiCategory
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.CardiovascularRisk
+import com.zandaulion.bpdigitized.domain.model.HealthNote
 import com.zandaulion.bpdigitized.presentation.dashboard.ChartRange
 import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
 
@@ -39,6 +40,20 @@ import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
     BmiCategory.NORMAL      -> R.string.bmi_normal
     BmiCategory.OVERWEIGHT  -> R.string.bmi_overweight
     BmiCategory.OBESE       -> R.string.bmi_obese
+}
+
+@StringRes fun HealthNote.stringRes(): Int = when (this) {
+    HealthNote.DISCLAIMER      -> R.string.risk_note_disclaimer
+    HealthNote.BP_CRISIS       -> R.string.risk_note_bp_crisis
+    HealthNote.BP_STAGE2       -> R.string.risk_note_bp_stage2
+    HealthNote.BP_STAGE1       -> R.string.risk_note_bp_stage1
+    HealthNote.BP_ELEVATED     -> R.string.risk_note_bp_elevated
+    HealthNote.SMOKER          -> R.string.risk_note_smoker
+    HealthNote.DIABETES        -> R.string.risk_note_diabetes
+    HealthNote.BMI_ELEVATED    -> R.string.risk_note_bmi_elevated
+    HealthNote.BMI_UNDERWEIGHT -> R.string.risk_note_bmi_underweight
+    HealthNote.SEDENTARY       -> R.string.risk_note_sedentary
+    HealthNote.OLDER_ADULT     -> R.string.risk_note_older_adult
 }
 
 @StringRes fun CardiovascularRisk.labelRes(): Int = when (this) {

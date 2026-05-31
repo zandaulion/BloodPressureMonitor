@@ -198,6 +198,19 @@
     <string name="reminders_footer">Tap a time to change it. Reminders fire each day at the chosen time and reschedule automatically.</string>
     <string name="reminders_set_time">Set time</string>
 
+    <!-- ── Health Risk Card – context notes ────────────────────────────────── -->
+    <string name="risk_note_disclaimer">This information is based on general AHA guidelines and is not medical advice. Always consult your doctor.</string>
+    <string name="risk_note_bp_crisis">According to AHA guidelines, readings above 180/120 indicate a hypertensive crisis. Please consult a healthcare professional immediately.</string>
+    <string name="risk_note_bp_stage2">According to AHA guidelines, Stage 2 hypertension often requires medical consultation.</string>
+    <string name="risk_note_bp_stage1">According to AHA guidelines, Stage 1 hypertension is often managed with lifestyle modifications under a doctor\'s supervision.</string>
+    <string name="risk_note_bp_elevated">According to AHA guidelines, elevated blood pressure can often be managed with lifestyle modifications.</string>
+    <string name="risk_note_smoker">Public health guidelines note that quitting smoking reduces cardiovascular risk.</string>
+    <string name="risk_note_diabetes">The AHA notes that diabetes combined with high blood pressure increases cardiovascular risk.</string>
+    <string name="risk_note_bmi_elevated">According to general guidelines, managing weight can help support healthy blood pressure.</string>
+    <string name="risk_note_bmi_underweight">Low body weight can be associated with other health considerations. Please discuss with your doctor.</string>
+    <string name="risk_note_sedentary">The AHA recommends regular aerobic activity to help support cardiovascular health.</string>
+    <string name="risk_note_older_adult">For older adults, blood pressure targets may vary. Please consult your doctor for personalized advice.</string>
+
     <!-- ── Health Risk Card ───────────────────────────────────────────────── -->
     <string name="risk_card_title">Risk Assessment</string>
     <string name="risk_card_edit_profile">Edit Profile</string>

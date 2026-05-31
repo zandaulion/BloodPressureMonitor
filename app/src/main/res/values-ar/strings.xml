@@ -192,6 +192,18 @@
     <string name="risk_card_show_less">عرض أقل</string>
     <string name="risk_card_show_more">عرض %d أخرى…</string>
 
+    <string name="risk_note_disclaimer">هذه المعلومات مستندة إلى إرشادات AHA العامة وليست نصيحة طبية. استشر طبيبك دائمًا.</string>
+    <string name="risk_note_bp_crisis">وفقًا لإرشادات AHA، تُشير القراءات التي تتجاوز 180/120 إلى أزمة ارتفاع ضغط الدم. يُرجى استشارة مختص طبي فورًا.</string>
+    <string name="risk_note_bp_stage2">وفقًا لإرشادات AHA، كثيرًا ما يستدعي ارتفاع ضغط الدم من الدرجة الثانية استشارة طبية.</string>
+    <string name="risk_note_bp_stage1">وفقًا لإرشادات AHA، كثيرًا ما يُدار ارتفاع ضغط الدم من الدرجة الأولى بتعديلات نمط الحياة تحت إشراف طبي.</string>
+    <string name="risk_note_bp_elevated">وفقًا لإرشادات AHA، كثيرًا ما يمكن التحكم في ارتفاع ضغط الدم بتعديلات نمط الحياة.</string>
+    <string name="risk_note_smoker">تشير إرشادات الصحة العامة إلى أن الإقلاع عن التدخين يُقلل من مخاطر أمراض القلب والأوعية الدموية.</string>
+    <string name="risk_note_diabetes">تلاحظ AHA أن مرض السكري مع ارتفاع ضغط الدم يزيد من مخاطر أمراض القلب والأوعية الدموية.</string>
+    <string name="risk_note_bmi_elevated">وفقًا للإرشادات العامة، يمكن أن تساعد إدارة الوزن في الحفاظ على ضغط دم صحي.</string>
+    <string name="risk_note_bmi_underweight">قد يرتبط انخفاض وزن الجسم باعتبارات صحية أخرى. يُرجى مناقشة ذلك مع طبيبك.</string>
+    <string name="risk_note_sedentary">توصي AHA بممارسة النشاط البدني الهوائي المنتظم للمساعدة في دعم صحة القلب والأوعية الدموية.</string>
+    <string name="risk_note_older_adult">بالنسبة لكبار السن، قد تختلف أهداف ضغط الدم. يُرجى استشارة طبيبك للحصول على توصيات شخصية.</string>
+
     <string name="onboarding_next">التالي</string>
     <string name="onboarding_get_started">ابدأ الآن</string>
     <string name="onboarding_page1_overlay">وضوح</string>

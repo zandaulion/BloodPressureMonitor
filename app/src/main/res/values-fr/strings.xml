@@ -183,6 +183,18 @@
     <string name="risk_card_show_less">Voir moins</string>
     <string name="risk_card_show_more">Voir %d de plus…</string>
 
+    <string name="risk_note_disclaimer">Ces informations sont basées sur les recommandations générales de l\'AHA et ne constituent pas un avis médical. Consultez toujours votre médecin.</string>
+    <string name="risk_note_bp_crisis">Selon les recommandations de l\'AHA, des valeurs supérieures à 180/120 indiquent une crise hypertensive. Veuillez consulter immédiatement un professionnel de santé.</string>
+    <string name="risk_note_bp_stage2">Selon les recommandations de l\'AHA, l\'HTA de stade 2 nécessite souvent une consultation médicale.</string>
+    <string name="risk_note_bp_stage1">Selon les recommandations de l\'AHA, l\'HTA de stade 1 est souvent prise en charge par des modifications du mode de vie sous supervision médicale.</string>
+    <string name="risk_note_bp_elevated">Selon les recommandations de l\'AHA, une pression artérielle élevée peut souvent être gérée par des modifications du mode de vie.</string>
+    <string name="risk_note_smoker">Les recommandations de santé publique indiquent que l\'arrêt du tabac réduit le risque cardiovasculaire.</string>
+    <string name="risk_note_diabetes">L\'AHA note que le diabète combiné à une pression artérielle élevée augmente le risque cardiovasculaire.</string>
+    <string name="risk_note_bmi_elevated">Selon les recommandations générales, gérer son poids peut aider à maintenir une pression artérielle saine.</string>
+    <string name="risk_note_bmi_underweight">Un faible poids corporel peut être associé à d\'autres considérations de santé. Veuillez en discuter avec votre médecin.</string>
+    <string name="risk_note_sedentary">L\'AHA recommande une activité aérobie régulière pour soutenir la santé cardiovasculaire.</string>
+    <string name="risk_note_older_adult">Pour les personnes âgées, les objectifs de pression artérielle peuvent varier. Consultez votre médecin pour des conseils personnalisés.</string>
+
     <string name="onboarding_next">Suivant</string>
     <string name="onboarding_get_started">Commencer</string>
     <string name="onboarding_page1_overlay">Clarté</string>

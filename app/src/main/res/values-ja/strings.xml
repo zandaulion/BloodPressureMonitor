@@ -182,6 +182,18 @@
     <string name="risk_card_show_less">少なく表示</string>
     <string name="risk_card_show_more">さらに%d件表示…</string>
 
+    <string name="risk_note_disclaimer">この情報はAHAの一般的なガイドラインに基づいており、医学的アドバイスではありません。必ず医師にご相談ください。</string>
+    <string name="risk_note_bp_crisis">AHAのガイドラインによると、180/120を超える数値は高血圧緊急症を示します。直ちに医療専門家にご相談ください。</string>
+    <string name="risk_note_bp_stage2">AHAのガイドラインによると、高血圧2度はしばしば医療相談が必要です。</string>
+    <string name="risk_note_bp_stage1">AHAのガイドラインによると、高血圧1度は医師の監督のもとで生活習慣の改善により管理されることが多いです。</string>
+    <string name="risk_note_bp_elevated">AHAのガイドラインによると、血圧の上昇は生活習慣の改善により管理できることが多いです。</string>
+    <string name="risk_note_smoker">公衆衛生のガイドラインは、禁煙が心血管リスクを低下させることを示しています。</string>
+    <string name="risk_note_diabetes">AHAは、糖尿病と高血圧の組み合わせが心血管リスクを高めることを指摘しています。</string>
+    <string name="risk_note_bmi_elevated">一般的なガイドラインによると、体重管理は健康的な血圧の維持に役立ちます。</string>
+    <string name="risk_note_bmi_underweight">低体重は他の健康上の考慮事項と関連している場合があります。医師にご相談ください。</string>
+    <string name="risk_note_sedentary">AHAは心血管の健康をサポートするために定期的な有酸素運動を推奨しています。</string>
+    <string name="risk_note_older_adult">高齢者の場合、血圧の目標値は異なる場合があります。個別のアドバイスについては医師にご相談ください。</string>
+
     <string name="onboarding_next">次へ</string>
     <string name="onboarding_get_started">始める</string>
     <string name="onboarding_page1_overlay">把握</string>

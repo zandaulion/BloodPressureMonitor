@@ -183,6 +183,18 @@
     <string name="risk_card_show_less">Ver menos</string>
     <string name="risk_card_show_more">Ver %d más…</string>
 
+    <string name="risk_note_disclaimer">Esta información se basa en las directrices generales de la AHA y no constituye asesoramiento médico. Consulte siempre a su médico.</string>
+    <string name="risk_note_bp_crisis">Según las directrices de la AHA, lecturas superiores a 180/120 indican una crisis hipertensiva. Consulte a un profesional sanitario de inmediato.</string>
+    <string name="risk_note_bp_stage2">Según las directrices de la AHA, la hipertensión de grado 2 a menudo requiere consulta médica.</string>
+    <string name="risk_note_bp_stage1">Según las directrices de la AHA, la hipertensión de grado 1 suele manejarse con modificaciones del estilo de vida bajo supervisión médica.</string>
+    <string name="risk_note_bp_elevated">Según las directrices de la AHA, la presión arterial elevada a menudo puede controlarse con cambios en el estilo de vida.</string>
+    <string name="risk_note_smoker">Las directrices de salud pública señalan que dejar de fumar reduce el riesgo cardiovascular.</string>
+    <string name="risk_note_diabetes">La AHA señala que la diabetes combinada con presión arterial alta aumenta el riesgo cardiovascular.</string>
+    <string name="risk_note_bmi_elevated">Según las directrices generales, controlar el peso puede ayudar a mantener una tensión arterial saludable.</string>
+    <string name="risk_note_bmi_underweight">El bajo peso corporal puede estar asociado con otras consideraciones de salud. Consulte a su médico.</string>
+    <string name="risk_note_sedentary">La AHA recomienda actividad aeróbica regular para ayudar a mantener la salud cardiovascular.</string>
+    <string name="risk_note_older_adult">En adultos mayores, los objetivos de presión arterial pueden variar. Consulte a su médico para obtener asesoramiento personalizado.</string>
+
     <string name="onboarding_next">Siguiente</string>
     <string name="onboarding_get_started">Empezar</string>
     <string name="onboarding_page1_overlay">Claridad</string>

@@ -182,6 +182,18 @@
     <string name="risk_card_show_less">收起</string>
     <string name="risk_card_show_more">显示另外 %d 项…</string>
 
+    <string name="risk_note_disclaimer">本信息基于美国心脏协会(AHA)的一般指南，不构成医疗建议。请始终咨询您的医生。</string>
+    <string name="risk_note_bp_crisis">根据AHA指南，读数超过180/120表明存在高血压危象。请立即就医。</string>
+    <string name="risk_note_bp_stage2">根据AHA指南，2级高血压通常需要就医。</string>
+    <string name="risk_note_bp_stage1">根据AHA指南，1级高血压通常在医生监督下通过生活方式改变来管理。</string>
+    <string name="risk_note_bp_elevated">根据AHA指南，血压偏高通常可以通过生活方式改变来控制。</string>
+    <string name="risk_note_smoker">公共卫生指南指出，戒烟可以降低心血管风险。</string>
+    <string name="risk_note_diabetes">AHA指出，糖尿病与高血压结合会增加心血管风险。</string>
+    <string name="risk_note_bmi_elevated">根据一般指南，体重管理有助于维持健康的血压。</string>
+    <string name="risk_note_bmi_underweight">体重过轻可能与其他健康问题有关。请与您的医生讨论。</string>
+    <string name="risk_note_sedentary">AHA建议定期进行有氧运动以支持心血管健康。</string>
+    <string name="risk_note_older_adult">对于老年人，血压目标可能有所不同。请咨询您的医生获取个性化建议。</string>
+
     <string name="onboarding_next">下一步</string>
     <string name="onboarding_get_started">开始使用</string>
     <string name="onboarding_page1_overlay">清晰</string>

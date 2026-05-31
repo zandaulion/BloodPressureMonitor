@@ -185,6 +185,18 @@
     <string name="risk_card_show_less">Arată mai puțin</string>
     <string name="risk_card_show_more">Arată încă %d…</string>
 
+    <string name="risk_note_disclaimer">Aceste informații se bazează pe ghidurile generale AHA și nu reprezintă sfaturi medicale. Consultați întotdeauna medicul dumneavoastră.</string>
+    <string name="risk_note_bp_crisis">Conform ghidurilor AHA, valorile peste 180/120 indică o criză hipertensivă. Vă rugăm să consultați imediat un profesionist medical.</string>
+    <string name="risk_note_bp_stage2">Conform ghidurilor AHA, hipertensiunea de stadiul 2 necesită adesea consultație medicală.</string>
+    <string name="risk_note_bp_stage1">Conform ghidurilor AHA, hipertensiunea de stadiul 1 este adesea gestionată prin modificări ale stilului de viață sub supravegherea unui medic.</string>
+    <string name="risk_note_bp_elevated">Conform ghidurilor AHA, tensiunea arterială crescută poate fi adesea gestionată prin modificări ale stilului de viață.</string>
+    <string name="risk_note_smoker">Ghidurile de sănătate publică indică faptul că renunțarea la fumat reduce riscul cardiovascular.</string>
+    <string name="risk_note_diabetes">AHA notează că diabetul combinat cu tensiunea arterială crescută crește riscul cardiovascular.</string>
+    <string name="risk_note_bmi_elevated">Conform ghidurilor generale, gestionarea greutății poate ajuta la menținerea unei tensiuni arteriale sănătoase.</string>
+    <string name="risk_note_bmi_underweight">Greutatea corporală scăzută poate fi asociată cu alte considerații de sănătate. Vă rugăm să discutați cu medicul dumneavoastră.</string>
+    <string name="risk_note_sedentary">AHA recomandă activitate aerobică regulată pentru a sprijini sănătatea cardiovasculară.</string>
+    <string name="risk_note_older_adult">Pentru adulții în vârstă, obiectivele tensiunii arteriale pot varia. Consultați medicul pentru sfaturi personalizate.</string>
+
     <string name="onboarding_next">Continuă</string>
     <string name="onboarding_get_started">Începe</string>
     <string name="onboarding_page1_overlay">Claritate</string>

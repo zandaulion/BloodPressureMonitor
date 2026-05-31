@@ -183,6 +183,18 @@
     <string name="risk_card_show_less">कम दिखाएं</string>
     <string name="risk_card_show_more">%d और दिखाएं…</string>
 
+    <string name="risk_note_disclaimer">यह जानकारी AHA के सामान्य दिशानिर्देशों पर आधारित है और चिकित्सा सलाह नहीं है। हमेशा अपने डॉक्टर से परामर्श करें।</string>
+    <string name="risk_note_bp_crisis">AHA के दिशानिर्देशों के अनुसार, 180/120 से ऊपर की रीडिंग उच्च रक्तचाप संकट का संकेत है। कृपया तुरंत किसी स्वास्थ्य पेशेवर से परामर्श करें।</string>
+    <string name="risk_note_bp_stage2">AHA के दिशानिर्देशों के अनुसार, चरण 2 उच्च रक्तचाप में अक्सर चिकित्सा परामर्श की आवश्यकता होती है।</string>
+    <string name="risk_note_bp_stage1">AHA के दिशानिर्देशों के अनुसार, चरण 1 उच्च रक्तचाप को अक्सर डॉक्टर की निगरानी में जीवनशैली परिवर्तनों से नियंत्रित किया जाता है।</string>
+    <string name="risk_note_bp_elevated">AHA के दिशानिर्देशों के अनुसार, बढ़ा हुआ रक्तचाप अक्सर जीवनशैली परिवर्तनों से नियंत्रित किया जा सकता है।</string>
+    <string name="risk_note_smoker">सार्वजनिक स्वास्थ्य दिशानिर्देशों के अनुसार, धूम्रपान छोड़ने से हृदय संबंधी जोखिम कम होता है।</string>
+    <string name="risk_note_diabetes">AHA के अनुसार, मधुमेह और उच्च रक्तचाप का संयोजन हृदय संबंधी जोखिम बढ़ाता है।</string>
+    <string name="risk_note_bmi_elevated">सामान्य दिशानिर्देशों के अनुसार, वजन प्रबंधन से स्वस्थ रक्तचाप बनाए रखने में मदद मिल सकती है।</string>
+    <string name="risk_note_bmi_underweight">कम शरीर वजन अन्य स्वास्थ्य संबंधी विचारों से जुड़ा हो सकता है। कृपया अपने डॉक्टर से चर्चा करें।</string>
+    <string name="risk_note_sedentary">AHA हृदय स्वास्थ्य को सहारा देने के लिए नियमित एरोबिक गतिविधि की सिफारिश करती है।</string>
+    <string name="risk_note_older_adult">वृद्ध वयस्कों के लिए रक्तचाप के लक्ष्य भिन्न हो सकते हैं। व्यक्तिगत सलाह के लिए अपने डॉक्टर से परामर्श करें।</string>
+
     <string name="onboarding_next">अगला</string>
     <string name="onboarding_get_started">शुरू करें</string>
     <string name="onboarding_page1_overlay">स्पष्टता</string>

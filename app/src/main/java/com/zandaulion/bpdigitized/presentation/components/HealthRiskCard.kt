@@ -32,6 +32,7 @@ import com.zandaulion.bpdigitized.domain.model.CardiovascularRisk
 import com.zandaulion.bpdigitized.domain.model.HealthAssessment
 import com.zandaulion.bpdigitized.presentation.extensions.displayLabelRes
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.extensions.stringRes
 import com.zandaulion.bpdigitized.presentation.theme.CategoryCrisis
 import com.zandaulion.bpdigitized.presentation.theme.CategoryElevated
 import com.zandaulion.bpdigitized.presentation.theme.CategoryNormal
@@ -136,7 +137,7 @@ fun HealthRiskCard(
                 Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
                     visibleNotes.forEach { note ->
                         Text(
-                            text = "• $note",
+                            text = "• ${stringResource(note.stringRes())}",
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }

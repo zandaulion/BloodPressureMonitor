@@ -183,6 +183,18 @@
     <string name="risk_card_show_less">Weniger anzeigen</string>
     <string name="risk_card_show_more">%d weitere anzeigen…</string>
 
+    <string name="risk_note_disclaimer">Diese Informationen basieren auf allgemeinen AHA-Leitlinien und stellen keine medizinische Beratung dar. Konsultieren Sie immer Ihren Arzt.</string>
+    <string name="risk_note_bp_crisis">Gemäß AHA-Leitlinien deuten Werte über 180/120 auf eine hypertensive Krise hin. Bitte wenden Sie sich sofort an einen Arzt.</string>
+    <string name="risk_note_bp_stage2">Gemäß AHA-Leitlinien erfordert Hypertonie Grad 2 häufig ärztliche Konsultation.</string>
+    <string name="risk_note_bp_stage1">Gemäß AHA-Leitlinien wird Hypertonie Grad 1 oft durch Lebensstiländerungen unter ärztlicher Aufsicht behandelt.</string>
+    <string name="risk_note_bp_elevated">Gemäß AHA-Leitlinien kann erhöhter Blutdruck oft durch Lebensstiländerungen reguliert werden.</string>
+    <string name="risk_note_smoker">Laut öffentlichen Gesundheitsleitlinien reduziert das Aufhören mit dem Rauchen das Herzkreislaufrisiko.</string>
+    <string name="risk_note_diabetes">Die AHA weist darauf hin, dass Diabetes in Verbindung mit Bluthochdruck das Herzkreislaufrisiko erhöht.</string>
+    <string name="risk_note_bmi_elevated">Laut allgemeinen Leitlinien kann Gewichtsmanagement dazu beitragen, einen gesunden Blutdruck zu unterstützen.</string>
+    <string name="risk_note_bmi_underweight">Niedriges Körpergewicht kann mit anderen gesundheitlichen Überlegungen verbunden sein. Bitte besprechen Sie dies mit Ihrem Arzt.</string>
+    <string name="risk_note_sedentary">Die AHA empfiehlt regelmäßige aerobe Aktivität zur Unterstützung der Herzkreislaufgesundheit.</string>
+    <string name="risk_note_older_adult">Bei älteren Erwachsenen können die Blutdruckziele variieren. Bitte konsultieren Sie Ihren Arzt für individuelle Empfehlungen.</string>
+
     <string name="onboarding_next">Weiter</string>
     <string name="onboarding_get_started">Los geht\'s</string>
     <string name="onboarding_page1_overlay">Klarheit</string>

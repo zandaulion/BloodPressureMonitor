@@ -15,8 +15,8 @@ android {
         applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 5
-        versionName = "0.5.0"
+        versionCode = 7
+        versionName = "0.7.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
@@ -46,6 +46,17 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+
+    bundle {
+        language {
+            // The app has its own in-app language switcher, so all locale
+            // resources must be present on every device. Disabling language
+            // splits prevents the Play Store from stripping non-device-locale
+            // strings, which would otherwise cause the switcher to fall back
+            // to English on Play Store builds.
+            enableSplit = false
+        }
     }
 
     packaging {

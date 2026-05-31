@@ -182,6 +182,18 @@
     <string name="risk_card_show_less">간략히 보기</string>
     <string name="risk_card_show_more">%d개 더 보기…</string>
 
+    <string name="risk_note_disclaimer">이 정보는 AHA의 일반 지침에 기반하며 의료 조언이 아닙니다. 항상 의사와 상담하세요.</string>
+    <string name="risk_note_bp_crisis">AHA 지침에 따르면 180/120을 초과하는 수치는 고혈압 위기를 나타냅니다. 즉시 의료 전문가에게 상담하세요.</string>
+    <string name="risk_note_bp_stage2">AHA 지침에 따르면 고혈압 2기는 종종 의료 상담이 필요합니다.</string>
+    <string name="risk_note_bp_stage1">AHA 지침에 따르면 고혈압 1기는 의사의 감독 하에 생활 습관 개선으로 관리되는 경우가 많습니다.</string>
+    <string name="risk_note_bp_elevated">AHA 지침에 따르면 높은 혈압은 생활 습관 개선으로 관리될 수 있는 경우가 많습니다.</string>
+    <string name="risk_note_smoker">공중 보건 지침에 따르면 금연은 심혈관 위험을 줄입니다.</string>
+    <string name="risk_note_diabetes">AHA는 당뇨병과 고혈압의 조합이 심혈관 위험을 증가시킨다고 밝히고 있습니다.</string>
+    <string name="risk_note_bmi_elevated">일반 지침에 따르면 체중 관리는 건강한 혈압 유지에 도움이 될 수 있습니다.</string>
+    <string name="risk_note_bmi_underweight">저체중은 다른 건강 고려 사항과 관련이 있을 수 있습니다. 의사와 상담하세요.</string>
+    <string name="risk_note_sedentary">AHA는 심혈관 건강을 지원하기 위해 규칙적인 유산소 운동을 권장합니다.</string>
+    <string name="risk_note_older_adult">노인의 경우 혈압 목표가 다를 수 있습니다. 개인화된 조언을 위해 의사와 상담하세요.</string>
+
     <string name="onboarding_next">다음</string>
     <string name="onboarding_get_started">시작하기</string>
     <string name="onboarding_page1_overlay">명확함</string>
