@@ -66,6 +66,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
@@ -313,6 +314,7 @@ private fun BpValueSlider(
     var isEditing by remember { mutableStateOf(false) }
     var editValue by remember { mutableStateOf(TextFieldValue("")) }
     val focusRequester = remember { FocusRequester() }
+    val keyboardController = LocalSoftwareKeyboardController.current
     // rememberUpdatedState ensures the commitEdit closure always reads the
     // latest `value` even when called from a stale LaunchedEffect coroutine.
     val latestValue by rememberUpdatedState(value)
@@ -322,11 +324,6 @@ private fun BpValueSlider(
         val parsed = editValue.text.toIntOrNull()?.coerceIn(range) ?: latestValue
         onValueChange(parsed)
         isEditing = false
-    }
-
-    // Auto-focus the hidden field the moment we enter edit mode.
-    LaunchedEffect(isEditing) {
-        if (isEditing) focusRequester.requestFocus()
     }
 
     Card(
@@ -361,6 +358,19 @@ private fun BpValueSlider(
 
                 // ── Value display / inline editor ─────────────────────────────
                 if (isEditing) {
+                    // hasFocused guards against onFocusChanged firing with
+                    // isFocused=false on initial mount (before focus is ever
+                    // requested), which would immediately call commitEdit() and
+                    // collapse the field before the keyboard even opens.
+                    var hasFocused by remember { mutableStateOf(false) }
+
+                    // Request focus + show keyboard after this composition frame,
+                    // once the BasicTextField is attached to the layout tree.
+                    LaunchedEffect(Unit) {
+                        focusRequester.requestFocus()
+                        keyboardController?.show()
+                    }
+
                     BasicTextField(
                         value = editValue,
                         onValueChange = { new ->
@@ -385,8 +395,12 @@ private fun BpValueSlider(
                             .width(96.dp)
                             .focusRequester(focusRequester)
                             .onFocusChanged { fs ->
-                                // Commit when the user taps away (e.g. to another slider).
-                                if (!fs.isFocused) commitEdit()
+                                if (fs.isFocused) {
+                                    hasFocused = true
+                                } else if (hasFocused) {
+                                    // Commit when the user taps away (e.g. to another slider).
+                                    commitEdit()
+                                }
                             },
                     )
                 } else {
