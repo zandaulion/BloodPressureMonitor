@@ -79,7 +79,7 @@
 • Corrigido: botão Refazer, seletor de idioma em instalações da Play Store
 </lang>
 
-<lang ro-RO>
+<lang ro>
 • Atinge orice cifră pentru a o scrie direct, fără a folosi cursorul
 • Ține apăsat + sau − pentru a modifica rapid valorile — se accelerează cu cât ții mai mult
 • Butonul Salvează citirea rămâne vizibil deasupra tastaturii la scriere
@@ -88,7 +88,7 @@
 • Remediat: butonul Reluare, selectorul de limbă la instalările din Play Store
 </lang>
 
-<lang uk-UA>
+<lang uk>
 • Торкніться будь-якого числа, щоб ввести його безпосередньо без повзунка
 • Утримуйте + або −, щоб швидко змінювати значення — чим довше тримаєте, тим швидше
 • Кнопка «Зберегти показник» залишається видимою над клавіатурою при введенні нотаток
