@@ -102,7 +102,12 @@ fun AppNavHost(
             ValidationScreen(
                 onSaved = { nav.popBackStack(Routes.DASHBOARD, inclusive = false) },
                 onRetake = {
-                    nav.popBackStack(Routes.CAPTURE, inclusive = false)
+                    // CAPTURE was already popped when we navigated here (popUpTo
+                    // Dashboard), so we can't pop back to it. Navigate to a fresh
+                    // CAPTURE instead, clearing VALIDATION from the stack.
+                    nav.navigate(Routes.CAPTURE) {
+                        popUpTo(Routes.DASHBOARD)
+                    }
                 },
                 onBack = { nav.popBackStack() },
             )
