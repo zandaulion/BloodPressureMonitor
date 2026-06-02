@@ -92,6 +92,10 @@
 
     <string name="capture_cd_capture">撮影</string>
     <string name="capture_reading_numbers">数値を読み取り中…</string>
+    <string name="capture_status_sending">Geminiに画像を送信中…</string>
+    <string name="capture_status_reading">AIがモニターを読み取り中…</string>
+    <string name="capture_status_extracting">数値を抽出中…</string>
+    <string name="capture_status_almost">もうすぐ完了…</string>
     <string name="capture_ocr_error">OCRエラー: %s</string>
     <string name="capture_permission_rationale">スキャンにはカメラへのアクセスが必要です。</string>
     <string name="capture_grant_permission">カメラの使用を許可する</string>

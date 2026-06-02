@@ -7,7 +7,9 @@ import com.zandaulion.bpdigitized.data.ocr.GeminiOcrRecognizer
 import com.zandaulion.bpdigitized.data.ocr.OcrRateLimiter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -49,8 +51,18 @@ class CaptureViewModel @Inject constructor(
     private val _events = Channel<CaptureEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
+    private var processingJob: Job? = null
+
+    fun cancelProcessing() {
+        processingJob?.cancel()
+        processingJob = null
+        // Immediately clear the processing flag so the UI responds at once;
+        // the finally block in processCapturedImage will also fire but that's fine.
+        _state.update { it.copy(isProcessing = false, error = null) }
+    }
+
     fun processCapturedImage(uri: Uri, path: String) {
-        viewModelScope.launch {
+        processingJob = viewModelScope.launch {
             _state.update { it.copy(isProcessing = true, error = null) }
             try {
                 Log.d(TAG, "════ processCapturedImage  path=$path")
@@ -75,6 +87,8 @@ class CaptureViewModel @Inject constructor(
                         imagePath = path,
                     ),
                 )
+            } catch (e: CancellationException) {
+                throw e     // let coroutine cancellation propagate normally
             } catch (e: Exception) {
                 Log.e(TAG, "processCapturedImage FAILED", e)
                 _state.update { it.copy(error = e.message ?: "OCR failed") }

@@ -92,6 +92,10 @@
 
     <string name="capture_cd_capture">拍摄</string>
     <string name="capture_reading_numbers">正在读取数值…</string>
+    <string name="capture_status_sending">正在将图像发送到Gemini…</string>
+    <string name="capture_status_reading">AI正在读取您的血压计…</string>
+    <string name="capture_status_extracting">正在提取数值…</string>
+    <string name="capture_status_almost">即将完成…</string>
     <string name="capture_ocr_error">OCR 错误：%s</string>
     <string name="capture_permission_rationale">扫描需要相机访问权限。</string>
     <string name="capture_grant_permission">授予相机权限</string>

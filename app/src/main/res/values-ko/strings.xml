@@ -92,6 +92,10 @@
 
     <string name="capture_cd_capture">촬영</string>
     <string name="capture_reading_numbers">숫자 읽는 중…</string>
+    <string name="capture_status_sending">Gemini에 이미지 전송 중…</string>
+    <string name="capture_status_reading">AI가 모니터를 읽는 중…</string>
+    <string name="capture_status_extracting">수치 추출 중…</string>
+    <string name="capture_status_almost">거의 완료…</string>
     <string name="capture_ocr_error">OCR 오류: %s</string>
     <string name="capture_permission_rationale">측정값을 스캔하려면 카메라 접근 권한이 필요합니다.</string>
     <string name="capture_grant_permission">카메라 권한 허용</string>

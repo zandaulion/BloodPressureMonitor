@@ -8,8 +8,12 @@ import androidx.camera.core.ImageCaptureException
 import androidx.camera.view.CameraController
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,23 +28,30 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -86,6 +97,7 @@ fun CaptureScreen(
                 onDismissError = viewModel::clearError,
                 onBack = onBack,
                 onImageCaptured = viewModel::processCapturedImage,
+                onCancel = viewModel::cancelProcessing,
             )
             cameraPermission.status.shouldShowRationale -> PermissionRationale(
                 onRequest = cameraPermission::launchPermissionRequest,
@@ -106,6 +118,7 @@ private fun CameraContent(
     onDismissError: () -> Unit,
     onBack: () -> Unit,
     onImageCaptured: (Uri, String) -> Unit,
+    onCancel: () -> Unit,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -171,21 +184,7 @@ private fun CameraContent(
         }
 
         if (isProcessing) {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.Black.copy(alpha = 0.5f)),
-                contentAlignment = Alignment.Center,
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    CircularProgressIndicator(color = Color.White)
-                    Text(
-                        stringResource(R.string.capture_reading_numbers),
-                        color = Color.White,
-                        modifier = Modifier.padding(top = 16.dp),
-                    )
-                }
-            }
+            ProcessingOverlay(onCancel = onCancel)
         }
 
         error?.let { errorMsg ->
@@ -205,6 +204,79 @@ private fun CameraContent(
             LaunchedEffect(errorMsg) {
                 kotlinx.coroutines.delay(3000)
                 onDismissError()
+            }
+        }
+    }
+}
+
+// ── Processing overlay ────────────────────────────────────────────────────────
+// Shown while Gemini processes the image. Keeps the user informed and gives
+// them an escape hatch so they never feel trapped waiting.
+
+private val statusMessages = listOf(
+    R.string.capture_status_sending,    // 0 – 2 s
+    R.string.capture_status_reading,    // 2 – 5 s
+    R.string.capture_status_extracting, // 5 – 8 s
+    R.string.capture_status_almost,     // 8 s+ (holds until done)
+)
+
+@Composable
+private fun ProcessingOverlay(onCancel: () -> Unit) {
+    // Option C: animate from 0 → 80 % over 8 s then hold.
+    // The composable is only present while isProcessing = true, so
+    // LaunchedEffect(Unit) is equivalent to "run once when processing starts".
+    val progress = remember { Animatable(0f) }
+    LaunchedEffect(Unit) {
+        progress.animateTo(
+            targetValue = 0.8f,
+            animationSpec = tween(durationMillis = 8_000, easing = LinearEasing),
+        )
+        // Hold at 80 % — the overlay will be removed by the parent when done.
+    }
+
+    // Option B: cycle through status messages on a fixed schedule.
+    var msgIdx by remember { mutableIntStateOf(0) }
+    LaunchedEffect(Unit) {
+        delay(2_000); msgIdx = 1
+        delay(3_000); msgIdx = 2
+        delay(3_000); msgIdx = 3
+        // "Almost there…" holds until the composable is removed.
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.Black.copy(alpha = 0.6f)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 32.dp),
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
+        ) {
+            Column(
+                modifier = Modifier.padding(24.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+            ) {
+                LinearProgressIndicator(
+                    progress = { progress.value },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                Text(
+                    text = stringResource(statusMessages[msgIdx]),
+                    style = MaterialTheme.typography.bodyMedium,
+                    textAlign = TextAlign.Center,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+                // Option A: cancel button so the user is never trapped.
+                TextButton(onClick = onCancel) {
+                    Text(stringResource(R.string.action_cancel))
+                }
             }
         }
     }

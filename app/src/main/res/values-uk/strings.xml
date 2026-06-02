@@ -97,6 +97,10 @@
 
     <string name="capture_cd_capture">Зняти</string>
     <string name="capture_reading_numbers">Зчитування значень…</string>
+    <string name="capture_status_sending">Надсилання зображення до Gemini…</string>
+    <string name="capture_status_reading">ШІ читає ваш монітор…</string>
+    <string name="capture_status_extracting">Витягування значень…</string>
+    <string name="capture_status_almost">Майже готово…</string>
     <string name="capture_ocr_error">Помилка OCR: %s</string>
     <string name="capture_permission_rationale">Для сканування потрібен доступ до камери.</string>
     <string name="capture_grant_permission">Надати доступ до камери</string>

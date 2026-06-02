@@ -102,6 +102,10 @@
 
     <string name="capture_cd_capture">التقاط</string>
     <string name="capture_reading_numbers">جارٍ قراءة الأرقام…</string>
+    <string name="capture_status_sending">جارٍ إرسال الصورة إلى Gemini…</string>
+    <string name="capture_status_reading">الذكاء الاصطناعي يقرأ جهازك…</string>
+    <string name="capture_status_extracting">جارٍ استخراج القيم…</string>
+    <string name="capture_status_almost">اكتمل تقريبًا…</string>
     <string name="capture_ocr_error">خطأ OCR: %s</string>
     <string name="capture_permission_rationale">يلزم الوصول إلى الكاميرا لمسح القراءات.</string>
     <string name="capture_grant_permission">منح إذن الكاميرا</string>

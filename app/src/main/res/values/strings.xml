@@ -109,6 +109,10 @@
     <!-- ── Capture ────────────────────────────────────────────────────────── -->
     <string name="capture_cd_capture">Capture</string>
     <string name="capture_reading_numbers">Reading numbers…</string>
+    <string name="capture_status_sending">Sending image to Gemini…</string>
+    <string name="capture_status_reading">AI is reading your monitor…</string>
+    <string name="capture_status_extracting">Extracting values…</string>
+    <string name="capture_status_almost">Almost there…</string>
     <!-- %s = error message from the OCR call -->
     <string name="capture_ocr_error">OCR error: %s</string>
     <string name="capture_permission_rationale">Camera access is required to scan readings.</string>

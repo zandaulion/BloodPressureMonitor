@@ -93,6 +93,10 @@
 
     <string name="capture_cd_capture">कैप्चर करें</string>
     <string name="capture_reading_numbers">संख्याएं पढ़ी जा रही हैं…</string>
+    <string name="capture_status_sending">Gemini को छवि भेजी जा रही है…</string>
+    <string name="capture_status_reading">AI आपका मॉनिटर पढ़ रहा है…</string>
+    <string name="capture_status_extracting">मान निकाले जा रहे हैं…</string>
+    <string name="capture_status_almost">लगभग हो गया…</string>
     <string name="capture_ocr_error">OCR त्रुटि: %s</string>
     <string name="capture_permission_rationale">रीडिंग स्कैन करने के लिए कैमरा एक्सेस आवश्यक है।</string>
     <string name="capture_grant_permission">कैमरा अनुमति दें</string>

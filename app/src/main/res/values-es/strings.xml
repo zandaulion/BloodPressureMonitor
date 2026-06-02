@@ -93,6 +93,10 @@
 
     <string name="capture_cd_capture">Capturar</string>
     <string name="capture_reading_numbers">Leyendo valores…</string>
+    <string name="capture_status_sending">Enviando imagen a Gemini…</string>
+    <string name="capture_status_reading">La IA lee tu monitor…</string>
+    <string name="capture_status_extracting">Extrayendo valores…</string>
+    <string name="capture_status_almost">Casi listo…</string>
     <string name="capture_ocr_error">Error OCR: %s</string>
     <string name="capture_permission_rationale">Se necesita acceso a la cámara para escanear.</string>
     <string name="capture_grant_permission">Conceder permiso de cámara</string>

@@ -95,6 +95,10 @@
 
     <string name="capture_cd_capture">Capturează</string>
     <string name="capture_reading_numbers">Se citesc valorile…</string>
+    <string name="capture_status_sending">Se trimite imaginea către Gemini…</string>
+    <string name="capture_status_reading">AI-ul citește monitorul tău…</string>
+    <string name="capture_status_extracting">Se extrag valorile…</string>
+    <string name="capture_status_almost">Aproape gata…</string>
     <string name="capture_ocr_error">Eroare OCR: %s</string>
     <string name="capture_permission_rationale">Accesul la cameră este necesar pentru scanare.</string>
     <string name="capture_grant_permission">Acordă permisiunea camerei</string>
