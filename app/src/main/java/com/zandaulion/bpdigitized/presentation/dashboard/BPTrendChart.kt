@@ -5,9 +5,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshotFlow
+import kotlinx.coroutines.flow.first
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -62,34 +67,11 @@ fun BPTrendChart(
         return
     }
 
-    // Use the full dataset time span to decide the label format.
-    // Previously this was computed from the scroll position on every frame, which caused
-    // the whole composable to recompose on every scroll frame. At the right edge, floating-
-    // point imprecision made scrollFraction briefly exceed 1.0, shifting the computed
-    // startIdx/endIdx and making the axis labels flicker.
-    // Basing the decision on the full span is stable during scrolling and correct for all
-    // typical BP use cases (readings spread over days or weeks → M/d labels;
-    // a handful of readings all on the same day → M/d HH:mm labels).
-    val isSubDayView = remember(readings) {
+    // True when the entire dataset falls within a single day — in that case labels
+    // show only "HH:mm" since showing the date is redundant.
+    val isSubDayDataset = remember(readings) {
         readings.size >= 2 &&
         readings.last().timestamp - readings.first().timestamp < MILLIS_PER_DAY
-    }
-
-    val bottomFormatter = remember(readings, isSubDayView) {
-        // x values are "seconds elapsed since the first reading in this dataset".
-        // Reconstruct the timestamp as firstTs + (value × 1000).
-        // Using seconds (÷ 1000) keeps precision to ≤ 3 decimal places because
-        // ms_diff is always an integer, so ms_diff / 1000.0 × 10_000 = ms_diff × 10
-        // which is always a whole number — satisfying Vico's 4-decimal-place limit.
-        val firstTs = readings.first().timestamp
-        val fmt = if (isSubDayView) {
-            SimpleDateFormat("HH:mm", Locale.getDefault())   // date redundant: all same day
-        } else {
-            SimpleDateFormat("M/d", Locale.getDefault())
-        }
-        CartesianValueFormatter { _, value, _ ->
-            fmt.format(Date(firstTs + (value * 1_000).toLong()))
-        }
     }
 
     // Match reference-line colours to the data-series colours (with reduced alpha so they
@@ -164,6 +146,44 @@ fun BPTrendChart(
             else
                 Zoom.Content,
         )
+
+        // Capture zoom factor after Vico's first layout pass (starts at 0 until then).
+        // visibleSecs * (capturedInitialZoom / currentZoom) gives the current number
+        // of seconds visible, regardless of xStep/xSpacing internals.
+        var capturedInitialZoom by remember { mutableStateOf(0f) }
+        LaunchedEffect(zoomState) {
+            capturedInitialZoom = snapshotFlow { zoomState.value }.first { it > 0f }
+        }
+
+        // isSubDayVisible: true when the current visible window is < 24 h.
+        // derivedStateOf ensures the composable only recomposes when this boolean
+        // changes (threshold crossing), not on every zoom frame.
+        val isSubDayVisible by remember {
+            derivedStateOf {
+                when {
+                    visibleSecs <= 0.0 || capturedInitialZoom <= 0f
+                        || zoomState.value <= 0f -> isSubDayDataset
+                    else ->
+                        visibleSecs * (capturedInitialZoom / zoomState.value) < 86_400.0
+                }
+            }
+        }
+
+        // Label format:
+        //   same-day dataset → "HH:mm"          (date is redundant)
+        //   zoomed in < 24 h → "M/d HH:mm"      (date + time)
+        //   default          → "M/d"             (date only)
+        val bottomFormatter = remember(readings, isSubDayDataset, isSubDayVisible) {
+            val firstTs = readings.first().timestamp
+            val fmt = when {
+                isSubDayDataset -> SimpleDateFormat("HH:mm", Locale.getDefault())
+                isSubDayVisible -> SimpleDateFormat("M/d HH:mm", Locale.getDefault())
+                else            -> SimpleDateFormat("M/d", Locale.getDefault())
+            }
+            CartesianValueFormatter { _, value, _ ->
+                fmt.format(Date(firstTs + (value * 1_000).toLong()))
+            }
+        }
 
         val modelProducer = remember { CartesianChartModelProducer() }
 
