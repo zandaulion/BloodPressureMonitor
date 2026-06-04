@@ -201,15 +201,14 @@
 
     <string name="onboarding_next">Suivant</string>
     <string name="onboarding_get_started">Commencer</string>
-    <string name="onboarding_page1_overlay">Clarté</string>
-    <string name="onboarding_page1_title">Connaissez vos chiffres</string>
-    <string name="onboarding_page1_body">Enregistrez vos mesures et découvrez instantanément leur signification, avec des informations claires sur votre catégorie de tension.</string>
-    <string name="onboarding_page2_overlay">1 geste</string>
-    <string name="onboarding_page2_title">Saisie sans effort</string>
-    <string name="onboarding_page2_body">Photographiez votre tensiomètre et laissez l\'appli lire les valeurs (Premium) — ou saisissez-les manuellement en quelques secondes.</string>
-    <string name="onboarding_page3_overlay">Régularité</string>
-    <string name="onboarding_page3_title">Restez régulier</string>
-    <string name="onboarding_page3_body">Les rappels quotidiens, les graphiques de tendance et la synchronisation avec Health Connect vous maintiennent sur la bonne voie.</string>
+    <string name="onboarding_welcome_overlay">Clarté</string>
+    <string name="onboarding_welcome_title">Connaissez vos chiffres</string>
+    <string name="onboarding_welcome_body">Enregistrez vos mesures et découvrez instantanément leur signification, avec des informations claires sur votre catégorie de tension.</string>
+    <string name="onboarding_profile_title">À propos de vous</string>
+    <string name="onboarding_profile_subtitle">Facultatif — ces informations aident à affiner l\'estimation de votre risque tensionnel. Vous pouvez ignorer cette étape et ajouter plus de détails (poids, taille, tabagisme, etc.) plus tard dans Profil.</string>
+    <string name="onboarding_reminders_title">Restez régulier</string>
+    <string name="onboarding_reminders_body">Mesurer aux mêmes heures chaque jour rend vos tendances plus fiables.</string>
+    <string name="onboarding_reminders_permission_note">Nécessite l\'autorisation de notifications. Facultatif — vous pouvez activer ou ajuster les rappels à tout moment dans l\'appli.</string>
 
     <string name="help_title">Aide</string>
     <string name="help_camera_title">Scanner avec la caméra</string>

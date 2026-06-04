@@ -205,15 +205,14 @@
 
     <string name="onboarding_next">Далі</string>
     <string name="onboarding_get_started">Почати</string>
-    <string name="onboarding_page1_overlay">Ясність</string>
-    <string name="onboarding_page1_title">Знайте свої показники</string>
-    <string name="onboarding_page1_body">Записуйте вимірювання та миттєво дізнавайтесь їхнє значення з чіткою інформацією про категорію тиску.</string>
-    <string name="onboarding_page2_overlay">1 дотик</string>
-    <string name="onboarding_page2_title">Легке внесення</string>
-    <string name="onboarding_page2_body">Сфотографуйте свій тонометр і дозвольте додатку зчитати показники (Преміум) — або введіть їх вручну за секунди.</string>
-    <string name="onboarding_page3_overlay">Послідовність</string>
-    <string name="onboarding_page3_title">Будьте послідовними</string>
-    <string name="onboarding_page3_body">Щоденні нагадування, графіки тенденцій і синхронізація з Health Connect тримають ваш прогрес на правильному шляху.</string>
+    <string name="onboarding_welcome_overlay">Ясність</string>
+    <string name="onboarding_welcome_title">Знайте свої показники</string>
+    <string name="onboarding_welcome_body">Записуйте вимірювання та миттєво дізнавайтесь їхнє значення з чіткою інформацією про категорію тиску.</string>
+    <string name="onboarding_profile_title">Про вас</string>
+    <string name="onboarding_profile_subtitle">Необов\'язково — це допомагає персоналізувати оцінку ризику тиску. Можна пропустити й додати більше деталей (вага, зріст, куріння тощо) пізніше у Профілі.</string>
+    <string name="onboarding_reminders_title">Будьте послідовними</string>
+    <string name="onboarding_reminders_body">Вимірювання щодня в один і той самий час робить ваші тенденції надійнішими.</string>
+    <string name="onboarding_reminders_permission_note">Потрібен дозвіл на сповіщення. Це необов\'язково — ви можете ввімкнути або змінити нагадування будь-коли в додатку.</string>
 
     <string name="help_title">Довідка</string>
     <string name="help_camera_title">Сканування камерою</string>

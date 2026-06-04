@@ -54,8 +54,8 @@ fun AppNavHost(
     ) {
         composable(Routes.ONBOARDING) {
             OnboardingScreen(
+                viewModel = onboardingViewModel,
                 onFinish = {
-                    onboardingViewModel.markSeen()
                     nav.navigate(Routes.DASHBOARD) {
                         popUpTo(Routes.ONBOARDING) { inclusive = true }
                     }

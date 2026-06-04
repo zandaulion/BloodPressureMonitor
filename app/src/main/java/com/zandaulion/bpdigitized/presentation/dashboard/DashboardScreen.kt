@@ -101,6 +101,7 @@ import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.locale.APP_LANGUAGES
 import com.zandaulion.bpdigitized.presentation.locale.LocalePrefs
 import kotlinx.coroutines.delay
 import java.io.File
@@ -349,7 +350,7 @@ fun DashboardScreen(
                             expanded = languageMenuExpanded,
                             onDismissRequest = { languageMenuExpanded = false },
                         ) {
-                            LANGUAGES.forEach { lang ->
+                            APP_LANGUAGES.forEach { lang ->
                                 val label = if (lang.code.isEmpty()) {
                                     stringResource(R.string.language_system)
                                 } else {
@@ -717,24 +718,3 @@ private fun shareFile(context: Context, file: File, mimeType: String) {
     })
 }
 
-// ── Language options ───────────────────────────────────────────────────────────
-
-private data class LangOption(val code: String, val nativeName: String)
-
-/** Language names are always in their native script so users can recognise
- *  their language regardless of the currently active app locale. */
-private val LANGUAGES = listOf(
-    LangOption("",   ""),          // label resolved from R.string.language_system
-    LangOption("en", "English"),
-    LangOption("es", "Español"),
-    LangOption("fr", "Français"),
-    LangOption("pt", "Português"),
-    LangOption("de", "Deutsch"),
-    LangOption("ja", "日本語"),
-    LangOption("zh", "简体中文"),
-    LangOption("hi", "हिन्दी"),
-    LangOption("ar", "العربية"),
-    LangOption("uk", "Українська"),
-    LangOption("ko", "한국어"),
-    LangOption("ro", "Română"),
-)

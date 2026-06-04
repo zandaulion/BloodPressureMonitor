@@ -201,15 +201,14 @@
 
     <string name="onboarding_next">अगला</string>
     <string name="onboarding_get_started">शुरू करें</string>
-    <string name="onboarding_page1_overlay">स्पष्टता</string>
-    <string name="onboarding_page1_title">अपनी संख्याएं जानें</string>
-    <string name="onboarding_page1_body">अपनी रीडिंग दर्ज करें और स्पष्ट रक्तचाप श्रेणी जानकारी के साथ तुरंत उनका अर्थ देखें।</string>
-    <string name="onboarding_page2_overlay">1-टैप</string>
-    <string name="onboarding_page2_title">आसान रिकॉर्डिंग</string>
-    <string name="onboarding_page2_body">अपने मॉनिटर की फोटो लें और ऐप को इसे पढ़ने दें (प्रीमियम) — या कुछ सेकंड में मैन्युअल रूप से दर्ज करें।</string>
-    <string name="onboarding_page3_overlay">निरंतरता</string>
-    <string name="onboarding_page3_title">नियमित रहें</string>
-    <string name="onboarding_page3_body">दैनिक रिमाइंडर, ट्रेंड चार्ट और Health Connect सिंक आपकी प्रगति को बनाए रखते हैं।</string>
+    <string name="onboarding_welcome_overlay">स्पष्टता</string>
+    <string name="onboarding_welcome_title">अपनी संख्याएं जानें</string>
+    <string name="onboarding_welcome_body">अपनी रीडिंग दर्ज करें और स्पष्ट रक्तचाप श्रेणी जानकारी के साथ तुरंत उनका अर्थ देखें।</string>
+    <string name="onboarding_profile_title">आपके बारे में</string>
+    <string name="onboarding_profile_subtitle">वैकल्पिक — ये आपके रक्तचाप जोखिम अनुमान को बेहतर बनाने में मदद करते हैं। आप इसे छोड़ सकते हैं और बाद में प्रोफ़ाइल में अधिक विवरण (वजन, ऊंचाई, धूम्रपान आदि) जोड़ सकते हैं।</string>
+    <string name="onboarding_reminders_title">नियमित रहें</string>
+    <string name="onboarding_reminders_body">हर दिन एक ही समय पर मापने से आपके रुझान अधिक विश्वसनीय बनते हैं।</string>
+    <string name="onboarding_reminders_permission_note">सूचना अनुमति आवश्यक है। यह वैकल्पिक है — आप ऐप में कभी भी रिमाइंडर सक्षम या समायोजित कर सकते हैं।</string>
 
     <string name="help_title">सहायता</string>
     <string name="help_camera_title">कैमरे से स्कैन करना</string>

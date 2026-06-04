@@ -200,15 +200,14 @@
 
     <string name="onboarding_next">다음</string>
     <string name="onboarding_get_started">시작하기</string>
-    <string name="onboarding_page1_overlay">명확함</string>
-    <string name="onboarding_page1_title">내 수치 알기</string>
-    <string name="onboarding_page1_body">측정값을 기록하면 명확한 혈압 분류 정보와 함께 그 의미를 즉시 확인할 수 있습니다.</string>
-    <string name="onboarding_page2_overlay">한 번의 탭</string>
-    <string name="onboarding_page2_title">손쉬운 기록</string>
-    <string name="onboarding_page2_body">혈압계를 촬영하면 앱이 수치를 읽어줍니다 (프리미엄) — 또는 몇 초 만에 수동으로 입력하세요.</string>
-    <string name="onboarding_page3_overlay">꾸준함</string>
-    <string name="onboarding_page3_title">꾸준히 관리하기</string>
-    <string name="onboarding_page3_body">매일 알림, 추세 차트, Health Connect 동기화로 진행 상황을 꾸준히 유지하세요.</string>
+    <string name="onboarding_welcome_overlay">명확함</string>
+    <string name="onboarding_welcome_title">내 수치 알기</string>
+    <string name="onboarding_welcome_body">측정값을 기록하면 명확한 혈압 분류 정보와 함께 그 의미를 즉시 확인할 수 있습니다.</string>
+    <string name="onboarding_profile_title">내 정보</string>
+    <string name="onboarding_profile_subtitle">선택 사항 — 혈압 위험도 추정을 맞춤화하는 데 도움이 됩니다. 건너뛰고 나중에 프로필에서 더 많은 정보(체중, 키, 흡연 등)를 추가할 수 있습니다.</string>
+    <string name="onboarding_reminders_title">꾸준히 관리하기</string>
+    <string name="onboarding_reminders_body">매일 같은 시간에 측정하면 추세가 더 정확해집니다.</string>
+    <string name="onboarding_reminders_permission_note">알림 권한이 필요합니다. 선택 사항이며, 앱에서 언제든지 알림을 켜거나 조정할 수 있습니다.</string>
 
     <string name="help_title">도움말</string>
     <string name="help_camera_title">카메라로 스캔하기</string>

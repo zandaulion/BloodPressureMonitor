@@ -200,15 +200,14 @@
 
     <string name="onboarding_next">次へ</string>
     <string name="onboarding_get_started">始める</string>
-    <string name="onboarding_page1_overlay">把握</string>
-    <string name="onboarding_page1_title">自分の数値を知ろう</string>
-    <string name="onboarding_page1_body">記録を入力すると、血圧カテゴリの明確な情報とともに、その意味を即座に確認できます。</string>
-    <string name="onboarding_page2_overlay">1タップ</string>
-    <string name="onboarding_page2_title">簡単な記録</string>
-    <string name="onboarding_page2_body">血圧計の写真を撮るだけで数値を自動読み取り（プレミアム）—または数秒で手動入力。</string>
-    <string name="onboarding_page3_overlay">継続</string>
-    <string name="onboarding_page3_title">習慣を続けよう</string>
-    <string name="onboarding_page3_body">毎日のリマインダー、トレンドグラフ、Health Connect同期で継続的な健康管理をサポートします。</string>
+    <string name="onboarding_welcome_overlay">把握</string>
+    <string name="onboarding_welcome_title">自分の数値を知ろう</string>
+    <string name="onboarding_welcome_body">記録を入力すると、血圧カテゴリの明確な情報とともに、その意味を即座に確認できます。</string>
+    <string name="onboarding_profile_title">あなたについて</string>
+    <string name="onboarding_profile_subtitle">任意 — 血圧リスクの推定をより正確にします。スキップして、後でプロフィールで詳細（体重、身長、喫煙など）を追加することもできます。</string>
+    <string name="onboarding_reminders_title">習慣を続けよう</string>
+    <string name="onboarding_reminders_body">毎日同じ時間に測定すると、傾向がより正確になります。</string>
+    <string name="onboarding_reminders_permission_note">通知の許可が必要です。任意です — アプリでいつでもリマインダーを有効化・調整できます。</string>
 
     <string name="help_title">ヘルプ</string>
     <string name="help_camera_title">カメラでスキャン</string>

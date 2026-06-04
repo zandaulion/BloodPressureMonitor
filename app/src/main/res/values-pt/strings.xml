@@ -201,15 +201,14 @@
 
     <string name="onboarding_next">Próximo</string>
     <string name="onboarding_get_started">Começar</string>
-    <string name="onboarding_page1_overlay">Clareza</string>
-    <string name="onboarding_page1_title">Conheça seus números</string>
-    <string name="onboarding_page1_body">Registre suas medições e veja instantaneamente o que significam, com informações claras sobre sua categoria de pressão arterial.</string>
-    <string name="onboarding_page2_overlay">1 toque</string>
-    <string name="onboarding_page2_title">Registro sem esforço</string>
-    <string name="onboarding_page2_body">Fotografe seu monitor de pressão e deixe o app ler os valores (Premium) — ou insira manualmente em segundos.</string>
-    <string name="onboarding_page3_overlay">Consistência</string>
-    <string name="onboarding_page3_title">Mantenha o ritmo</string>
-    <string name="onboarding_page3_body">Lembretes diários, gráficos de tendência e sincronização com Health Connect mantêm seu progresso em dia.</string>
+    <string name="onboarding_welcome_overlay">Clareza</string>
+    <string name="onboarding_welcome_title">Conheça seus números</string>
+    <string name="onboarding_welcome_body">Registre suas medições e veja instantaneamente o que significam, com informações claras sobre sua categoria de pressão arterial.</string>
+    <string name="onboarding_profile_title">Sobre você</string>
+    <string name="onboarding_profile_subtitle">Opcional — ajudam a personalizar sua estimativa de risco de pressão arterial. Você pode pular e adicionar mais detalhes (peso, altura, tabagismo e mais) depois no Perfil.</string>
+    <string name="onboarding_reminders_title">Mantenha o ritmo</string>
+    <string name="onboarding_reminders_body">Medir nos mesmos horários todos os dias torna suas tendências mais confiáveis.</string>
+    <string name="onboarding_reminders_permission_note">Requer permissão de notificação. É opcional — você pode ativar ou ajustar os lembretes a qualquer momento no app.</string>
 
     <string name="help_title">Ajuda</string>
     <string name="help_camera_title">Escanear com câmera</string>

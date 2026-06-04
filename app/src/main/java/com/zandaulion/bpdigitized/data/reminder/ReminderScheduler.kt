@@ -27,20 +27,38 @@ class ReminderScheduler @Inject constructor(
      * If that time has already passed today, schedules for tomorrow.
      */
     fun schedule(type: ReminderType, minutesSinceMidnight: Int) {
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            nextTriggerMillis(minutesSinceMidnight),
-            pendingIntentFor(type),
-        )
+        setAlarm(nextTriggerMillis(minutesSinceMidnight), pendingIntentFor(type))
     }
 
     /** Schedule a one-shot 15-minute snooze alarm. */
     fun scheduleSnooze() {
-        alarmManager.setExactAndAllowWhileIdle(
-            AlarmManager.RTC_WAKEUP,
-            System.currentTimeMillis() + SNOOZE_MS,
-            pendingIntentFor(ReminderType.SNOOZE),
-        )
+        setAlarm(System.currentTimeMillis() + SNOOZE_MS, pendingIntentFor(ReminderType.SNOOZE))
+    }
+
+    /**
+     * Sets an allow-while-idle alarm, preferring exact delivery. Exact alarms require the
+     * SCHEDULE_EXACT_ALARM / USE_EXACT_ALARM permission (revocable, and not granted by
+     * default on API 34+); when it isn't held we fall back to an inexact alarm rather than
+     * letting [AlarmManager] throw — a BP reminder doesn't need to-the-minute precision, and
+     * an unguarded exact call here previously crashed callers such as [BootReceiver].
+     */
+    private fun setAlarm(triggerAtMillis: Long, pendingIntent: PendingIntent) {
+        try {
+            if (canScheduleExact()) {
+                alarmManager.setExactAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent,
+                )
+            } else {
+                alarmManager.setAndAllowWhileIdle(
+                    AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent,
+                )
+            }
+        } catch (e: SecurityException) {
+            // Permission revoked between the check and the call — fall back to inexact.
+            alarmManager.setAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP, triggerAtMillis, pendingIntent,
+            )
+        }
     }
 
     fun cancel(type: ReminderType) = alarmManager.cancel(pendingIntentFor(type))

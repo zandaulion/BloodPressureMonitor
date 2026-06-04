@@ -203,15 +203,14 @@
 
     <string name="onboarding_next">Continuă</string>
     <string name="onboarding_get_started">Începe</string>
-    <string name="onboarding_page1_overlay">Claritate</string>
-    <string name="onboarding_page1_title">Cunoaște-ți valorile</string>
-    <string name="onboarding_page1_body">Înregistrează măsurătorile și află instantaneu ce înseamnă, cu informații clare despre categoria tensiunii.</string>
-    <string name="onboarding_page2_overlay">O atingere</string>
-    <string name="onboarding_page2_title">Înregistrare fără efort</string>
-    <string name="onboarding_page2_body">Fotografiază-ți tensiometrul și lasă aplicația să citească valorile (Premium) — sau introdu-le manual în câteva secunde.</string>
-    <string name="onboarding_page3_overlay">Consecvență</string>
-    <string name="onboarding_page3_title">Rămâi consecvent</string>
-    <string name="onboarding_page3_body">Mementourile zilnice, graficele de tendință și sincronizarea cu Health Connect îți mențin progresul pe drumul cel bun.</string>
+    <string name="onboarding_welcome_overlay">Claritate</string>
+    <string name="onboarding_welcome_title">Cunoaște-ți valorile</string>
+    <string name="onboarding_welcome_body">Înregistrează măsurătorile și află instantaneu ce înseamnă, cu informații clare despre categoria tensiunii.</string>
+    <string name="onboarding_profile_title">Despre tine</string>
+    <string name="onboarding_profile_subtitle">Opțional — ajută la personalizarea estimării riscului tensiunii tale. Poți sări peste și adăuga mai multe detalii (greutate, înălțime, fumat și altele) mai târziu în Profil.</string>
+    <string name="onboarding_reminders_title">Rămâi consecvent</string>
+    <string name="onboarding_reminders_body">Măsurarea la aceleași ore în fiecare zi face tendințele mai fiabile.</string>
+    <string name="onboarding_reminders_permission_note">Necesită permisiunea pentru notificări. Este opțional — poți activa sau ajusta mementourile oricând în aplicație.</string>
 
     <string name="help_title">Ajutor</string>
     <string name="help_camera_title">Scanare cu camera</string>

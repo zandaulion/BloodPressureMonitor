@@ -210,15 +210,14 @@
 
     <string name="onboarding_next">التالي</string>
     <string name="onboarding_get_started">ابدأ الآن</string>
-    <string name="onboarding_page1_overlay">وضوح</string>
-    <string name="onboarding_page1_title">اعرف أرقامك</string>
-    <string name="onboarding_page1_body">سجّل قراءاتك واعرف معناها فورًا، مع معلومات واضحة عن فئة ضغط الدم.</string>
-    <string name="onboarding_page2_overlay">لمسة واحدة</string>
-    <string name="onboarding_page2_title">تسجيل بلا عناء</string>
-    <string name="onboarding_page2_body">التقط صورة لجهازك ودع التطبيق يقرأها لك (مميّز) — أو أدخل القراءات يدويًا في ثوانٍ.</string>
-    <string name="onboarding_page3_overlay">استمرارية</string>
-    <string name="onboarding_page3_title">حافظ على الانتظام</string>
-    <string name="onboarding_page3_body">التذكيرات اليومية ومخططات الاتجاهات ومزامنة Health Connect تُبقي تقدّمك في المسار الصحيح.</string>
+    <string name="onboarding_welcome_overlay">وضوح</string>
+    <string name="onboarding_welcome_title">اعرف أرقامك</string>
+    <string name="onboarding_welcome_body">سجّل قراءاتك واعرف معناها فورًا، مع معلومات واضحة عن فئة ضغط الدم.</string>
+    <string name="onboarding_profile_title">نبذة عنك</string>
+    <string name="onboarding_profile_subtitle">اختياري — تساعد في تخصيص تقدير خطر ضغط الدم لديك. يمكنك تخطّي هذا وإضافة المزيد من التفاصيل (الوزن، الطول، التدخين والمزيد) لاحقًا في الملف الشخصي.</string>
+    <string name="onboarding_reminders_title">حافظ على الانتظام</string>
+    <string name="onboarding_reminders_body">القياس في نفس الأوقات كل يوم يجعل اتجاهاتك أكثر موثوقية.</string>
+    <string name="onboarding_reminders_permission_note">يتطلب إذن الإشعارات. هذا اختياري — يمكنك تفعيل التذكيرات أو تعديلها في أي وقت داخل التطبيق.</string>
 
     <string name="help_title">المساعدة</string>
     <string name="help_camera_title">المسح بالكاميرا</string>
