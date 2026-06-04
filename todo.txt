@@ -1,2 +1,14 @@
- * translate into 20 languages + language button
- * message after export
+ [*] translate into 20 languages + language button
+ [*] message after export
+ [*] camera icon 50% bigger inside the camera button
+ [*] lock icon 100% bigger and 80% inside the butoon
+ [*] icons inside help screen
+ [*] conversie imperial-metric strică valorile pe metric
+ [*] aliniere casute ft si in
+ [*] aliniere linii din help screen fara icons
+ [*] graficul sa arate cea mai noua valoare
+ [*] when entering a note your are captive unless you minimize the keyboard, which is not intuitive
+ [] add rate limiter
+
+
+in the help screen, when describing the functionality behind an icon, also show that icon before the text
