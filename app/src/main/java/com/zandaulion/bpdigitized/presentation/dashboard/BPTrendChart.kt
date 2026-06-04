@@ -77,10 +77,11 @@ fun BPTrendChart(
     }
 
     val bottomFormatter = remember(readings, isSubDayView) {
-        // x values are "days elapsed since the first reading in this dataset", so we
-        // reconstruct the timestamp by adding (value × MILLIS_PER_DAY) to firstTs.
-        // This works for any x position Vico picks for axis labels, not just positions
-        // that coincide with an actual data point.
+        // x values are "seconds elapsed since the first reading in this dataset".
+        // Reconstruct the timestamp as firstTs + (value × 1000).
+        // Using seconds (÷ 1000) keeps precision to ≤ 3 decimal places because
+        // ms_diff is always an integer, so ms_diff / 1000.0 × 10_000 = ms_diff × 10
+        // which is always a whole number — satisfying Vico's 4-decimal-place limit.
         val firstTs = readings.first().timestamp
         val fmt = if (isSubDayView) {
             SimpleDateFormat("HH:mm", Locale.getDefault())   // date redundant: all same day
@@ -88,7 +89,7 @@ fun BPTrendChart(
             SimpleDateFormat("M/d", Locale.getDefault())
         }
         CartesianValueFormatter { _, value, _ ->
-            fmt.format(Date(firstTs + (value * MILLIS_PER_DAY).toLong()))
+            fmt.format(Date(firstTs + (value * 1_000).toLong()))
         }
     }
 
@@ -148,11 +149,12 @@ fun BPTrendChart(
         val modelProducer = remember { CartesianChartModelProducer() }
 
         LaunchedEffect(readings) {
-            // x = days elapsed since the first reading, so points that are close in
-            // time appear close on the chart and points far apart appear far apart.
-            // Using days keeps the numbers small (0–90) regardless of dataset size.
+            // x = seconds elapsed since the first reading, so points close in time
+            // appear close on the chart. Seconds (÷ 1000) satisfies Vico's constraint
+            // of ≤ 4 decimal places; days (÷ 86_400_000) would produce values like
+            // 0.00001157… which triggers IllegalArgumentException in getXDeltaGcd.
             val firstTs = readings.first().timestamp
-            val xs  = readings.map { (it.timestamp - firstTs).toDouble() / MILLIS_PER_DAY }
+            val xs  = readings.map { (it.timestamp - firstTs).toDouble() / 1_000.0 }
             val sys = readings.map { it.systolic.toDouble() }
             val dia = readings.map { it.diastolic.toDouble() }
             modelProducer.runTransaction {
