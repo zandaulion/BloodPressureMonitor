@@ -16,6 +16,7 @@ import androidx.health.connect.client.PermissionController
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -249,6 +250,8 @@ fun DashboardScreen(
                 RangeChipRow(
                     selected = ui.selectedRange,
                     onSelect = viewModel::selectRange,
+                    smoothBursts = ui.smoothBursts,
+                    onToggleSmooth = viewModel::setSmoothBursts,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
@@ -457,6 +460,8 @@ fun DashboardScreen(
             RangeChipRow(
                 selected = ui.selectedRange,
                 onSelect = viewModel::selectRange,
+                smoothBursts = ui.smoothBursts,
+                onToggleSmooth = viewModel::setSmoothBursts,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 8.dp),
@@ -538,11 +543,14 @@ fun DashboardScreen(
 private fun RangeChipRow(
     selected: ChartRange,
     onSelect: (ChartRange) -> Unit,
+    smoothBursts: Boolean,
+    onToggleSmooth: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         ChartRange.entries.forEach { range ->
             FilterChip(
@@ -551,6 +559,16 @@ private fun RangeChipRow(
                 label = { Text(stringResource(range.labelRes())) },
             )
         }
+        Spacer(modifier = Modifier.weight(1f))
+        // Toggles burst-averaging: when on, readings taken within ~10 min are merged
+        // into one smoothed chart point (the readings list and PDF table stay raw).
+        // No leading icon — the selected container colour is the only active indicator,
+        // so the chip stays narrow enough to fit the row on small screens.
+        FilterChip(
+            selected = smoothBursts,
+            onClick = { onToggleSmooth(!smoothBursts) },
+            label = { Text(stringResource(R.string.dashboard_smooth_bursts)) },
+        )
     }
 }
 

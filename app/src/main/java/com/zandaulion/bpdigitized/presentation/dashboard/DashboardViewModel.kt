@@ -12,8 +12,10 @@ import androidx.lifecycle.viewModelScope
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.HealthAssessment
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
+import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import com.zandaulion.bpdigitized.domain.billing.BillingManager
+import com.zandaulion.bpdigitized.domain.usecase.AggregateReadingsUseCase
 import com.zandaulion.bpdigitized.domain.usecase.CalculateHealthRiskUseCase
 import com.zandaulion.bpdigitized.domain.usecase.ExportCsvUseCase
 import com.zandaulion.bpdigitized.domain.usecase.ExportPdfUseCase
@@ -48,6 +50,8 @@ data class DashboardUi(
     val healthAssessment: HealthAssessment?,
     /** True if the user has purchased the pro subscription. */
     val isProUser: Boolean = false,
+    /** True when back-to-back readings are averaged into one smoothed chart point. */
+    val smoothBursts: Boolean = true,
 )
 
 enum class ExportType { JSON, CSV, PDF }
@@ -72,7 +76,9 @@ class DashboardViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: BPRepository,
     private val profileRepository: UserProfileRepository,
+    private val chartSettings: ChartSettingsRepository,
     private val billingManager: BillingManager,
+    private val aggregateReadings: AggregateReadingsUseCase,
     private val exportReadings: ExportReadingsUseCase,
     private val exportCsv: ExportCsvUseCase,
     private val exportPdf: ExportPdfUseCase,
@@ -88,14 +94,17 @@ class DashboardViewModel @Inject constructor(
         selectedRange,
         profileRepository.observe(),
         billingManager.isProUser,
-    ) { all, range, profile, isPro ->
-        val chart = range.days?.let { days ->
+        chartSettings.observeSmoothBursts(),
+    ) { all, range, profile, isPro, smooth ->
+        val inRange = range.days?.let { days ->
             val cutoff = System.currentTimeMillis() - days * MILLIS_PER_DAY
             all.filter { it.timestamp >= cutoff }
         } ?: all
+        // Smoothing affects only the chart; the readings list below stays raw.
+        val chart = if (smooth) aggregateReadings(inRange) else inRange.sortedBy { it.timestamp }
         val latest = all.maxByOrNull { it.timestamp }
         val assessment = latest?.let { calculateHealthRisk(it.category, profile) }
-        DashboardUi(all, chart.sortedBy { it.timestamp }, range, assessment, isPro)
+        DashboardUi(all, chart, range, assessment, isPro, smooth)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
@@ -107,6 +116,12 @@ class DashboardViewModel @Inject constructor(
 
     fun selectRange(range: ChartRange) {
         selectedRange.value = range
+    }
+
+    fun setSmoothBursts(enabled: Boolean) {
+        viewModelScope.launch {
+            chartSettings.setSmoothBursts(enabled)
+        }
     }
 
     fun requestDelete(reading: BPReading) {

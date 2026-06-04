@@ -78,6 +78,7 @@
     <string name="dashboard_export_csv">Export as CSV</string>
     <string name="dashboard_export_pdf">Export as PDF</string>
     <string name="dashboard_empty">No readings yet. Tap the pencil button to enter one, or the camera button to scan.</string>
+    <string name="dashboard_smooth_bursts">Avg</string>
     <string name="dashboard_snack_deleted">Reading deleted</string>
     <string name="dashboard_snack_undo">Undo</string>
     <string name="dashboard_snack_export_failed">Export failed</string>

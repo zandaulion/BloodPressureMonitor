@@ -11,8 +11,10 @@ import android.graphics.pdf.PdfDocument
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
+import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.text.SimpleDateFormat
@@ -35,19 +37,28 @@ import kotlin.math.roundToInt
 class ExportPdfUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: BPRepository,
+    private val chartSettings: ChartSettingsRepository,
+    private val aggregateReadings: AggregateReadingsUseCase,
 ) {
 
     // ── Entry point ───────────────────────────────────────────────────────────
 
     suspend operator fun invoke(): File = withContext(Dispatchers.Default) {
         val all = repository.getAll().sortedBy { it.timestamp }
+        val smooth = chartSettings.observeSmoothBursts().first()
         val stamp = STAMP_FMT.format(Date())
         val file  = File(context.cacheDir, "bp_export_$stamp.pdf")
         val doc   = PdfDocument()
         try {
             var pageNum = 1
             buildChartRanges(all).forEach { range ->
-                drawChartPage(doc, pageNum++, range)
+                // Smooth the chart's readings (averaging back-to-back sittings); merged
+                // notes are preserved so numbered callouts/labels still appear. The table
+                // pages below stay raw.
+                val drawn = if (smooth)
+                    range.copy(readings = aggregateReadings(range.readings))
+                else range
+                drawChartPage(doc, pageNum++, drawn)
             }
             // Table pages show only the last 30 days (newest-first)
             val tableCutoff = System.currentTimeMillis() - 30L * MS_PER_DAY
