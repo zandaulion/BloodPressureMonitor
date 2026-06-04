@@ -20,7 +20,6 @@ import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.ceil
-import kotlin.math.max
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -137,10 +136,12 @@ class ExportPdfUseCase @Inject constructor(
         c: Canvas, readings: List<BPReading>, noteNums: Map<Int, Int>,
         left: Float, top: Float, right: Float, bottom: Float,
     ) {
-        val n    = readings.size
-        val yMin = Y_FLOOR.toDouble()
-        val yMax = Y_CEIL.toDouble()
-        val dotR = when { n > 100 -> 3f; n > 40 -> 5f; else -> 7f }
+        val n       = readings.size
+        val yMin    = Y_FLOOR.toDouble()
+        val yMax    = Y_CEIL.toDouble()
+        val dotR    = when { n > 100 -> 3f; n > 40 -> 5f; else -> 7f }
+        val firstTs = readings.first().timestamp
+        val lastTs  = readings.last().timestamp
 
         // grid + Y labels (left and right)
         var gv = Y_FLOOR
@@ -161,22 +162,24 @@ class ExportPdfUseCase @Inject constructor(
         refLine(120.0, "SYS 120")
         refLine(80.0,  "DIA 80")
 
-        // X axis date labels (max 10, rotated 40°)
-        val xFmt = xDateFmt(readings)
-        val step = max(1, n / 10)
-        readings.forEachIndexed { i, r ->
-            if (i % step == 0 || i == n - 1) {
-                val cx = xC(i, n, left, right)
-                c.save(); c.translate(cx, bottom + 16f); c.rotate(40f)
-                c.drawText(xFmt.format(Date(r.timestamp)), 0f, 0f, pXLabel)
-                c.restore()
-            }
+        // X axis time labels — up to 10, evenly spaced in real time (not by index),
+        // rotated 40° to avoid overlap.
+        val xFmt       = xDateFmt(readings)
+        val labelCount = 10.coerceAtMost(n)
+        val denom      = (labelCount - 1).coerceAtLeast(1)
+        val totalMs    = lastTs - firstTs
+        for (li in 0 until labelCount) {
+            val labelTs = firstTs + totalMs * li / denom
+            val cx = xC(labelTs, firstTs, lastTs, left, right)
+            c.save(); c.translate(cx, bottom + 16f); c.rotate(40f)
+            c.drawText(xFmt.format(Date(labelTs)), 0f, 0f, pXLabel)
+            c.restore()
         }
 
-        // series paths
+        // series paths — x position is time-proportional
         val sysPath = Path(); val diaPath = Path()
         readings.forEachIndexed { i, r ->
-            val cx = xC(i, n, left, right)
+            val cx = xC(r.timestamp, firstTs, lastTs, left, right)
             val sy = yC(r.systolic.toDouble(),  yMin, yMax, top, bottom)
             val dy = yC(r.diastolic.toDouble(), yMin, yMax, top, bottom)
             if (i == 0) { sysPath.moveTo(cx, sy); diaPath.moveTo(cx, dy) }
@@ -187,7 +190,7 @@ class ExportPdfUseCase @Inject constructor(
 
         // dots + callout badges
         readings.forEachIndexed { i, r ->
-            val cx = xC(i, n, left, right)
+            val cx = xC(r.timestamp, firstTs, lastTs, left, right)
             val sy = yC(r.systolic.toDouble(),  yMin, yMax, top, bottom)
             val dy = yC(r.diastolic.toDouble(), yMin, yMax, top, bottom)
             c.drawCircle(cx, sy, dotR, pSysDot)
@@ -336,10 +339,10 @@ class ExportPdfUseCase @Inject constructor(
     private fun yC(y: Double, yMin: Double, yMax: Double, top: Float, bottom: Float) =
         (bottom - (y - yMin) / (yMax - yMin) * (bottom - top)).toFloat()
 
-    /** Reading index → canvas X. */
-    private fun xC(i: Int, n: Int, left: Float, right: Float) =
-        if (n <= 1) (left + right) / 2f
-        else left + i.toFloat() / (n - 1).toFloat() * (right - left)
+    /** Timestamp → canvas X (time-proportional, matching the interactive chart). */
+    private fun xC(ts: Long, firstTs: Long, lastTs: Long, left: Float, right: Float) =
+        if (firstTs == lastTs) (left + right) / 2f
+        else left + (ts - firstTs).toFloat() / (lastTs - firstTs).toFloat() * (right - left)
 
     private fun xDateFmt(readings: List<BPReading>) = SimpleDateFormat(
         when (readings.last().timestamp - readings.first().timestamp) {
