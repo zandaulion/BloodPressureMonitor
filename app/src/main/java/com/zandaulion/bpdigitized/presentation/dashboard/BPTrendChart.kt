@@ -77,15 +77,18 @@ fun BPTrendChart(
     }
 
     val bottomFormatter = remember(readings, isSubDayView) {
+        // x values are "days elapsed since the first reading in this dataset", so we
+        // reconstruct the timestamp by adding (value × MILLIS_PER_DAY) to firstTs.
+        // This works for any x position Vico picks for axis labels, not just positions
+        // that coincide with an actual data point.
+        val firstTs = readings.first().timestamp
         val fmt = if (isSubDayView) {
-            SimpleDateFormat("M/d HH:mm", Locale.getDefault())
+            SimpleDateFormat("HH:mm", Locale.getDefault())   // date redundant: all same day
         } else {
             SimpleDateFormat("M/d", Locale.getDefault())
         }
         CartesianValueFormatter { _, value, _ ->
-            val ts = readings.getOrNull(value.toInt())?.timestamp
-                ?: return@CartesianValueFormatter ""
-            fmt.format(Date(ts))
+            fmt.format(Date(firstTs + (value * MILLIS_PER_DAY).toLong()))
         }
     }
 
@@ -145,7 +148,11 @@ fun BPTrendChart(
         val modelProducer = remember { CartesianChartModelProducer() }
 
         LaunchedEffect(readings) {
-            val xs  = readings.indices.map { it.toDouble() }
+            // x = days elapsed since the first reading, so points that are close in
+            // time appear close on the chart and points far apart appear far apart.
+            // Using days keeps the numbers small (0–90) regardless of dataset size.
+            val firstTs = readings.first().timestamp
+            val xs  = readings.map { (it.timestamp - firstTs).toDouble() / MILLIS_PER_DAY }
             val sys = readings.map { it.systolic.toDouble() }
             val dia = readings.map { it.diastolic.toDouble() }
             modelProducer.runTransaction {
@@ -158,8 +165,6 @@ fun BPTrendChart(
 
         CartesianChartHost(
             modelProducer = modelProducer,
-            // onSizeChanged captures the rendered pixel width so derivedStateOf can
-            // compute the visible fraction correctly.
             modifier = modifier,
             animationSpec = null,
             scrollState = scrollState,
