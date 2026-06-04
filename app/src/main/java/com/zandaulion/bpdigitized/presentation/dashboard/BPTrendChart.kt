@@ -43,7 +43,8 @@ import java.util.Locale
 private const val NORMAL_SYSTOLIC  = 120.0
 private const val NORMAL_DIASTOLIC = 80.0
 
-private const val MILLIS_PER_DAY = 24L * 60 * 60 * 1_000
+private const val MILLIS_PER_DAY    = 24L * 60 * 60 * 1_000
+private const val MAX_VISIBLE_SECS  = 10.0 * 24 * 3600   // cap: never open wider than 10 days
 
 @Composable
 fun BPTrendChart(
@@ -147,15 +148,19 @@ fun BPTrendChart(
     key(readings.first().timestamp) {
         val scrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
 
-        // Default zoom = half of the displayed time span, scrolled to the most recent
-        // end. Examples: 7d range → ~3.5 days visible; 30d → ~15 days; 90d → ~45 days.
+        // Default zoom = half the displayed span, capped at 10 days.
+        //   7d  → min(3.5d, 10d) = 3.5 days visible
+        //   30d → min(15d,  10d) = 10 days visible
+        //   90d → min(45d,  10d) = 10 days visible
+        //   All → min(half, 10d) = 10 days visible
         // Zoom.max ensures we never zoom past the content when few readings exist.
         val halfSpanSecs = if (readings.size >= 2)
             (readings.last().timestamp - readings.first().timestamp) / 2_000.0
         else 0.0
+        val visibleSecs = halfSpanSecs.coerceAtMost(MAX_VISIBLE_SECS)
         val zoomState = rememberVicoZoomState(
-            initialZoom = if (halfSpanSecs > 0.0)
-                Zoom.max(Zoom.x(halfSpanSecs), Zoom.Content)
+            initialZoom = if (visibleSecs > 0.0)
+                Zoom.max(Zoom.x(visibleSecs), Zoom.Content)
             else
                 Zoom.Content,
         )
