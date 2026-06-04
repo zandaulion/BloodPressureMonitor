@@ -21,6 +21,7 @@ import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoZoomState
 import com.patrykandpatrick.vico.core.cartesian.Scroll
+import com.patrykandpatrick.vico.core.cartesian.Zoom
 import com.patrykandpatrick.vico.compose.common.component.rememberLineComponent
 import com.patrykandpatrick.vico.compose.common.component.rememberTextComponent
 import com.patrykandpatrick.vico.compose.common.fill
@@ -44,6 +45,9 @@ private const val NORMAL_DIASTOLIC = 80.0
 
 private const val MILLIS_PER_DAY = 24L * 60 * 60 * 1_000
 
+/** Default number of x-units (seconds) shown on first render — approximately 3 days. */
+private const val DEFAULT_VISIBLE_SECS = 3.0 * 24 * 3600   // 259 200 s
+
 @Composable
 fun BPTrendChart(
     readings: List<BPReading>,
@@ -61,7 +65,13 @@ fun BPTrendChart(
     }
 
     val scrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
-    val zoomState   = rememberVicoZoomState()
+    // Zoom.x(n) ensures exactly n x-units (seconds) are visible.
+    // Zoom.max picks the larger zoom factor of the two, which means:
+    //   • dataset > 3 days → Zoom.x wins → chart opens showing the last 3 days
+    //   • dataset ≤ 3 days → Zoom.Content wins → all readings are visible
+    val zoomState = rememberVicoZoomState(
+        initialZoom = Zoom.max(Zoom.x(DEFAULT_VISIBLE_SECS), Zoom.Content),
+    )
 
     // Use the full dataset time span to decide the label format.
     // Previously this was computed from the scroll position on every frame, which caused
