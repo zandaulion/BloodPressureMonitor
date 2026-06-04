@@ -45,9 +45,6 @@ private const val NORMAL_DIASTOLIC = 80.0
 
 private const val MILLIS_PER_DAY = 24L * 60 * 60 * 1_000
 
-/** Default number of x-units (seconds) shown on first render — approximately 3 days. */
-private const val DEFAULT_VISIBLE_SECS = 3.0 * 24 * 3600   // 259 200 s
-
 @Composable
 fun BPTrendChart(
     readings: List<BPReading>,
@@ -63,15 +60,6 @@ fun BPTrendChart(
         }
         return
     }
-
-    val scrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
-    // Zoom.x(n) ensures exactly n x-units (seconds) are visible.
-    // Zoom.max picks the larger zoom factor of the two, which means:
-    //   • dataset > 3 days → Zoom.x wins → chart opens showing the last 3 days
-    //   • dataset ≤ 3 days → Zoom.Content wins → all readings are visible
-    val zoomState = rememberVicoZoomState(
-        initialZoom = Zoom.max(Zoom.x(DEFAULT_VISIBLE_SECS), Zoom.Content),
-    )
 
     // Use the full dataset time span to decide the label format.
     // Previously this was computed from the scroll position on every frame, which caused
@@ -147,15 +135,31 @@ fun BPTrendChart(
         )
     }
 
-    // key(readings.size) resets all Vico internal state whenever the dataset SIZE changes.
-    // This prevents the stale-bounds crash that occurs when going DOWN in range (e.g. 90d→30d):
-    // Vico's layer keeps bounds from the old (larger) dataset and crashes indexing the new
-    // shorter one before the next transaction lands.
+    // Key on the first reading's timestamp: this changes whenever the user switches
+    // range tabs (the oldest visible reading shifts), which resets the model producer,
+    // scroll position, and zoom level. It does NOT change when a new reading is merely
+    // appended to the end, so the user's current scroll/zoom is preserved on live updates.
     //
-    // Within a given size, modelProducer is stable (plain remember {}), so content-only
-    // changes (same count, different values) just trigger LaunchedEffect(readings) and run
-    // a new transaction on the existing producer — no empty-producer flash.
-    key(readings.size) {
+    // This also fixes the stale-bounds crash that occurred when going DOWN in range
+    // (e.g. 90d→30d): Vico's layer kept bounds from the old dataset and crashed before
+    // the new transaction landed. Keying on firstTs guarantees a full remount on every
+    // range change, so Vico always starts fresh.
+    key(readings.first().timestamp) {
+        val scrollState = rememberVicoScrollState(initialScroll = Scroll.Absolute.End)
+
+        // Default zoom = half of the displayed time span, scrolled to the most recent
+        // end. Examples: 7d range → ~3.5 days visible; 30d → ~15 days; 90d → ~45 days.
+        // Zoom.max ensures we never zoom past the content when few readings exist.
+        val halfSpanSecs = if (readings.size >= 2)
+            (readings.last().timestamp - readings.first().timestamp) / 2_000.0
+        else 0.0
+        val zoomState = rememberVicoZoomState(
+            initialZoom = if (halfSpanSecs > 0.0)
+                Zoom.max(Zoom.x(halfSpanSecs), Zoom.Content)
+            else
+                Zoom.Content,
+        )
+
         val modelProducer = remember { CartesianChartModelProducer() }
 
         LaunchedEffect(readings) {
