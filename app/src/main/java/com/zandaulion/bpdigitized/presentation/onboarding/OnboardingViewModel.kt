@@ -20,9 +20,16 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/** Birth-year picker bounds, expressed as ages relative to the current year. */
+const val MIN_AGE = 1
+const val MAX_AGE = 120
+const val DEFAULT_AGE = 40
+
 /** Editable state for the optional setup steps shown during onboarding. */
 data class OnboardingForm(
-    val birthYearText: String = "",
+    // Pre-filled with a neutral default (40 years ago), matching the Profile screen, so
+    // the year picker starts on a sensible value rather than empty.
+    val birthYearText: String = (java.time.Year.now().value - DEFAULT_AGE).toString(),
     val sex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
     val remindersEnabled: Boolean = false,
 ) {

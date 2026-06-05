@@ -20,22 +20,25 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -51,9 +54,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import kotlin.math.roundToInt
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -228,22 +231,17 @@ private fun ProfilePage(
         )
         Spacer(Modifier.height(28.dp))
 
-        OutlinedTextField(
-            value = form.birthYearText,
-            onValueChange = onBirthYearChange,
-            label = { Text(stringResource(R.string.profile_birth_year_label)) },
-            singleLine = true,
-            isError = form.birthYearError,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            supportingText = {
-                when {
-                    form.birthYearError ->
-                        Text(stringResource(R.string.profile_birth_year_error))
-                    form.computedAge != null ->
-                        Text(stringResource(R.string.profile_age, form.computedAge!!))
-                }
-            },
-            modifier = Modifier.fillMaxWidth(),
+        val currentYear = remember { java.time.Year.now().value }
+        val minYear = currentYear - MAX_AGE
+        val maxYear = currentYear - MIN_AGE
+        val year = form.birthYearText.toIntOrNull()?.coerceIn(minYear, maxYear)
+            ?: (currentYear - DEFAULT_AGE)
+
+        YearPickerCard(
+            year = year,
+            age = currentYear - year,
+            onYearChange = { onBirthYearChange(it.toString()) },
+            range = minYear..maxYear,
         )
 
         Spacer(Modifier.height(20.dp))
@@ -345,6 +343,97 @@ private fun RemindersPage(
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
+    }
+}
+
+/**
+ * Birth-year picker styled like the validation screen's SYS/DIA sliders: a large value
+ * with a slider and ±1 stepper buttons, plus the implied age and the allowed range.
+ */
+@Composable
+private fun YearPickerCard(
+    year: Int,
+    age: Int,
+    onYearChange: (Int) -> Unit,
+    range: IntRange,
+) {
+    val label = stringResource(R.string.profile_birth_year_label)
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Column {
+                    Text(
+                        text = label,
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary,
+                    )
+                    Text(
+                        text = stringResource(R.string.profile_age, age),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
+                Text(
+                    text = year.toString(),
+                    style = MaterialTheme.typography.displaySmall,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                IconButton(
+                    onClick = { onYearChange((year - 1).coerceAtLeast(range.first)) },
+                    enabled = year > range.first,
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(
+                        Icons.Default.Remove,
+                        contentDescription = stringResource(R.string.validation_cd_decrease, label),
+                    )
+                }
+                Slider(
+                    value = year.toFloat(),
+                    onValueChange = { onYearChange(it.roundToInt()) },
+                    valueRange = range.first.toFloat()..range.last.toFloat(),
+                    modifier = Modifier.weight(1f),
+                )
+                IconButton(
+                    onClick = { onYearChange((year + 1).coerceAtMost(range.last)) },
+                    enabled = year < range.last,
+                    modifier = Modifier.size(40.dp),
+                ) {
+                    Icon(
+                        Icons.Default.Add,
+                        contentDescription = stringResource(R.string.validation_cd_increase, label),
+                    )
+                }
+            }
+
+            Text(
+                text = "${range.first} – ${range.last}",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                modifier = Modifier.align(Alignment.End),
+            )
+        }
     }
 }
 
