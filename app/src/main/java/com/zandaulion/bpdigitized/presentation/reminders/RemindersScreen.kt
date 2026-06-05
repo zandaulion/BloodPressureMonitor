@@ -1,6 +1,8 @@
 package com.zandaulion.bpdigitized.presentation.reminders
 
 import android.Manifest
+import android.app.AlarmManager
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.provider.Settings
@@ -25,8 +27,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -34,7 +34,7 @@ import androidx.compose.material3.TimePicker
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberTimePickerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,9 +45,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
@@ -60,29 +61,45 @@ fun RemindersScreen(
     viewModel: RemindersViewModel = hiltViewModel(),
 ) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
-    val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
-    val snackbarHostState = remember { SnackbarHostState() }
+    val lifecycleOwner = LocalLifecycleOwner.current
 
-    // Runtime permission for POST_NOTIFICATIONS (API 33+)
-    val notifPermState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS)
-    } else null
-
-    LaunchedEffect(viewModel.events, lifecycleOwner) {
-        viewModel.events.flowWithLifecycle(lifecycleOwner.lifecycle).collect { event ->
-            when (event) {
-                RemindersEvent.OpenExactAlarmSettings -> {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                        context.startActivity(
-                            Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                        )
-                    }
-                }
-                RemindersEvent.RequestNotificationPermission ->
-                    notifPermState?.launchPermissionRequest()
+    // Exact-alarm permission isn't a runtime dialog — it's a Settings screen. Track its
+    // granted state locally and refresh on resume so the card hides after the user returns.
+    var exactAlarmGranted by remember { mutableStateOf(canScheduleExactAlarms(context)) }
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                exactAlarmGranted = canScheduleExactAlarms(context)
             }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
+
+    // When enabling, we ask for the notification permission first (a dialog); once it
+    // resolves we chase the exact-alarm permission (a Settings screen) so the two prompts
+    // don't collide. This flag remembers that the exact-alarm step is still owed.
+    var pendingExactAlarm by remember { mutableStateOf(false) }
+
+    val notifPermState = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        rememberPermissionState(Manifest.permission.POST_NOTIFICATIONS) {
+            if (pendingExactAlarm) {
+                pendingExactAlarm = false
+                if (!canScheduleExactAlarms(context)) openExactAlarmSettings(context)
+            }
+        }
+    } else null
+    val notifGranted = notifPermState == null || notifPermState.status.isGranted
+
+    // Fired when the master switch is turned on: request whichever permissions are missing.
+    fun requestMissingPermissions() {
+        val needExact = !exactAlarmGranted
+        if (notifPermState != null && !notifPermState.status.isGranted) {
+            pendingExactAlarm = needExact
+            notifPermState.launchPermissionRequest()
+        } else if (needExact) {
+            openExactAlarmSettings(context)
         }
     }
 
@@ -118,7 +135,6 @@ fun RemindersScreen(
                 },
             )
         },
-        snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { inner ->
         Column(
             modifier = Modifier
@@ -127,33 +143,6 @@ fun RemindersScreen(
                 .padding(horizontal = 16.dp, vertical = 8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-
-            // ── Notification permission banner ────────────────────────────────
-            if (notifPermState != null && !notifPermState.status.isGranted) {
-                PermissionBanner(
-                    title       = stringResource(R.string.reminders_notif_perm_title),
-                    description = stringResource(R.string.reminders_notif_perm_desc),
-                    buttonText  = stringResource(R.string.reminders_notif_perm_button),
-                    onClick     = { notifPermState.launchPermissionRequest() },
-                )
-            }
-
-            // ── Exact-alarm permission banner ─────────────────────────────────
-            if (ui.needsExactAlarmPermission) {
-                PermissionBanner(
-                    title       = stringResource(R.string.reminders_exact_alarm_title),
-                    description = stringResource(R.string.reminders_exact_alarm_desc),
-                    buttonText  = stringResource(R.string.reminders_exact_alarm_button),
-                    onClick     = {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                            context.startActivity(
-                                Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
-                                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-                            )
-                        }
-                    },
-                )
-            }
 
             // ── Master toggle ─────────────────────────────────────────────────
             Card(modifier = Modifier.fillMaxWidth()) {
@@ -176,7 +165,10 @@ fun RemindersScreen(
                     }
                     Switch(
                         checked = ui.isEnabled,
-                        onCheckedChange = { viewModel.toggleEnabled(it) },
+                        onCheckedChange = { enabled ->
+                            viewModel.toggleEnabled(enabled)
+                            if (enabled) requestMissingPermissions()
+                        },
                     )
                 }
             }
@@ -199,6 +191,24 @@ fun RemindersScreen(
                 onClick     = { if (ui.isEnabled) showEveningPicker = true },
             )
 
+            // ── Permission cards (only those still missing, shown while enabled) ──
+            if (ui.isEnabled && !notifGranted) {
+                PermissionBanner(
+                    title       = stringResource(R.string.reminders_notif_perm_title),
+                    description = stringResource(R.string.reminders_notif_perm_desc),
+                    buttonText  = stringResource(R.string.reminders_notif_perm_button),
+                    onClick     = { notifPermState.launchPermissionRequest() },
+                )
+            }
+            if (ui.isEnabled && !exactAlarmGranted) {
+                PermissionBanner(
+                    title       = stringResource(R.string.reminders_exact_alarm_title),
+                    description = stringResource(R.string.reminders_exact_alarm_desc),
+                    buttonText  = stringResource(R.string.reminders_exact_alarm_button),
+                    onClick     = { openExactAlarmSettings(context) },
+                )
+            }
+
             HorizontalDivider(modifier = Modifier.padding(top = 4.dp))
 
             Text(
@@ -207,6 +217,26 @@ fun RemindersScreen(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
+    }
+}
+
+// ── Permission helpers ───────────────────────────────────────────────────────
+
+/** True when exact alarms can be scheduled (always true below API 31). */
+private fun canScheduleExactAlarms(context: Context): Boolean =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager).canScheduleExactAlarms()
+    } else {
+        true
+    }
+
+/** Opens the system "Alarms & reminders" settings so the user can allow exact alarms. */
+private fun openExactAlarmSettings(context: Context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+        context.startActivity(
+            Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
+        )
     }
 }
 

@@ -7,11 +7,9 @@ import com.zandaulion.bpdigitized.data.reminder.ReminderType
 import com.zandaulion.bpdigitized.domain.model.ReminderSettings
 import com.zandaulion.bpdigitized.domain.repository.ReminderRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,15 +18,7 @@ data class RemindersUi(
     val isEnabled: Boolean = false,
     val morningMinutes: Int = 7 * 60 + 30,
     val eveningMinutes: Int = 20 * 60,
-    val needsExactAlarmPermission: Boolean = false,
 )
-
-sealed interface RemindersEvent {
-    /** Ask the screen to launch the POST_NOTIFICATIONS permission request. */
-    data object RequestNotificationPermission : RemindersEvent
-    /** The SCHEDULE_EXACT_ALARM permission is missing — send user to settings. */
-    data object OpenExactAlarmSettings : RemindersEvent
-}
 
 @HiltViewModel
 class RemindersViewModel @Inject constructor(
@@ -39,10 +29,9 @@ class RemindersViewModel @Inject constructor(
     val ui: StateFlow<RemindersUi> = reminderRepository.observe()
         .map { settings ->
             RemindersUi(
-                isEnabled                 = settings.isEnabled,
-                morningMinutes            = settings.morningMinutes,
-                eveningMinutes            = settings.eveningMinutes,
-                needsExactAlarmPermission = !reminderScheduler.canScheduleExact(),
+                isEnabled      = settings.isEnabled,
+                morningMinutes = settings.morningMinutes,
+                eveningMinutes = settings.eveningMinutes,
             )
         }
         .stateIn(
@@ -51,16 +40,14 @@ class RemindersViewModel @Inject constructor(
             RemindersUi(),
         )
 
-    private val _events = Channel<RemindersEvent>(Channel.BUFFERED)
-    val events = _events.receiveAsFlow()
-
-    /** Called when the master on/off switch is toggled. */
+    /**
+     * Master on/off switch. Persists the preference and schedules (or cancels) the alarms.
+     * Permission prompting is handled by the screen; [ReminderScheduler] falls back to an
+     * inexact alarm when the exact-alarm permission isn't granted, so this never blocks or
+     * throws even if the user hasn't granted it yet.
+     */
     fun toggleEnabled(enabled: Boolean) {
         viewModelScope.launch {
-            if (enabled && !reminderScheduler.canScheduleExact()) {
-                _events.send(RemindersEvent.OpenExactAlarmSettings)
-                return@launch
-            }
             val current = ui.value
             save(ReminderSettings(enabled, current.morningMinutes, current.eveningMinutes))
             if (enabled) {
