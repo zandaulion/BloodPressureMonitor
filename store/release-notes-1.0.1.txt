@@ -1,0 +1,71 @@
+<en-US>
+• Reminders: the on/off switch and times are now at the top, and turning reminders on requests the notification and alarm permissions for you automatically
+• Permission cards now appear only when a permission is actually missing
+• Help: added a note explaining the "Avg" averaging on the chart and PDF export
+</en-US>
+
+<de-DE>
+• Erinnerungen: Schalter und Zeiten sind jetzt oben, und beim Aktivieren werden die Benachrichtigungs- und Alarmberechtigungen automatisch angefragt
+• Berechtigungskarten erscheinen nur noch, wenn eine Berechtigung wirklich fehlt
+• Hilfe: Erklärung zur „Avg"-Mittelung in Diagramm und PDF-Export ergänzt
+</de-DE>
+
+<es-ES>
+• Recordatorios: el interruptor y las horas están ahora arriba, y al activarlos se solicitan los permisos de notificación y alarma automáticamente
+• Las tarjetas de permiso solo aparecen cuando falta algún permiso
+• Ayuda: añadida una nota que explica el promediado «Avg» en el gráfico y el PDF
+</es-ES>
+
+<fr-FR>
+• Rappels : l'interrupteur et les heures sont désormais en haut, et l'activation demande automatiquement les autorisations de notification et d'alarme
+• Les cartes d'autorisation n'apparaissent que si une autorisation manque réellement
+• Aide : ajout d'une explication sur le moyennage « Avg » du graphique et du PDF
+</fr-FR>
+
+<ar>
+• التذكيرات: مفتاح التفعيل والأوقات أصبحت في الأعلى، وعند التفعيل تُطلب أذونات الإشعارات والمنبه تلقائيًا
+• تظهر بطاقات الأذونات فقط عند وجود إذن مفقود فعلاً
+• المساعدة: أضفنا شرحًا لتجميع «Avg» في المخطط وتصدير PDF
+</ar>
+
+<hi-IN>
+• रिमाइंडर: चालू/बंद स्विच और समय अब सबसे ऊपर हैं, और चालू करने पर सूचना व अलार्म अनुमतियां स्वतः मांगी जाती हैं
+• अनुमति कार्ड अब केवल तभी दिखते हैं जब कोई अनुमति वास्तव में नहीं दी गई हो
+• मदद: चार्ट और PDF में «Avg» औसत की व्याख्या जोड़ी गई
+</hi-IN>
+
+<ja-JP>
+• リマインダー：オン/オフと時刻が上部に移動し、オンにすると通知とアラームの権限を自動で求めます
+• 権限カードは、権限が不足しているときだけ表示されます
+• ヘルプ：グラフとPDFの「Avg」平均化の説明を追加
+</ja-JP>
+
+<ko-KR>
+• 알림: 켜기 스위치와 시간이 상단으로 이동했고, 켜면 알림과 알람 권한을 자동으로 요청합니다
+• 권한 카드는 실제로 권한이 없을 때만 표시됩니다
+• 도움말: 차트와 PDF의 'Avg' 평균화 설명 추가
+</ko-KR>
+
+<pt-BR>
+• Lembretes: o botão liga/desliga e os horários agora ficam no topo, e ativar solicita as permissões de notificação e alarme automaticamente
+• Os cartões de permissão aparecem apenas quando uma permissão está realmente faltando
+• Ajuda: adicionada uma explicação sobre a média «Avg» no gráfico e no PDF
+</pt-BR>
+
+<ro>
+• Mementouri: comutatorul și orele sunt acum sus, iar activarea solicită automat permisiunile de notificare și de alarmă
+• Cardurile de permisiuni apar doar când lipsește efectiv o permisiune
+• Ajutor: adăugată o explicație despre medierea «Avg» în grafic și exportul PDF
+</ro>
+
+<uk>
+• Нагадування: перемикач і час тепер угорі, а ввімкнення автоматично запитує дозволи на сповіщення та будильник
+• Картки дозволів зʼявляються лише тоді, коли дозволу справді бракує
+• Довідка: додано пояснення усереднення «Avg» у графіку та експорті PDF
+</uk>
+
+<zh-CN>
+• 提醒：开关和时间已移至顶部，开启时会自动请求通知和闹钟权限
+• 权限卡片仅在确实缺少权限时才显示
+• 帮助：新增图表和 PDF 中「Avg」平均的说明
+</zh-CN>
