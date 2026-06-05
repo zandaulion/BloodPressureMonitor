@@ -9,6 +9,5 @@
  [*] graficul sa arate cea mai noua valoare
  [*] when entering a note your are captive unless you minimize the keyboard, which is not intuitive
  [] add rate limiter
-
-
-in the help screen, when describing the functionality behind an icon, also show that icon before the text
+ [] update the help screen with the new changes for the chart
+ [] reshape notificatiosn screen -> aslk for both permissions when enabling + move the permission cards under the alarm time settings

@@ -1,0 +1,95 @@
+<en-US>
+• Smarter trend chart — a real-time timeline that opens on your latest readings, with pinch-to-zoom
+• New "Avg" mode merges back-to-back readings into one point — the clinical way to read blood pressure
+• Redesigned welcome: set up your profile and reminders in seconds, with an easy birth-year picker
+• Change the app's language from the very first screen — 12 languages
+• Fixes: a reminder crash and several chart glitches
+</en-US>
+
+<de-DE>
+• Verbessertes Trenddiagramm – eine Echtzeit-Zeitleiste, die bei deinen neuesten Werten startet, mit Zoom per Fingergeste
+• Neuer „Avg"-Modus fasst aufeinanderfolgende Messungen zu einem Punkt zusammen – so wird Blutdruck klinisch gemessen
+• Neu gestalteter Start: Profil und Erinnerungen in Sekunden einrichten, mit einfacher Geburtsjahr-Auswahl
+• Sprache direkt auf dem ersten Bildschirm wechseln – 12 Sprachen
+• Behoben: ein Erinnerungs-Absturz und mehrere Diagramm-Fehler
+</de-DE>
+
+<es-ES>
+• Gráfico de tendencias mejorado: línea de tiempo en tiempo real abierta en tus últimas lecturas, con zoom con los dedos
+• Nuevo modo «Avg» que combina lecturas consecutivas en un punto, la forma clínica de medir la tensión
+• Bienvenida rediseñada: configura tu perfil y recordatorios en segundos, con un selector de año de nacimiento sencillo
+• Cambia el idioma de la app desde la primera pantalla: 12 idiomas
+• Correcciones: un fallo de los recordatorios y varios errores del gráfico
+</es-ES>
+
+<fr-FR>
+• Graphique de tendance amélioré : chronologie en temps réel ouverte sur vos dernières mesures, avec zoom à deux doigts
+• Nouveau mode « Avg » qui fusionne les mesures consécutives en un point — la façon clinique de mesurer la tension
+• Accueil repensé : profil et rappels configurés en quelques secondes, sélecteur d'année de naissance simplifié
+• Changez la langue de l'appli dès le premier écran — 12 langues
+• Corrections : plantage des rappels et soucis du graphique
+</fr-FR>
+
+<ar>
+• رسم بياني أذكى للاتجاهات — خط زمني فوري يبدأ من أحدث قراءاتك، مع التكبير بإصبعين
+• وضع «Avg» جديد يدمج القراءات المتتالية في نقطة واحدة — الطريقة الطبية لقياس ضغط الدم
+• شاشة ترحيب جديدة: أعدّ ملفك الشخصي والتذكيرات في ثوانٍ، مع منتقي سهل لسنة الميلاد
+• غيّر لغة التطبيق من الشاشة الأولى — 12 لغة
+• إصلاحات: تعطّل متعلق بالتذكيرات وعدة مشكلات في الرسم البياني
+</ar>
+
+<hi-IN>
+• बेहतर ट्रेंड चार्ट — रियल-टाइम टाइमलाइन जो आपकी ताज़ा रीडिंग पर खुलती है, पिंच-टू-ज़ूम के साथ
+• नया «Avg» मोड लगातार ली गई रीडिंग को एक बिंदु में मिला देता है — रक्तचाप मापने का चिकित्सकीय तरीका
+• नया स्वागत फ़्लो: कुछ सेकंड में प्रोफ़ाइल और रिमाइंडर सेट करें, आसान जन्म-वर्ष पिकर के साथ
+• पहली स्क्रीन से ही ऐप की भाषा बदलें — 12 भाषाएं
+• सुधार: रिमाइंडर से जुड़ा एक क्रैश और कई चार्ट गड़बड़ियां
+</hi-IN>
+
+<ja-JP>
+• 進化したトレンドグラフ — 最新の記録から開くリアルタイムの時間軸、ピンチでズーム
+• 新しい「Avg」モードで連続した測定値を1つにまとめます — 血圧の臨床的な見方
+• 新しいウェルカム画面：プロフィールとリマインダーを数秒で設定、生年の選択も簡単
+• 最初の画面からアプリの言語を変更 — 12言語
+• 修正：リマインダー関連のクラッシュとグラフの不具合
+</ja-JP>
+
+<ko-KR>
+• 더 똑똑해진 추세 차트 — 최신 측정값에서 열리는 실시간 타임라인, 손가락으로 확대
+• 새로운 'Avg' 모드가 연속 측정값을 하나로 합칩니다 — 혈압을 읽는 임상적 방식
+• 새로워진 시작 화면: 프로필과 알림을 몇 초 만에 설정, 간편한 출생 연도 선택기 포함
+• 첫 화면에서 바로 앱 언어 변경 — 12개 언어
+• 수정: 알림 관련 충돌 및 여러 차트 오류
+</ko-KR>
+
+<pt-BR>
+• Gráfico de tendências mais inteligente — uma linha do tempo em tempo real que abre nas suas leituras mais recentes, com zoom por pinça
+• Novo modo «Avg» que combina leituras consecutivas em um único ponto — a forma clínica de medir a pressão
+• Boas-vindas redesenhadas: configure seu perfil e lembretes em segundos, com um seletor de ano de nascimento fácil
+• Mude o idioma do app já na primeira tela — 12 idiomas
+• Correções: uma falha dos lembretes e vários problemas no gráfico
+</pt-BR>
+
+<ro>
+• Grafic de tendințe mai inteligent — cronologie în timp real deschisă pe cele mai recente valori, cu zoom din degete
+• Mod «Avg» nou care combină măsurătorile consecutive într-un punct — modul clinic de a măsura tensiunea
+• Ecran de bun venit redesenat: profil și mementouri în câteva secunde, selector simplu pentru anul nașterii
+• Schimbă limba aplicației chiar din primul ecran — 12 limbi
+• Remedieri: o eroare a mementourilor și alte probleme ale graficului
+</ro>
+
+<uk>
+• Розумніший графік тенденцій — часова шкала в реальному часі, що відкривається на останніх показниках, із масштабуванням пальцями
+• Новий режим «Avg» об'єднує послідовні показники в одну точку — клінічний спосіб вимірювання тиску
+• Оновлений екран привітання: налаштуйте профіль і нагадування за секунди, із зручним вибором року народження
+• Змінюйте мову застосунку прямо з першого екрана — 12 мов
+• Виправлення: збій, пов'язаний із нагадуваннями, і кілька проблем графіка
+</uk>
+
+<zh-CN>
+• 更智能的趋势图——实时时间轴，打开即显示最新读数，支持双指缩放
+• 全新「Avg」模式，将连续读数合并为一个点——符合临床的血压读取方式
+• 重新设计的欢迎流程：几秒内设置个人资料和提醒，并配有简易的出生年份选择器
+• 在第一个屏幕即可切换应用语言——12 种语言
+• 修复：一个与提醒相关的崩溃以及若干图表问题
+</zh-CN>
