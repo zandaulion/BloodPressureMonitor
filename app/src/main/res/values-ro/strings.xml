@@ -203,13 +203,17 @@
 
     <string name="onboarding_next">Continuă</string>
     <string name="onboarding_get_started">Începe</string>
-    <string name="onboarding_welcome_overlay">Claritate</string>
-    <string name="onboarding_welcome_title">Cunoaște-ți valorile</string>
-    <string name="onboarding_welcome_body">Înregistrează măsurătorile și află instantaneu ce înseamnă, cu informații clare despre categoria tensiunii.</string>
+    <string name="onboarding_welcome_overlay">Tot-în-unu</string>
+    <string name="onboarding_welcome_title">Tensiunea ta, sub control</string>
+    <string name="onboarding_welcome_body">Înregistrează valori în câteva secunde, înțelege ce înseamnă și partajează un raport pregătit pentru medic — totul pe dispozitivul tău.</string>
+    <string name="onboarding_welcome_feature_scan">Scanează orice tensiometru</string>
+    <string name="onboarding_welcome_feature_trends">Vezi-ți tendințele</string>
+    <string name="onboarding_welcome_feature_pdf">PDF pentru medic</string>
+    <string name="onboarding_welcome_privacy">Fără cont — valorile rămân pe telefonul tău.</string>
     <string name="onboarding_profile_title">Despre tine</string>
-    <string name="onboarding_profile_subtitle">Opțional — ajută la personalizarea estimării riscului tensiunii tale. Poți sări peste și adăuga mai multe detalii (greutate, înălțime, fumat și altele) mai târziu în Profil.</string>
+    <string name="onboarding_profile_subtitle">Opțional — adaugă anul nașterii și sexul pentru a transforma valorile într-o estimare personală a riscului cardiac. O poți ajusta oricând în Profil.</string>
     <string name="onboarding_reminders_title">Rămâi consecvent</string>
-    <string name="onboarding_reminders_body">Măsurarea la aceleași ore în fiecare zi face tendințele mai fiabile.</string>
+    <string name="onboarding_reminders_body">Măsurarea la aceleași ore în fiecare zi creează tendințe fiabile — gata de exportat ca PDF sau de sincronizat cu Health Connect când are nevoie medicul tău.</string>
     <string name="onboarding_reminders_permission_note">Necesită permisiunea pentru notificări. Este opțional — poți activa sau ajusta mementourile oricând în aplicație.</string>
 
     <string name="help_title">Ajutor</string>

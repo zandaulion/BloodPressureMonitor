@@ -210,13 +210,17 @@
 
     <string name="onboarding_next">التالي</string>
     <string name="onboarding_get_started">ابدأ الآن</string>
-    <string name="onboarding_welcome_overlay">وضوح</string>
-    <string name="onboarding_welcome_title">اعرف أرقامك</string>
-    <string name="onboarding_welcome_body">سجّل قراءاتك واعرف معناها فورًا، مع معلومات واضحة عن فئة ضغط الدم.</string>
+    <string name="onboarding_welcome_overlay">الكل في واحد</string>
+    <string name="onboarding_welcome_title">ضغط دمك تحت السيطرة</string>
+    <string name="onboarding_welcome_body">سجّل القراءات في ثوانٍ، وافهم معناها، وشارك تقريرًا جاهزًا للطبيب — كل ذلك على جهازك.</string>
+    <string name="onboarding_welcome_feature_scan">امسح أي جهاز</string>
+    <string name="onboarding_welcome_feature_trends">تابع اتجاهاتك</string>
+    <string name="onboarding_welcome_feature_pdf">ملف PDF للطبيب</string>
+    <string name="onboarding_welcome_privacy">لا حاجة لحساب — تبقى قراءاتك على هاتفك.</string>
     <string name="onboarding_profile_title">نبذة عنك</string>
-    <string name="onboarding_profile_subtitle">اختياري — تساعد في تخصيص تقدير خطر ضغط الدم لديك. يمكنك تخطّي هذا وإضافة المزيد من التفاصيل (الوزن، الطول، التدخين والمزيد) لاحقًا في الملف الشخصي.</string>
+    <string name="onboarding_profile_subtitle">اختياري — أضف سنة ميلادك وجنسك لتحويل قراءاتك إلى تقدير شخصي لمخاطر القلب. يمكنك تعديله في أي وقت من الملف الشخصي.</string>
     <string name="onboarding_reminders_title">حافظ على الانتظام</string>
-    <string name="onboarding_reminders_body">القياس في نفس الأوقات كل يوم يجعل اتجاهاتك أكثر موثوقية.</string>
+    <string name="onboarding_reminders_body">القياس في نفس الأوقات كل يوم يبني اتجاهات موثوقة — جاهزة للتصدير كملف PDF أو المزامنة مع Health Connect عندما يحتاجها طبيبك.</string>
     <string name="onboarding_reminders_permission_note">يتطلب إذن الإشعارات. هذا اختياري — يمكنك تفعيل التذكيرات أو تعديلها في أي وقت داخل التطبيق.</string>
 
     <string name="help_title">المساعدة</string>

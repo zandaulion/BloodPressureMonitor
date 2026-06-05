@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,11 +23,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ShowChart
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsActive
+import androidx.compose.material.icons.filled.PhotoCamera
+import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -37,6 +41,7 @@ import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
@@ -163,13 +168,14 @@ fun OnboardingScreen(
     }
 }
 
-// ── Page 1: Welcome (informational) ─────────────────────────────────────────
+// ── Page 1: Welcome / hero ──────────────────────────────────────────────────
 
 @Composable
 private fun WelcomePage() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(horizontal = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
@@ -181,9 +187,7 @@ private fun WelcomePage() {
             color = MaterialTheme.colorScheme.primary,
             textAlign = TextAlign.Center,
         )
-        Spacer(Modifier.height(20.dp))
-        IconCircle(Icons.Default.MonitorHeart)
-        Spacer(Modifier.height(40.dp))
+        Spacer(Modifier.height(16.dp))
         Text(
             text = stringResource(R.string.onboarding_welcome_title),
             style = MaterialTheme.typography.headlineMedium,
@@ -194,6 +198,37 @@ private fun WelcomePage() {
         Text(
             text = stringResource(R.string.onboarding_welcome_body),
             style = MaterialTheme.typography.bodyLarge,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
+
+        Spacer(Modifier.height(40.dp))
+        // Three concrete value props: capture, insight, sharing.
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            FeatureItem(
+                modifier = Modifier.weight(1f),
+                icon = Icons.Default.PhotoCamera,
+                label = stringResource(R.string.onboarding_welcome_feature_scan),
+            )
+            FeatureItem(
+                modifier = Modifier.weight(1f),
+                icon = Icons.AutoMirrored.Filled.ShowChart,
+                label = stringResource(R.string.onboarding_welcome_feature_trends),
+            )
+            FeatureItem(
+                modifier = Modifier.weight(1f),
+                icon = Icons.Default.PictureAsPdf,
+                label = stringResource(R.string.onboarding_welcome_feature_pdf),
+            )
+        }
+
+        Spacer(Modifier.height(28.dp))
+        Text(
+            text = stringResource(R.string.onboarding_welcome_privacy),
+            style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
@@ -453,13 +488,22 @@ private fun LanguageSelector(modifier: Modifier = Modifier) {
     }
 
     Box(modifier = modifier) {
-        TextButton(onClick = { expanded = true }) {
+        // Outlined pill so the switcher reads as an obvious, tappable control.
+        OutlinedButton(
+            onClick = { expanded = true },
+            contentPadding = PaddingValues(start = 12.dp, end = 8.dp, top = 6.dp, bottom = 6.dp),
+        ) {
             Icon(
                 Icons.Default.Language,
                 contentDescription = stringResource(R.string.dashboard_cd_language),
+                modifier = Modifier.size(18.dp),
             )
             Spacer(Modifier.width(6.dp))
-            Text(currentLabel)
+            Text(currentLabel, style = MaterialTheme.typography.labelLarge)
+            Icon(
+                Icons.Default.ArrowDropDown,
+                contentDescription = null,
+            )
         }
         DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             APP_LANGUAGES.forEach { lang ->
@@ -483,6 +527,36 @@ private fun LanguageSelector(modifier: Modifier = Modifier) {
                 )
             }
         }
+    }
+}
+
+/** A single icon-over-label value prop in the welcome hero's feature strip. */
+@Composable
+private fun FeatureItem(modifier: Modifier, icon: ImageVector, label: String) {
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        Box(
+            modifier = Modifier
+                .size(56.dp)
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                modifier = Modifier.size(28.dp),
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            textAlign = TextAlign.Center,
+        )
     }
 }
 

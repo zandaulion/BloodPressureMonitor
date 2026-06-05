@@ -201,13 +201,17 @@
 
     <string name="onboarding_next">अगला</string>
     <string name="onboarding_get_started">शुरू करें</string>
-    <string name="onboarding_welcome_overlay">स्पष्टता</string>
-    <string name="onboarding_welcome_title">अपनी संख्याएं जानें</string>
-    <string name="onboarding_welcome_body">अपनी रीडिंग दर्ज करें और स्पष्ट रक्तचाप श्रेणी जानकारी के साथ तुरंत उनका अर्थ देखें।</string>
+    <string name="onboarding_welcome_overlay">ऑल-इन-वन</string>
+    <string name="onboarding_welcome_title">आपका रक्तचाप, संभाला हुआ</string>
+    <string name="onboarding_welcome_body">सेकंडों में रीडिंग कैप्चर करें, उनका अर्थ समझें और डॉक्टर के लिए तैयार रिपोर्ट साझा करें — सब कुछ आपके डिवाइस पर।</string>
+    <string name="onboarding_welcome_feature_scan">कोई भी मॉनिटर स्कैन करें</string>
+    <string name="onboarding_welcome_feature_trends">अपने रुझान देखें</string>
+    <string name="onboarding_welcome_feature_pdf">डॉक्टर-तैयार PDF</string>
+    <string name="onboarding_welcome_privacy">खाते की ज़रूरत नहीं — आपकी रीडिंग आपके फ़ोन पर रहती हैं।</string>
     <string name="onboarding_profile_title">आपके बारे में</string>
-    <string name="onboarding_profile_subtitle">वैकल्पिक — ये आपके रक्तचाप जोखिम अनुमान को बेहतर बनाने में मदद करते हैं। आप इसे छोड़ सकते हैं और बाद में प्रोफ़ाइल में अधिक विवरण (वजन, ऊंचाई, धूम्रपान आदि) जोड़ सकते हैं।</string>
+    <string name="onboarding_profile_subtitle">वैकल्पिक — अपना जन्म वर्ष और लिंग जोड़ें ताकि आपकी रीडिंग एक व्यक्तिगत हृदय-जोखिम चित्र बन सके। आप इसे प्रोफ़ाइल में कभी भी बदल सकते हैं।</string>
     <string name="onboarding_reminders_title">नियमित रहें</string>
-    <string name="onboarding_reminders_body">हर दिन एक ही समय पर मापने से आपके रुझान अधिक विश्वसनीय बनते हैं।</string>
+    <string name="onboarding_reminders_body">हर दिन एक ही समय पर मापने से विश्वसनीय रुझान बनते हैं — जब आपके डॉक्टर को ज़रूरत हो, PDF के रूप में निर्यात करने या Health Connect से सिंक करने के लिए तैयार।</string>
     <string name="onboarding_reminders_permission_note">सूचना अनुमति आवश्यक है। यह वैकल्पिक है — आप ऐप में कभी भी रिमाइंडर सक्षम या समायोजित कर सकते हैं।</string>
 
     <string name="help_title">सहायता</string>

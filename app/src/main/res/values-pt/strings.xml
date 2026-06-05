@@ -201,13 +201,17 @@
 
     <string name="onboarding_next">Próximo</string>
     <string name="onboarding_get_started">Começar</string>
-    <string name="onboarding_welcome_overlay">Clareza</string>
-    <string name="onboarding_welcome_title">Conheça seus números</string>
-    <string name="onboarding_welcome_body">Registre suas medições e veja instantaneamente o que significam, com informações claras sobre sua categoria de pressão arterial.</string>
+    <string name="onboarding_welcome_overlay">Tudo em um</string>
+    <string name="onboarding_welcome_title">Sua pressão, sob controle</string>
+    <string name="onboarding_welcome_body">Capture leituras em segundos, entenda o que significam e compartilhe um relatório pronto para o médico — tudo no seu dispositivo.</string>
+    <string name="onboarding_welcome_feature_scan">Escaneie qualquer aparelho</string>
+    <string name="onboarding_welcome_feature_trends">Veja suas tendências</string>
+    <string name="onboarding_welcome_feature_pdf">PDF para o médico</string>
+    <string name="onboarding_welcome_privacy">Sem conta — suas leituras ficam no seu telefone.</string>
     <string name="onboarding_profile_title">Sobre você</string>
-    <string name="onboarding_profile_subtitle">Opcional — ajudam a personalizar sua estimativa de risco de pressão arterial. Você pode pular e adicionar mais detalhes (peso, altura, tabagismo e mais) depois no Perfil.</string>
+    <string name="onboarding_profile_subtitle">Opcional — adicione seu ano de nascimento e sexo para transformar suas leituras em uma estimativa de risco cardíaco personalizada. Você pode ajustar quando quiser no Perfil.</string>
     <string name="onboarding_reminders_title">Mantenha o ritmo</string>
-    <string name="onboarding_reminders_body">Medir nos mesmos horários todos os dias torna suas tendências mais confiáveis.</string>
+    <string name="onboarding_reminders_body">Medir nos mesmos horários todos os dias cria tendências confiáveis — prontas para exportar como PDF ou sincronizar com o Health Connect quando seu médico precisar.</string>
     <string name="onboarding_reminders_permission_note">Requer permissão de notificação. É opcional — você pode ativar ou ajustar os lembretes a qualquer momento no app.</string>
 
     <string name="help_title">Ajuda</string>

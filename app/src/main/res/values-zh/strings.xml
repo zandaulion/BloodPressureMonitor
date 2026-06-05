@@ -200,13 +200,17 @@
 
     <string name="onboarding_next">下一步</string>
     <string name="onboarding_get_started">开始使用</string>
-    <string name="onboarding_welcome_overlay">清晰</string>
-    <string name="onboarding_welcome_title">了解您的数值</string>
-    <string name="onboarding_welcome_body">记录您的血压，即可立即了解其含义，并获得清晰的血压类别信息。</string>
+    <string name="onboarding_welcome_overlay">一体化</string>
+    <string name="onboarding_welcome_title">血压，轻松掌控</string>
+    <string name="onboarding_welcome_body">几秒内记录血压，了解其含义，并分享可供医生查看的报告 — 全部在您的设备上完成。</string>
+    <string name="onboarding_welcome_feature_scan">扫描任何血压计</string>
+    <string name="onboarding_welcome_feature_trends">查看趋势</string>
+    <string name="onboarding_welcome_feature_pdf">医生专用 PDF</string>
+    <string name="onboarding_welcome_privacy">无需账户 — 您的血压数据保留在手机中。</string>
     <string name="onboarding_profile_title">关于您</string>
-    <string name="onboarding_profile_subtitle">可选 — 这些有助于个性化您的血压风险评估。您可以跳过，稍后在“个人资料”中添加更多信息（体重、身高、吸烟等）。</string>
+    <string name="onboarding_profile_subtitle">可选 — 添加出生年份和性别，将您的血压转化为个性化的心脏风险评估。您可以随时在“个人资料”中调整。</string>
     <string name="onboarding_reminders_title">保持规律</string>
-    <string name="onboarding_reminders_body">每天在相同时间测量可让您的趋势更可靠。</string>
+    <string name="onboarding_reminders_body">每天在相同时间测量可建立可靠的趋势 — 需要时可导出为 PDF 或同步到 Health Connect 供医生查看。</string>
     <string name="onboarding_reminders_permission_note">需要通知权限。此项为可选 — 您可以随时在应用中启用或调整提醒。</string>
 
     <string name="help_title">帮助</string>

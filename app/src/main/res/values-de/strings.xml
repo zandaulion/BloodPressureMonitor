@@ -201,13 +201,17 @@
 
     <string name="onboarding_next">Weiter</string>
     <string name="onboarding_get_started">Los geht\'s</string>
-    <string name="onboarding_welcome_overlay">Klarheit</string>
-    <string name="onboarding_welcome_title">Kenne deine Werte</string>
-    <string name="onboarding_welcome_body">Erfasse deine Messwerte und sieh sofort, was sie bedeuten – mit klaren Informationen zu deiner Blutdruckkategorie.</string>
+    <string name="onboarding_welcome_overlay">Alles-in-einem</string>
+    <string name="onboarding_welcome_title">Dein Blutdruck im Griff</string>
+    <string name="onboarding_welcome_body">Erfasse Messwerte in Sekunden, verstehe, was sie bedeuten, und teile einen arztfertigen Bericht – alles auf deinem Gerät.</string>
+    <string name="onboarding_welcome_feature_scan">Jedes Messgerät scannen</string>
+    <string name="onboarding_welcome_feature_trends">Trends sehen</string>
+    <string name="onboarding_welcome_feature_pdf">Arztfertiges PDF</string>
+    <string name="onboarding_welcome_privacy">Kein Konto nötig – deine Messwerte bleiben auf deinem Telefon.</string>
     <string name="onboarding_profile_title">Über dich</string>
-    <string name="onboarding_profile_subtitle">Optional – sie helfen, deine Blutdruck-Risikoeinschätzung anzupassen. Du kannst dies überspringen und später im Profil weitere Angaben (Gewicht, Größe, Rauchen und mehr) ergänzen.</string>
+    <string name="onboarding_profile_subtitle">Optional – gib dein Geburtsjahr und Geschlecht an, um aus deinen Messwerten eine persönliche Herzrisiko-Einschätzung zu machen. Du kannst sie jederzeit im Profil anpassen.</string>
     <string name="onboarding_reminders_title">Bleib am Ball</string>
-    <string name="onboarding_reminders_body">Tägliche Messungen zur gleichen Zeit machen deine Trends zuverlässiger.</string>
+    <string name="onboarding_reminders_body">Tägliche Messungen zur gleichen Zeit ergeben verlässliche Trends – bereit zum Export als PDF oder zur Synchronisierung mit Health Connect, wann immer dein Arzt sie braucht.</string>
     <string name="onboarding_reminders_permission_note">Erfordert die Benachrichtigungsberechtigung. Optional – du kannst Erinnerungen jederzeit in der App aktivieren oder anpassen.</string>
 
     <string name="help_title">Hilfe</string>

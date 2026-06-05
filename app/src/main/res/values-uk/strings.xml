@@ -205,13 +205,17 @@
 
     <string name="onboarding_next">Далі</string>
     <string name="onboarding_get_started">Почати</string>
-    <string name="onboarding_welcome_overlay">Ясність</string>
-    <string name="onboarding_welcome_title">Знайте свої показники</string>
-    <string name="onboarding_welcome_body">Записуйте вимірювання та миттєво дізнавайтесь їхнє значення з чіткою інформацією про категорію тиску.</string>
+    <string name="onboarding_welcome_overlay">Все в одному</string>
+    <string name="onboarding_welcome_title">Ваш тиск під контролем</string>
+    <string name="onboarding_welcome_body">Записуйте вимірювання за секунди, розумійте, що вони означають, і діліться звітом, готовим для лікаря — усе на вашому пристрої.</string>
+    <string name="onboarding_welcome_feature_scan">Скануйте будь-який тонометр</string>
+    <string name="onboarding_welcome_feature_trends">Дивіться свої тенденції</string>
+    <string name="onboarding_welcome_feature_pdf">PDF для лікаря</string>
+    <string name="onboarding_welcome_privacy">Без облікового запису — ваші вимірювання залишаються на телефоні.</string>
     <string name="onboarding_profile_title">Про вас</string>
-    <string name="onboarding_profile_subtitle">Необов\'язково — це допомагає персоналізувати оцінку ризику тиску. Можна пропустити й додати більше деталей (вага, зріст, куріння тощо) пізніше у Профілі.</string>
+    <string name="onboarding_profile_subtitle">Необов\'язково — додайте рік народження та стать, щоб перетворити вимірювання на персональну оцінку серцевого ризику. Ви можете змінити це будь-коли у Профілі.</string>
     <string name="onboarding_reminders_title">Будьте послідовними</string>
-    <string name="onboarding_reminders_body">Вимірювання щодня в один і той самий час робить ваші тенденції надійнішими.</string>
+    <string name="onboarding_reminders_body">Вимірювання щодня в один і той самий час створює надійні тенденції — готові до експорту в PDF або синхронізації з Health Connect, коли вони потрібні вашому лікарю.</string>
     <string name="onboarding_reminders_permission_note">Потрібен дозвіл на сповіщення. Це необов\'язково — ви можете ввімкнути або змінити нагадування будь-коли в додатку.</string>
 
     <string name="help_title">Довідка</string>

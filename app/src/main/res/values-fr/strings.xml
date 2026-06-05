@@ -201,13 +201,17 @@
 
     <string name="onboarding_next">Suivant</string>
     <string name="onboarding_get_started">Commencer</string>
-    <string name="onboarding_welcome_overlay">Clarté</string>
-    <string name="onboarding_welcome_title">Connaissez vos chiffres</string>
-    <string name="onboarding_welcome_body">Enregistrez vos mesures et découvrez instantanément leur signification, avec des informations claires sur votre catégorie de tension.</string>
+    <string name="onboarding_welcome_overlay">Tout-en-un</string>
+    <string name="onboarding_welcome_title">Votre tension, maîtrisée</string>
+    <string name="onboarding_welcome_body">Enregistrez vos mesures en quelques secondes, comprenez ce qu\'elles signifient et partagez un rapport prêt pour le médecin — le tout sur votre appareil.</string>
+    <string name="onboarding_welcome_feature_scan">Scannez n\'importe quel tensiomètre</string>
+    <string name="onboarding_welcome_feature_trends">Voyez vos tendances</string>
+    <string name="onboarding_welcome_feature_pdf">PDF pour le médecin</string>
+    <string name="onboarding_welcome_privacy">Aucun compte requis — vos mesures restent sur votre téléphone.</string>
     <string name="onboarding_profile_title">À propos de vous</string>
-    <string name="onboarding_profile_subtitle">Facultatif — ces informations aident à affiner l\'estimation de votre risque tensionnel. Vous pouvez ignorer cette étape et ajouter plus de détails (poids, taille, tabagisme, etc.) plus tard dans Profil.</string>
+    <string name="onboarding_profile_subtitle">Facultatif — ajoutez votre année de naissance et votre sexe pour transformer vos mesures en une estimation personnalisée du risque cardiaque. Vous pouvez l\'ajuster à tout moment dans Profil.</string>
     <string name="onboarding_reminders_title">Restez régulier</string>
-    <string name="onboarding_reminders_body">Mesurer aux mêmes heures chaque jour rend vos tendances plus fiables.</string>
+    <string name="onboarding_reminders_body">Mesurer aux mêmes heures chaque jour crée des tendances fiables — prêtes à exporter en PDF ou à synchroniser avec Health Connect quand votre médecin en a besoin.</string>
     <string name="onboarding_reminders_permission_note">Nécessite l\'autorisation de notifications. Facultatif — vous pouvez activer ou ajuster les rappels à tout moment dans l\'appli.</string>
 
     <string name="help_title">Aide</string>
