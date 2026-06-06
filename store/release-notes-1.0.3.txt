@@ -1,0 +1,47 @@
+<en-US>
+New: Add contextual tags to any reading — caffeine, salty meal, stress, poor sleep, before/after meds and more — so you can spot what moves your numbers. Tags appear on each reading and in your CSV, PDF and JSON exports. Your existing history is fully preserved on update.
+</en-US>
+
+<de-DE>
+Neu: Versehen Sie jede Messung mit Kontext-Tags – Koffein, salziges Essen, Stress, schlechter Schlaf, vor/nach Einnahme und mehr – um zu erkennen, was Ihre Werte beeinflusst. Tags erscheinen bei jeder Messung und in CSV-, PDF- und JSON-Exporten. Ihr bisheriger Verlauf bleibt beim Update vollständig erhalten.
+</de-DE>
+
+<es-ES>
+Novedad: Añade etiquetas de contexto a cualquier lectura —cafeína, comida salada, estrés, dormir mal, antes/después de medicación y más— para ver qué influye en tus valores. Las etiquetas aparecen en cada lectura y en tus exportaciones CSV, PDF y JSON. Tu historial existente se conserva por completo al actualizar.
+</es-ES>
+
+<fr-FR>
+Nouveau : ajoutez des étiquettes de contexte à chaque mesure — caféine, repas salé, stress, mauvais sommeil, avant/après la prise, etc. — pour repérer ce qui influence vos chiffres. Les étiquettes apparaissent sur chaque mesure et dans vos exports CSV, PDF et JSON. Votre historique existant est entièrement conservé lors de la mise à jour.
+</fr-FR>
+
+<ar>
+جديد: أضف وسوم سياقية لأي قراءة — كافيين، وجبة مالحة، توتر، نوم سيئ، قبل/بعد الدواء وغيرها — لتعرف ما الذي يؤثر على أرقامك. تظهر الوسوم مع كل قراءة وفي ملفات التصدير CSV وPDF وJSON. يُحفظ سجلّك الحالي بالكامل عند التحديث.
+</ar>
+
+<hi-IN>
+नया: किसी भी रीडिंग में संदर्भ टैग जोड़ें — कैफीन, नमकीन भोजन, तनाव, खराब नींद, दवा से पहले/बाद और बहुत कुछ — ताकि आप जान सकें कि आपके आँकड़ों को क्या प्रभावित करता है। टैग हर रीडिंग पर और आपके CSV, PDF तथा JSON निर्यात में दिखते हैं। अपडेट पर आपका मौजूदा इतिहास पूरी तरह सुरक्षित रहता है।
+</hi-IN>
+
+<ja-JP>
+新機能：どの記録にもコンテキストタグを追加できます — カフェイン、塩分の多い食事、ストレス、睡眠不足、服薬前後など — 数値に影響する要因を把握できます。タグは各記録のほか、CSV・PDF・JSONのエクスポートにも表示されます。更新後も既存の履歴は完全に保持されます。
+</ja-JP>
+
+<ko-KR>
+새 기능: 모든 측정값에 상황 태그를 추가하세요 — 카페인, 짠 음식, 스트레스, 수면 부족, 약 복용 전후 등 — 무엇이 수치에 영향을 주는지 파악할 수 있습니다. 태그는 각 측정값과 CSV, PDF, JSON 내보내기에 표시됩니다. 업데이트 후에도 기존 기록은 그대로 보존됩니다.
+</ko-KR>
+
+<pt-BR>
+Novo: adicione etiquetas de contexto a qualquer medição — cafeína, refeição salgada, estresse, sono ruim, antes/depois do remédio e mais — para perceber o que altera seus números. As etiquetas aparecem em cada medição e nas exportações CSV, PDF e JSON. Seu histórico atual é totalmente preservado na atualização.
+</pt-BR>
+
+<ro>
+Nou: adaugă etichete de context oricărei măsurători — cofeină, masă sărată, stres, somn slab, înainte/după medicație și altele — ca să vezi ce îți influențează valorile. Etichetele apar la fiecare măsurătoare și în exporturile CSV, PDF și JSON. Istoricul tău existent este păstrat complet la actualizare.
+</ro>
+
+<uk>
+Нове: додавайте контекстні теги до будь-якого вимірювання — кофеїн, солона їжа, стрес, поганий сон, до/після ліків тощо — щоб бачити, що впливає на ваші показники. Теги відображаються біля кожного вимірювання та в експортах CSV, PDF і JSON. Ваша наявна історія повністю зберігається після оновлення.
+</uk>
+
+<zh-CN>
+新功能：为任意记录添加情境标签——咖啡因、高盐饮食、压力、睡眠不佳、服药前/后等——帮助您发现影响数值的因素。标签会显示在每条记录以及 CSV、PDF 和 JSON 导出中。更新后您的现有历史记录将完整保留。
+</zh-CN>
