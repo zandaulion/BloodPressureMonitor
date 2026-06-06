@@ -1,1 +1,47 @@
+<en-US>
 New: Mean Arterial Pressure (MAP) and Pulse Pressure (PP) now shown for each reading, live while entering values, in the PDF report, and in CSV export. A new Help section explains both metrics.
+</en-US>
+
+<de-DE>
+Neu: Mittlerer arterieller Druck (MAP) und Pulsdruck (PP) werden jetzt für jede Messung angezeigt – live bei der Eingabe, im PDF-Bericht und im CSV-Export. Ein neuer Hilfe-Abschnitt erklärt beide Werte.
+</de-DE>
+
+<es-ES>
+Novedad: La presión arterial media (MAP) y la presión del pulso (PP) ahora se muestran en cada lectura, en directo al introducir valores, en el informe PDF y en el exportado CSV. Una nueva sección de ayuda explica ambas métricas.
+</es-ES>
+
+<fr-FR>
+Nouveau : La pression artérielle moyenne (PAM) et la pression différentielle (PP) sont désormais affichées pour chaque mesure, en direct lors de la saisie, dans le rapport PDF et dans l'export CSV. Une nouvelle section d'aide explique ces deux valeurs.
+</fr-FR>
+
+<ar>
+جديد: يتم الآن عرض متوسط الضغط الشرياني (MAP) وضغط النبض (PP) لكل قراءة، مباشرةً أثناء إدخال القيم، وفي تقرير PDF وتصدير CSV. يشرح قسم مساعدة جديد كلا المقياسين.
+</ar>
+
+<hi-IN>
+नया: औसत धमनी दबाव (MAP) और नाड़ी दबाव (PP) अब प्रत्येक रीडिंग के लिए दिखाए जाते हैं — मान दर्ज करते समय लाइव, PDF रिपोर्ट में और CSV निर्यात में। एक नया सहायता अनुभाग दोनों मेट्रिक्स की व्याख्या करता है।
+</hi-IN>
+
+<ja-JP>
+新機能：平均動脈圧（MAP）と脈圧（PP）が各測定値に表示されるようになりました。入力中のリアルタイム表示、PDFレポート、CSVエクスポートに対応。新しいヘルプセクションで両方の指標を解説しています。
+</ja-JP>
+
+<ko-KR>
+새 기능: 평균 동맥압(MAP)과 맥압(PP)이 이제 각 측정값에 표시됩니다 — 값 입력 중 실시간으로, PDF 보고서 및 CSV 내보내기에서도 확인할 수 있습니다. 새 도움말 섹션에서 두 지표를 설명합니다.
+</ko-KR>
+
+<pt-BR>
+Novo: A pressão arterial média (PAM) e a pressão de pulso (PP) agora são exibidas em cada leitura, em tempo real ao inserir valores, no relatório PDF e no exportado CSV. Uma nova seção de ajuda explica as duas métricas.
+</pt-BR>
+
+<ro>
+Nou: Presiunea arterială medie (PAM) și presiunea pulsului (PP) sunt acum afișate pentru fiecare măsurătoare, în timp real la introducerea valorilor, în raportul PDF și în exportul CSV. O nouă secțiune de ajutor explică ambele valori.
+</ro>
+
+<uk>
+Нове: Середній артеріальний тиск (MAP) і пульсовий тиск (PP) тепер відображаються для кожного вимірювання — у реальному часі під час введення значень, у PDF-звіті та CSV-експорті. Новий розділ довідки пояснює обидва показники.
+</uk>
+
+<zh-CN>
+新功能：每条记录现在均显示平均动脉压（MAP）和脉压（PP）——输入数值时实时呈现，并出现在 PDF 报告和 CSV 导出中。新的帮助章节详细解释了这两项指标。
+</zh-CN>
