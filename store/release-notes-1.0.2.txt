@@ -1,0 +1,1 @@
+New: Mean Arterial Pressure (MAP) and Pulse Pressure (PP) now shown for each reading, live while entering values, in the PDF report, and in CSV export. A new Help section explains both metrics.
