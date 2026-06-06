@@ -214,6 +214,13 @@
     <string name="onboarding_reminders_body">Medir a la misma hora cada día crea tendencias fiables, listas para exportar como PDF o sincronizar con Health Connect cuando tu médico las necesite.</string>
     <string name="onboarding_reminders_permission_note">Requiere permiso de notificaciones. Es opcional: puedes activar o ajustar los recordatorios en cualquier momento en la app.</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">Presión del pulso</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">Presión arterial media y del pulso</string>
+    <string name="help_hemo_body">La presión arterial media (MAP) es la presión promedio en las arterias durante un latido completo — aproximadamente la diastólica más un tercio de la diferencia con la sistólica. Un MAP normal en reposo suele estar entre 70 y 100 mmHg.\n\nLa presión del pulso (PP) es simplemente la sistólica menos la diastólica. Un valor entre 40 y 60 mmHg es típico en reposo. Una presión del pulso persistentemente alta (por encima de ~60 mmHg) puede ser señal de rigidez arterial.\n\nAmbos valores se derivan de sus lecturas sistólicas y diastólicas guardadas. Se muestran solo a título informativo — consúltelos con su profesional de salud.</string>
+
     <string name="help_title">Ayuda</string>
     <string name="help_camera_title">Escanear con cámara</string>
     <string name="help_manual_title">Entrada manual</string>

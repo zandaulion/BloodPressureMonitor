@@ -214,6 +214,13 @@
     <string name="onboarding_reminders_body">Tägliche Messungen zur gleichen Zeit ergeben verlässliche Trends – bereit zum Export als PDF oder zur Synchronisierung mit Health Connect, wann immer dein Arzt sie braucht.</string>
     <string name="onboarding_reminders_permission_note">Erfordert die Benachrichtigungsberechtigung. Optional – du kannst Erinnerungen jederzeit in der App aktivieren oder anpassen.</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">Pulsdruck</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">Mittlerer arterieller Druck &amp; Pulsdruck</string>
+    <string name="help_hemo_body">Der mittlere arterielle Druck (MAP) ist der Durchschnittsdruck in den Arterien über einen vollständigen Herzschlag — ungefähr der diastolische Wert plus ein Drittel der Differenz zum systolischen Wert. Ein normaler Ruhe-MAP liegt typischerweise bei 70–100 mmHg.\n\nDer Pulsdruck (PP) ist einfach systolisch minus diastolisch. Ein Wert zwischen 40–60 mmHg ist in Ruhe typisch. Ein dauerhaft hoher Pulsdruck (über ~60 mmHg) kann ein Zeichen für Arteriensteifheit sein.\n\nBeide Werte werden aus Ihren gespeicherten systolischen und diastolischen Messwerten abgeleitet. Sie dienen nur zur Information — besprechen Sie sie bitte mit Ihrem Arzt.</string>
+
     <string name="help_title">Hilfe</string>
     <string name="help_camera_title">Mit Kamera scannen</string>
     <string name="help_manual_title">Manuelle Eingabe</string>

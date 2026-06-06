@@ -216,6 +216,13 @@
     <string name="onboarding_reminders_body">Măsurarea la aceleași ore în fiecare zi creează tendințe fiabile — gata de exportat ca PDF sau de sincronizat cu Health Connect când are nevoie medicul tău.</string>
     <string name="onboarding_reminders_permission_note">Necesită permisiunea pentru notificări. Este opțional — poți activa sau ajusta mementourile oricând în aplicație.</string>
 
+    <string name="reading_hemodynamics_format">PAM %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">PAM</string>
+    <string name="hemo_pp_label">Presiunea pulsului</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">Presiunea arterială medie și a pulsului</string>
+    <string name="help_hemo_body">Presiunea arterială medie (PAM) este presiunea medie din artere pe parcursul unei bătăi cardiace complete — aproximativ diastolica plus o treime din diferența față de sistolică. O PAM normală în repaus este de obicei 70–100 mmHg.\n\nPresiunea pulsului (PP) este pur și simplu sistolica minus diastolica. O valoare între 40–60 mmHg este tipică în repaus. O presiune a pulsului persistent ridicată (peste ~60 mmHg) poate fi un semn de rigiditate arterială.\n\nAmbele valori sunt derivate din citirile sistolice și diastolice salvate. Sunt afișate doar în scop informativ — discutați-le cu profesionistul dvs. din domeniul sănătății.</string>
+
     <string name="help_title">Ajutor</string>
     <string name="help_camera_title">Scanare cu camera</string>
     <string name="help_manual_title">Introducere manuală</string>

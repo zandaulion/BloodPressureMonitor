@@ -213,6 +213,13 @@
     <string name="onboarding_reminders_body">毎日同じ時間に測定すると信頼できる傾向が得られます — 医師が必要なときにPDFで書き出したり、Health Connectに同期したりできます。</string>
     <string name="onboarding_reminders_permission_note">通知の許可が必要です。任意です — アプリでいつでもリマインダーを有効化・調整できます。</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">脈圧</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">平均動脈圧と脈圧</string>
+    <string name="help_hemo_body">平均動脈圧（MAP）は、1回の心拍全体にわたる動脈内の平均圧です — おおよそ拡張期血圧に収縮期血圧との差の1/3を加えた値です。安静時の正常なMAPは通常70〜100 mmHgです。\n\n脈圧（PP）は単純に収縮期血圧から拡張期血圧を引いた値です。安静時は40〜60 mmHgが典型的です。脈圧が持続的に高い（約60 mmHg超）場合は、動脈硬化のサインである可能性があります。\n\nどちらの値も保存された収縮期・拡張期血圧の測定値から算出されます。情報提供のみを目的として表示されています — 医療専門家にご相談ください。</string>
+
     <string name="help_title">ヘルプ</string>
     <string name="help_camera_title">カメラでスキャン</string>
     <string name="help_manual_title">手動入力</string>

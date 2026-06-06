@@ -214,6 +214,13 @@
     <string name="onboarding_reminders_body">Mesurer aux mêmes heures chaque jour crée des tendances fiables — prêtes à exporter en PDF ou à synchroniser avec Health Connect quand votre médecin en a besoin.</string>
     <string name="onboarding_reminders_permission_note">Nécessite l\'autorisation de notifications. Facultatif — vous pouvez activer ou ajuster les rappels à tout moment dans l\'appli.</string>
 
+    <string name="reading_hemodynamics_format">PAM %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">PAM</string>
+    <string name="hemo_pp_label">Pression différentielle</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">Pression artérielle moyenne et différentielle</string>
+    <string name="help_hemo_body">La pression artérielle moyenne (PAM) est la pression moyenne dans les artères sur un battement cardiaque complet — environ la diastolique plus un tiers de l\'écart avec la systolique. Une PAM normale au repos est généralement de 70 à 100 mmHg.\n\nLa pression différentielle (PP) est simplement la systolique moins la diastolique. Une valeur entre 40 et 60 mmHg est typique au repos. Une pression différentielle persistamment élevée (au-delà de ~60 mmHg) peut être signe de rigidité artérielle.\n\nCes deux valeurs sont dérivées de vos mesures systolique et diastolique enregistrées. Elles sont présentées à titre informatif uniquement — veuillez en discuter avec votre professionnel de santé.</string>
+
     <string name="help_title">Aide</string>
     <string name="help_camera_title">Scanner avec la caméra</string>
     <string name="help_manual_title">Saisie manuelle</string>

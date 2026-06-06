@@ -213,6 +213,13 @@
     <string name="onboarding_reminders_body">매일 같은 시간에 측정하면 신뢰할 수 있는 추세가 쌓입니다 — 의사가 필요할 때 PDF로 내보내거나 Health Connect에 동기화할 수 있습니다.</string>
     <string name="onboarding_reminders_permission_note">알림 권한이 필요합니다. 선택 사항이며, 앱에서 언제든지 알림을 켜거나 조정할 수 있습니다.</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">맥압</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">평균 동맥압과 맥압</string>
+    <string name="help_hemo_body">평균 동맥압(MAP)은 심장 박동 전체에 걸쳐 동맥의 평균 압력입니다 — 대략 이완기 혈압에 수축기와의 차이의 1/3을 더한 값입니다. 안정 시 정상 MAP은 일반적으로 70~100 mmHg입니다.\n\n맥압(PP)은 단순히 수축기 혈압에서 이완기 혈압을 뺀 값입니다. 안정 시 40~60 mmHg가 전형적입니다. 지속적으로 높은 맥압(~60 mmHg 초과)은 동맥 경화의 징후일 수 있습니다.\n\n두 값 모두 저장된 수축기 및 이완기 혈압 측정값에서 계산됩니다. 정보 제공 목적으로만 표시됩니다 — 의료 전문가와 상담하십시오.</string>
+
     <string name="help_title">도움말</string>
     <string name="help_camera_title">카메라로 스캔하기</string>
     <string name="help_manual_title">수동 입력</string>

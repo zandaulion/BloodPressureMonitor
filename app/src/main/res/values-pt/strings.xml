@@ -214,6 +214,13 @@
     <string name="onboarding_reminders_body">Medir nos mesmos horários todos os dias cria tendências confiáveis — prontas para exportar como PDF ou sincronizar com o Health Connect quando seu médico precisar.</string>
     <string name="onboarding_reminders_permission_note">Requer permissão de notificação. É opcional — você pode ativar ou ajustar os lembretes a qualquer momento no app.</string>
 
+    <string name="reading_hemodynamics_format">PAM %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">PAM</string>
+    <string name="hemo_pp_label">Pressão de pulso</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">Pressão arterial média e de pulso</string>
+    <string name="help_hemo_body">A pressão arterial média (PAM) é a pressão média nas artérias ao longo de um batimento cardíaco completo — aproximadamente a diastólica mais um terço da diferença até a sistólica. Uma PAM normal em repouso é tipicamente de 70 a 100 mmHg.\n\nA pressão de pulso (PP) é simplesmente a sistólica menos a diastólica. Um valor entre 40 e 60 mmHg é típico em repouso. Uma pressão de pulso persistentemente alta (acima de ~60 mmHg) pode ser sinal de rigidez arterial.\n\nAmbos os valores são derivados das suas leituras sistólica e diastólica salvas. São exibidos apenas para informação — discuta-os com seu profissional de saúde.</string>
+
     <string name="help_title">Ajuda</string>
     <string name="help_camera_title">Escanear com câmera</string>
     <string name="help_manual_title">Entrada manual</string>

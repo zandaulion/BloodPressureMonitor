@@ -223,6 +223,13 @@
     <string name="onboarding_reminders_body">القياس في نفس الأوقات كل يوم يبني اتجاهات موثوقة — جاهزة للتصدير كملف PDF أو المزامنة مع Health Connect عندما يحتاجها طبيبك.</string>
     <string name="onboarding_reminders_permission_note">يتطلب إذن الإشعارات. هذا اختياري — يمكنك تفعيل التذكيرات أو تعديلها في أي وقت داخل التطبيق.</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">ضغط النبض</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">متوسط ​​الضغط الشرياني وضغط النبض</string>
+    <string name="help_hemo_body">متوسط الضغط الشرياني (MAP) هو متوسط الضغط في الشرايين خلال ضربة قلب كاملة — تقريبًا الضغط الانبساطي زائد ثلث الفرق حتى الضغط الانقباضي. يتراوح MAP الطبيعي في وضع الراحة عادةً بين 70 و100 mmHg.\n\nضغط النبض (PP) هو ببساطة الضغط الانقباضي ناقص الانبساطي. تتراوح القيمة الطبيعية في وضع الراحة بين 40 و60 mmHg. قد يكون ارتفاع ضغط النبض بشكل مستمر (فوق ~60 mmHg) علامة على تصلب الشرايين.\n\nكلا القيمتين مشتقتان من قراءات الضغط الانقباضي والانبساطي المحفوظة. تُعرض للأغراض المعلوماتية فقط — يرجى مناقشتهما مع طبيبك.</string>
+
     <string name="help_title">المساعدة</string>
     <string name="help_camera_title">المسح بالكاميرا</string>
     <string name="help_manual_title">الإدخال اليدوي</string>

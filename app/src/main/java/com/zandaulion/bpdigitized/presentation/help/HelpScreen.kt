@@ -62,6 +62,7 @@ private val HELP_SECTIONS = listOf(
     HelpSection(R.string.help_history_title,   R.string.help_history_body),
     HelpSection(R.string.help_profile_title,   R.string.help_profile_body, Icons.Default.Person),
     HelpSection(R.string.help_risk_title,      R.string.help_risk_body),
+    HelpSection(R.string.help_hemo_title,      R.string.help_hemo_body),
     HelpSection(R.string.help_reminders_title, R.string.help_reminders_body, Icons.Default.NotificationsNone),
     HelpSection(R.string.help_export_title,    R.string.help_export_body, Icons.Default.IosShare),
     HelpSection(R.string.help_import_title,    R.string.help_import_body, Icons.Default.FileDownload),

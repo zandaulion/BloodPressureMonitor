@@ -251,6 +251,16 @@
     <string name="onboarding_reminders_body">Measuring at the same times each day builds reliable trends — ready to export as a PDF or sync to Health Connect whenever your doctor needs them.</string>
     <string name="onboarding_reminders_permission_note">Requires notification permission. This is optional — you can enable or adjust reminders anytime in the app.</string>
 
+    <!-- ── Hemodynamics (MAP / Pulse Pressure) ──────────────────────────── -->
+    <!-- %1$d = MAP value, %2$d = PP value -->
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">Pulse pressure</string>
+    <!-- %1$d = value in mmHg -->
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">Mean arterial &amp; pulse pressure</string>
+    <string name="help_hemo_body">Mean Arterial Pressure (MAP) is the average pressure in your arteries across a full heartbeat — roughly diastolic plus one-third of the gap to systolic. A normal resting MAP is typically 70–100 mmHg.\n\nPulse Pressure (PP) is simply systolic minus diastolic. A value between 40–60 mmHg is typical at rest. A persistently high pulse pressure (above ~60 mmHg) can be a sign of arterial stiffness.\n\nBoth values are derived from your saved systolic and diastolic readings. They are shown for information only — please discuss them with your healthcare professional.</string>
+
     <!-- ── Help – section titles ──────────────────────────────────────────── -->
     <string name="help_title">Help</string>
     <string name="help_camera_title">Scanning with Camera</string>

@@ -213,6 +213,13 @@
     <string name="onboarding_reminders_body">每天在相同时间测量可建立可靠的趋势 — 需要时可导出为 PDF 或同步到 Health Connect 供医生查看。</string>
     <string name="onboarding_reminders_permission_note">需要通知权限。此项为可选 — 您可以随时在应用中启用或调整提醒。</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">脉压</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">平均动脉压与脉压</string>
+    <string name="help_hemo_body">平均动脉压（MAP）是整个心跳过程中动脉内的平均压力——大约等于舒张压加上收缩压与舒张压之差的三分之一。正常静息 MAP 通常为 70–100 mmHg。\n\n脉压（PP）即收缩压减去舒张压。静息时 40–60 mmHg 是正常范围。持续偏高的脉压（超过约 60 mmHg）可能是动脉硬化的信号。\n\n这两个值均由您保存的收缩压和舒张压读数计算得出，仅供参考——请与您的医疗专业人员讨论。</string>
+
     <string name="help_title">帮助</string>
     <string name="help_camera_title">用相机扫描</string>
     <string name="help_manual_title">手动输入</string>

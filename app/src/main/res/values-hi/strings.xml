@@ -214,6 +214,13 @@
     <string name="onboarding_reminders_body">हर दिन एक ही समय पर मापने से विश्वसनीय रुझान बनते हैं — जब आपके डॉक्टर को ज़रूरत हो, PDF के रूप में निर्यात करने या Health Connect से सिंक करने के लिए तैयार।</string>
     <string name="onboarding_reminders_permission_note">सूचना अनुमति आवश्यक है। यह वैकल्पिक है — आप ऐप में कभी भी रिमाइंडर सक्षम या समायोजित कर सकते हैं।</string>
 
+    <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
+    <string name="hemo_map_label">MAP</string>
+    <string name="hemo_pp_label">नाड़ी दबाव</string>
+    <string name="hemo_value_mmhg">%1$d mmHg</string>
+    <string name="help_hemo_title">औसत धमनी दबाव और नाड़ी दबाव</string>
+    <string name="help_hemo_body">औसत धमनी दबाव (MAP) एक पूरी धड़कन में धमनियों में औसत दबाव है — लगभग डायस्टोलिक मान में सिस्टोलिक तक के अंतर का एक-तिहाई जोड़ने पर। सामान्य आराम MAP आमतौर पर 70–100 mmHg होता है।\n\nनाड़ी दबाव (PP) बस सिस्टोलिक माइनस डायस्टोलिक है। आराम में 40–60 mmHg का मान सामान्य है। लगातार उच्च नाड़ी दबाव (~60 mmHg से ऊपर) धमनी कठोरता का संकेत हो सकता है।\n\nदोनों मान आपकी सहेजी गई सिस्टोलिक और डायस्टोलिक रीडिंग से लिए गए हैं। ये केवल जानकारी के लिए दिखाए जाते हैं — कृपया अपने स्वास्थ्य पेशेवर से इनके बारे में चर्चा करें।</string>
+
     <string name="help_title">सहायता</string>
     <string name="help_camera_title">कैमरे से स्कैन करना</string>
     <string name="help_manual_title">मैन्युअल प्रविष्टि</string>
