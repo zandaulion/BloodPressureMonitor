@@ -9,6 +9,8 @@ import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +37,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -84,15 +87,17 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
 import com.zandaulion.bpdigitized.R
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
 import com.zandaulion.bpdigitized.domain.model.pulsePressure
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 import com.zandaulion.bpdigitized.presentation.capture.ocrDumpFileFor
 import com.zandaulion.bpdigitized.presentation.capture.preprocFileFor
 import java.io.File
 import kotlin.math.roundToInt
 import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun ValidationScreen(
     onSaved: () -> Unit,
@@ -225,6 +230,12 @@ fun ValidationScreen(
                     pulsePressure = pulsePressure(state.systolic, state.diastolic),
                 )
             }
+
+            // ── Contextual tags ───────────────────────────────────────────
+            TagPicker(
+                selected = state.selectedTags,
+                onToggle = viewModel::toggleTag,
+            )
 
             // ── Notes ─────────────────────────────────────────────────────
             OutlinedTextField(
@@ -565,6 +576,32 @@ private fun FullscreenImageDialog(path: String, onDismiss: () -> Unit) {
                     Icons.Default.Close,
                     contentDescription = stringResource(R.string.action_cancel),
                     tint = Color.White,
+                )
+            }
+        }
+    }
+}
+
+// ── Contextual tag picker ───────────────────────────────────────────────────────
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun TagPicker(
+    selected: Set<BpTag>,
+    onToggle: (BpTag) -> Unit,
+) {
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        Text(
+            text = stringResource(R.string.validation_tags_header),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            BpTag.entries.forEach { tag ->
+                FilterChip(
+                    selected = tag in selected,
+                    onClick = { onToggle(tag) },
+                    label = { Text(stringResource(tag.labelRes())) },
                 )
             }
         }

@@ -135,6 +135,18 @@
     <string name="validation_notes_label">Notes (optional)</string>
     <string name="validation_notes_placeholder">e.g. after exercise, morning</string>
     <string name="validation_save">Save Reading</string>
+    <!-- ── Contextual tags ──────────────────────────────────────────────── -->
+    <string name="validation_tags_header">What might have affected this reading?</string>
+    <string name="tag_before_medication">Before meds</string>
+    <string name="tag_after_medication">After meds</string>
+    <string name="tag_caffeine">Caffeine</string>
+    <string name="tag_alcohol">Alcohol</string>
+    <string name="tag_salty_meal">Salty meal</string>
+    <string name="tag_exercise">Exercise</string>
+    <string name="tag_stress">Stress</string>
+    <string name="tag_poor_sleep">Poor sleep</string>
+    <string name="tag_resting">Resting</string>
+    <string name="tag_on_waking">On waking</string>
     <string name="validation_retake">Retake</string>
     <string name="validation_debug_ocr">Share raw OCR (debug)</string>
     <string name="validation_debug_preproc">Share preprocessed image (debug)</string>

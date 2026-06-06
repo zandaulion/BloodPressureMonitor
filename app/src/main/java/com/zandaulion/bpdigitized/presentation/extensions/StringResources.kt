@@ -6,6 +6,7 @@ import com.zandaulion.bpdigitized.domain.model.ActivityLevel
 import com.zandaulion.bpdigitized.domain.model.BiologicalSex
 import com.zandaulion.bpdigitized.domain.model.BmiCategory
 import com.zandaulion.bpdigitized.domain.model.BPCategory
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.CardiovascularRisk
 import com.zandaulion.bpdigitized.domain.model.HealthNote
 import com.zandaulion.bpdigitized.presentation.dashboard.ChartRange
@@ -92,4 +93,17 @@ import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
     ExportType.JSON -> R.string.export_type_json
     ExportType.CSV  -> R.string.export_type_csv
     ExportType.PDF  -> R.string.export_type_pdf
+}
+
+@StringRes fun BpTag.labelRes(): Int = when (this) {
+    BpTag.BEFORE_MEDICATION -> R.string.tag_before_medication
+    BpTag.AFTER_MEDICATION  -> R.string.tag_after_medication
+    BpTag.CAFFEINE          -> R.string.tag_caffeine
+    BpTag.ALCOHOL           -> R.string.tag_alcohol
+    BpTag.SALTY_MEAL        -> R.string.tag_salty_meal
+    BpTag.EXERCISE          -> R.string.tag_exercise
+    BpTag.STRESS            -> R.string.tag_stress
+    BpTag.POOR_SLEEP        -> R.string.tag_poor_sleep
+    BpTag.RESTING           -> R.string.tag_resting
+    BpTag.ON_WAKING         -> R.string.tag_on_waking
 }

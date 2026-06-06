@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.usecase.CalculateBPZoneUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +21,7 @@ data class ValidationState(
     val diastolic: Int = 80,
     val pulse: Int = 60,
     val notes: String = "",
+    val selectedTags: Set<BpTag> = emptySet(),
     val imagePath: String? = null,
     val isLoading: Boolean = true,
 ) {
@@ -78,6 +80,10 @@ class ValidationViewModel @Inject constructor(
     fun updatePulse(v: Int)     = _state.update { it.copy(pulse     = v.coerceIn(PUL_RANGE)) }
     fun updateNotes(v: String)  = _state.update { it.copy(notes     = v.take(200)) }
 
+    fun toggleTag(tag: BpTag) = _state.update {
+        it.copy(selectedTags = if (tag in it.selectedTags) it.selectedTags - tag else it.selectedTags + tag)
+    }
+
     fun save() {
         val current = _state.value
         if (!current.isValid) return
@@ -89,6 +95,7 @@ class ValidationViewModel @Inject constructor(
                 pulse     = current.pulse,
                 category  = calculateZone(current.systolic, current.diastolic),
                 notes     = current.notes.trim().takeIf { it.isNotEmpty() },
+                tags      = current.selectedTags.sorted(),
             )
             val id = repository.insert(reading)
             _events.send(ValidationEvent.Saved)
