@@ -100,6 +100,7 @@ import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
 import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
@@ -681,7 +682,26 @@ private fun ReadingRow(reading: BPReading) {
                 modifier = Modifier.padding(top = 4.dp),
             )
         }
+        if (reading.tags.isNotEmpty()) {
+            Text(
+                text = tagCaption(reading.tags),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.padding(top = 4.dp),
+            )
+        }
     }
+}
+
+/** Resolves a reading's tags to a " · "-joined, localized caption. */
+@Composable
+private fun tagCaption(tags: List<BpTag>): String {
+    // Resolve each label with stringResource in composable scope (a plain for
+    // loop), then join the already-resolved strings — joinToString's transform
+    // lambda is not a composable context, so we must not call stringResource there.
+    val labels = ArrayList<String>(tags.size)
+    for (tag in tags) labels.add(stringResource(tag.labelRes()))
+    return labels.joinToString(" · ")
 }
 
 private val ROW_DATE_FORMAT = SimpleDateFormat("MMM d, yyyy · HH:mm", Locale.getDefault())
