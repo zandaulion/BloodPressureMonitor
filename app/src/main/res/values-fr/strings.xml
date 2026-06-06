@@ -116,6 +116,17 @@
     <string name="validation_notes_label">Notes (optionnel)</string>
     <string name="validation_notes_placeholder">ex. après l\'effort, le matin</string>
     <string name="validation_save">Enregistrer la mesure</string>
+    <string name="validation_tags_header">Qu\'est-ce qui a pu influencer cette mesure ?</string>
+    <string name="tag_before_medication">Avant la prise</string>
+    <string name="tag_after_medication">Après la prise</string>
+    <string name="tag_caffeine">Caféine</string>
+    <string name="tag_alcohol">Alcool</string>
+    <string name="tag_salty_meal">Repas salé</string>
+    <string name="tag_exercise">Exercice</string>
+    <string name="tag_stress">Stress</string>
+    <string name="tag_poor_sleep">Mauvais sommeil</string>
+    <string name="tag_resting">Au repos</string>
+    <string name="tag_on_waking">Au réveil</string>
     <string name="validation_retake">Reprendre</string>
     <string name="validation_debug_ocr">Partager OCR brut (débogage)</string>
     <string name="validation_debug_preproc">Partager image prétraitée (débogage)</string>

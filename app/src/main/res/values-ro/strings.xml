@@ -118,6 +118,17 @@
     <string name="validation_notes_label">Note (opțional)</string>
     <string name="validation_notes_placeholder">ex.: după efort, dimineața</string>
     <string name="validation_save">Salvează măsurătoarea</string>
+    <string name="validation_tags_header">Ce ar fi putut influența această măsurătoare?</string>
+    <string name="tag_before_medication">Pre-medicație</string>
+    <string name="tag_after_medication">Post-medicație</string>
+    <string name="tag_caffeine">Cofeină</string>
+    <string name="tag_alcohol">Alcool</string>
+    <string name="tag_salty_meal">Masă sărată</string>
+    <string name="tag_exercise">Efort fizic</string>
+    <string name="tag_stress">Stres</string>
+    <string name="tag_poor_sleep">Somn slab</string>
+    <string name="tag_resting">În repaus</string>
+    <string name="tag_on_waking">La trezire</string>
     <string name="validation_retake">Refă</string>
     <string name="validation_debug_ocr">Distribuie OCR brut (depanare)</string>
     <string name="validation_debug_preproc">Distribuie imaginea preprocesată (depanare)</string>

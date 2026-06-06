@@ -115,6 +115,17 @@
     <string name="validation_notes_label">メモ（任意）</string>
     <string name="validation_notes_placeholder">例：運動後、朝</string>
     <string name="validation_save">記録を保存</string>
+    <string name="validation_tags_header">この測定に影響した可能性は？</string>
+    <string name="tag_before_medication">服薬前</string>
+    <string name="tag_after_medication">服薬後</string>
+    <string name="tag_caffeine">カフェイン</string>
+    <string name="tag_alcohol">アルコール</string>
+    <string name="tag_salty_meal">塩分の多い食事</string>
+    <string name="tag_exercise">運動</string>
+    <string name="tag_stress">ストレス</string>
+    <string name="tag_poor_sleep">睡眠不足</string>
+    <string name="tag_resting">安静時</string>
+    <string name="tag_on_waking">起床時</string>
     <string name="validation_retake">撮り直す</string>
     <string name="validation_debug_ocr">OCR生データを共有（デバッグ）</string>
     <string name="validation_debug_preproc">前処理画像を共有（デバッグ）</string>

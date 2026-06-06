@@ -125,6 +125,17 @@
     <string name="validation_notes_label">ملاحظات (اختياري)</string>
     <string name="validation_notes_placeholder">مثال: بعد التمرين، صباحًا</string>
     <string name="validation_save">حفظ القراءة</string>
+    <string name="validation_tags_header">ما الذي قد يكون أثّر على هذه القراءة؟</string>
+    <string name="tag_before_medication">قبل الدواء</string>
+    <string name="tag_after_medication">بعد الدواء</string>
+    <string name="tag_caffeine">كافيين</string>
+    <string name="tag_alcohol">كحول</string>
+    <string name="tag_salty_meal">وجبة مالحة</string>
+    <string name="tag_exercise">تمارين</string>
+    <string name="tag_stress">توتر</string>
+    <string name="tag_poor_sleep">نوم سيئ</string>
+    <string name="tag_resting">في راحة</string>
+    <string name="tag_on_waking">عند الاستيقاظ</string>
     <string name="validation_retake">إعادة الالتقاط</string>
     <string name="validation_debug_ocr">مشاركة OCR الخام (تصحيح)</string>
     <string name="validation_debug_preproc">مشاركة الصورة المعالجة مسبقًا (تصحيح)</string>

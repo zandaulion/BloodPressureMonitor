@@ -116,6 +116,17 @@
     <string name="validation_notes_label">नोट्स (वैकल्पिक)</string>
     <string name="validation_notes_placeholder">जैसे: व्यायाम के बाद, सुबह</string>
     <string name="validation_save">रीडिंग सहेजें</string>
+    <string name="validation_tags_header">इस रीडिंग को क्या प्रभावित कर सकता है?</string>
+    <string name="tag_before_medication">दवा से पहले</string>
+    <string name="tag_after_medication">दवा के बाद</string>
+    <string name="tag_caffeine">कैफीन</string>
+    <string name="tag_alcohol">शराब</string>
+    <string name="tag_salty_meal">नमकीन भोजन</string>
+    <string name="tag_exercise">व्यायाम</string>
+    <string name="tag_stress">तनाव</string>
+    <string name="tag_poor_sleep">खराब नींद</string>
+    <string name="tag_resting">आराम में</string>
+    <string name="tag_on_waking">जागने पर</string>
     <string name="validation_retake">फिर से लें</string>
     <string name="validation_debug_ocr">कच्चा OCR साझा करें (डिबग)</string>
     <string name="validation_debug_preproc">पूर्व-संसाधित छवि साझा करें (डिबग)</string>
