@@ -11,4 +11,6 @@ data class BPReading(
     val pulse: Int?,
     val category: BPCategory,
     val notes: String? = null,
+    // Default keeps older JSON exports (without this field) deserializable.
+    val tags: List<BpTag> = emptyList(),
 )

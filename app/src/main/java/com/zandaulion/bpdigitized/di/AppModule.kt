@@ -6,6 +6,7 @@ import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
 import androidx.room.Room
 import com.zandaulion.bpdigitized.data.local.BPDatabase
+import com.zandaulion.bpdigitized.data.local.BPDatabase.Companion.MIGRATION_2_3
 import com.zandaulion.bpdigitized.data.local.BPReadingDao
 import com.zandaulion.bpdigitized.data.repository.BPRepositoryImpl
 import com.zandaulion.bpdigitized.data.repository.ChartSettingsRepositoryImpl
@@ -35,7 +36,14 @@ object DataModule {
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context): BPDatabase =
         Room.databaseBuilder(context, BPDatabase::class.java, "bp.db")
-            .fallbackToDestructiveMigration()
+            // Explicit, data-preserving migration for the live schema gap.
+            .addMigrations(MIGRATION_2_3)
+            // Safety: NO blanket destructive fallback. A v2+ database (every
+            // real user) is never wiped — a missing migration path now throws
+            // loudly instead of silently deleting history. Destructive recreate
+            // is permitted ONLY from the pre-launch v1 schema, which in practice
+            // holds no data (it was already recreated at the 1→2 bump).
+            .fallbackToDestructiveMigrationFrom(dropAllTables = true, 1)
             .build()
 
     @Provides

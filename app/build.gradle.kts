@@ -64,6 +64,13 @@ kotlin {
     }
 }
 
+// Export the Room schema to a checked-in JSON file per version. This gives a
+// reviewable record of every schema and is the source of truth for verifying
+// migrations (and for MigrationTestHelper-based tests in the future).
+ksp {
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
