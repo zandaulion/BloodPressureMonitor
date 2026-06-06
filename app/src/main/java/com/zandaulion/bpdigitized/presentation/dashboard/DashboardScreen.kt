@@ -97,6 +97,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.zandaulion.bpdigitized.R
+import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
+import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
@@ -657,6 +659,15 @@ private fun ReadingRow(reading: BPReading) {
                     text = "${reading.systolic}/${reading.diastolic}$pulseSuffix",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
+                )
+                Text(
+                    text = stringResource(
+                        R.string.reading_hemodynamics_format,
+                        reading.meanArterialPressure,
+                        reading.pulsePressure,
+                    ),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
             CategoryBadge(category = reading.category)

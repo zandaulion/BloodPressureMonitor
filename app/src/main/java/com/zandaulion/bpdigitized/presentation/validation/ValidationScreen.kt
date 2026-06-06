@@ -84,6 +84,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
 import com.zandaulion.bpdigitized.R
+import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
+import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.presentation.capture.ocrDumpFileFor
 import com.zandaulion.bpdigitized.presentation.capture.preprocFileFor
 import java.io.File
@@ -213,6 +215,14 @@ fun ValidationScreen(
                     text = stringResource(R.string.validation_error_sys_dia),
                     color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
+                )
+            }
+
+            // ── Live MAP / PP readout ─────────────────────────────────────
+            if (state.isValid) {
+                HemodynamicsReadout(
+                    map = meanArterialPressure(state.systolic, state.diastolic),
+                    pulsePressure = pulsePressure(state.systolic, state.diastolic),
                 )
             }
 
@@ -558,6 +568,44 @@ private fun FullscreenImageDialog(path: String, onDismiss: () -> Unit) {
                 )
             }
         }
+    }
+}
+
+// ── Hemodynamics card ─────────────────────────────────────────────────────────
+
+@Composable
+private fun HemodynamicsReadout(map: Int, pulsePressure: Int) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ),
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly,
+        ) {
+            HemoMetric(label = stringResource(R.string.hemo_map_label), value = map)
+            HemoMetric(label = stringResource(R.string.hemo_pp_label), value = pulsePressure)
+        }
+    }
+}
+
+@Composable
+private fun HemoMetric(label: String, value: Int) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+        Text(
+            text = stringResource(R.string.hemo_value_mmhg, value),
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold,
+        )
     }
 }
 
