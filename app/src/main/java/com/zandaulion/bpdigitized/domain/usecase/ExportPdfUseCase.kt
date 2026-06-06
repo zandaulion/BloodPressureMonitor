@@ -10,6 +10,8 @@ import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
+import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -245,6 +247,11 @@ class ExportPdfUseCase @Inject constructor(
         value("Avg  ${sys.average().roundToInt()} / ${dia.average().roundToInt()}")
         value("Min  ${sys.min()} / ${dia.min()}")
         value("Max  ${sys.max()} / ${dia.max()}")
+        vline()
+        val mapAvg = readings.map { meanArterialPressure(it.systolic, it.diastolic) }.average().roundToInt()
+        val ppAvg  = readings.map { pulsePressure(it.systolic, it.diastolic) }.average().roundToInt()
+        value("MAP  $mapAvg")
+        value("PP  $ppAvg")
     }
 
     // ── Note legend ───────────────────────────────────────────────────────────

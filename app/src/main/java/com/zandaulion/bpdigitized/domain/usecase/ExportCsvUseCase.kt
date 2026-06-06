@@ -1,6 +1,8 @@
 package com.zandaulion.bpdigitized.domain.usecase
 
 import android.content.Context
+import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
+import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
@@ -19,7 +21,7 @@ class ExportCsvUseCase @Inject constructor(
         val file  = File(context.cacheDir, "bp_export_$stamp.csv")
 
         file.bufferedWriter().use { w ->
-            w.write("id,dateTime,timestamp,systolic,diastolic,pulse,category,notes\n")
+            w.write("id,dateTime,timestamp,systolic,diastolic,pulse,map,pulsePressure,category,notes\n")
             readings.forEach { r ->
                 w.write(
                     "${r.id}," +
@@ -28,6 +30,8 @@ class ExportCsvUseCase @Inject constructor(
                     "${r.systolic}," +
                     "${r.diastolic}," +
                     "${r.pulse ?: ""}," +
+                    "${meanArterialPressure(r.systolic, r.diastolic)}," +
+                    "${pulsePressure(r.systolic, r.diastolic)}," +
                     "${r.category}," +
                     "${csvQuote(r.notes)}\n"
                 )
