@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.Serializable
@@ -45,6 +46,7 @@ class ImportReadingsUseCase @Inject constructor(
                         category  = entry.category
                             ?: calculateZone(entry.systolic, entry.diastolic),
                         notes     = entry.notes,
+                        tags      = entry.tags,
                     ),
                 )
                 existing += entry.timestamp
@@ -69,6 +71,7 @@ class ImportReadingsUseCase @Inject constructor(
         val pulse: Int? = null,
         val category: BPCategory? = null,
         val notes: String? = null,
+        val tags: List<BpTag> = emptyList(),
     )
 
     private companion object {

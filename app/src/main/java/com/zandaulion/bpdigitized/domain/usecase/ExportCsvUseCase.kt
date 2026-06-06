@@ -21,7 +21,7 @@ class ExportCsvUseCase @Inject constructor(
         val file  = File(context.cacheDir, "bp_export_$stamp.csv")
 
         file.bufferedWriter().use { w ->
-            w.write("id,dateTime,timestamp,systolic,diastolic,pulse,map,pulsePressure,category,notes\n")
+            w.write("id,dateTime,timestamp,systolic,diastolic,pulse,map,pulsePressure,category,notes,tags\n")
             readings.forEach { r ->
                 w.write(
                     "${r.id}," +
@@ -33,7 +33,8 @@ class ExportCsvUseCase @Inject constructor(
                     "${meanArterialPressure(r.systolic, r.diastolic)}," +
                     "${pulsePressure(r.systolic, r.diastolic)}," +
                     "${r.category}," +
-                    "${csvQuote(r.notes)}\n"
+                    "${csvQuote(r.notes)}," +
+                    "${csvQuote(r.tags.joinToString(";") { it.name })}\n"
                 )
             }
         }

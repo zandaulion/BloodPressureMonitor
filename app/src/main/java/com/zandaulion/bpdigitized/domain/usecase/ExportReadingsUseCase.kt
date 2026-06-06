@@ -2,6 +2,7 @@ package com.zandaulion.bpdigitized.domain.usecase
 
 import android.content.Context
 import com.zandaulion.bpdigitized.domain.model.BPCategory
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.serialization.Serializable
@@ -30,6 +31,7 @@ class ExportReadingsUseCase @Inject constructor(
                 pulse     = r.pulse,
                 category  = r.category,
                 notes     = r.notes,
+                tags      = r.tags,
             )
         }
         val payload = json.encodeToString(entries)
@@ -50,6 +52,7 @@ class ExportReadingsUseCase @Inject constructor(
         val pulse: Int?,
         val category: BPCategory,
         val notes: String?,
+        val tags: List<BpTag> = emptyList(),
     )
 
     private companion object {

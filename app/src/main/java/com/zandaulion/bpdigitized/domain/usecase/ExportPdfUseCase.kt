@@ -10,6 +10,7 @@ import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
 import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
@@ -317,7 +318,7 @@ class ExportPdfUseCase @Inject constructor(
                     dia   = r.diastolic.toString(),
                     pulse = r.pulse?.toString() ?: "—",
                     cat   = categoryLabel(r.category),
-                    notes = r.notes?.let { if (it.length > 52) it.take(49) + "…" else it } ?: "",
+                    notes = notesCell(r),
                     catColor = categoryArgb(r.category))
             }
             drawFooter(c, w, h)
@@ -386,6 +387,28 @@ class ExportPdfUseCase @Inject constructor(
         BPCategory.STAGE_1             -> Color.rgb(239, 108, 0)
         BPCategory.STAGE_2             -> Color.rgb(211, 47, 47)
         BPCategory.HYPERTENSIVE_CRISIS -> Color.rgb(183, 28, 28)
+    }
+
+    // English labels for the PDF (the report is English-only by design).
+    private fun tagLabel(tag: BpTag) = when (tag) {
+        BpTag.BEFORE_MEDICATION -> "before meds"
+        BpTag.AFTER_MEDICATION  -> "after meds"
+        BpTag.CAFFEINE          -> "caffeine"
+        BpTag.ALCOHOL           -> "alcohol"
+        BpTag.SALTY_MEAL        -> "salty meal"
+        BpTag.EXERCISE          -> "exercise"
+        BpTag.STRESS            -> "stress"
+        BpTag.POOR_SLEEP        -> "poor sleep"
+        BpTag.RESTING           -> "resting"
+        BpTag.ON_WAKING         -> "on waking"
+    }
+
+    /** Notes table cell: prefixes "[tag, tag] " before any note, then truncates. */
+    private fun notesCell(r: BPReading): String {
+        val tagPart = if (r.tags.isNotEmpty())
+            "[" + r.tags.joinToString(", ") { tagLabel(it) } + "] " else ""
+        val full = tagPart + (r.notes ?: "")
+        return if (full.length > 52) full.take(49) + "…" else full
     }
 
     // ── Canvas extension ──────────────────────────────────────────────────────
