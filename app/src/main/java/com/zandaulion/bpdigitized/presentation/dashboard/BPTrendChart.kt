@@ -15,10 +15,16 @@ import androidx.compose.runtime.snapshotFlow
 import kotlinx.coroutines.flow.first
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
+import com.patrykandpatrick.vico.compose.cartesian.marker.rememberDefaultCartesianMarker
+import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
+import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
@@ -43,6 +49,7 @@ import com.patrykandpatrick.vico.core.common.shape.DashedShape
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlin.math.abs
 
 /** AHA normal-range upper limits shown as dotted reference lines. */
 private const val NORMAL_SYSTOLIC  = 120.0
@@ -185,6 +192,44 @@ fun BPTrendChart(
             }
         }
 
+        // Tap marker: tapping a point shows that reading's values, tags and note.
+        // The chart's x is "seconds since the first reading"; map the tapped x back
+        // to the nearest reading to pull its tags/notes (which the line series alone
+        // doesn't carry).
+        val markerFirstTs = readings.first().timestamp
+        // Resolve localized tag labels in composable scope (stringResource can't run
+        // inside the marker's value formatter), indexed by enum ordinal.
+        val tagLabels = ArrayList<String>(BpTag.entries.size)
+        for (tag in BpTag.entries) tagLabels.add(stringResource(tag.labelRes()))
+
+        val markerLabel = rememberTextComponent(
+            color = MaterialTheme.colorScheme.onSurface,
+            background = rememberShapeComponent(
+                fill = fill(MaterialTheme.colorScheme.surfaceVariant),
+            ),
+            textSize = 11.sp,
+        )
+        val tapMarker = rememberDefaultCartesianMarker(
+            label = markerLabel,
+            valueFormatter = DefaultCartesianMarker.ValueFormatter { _, targets ->
+                val x = targets.firstOrNull()?.x ?: return@ValueFormatter ""
+                val r = readings.minByOrNull {
+                    abs((it.timestamp - markerFirstTs) / 1_000.0 - x)
+                } ?: return@ValueFormatter ""
+                buildString {
+                    append("${r.systolic}/${r.diastolic}")
+                    if (r.tags.isNotEmpty()) {
+                        append("  ·  ")
+                        append(r.tags.joinToString(", ") { tagLabels[it.ordinal] })
+                    }
+                    r.notes?.takeIf { it.isNotBlank() }?.let { note ->
+                        append("  ·  ")
+                        append(if (note.length > 40) note.take(37) + "…" else note)
+                    }
+                }
+            },
+        )
+
         val modelProducer = remember { CartesianChartModelProducer() }
 
         LaunchedEffect(readings) {
@@ -217,6 +262,7 @@ fun BPTrendChart(
                 startAxis = VerticalAxis.rememberStart(),
                 bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),
                 decorations = listOf(sysRefLine, diaRefLine),
+                marker = tapMarker,
             ),
         )
     }
