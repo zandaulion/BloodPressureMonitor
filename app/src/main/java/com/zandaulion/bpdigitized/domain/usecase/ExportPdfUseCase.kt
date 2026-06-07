@@ -121,9 +121,11 @@ class ExportPdfUseCase @Inject constructor(
         val divY = M + TS_TITLE + TS_SUB + 28f
         c.hRule(divY)
 
-        // --- numbered note assignments (cap at MAX_CALLOUTS) ---
+        // --- numbered callout assignments (notes OR tags; cap at MAX_CALLOUTS) ---
         val notedPairs = range.readings
-            .mapIndexedNotNull { i, r -> if (!r.notes.isNullOrBlank()) i to r else null }
+            .mapIndexedNotNull { i, r ->
+                if (!r.notes.isNullOrBlank() || r.tags.isNotEmpty()) i to r else null
+            }
             .take(MAX_CALLOUTS)
         val noteNumAt  = notedPairs.mapIndexed { ni, (ri, _) -> ri to (ni + 1) }.toMap()
 
@@ -266,9 +268,12 @@ class ExportPdfUseCase @Inject constructor(
             val colX = CHART_L + col * colW
             val rowY = top + NOTE_ROW_H * row + NOTE_ROW_H * 0.72f
             badge(c, colX + BADGE_R + 2f, rowY - BADGE_R, ni + 1)
-            val note = r.notes?.let { if (it.length > 25) it.take(22) + "…" else it }.orEmpty()
+            val tagPart = if (r.tags.isNotEmpty())
+                "[" + r.tags.joinToString(", ") { tagLabel(it) } + "] " else ""
+            val combined = tagPart + (r.notes?.takeIf { it.isNotBlank() } ?: "")
+            val text = if (combined.length > 34) combined.take(31) + "…" else combined
             c.drawText(
-                "${DATE_FMT.format(Date(r.timestamp))}  —  $note",
+                "${DATE_FMT.format(Date(r.timestamp))}  —  $text",
                 colX + BADGE_R * 2 + 14f, rowY, pNoteLegend,
             )
         }

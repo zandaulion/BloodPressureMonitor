@@ -19,6 +19,7 @@ import kotlin.math.roundToInt
  *  - timestamp → mean of the session
  *  - category  → **recomputed** from the averaged sys/dia (not averaged)
  *  - notes     → distinct member notes joined, so PDF callouts/labels survive averaging
+ *  - tags      → union of member tags, so tag callouts/markers survive averaging
  *
  * Singleton sessions pass through unchanged. The result is ordered by timestamp.
  */
@@ -63,6 +64,7 @@ class AggregateReadingsUseCase @Inject constructor(
             .distinct()
             .joinToString(" • ")
             .ifBlank { null }
+        val tags   = session.flatMap { it.tags }.distinct().sorted()
         return BPReading(
             id        = session.first().id,
             timestamp = ts,
@@ -71,6 +73,7 @@ class AggregateReadingsUseCase @Inject constructor(
             pulse     = pulse,
             category  = calculateZone(sys, dia),
             notes     = notes,
+            tags      = tags,
         )
     }
 
