@@ -30,6 +30,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.LocalOffer
 import androidx.compose.material.icons.filled.Remove
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -175,7 +176,7 @@ fun ValidationScreen(
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(110.dp)
+                        .height(72.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .background(Color.LightGray)
                         .clickable { fullscreenOpen = true },
@@ -223,6 +224,15 @@ fun ValidationScreen(
                 )
             }
 
+            // ── Contextual tags ───────────────────────────────────────────
+            // Placed right after the values (above the derived MAP/PP card) so
+            // it isn't buried at the bottom — easy to miss on the camera path
+            // where the values arrive pre-filled and tagging is the main task.
+            TagPicker(
+                selected = state.selectedTags,
+                onToggle = viewModel::toggleTag,
+            )
+
             // ── Live MAP / PP readout ─────────────────────────────────────
             if (state.isValid) {
                 HemodynamicsReadout(
@@ -230,12 +240,6 @@ fun ValidationScreen(
                     pulsePressure = pulsePressure(state.systolic, state.diastolic),
                 )
             }
-
-            // ── Contextual tags ───────────────────────────────────────────
-            TagPicker(
-                selected = state.selectedTags,
-                onToggle = viewModel::toggleTag,
-            )
 
             // ── Notes ─────────────────────────────────────────────────────
             OutlinedTextField(
@@ -356,7 +360,7 @@ private fun BpValueSlider(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -590,19 +594,45 @@ private fun TagPicker(
     selected: Set<BpTag>,
     onToggle: (BpTag) -> Unit,
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(
-            text = stringResource(R.string.validation_tags_header),
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
-        )
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            BpTag.entries.forEach { tag ->
-                FilterChip(
-                    selected = tag in selected,
-                    onClick = { onToggle(tag) },
-                    label = { Text(stringResource(tag.labelRes())) },
+    // A distinct card (matching the slider/MAP cards) with an icon header, so the
+    // tags read as an intentional step rather than faint chips at the bottom.
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant,
+        ),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.LocalOffer,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.size(18.dp),
                 )
+                Text(
+                    text = stringResource(R.string.validation_tags_header),
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.SemiBold,
+                    color = MaterialTheme.colorScheme.onSurface,
+                )
+            }
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                BpTag.entries.forEach { tag ->
+                    FilterChip(
+                        selected = tag in selected,
+                        onClick = { onToggle(tag) },
+                        label = { Text(stringResource(tag.labelRes())) },
+                    )
+                }
             }
         }
     }
