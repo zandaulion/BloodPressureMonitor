@@ -1,0 +1,47 @@
+<en-US>
+Charts now fit your data: once you have 24+ hours of readings the Y-axis tightens around your actual range instead of always showing 40–180, so trends are easier to read. Long-press any reading in the list to add or edit its context tags after the fact. PDF exports use the same improved chart scale.
+</en-US>
+
+<de-DE>
+Diagramme passen sich jetzt Ihren Daten an: Ab 24 Stunden Messwerten zeigt die Y-Achse Ihren tatsächlichen Bereich statt immer 40–180 – Trends sind so besser erkennbar. Lang drücken Sie einen Eintrag in der Liste, um Kontext-Tags nachträglich hinzuzufügen oder zu bearbeiten. PDF-Exporte verwenden dieselbe verbesserte Skalierung.
+</de-DE>
+
+<es-ES>
+Los gráficos ahora se adaptan a tus datos: con 24 h o más de lecturas, el eje Y se ajusta a tu rango real en lugar de mostrar siempre 40–180, facilitando la lectura de tendencias. Mantén pulsada cualquier medición de la lista para añadir o editar sus etiquetas de contexto a posteriori. Las exportaciones en PDF usan la misma escala mejorada.
+</es-ES>
+
+<fr-FR>
+Les graphiques s'adaptent maintenant à vos données : après 24 h de mesures, l'axe Y se resserre autour de votre plage réelle au lieu d'afficher toujours 40–180, ce qui facilite la lecture des tendances. Appuyez longuement sur une mesure dans la liste pour ajouter ou modifier ses étiquettes de contexte après coup. Les exports PDF utilisent la même échelle améliorée.
+</fr-FR>
+
+<ar>
+تتكيّف الرسوم البيانية الآن مع بياناتك: بعد 24 ساعة أو أكثر من القراءات، يضيق محور Y حول نطاقك الفعلي بدلاً من عرض 40–180 دائمًا، مما يُسهّل قراءة الاتجاهات. اضغط مطولاً على أي قراءة في القائمة لإضافة وسوم السياق أو تعديلها لاحقًا. تستخدم صادرات PDF نفس المقياس المحسّن.
+</ar>
+
+<hi-IN>
+चार्ट अब आपके डेटा के अनुसार ढलते हैं: 24+ घंटे की रीडिंग के बाद Y-अक्ष हमेशा 40–180 दिखाने की बजाय आपकी वास्तविक रेंज के अनुसार सिकुड़ जाता है, जिससे रुझान पढ़ना आसान होता है। किसी भी रीडिंग पर लंबे दबाव से उसके संदर्भ टैग बाद में जोड़ें या बदलें। PDF एक्सपोर्ट में भी यही बेहतर स्केल लागू होता है।
+</hi-IN>
+
+<ja-JP>
+グラフがデータに合わせて調整されるようになりました：24時間以上の記録がある場合、Y軸は常に40〜180を表示する代わりに実際の範囲に絞り込まれ、傾向が読みやすくなります。記録を長押しすると、後からコンテキストタグを追加・編集できます。PDFエクスポートにも同じ改善されたスケールが適用されます。
+</ja-JP>
+
+<ko-KR>
+이제 차트가 데이터에 맞게 조정됩니다: 24시간 이상의 기록이 있으면 Y축이 항상 40–180 대신 실제 범위에 맞게 좁혀져 추세를 읽기 쉬워집니다. 목록에서 기록을 길게 눌러 상황 태그를 나중에 추가하거나 편집할 수 있습니다. PDF 내보내기에도 동일하게 개선된 축척이 적용됩니다.
+</ko-KR>
+
+<pt-BR>
+Os gráficos agora se adaptam aos seus dados: com 24 h ou mais de leituras, o eixo Y se ajusta à sua faixa real em vez de mostrar sempre 40–180, facilitando a leitura das tendências. Toque e segure qualquer leitura da lista para adicionar ou editar suas etiquetas de contexto depois. As exportações em PDF usam a mesma escala aprimorada.
+</pt-BR>
+
+<ro>
+Graficele se adaptează acum la datele tale: după 24+ ore de măsurători, axa Y se restrânge la intervalul tău real în loc să afișeze mereu 40–180, făcând tendințele mai ușor de citit. Apasă lung pe orice înregistrare din listă pentru a adăuga sau edita etichetele de context ulterior. Exporturile PDF folosesc aceeași scală îmbunătățită.
+</ro>
+
+<uk>
+Графіки тепер підлаштовуються до ваших даних: після 24+ годин вимірювань вісь Y звужується до вашого реального діапазону замість постійного 40–180, що полегшує читання тенденцій. Натисніть і утримуйте будь-який запис у списку, щоб додати або змінити контекстні теги пізніше. Експорт PDF також використовує покращений масштаб.
+</uk>
+
+<zh-CN>
+图表现在适应您的数据：超过24小时的记录后，Y轴会收窄至实际范围而非始终显示40–180，趋势一目了然。长按列表中的任意记录，可随时补充或修改情境标签。PDF导出同样采用改进后的坐标轴比例。
+</zh-CN>
