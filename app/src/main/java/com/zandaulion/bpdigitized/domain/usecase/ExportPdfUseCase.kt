@@ -6,8 +6,11 @@ import android.graphics.Color
 import android.graphics.DashPathEffect
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.graphics.Typeface
 import android.graphics.pdf.PdfDocument
+import androidx.annotation.StringRes
+import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.BpTag
@@ -15,6 +18,10 @@ import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
 import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
+import com.zandaulion.bpdigitized.presentation.extensions.badgeLabelRes
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.locale.LocaleHelper
+import com.zandaulion.bpdigitized.presentation.locale.LocalePrefs
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -31,8 +38,8 @@ import kotlin.math.roundToInt
 
 /**
  * Exports all readings to a multi-page PDF:
- *  - One landscape page per active time range (7 d, 30 d, all-time),
- *    with a line chart, numbered note callouts, a stats bar, and a note legend.
+ *  - One landscape page per active time range (7, 30, 90 days),
+ *    with a line chart, numbered tag badges, a stats bar, and a tag legend.
  *  - One or more portrait pages with the full readings table.
  *
  * Pages for a range are skipped when fewer than 2 readings exist for it, or
@@ -50,25 +57,31 @@ class ExportPdfUseCase @Inject constructor(
     suspend operator fun invoke(): File = withContext(Dispatchers.Default) {
         val all = repository.getAll().sortedBy { it.timestamp }
         val smooth = chartSettings.observeSmoothBursts().first()
+        // Render the report in the user's chosen app language (blank = system locale).
+        val code = LocalePrefs.getLocale(context)
+        val t = L10n(
+            ctx    = LocaleHelper.applyLocale(context, code),
+            locale = if (code.isBlank()) Locale.getDefault() else Locale(code),
+        )
         val stamp = STAMP_FMT.format(Date())
         val file  = File(context.cacheDir, "bp_export_$stamp.pdf")
         val doc   = PdfDocument()
         try {
             var pageNum = 1
-            buildChartRanges(all).forEach { range ->
+            buildChartRanges(all, t).forEach { range ->
                 // Smooth the chart's readings (averaging back-to-back sittings); merged
                 // notes are preserved so numbered callouts/labels still appear. The table
                 // pages below stay raw.
                 val drawn = if (smooth)
                     range.copy(readings = aggregateReadings(range.readings))
                 else range
-                drawChartPage(doc, pageNum++, drawn)
+                drawChartPage(doc, pageNum++, drawn, t)
             }
             // Table pages show only the last 30 days (newest-first)
             val tableCutoff = System.currentTimeMillis() - 30L * MS_PER_DAY
             val tableReadings = all.filter { it.timestamp >= tableCutoff }
             if (tableReadings.isNotEmpty()) {
-                drawTablePages(doc, pageNum, tableReadings.reversed())
+                drawTablePages(doc, pageNum, tableReadings.reversed(), t)
             }
             file.outputStream().use { doc.writeTo(it) }
         } finally {
@@ -77,81 +90,128 @@ class ExportPdfUseCase @Inject constructor(
         file
     }
 
+    // ── Localized text ────────────────────────────────────────────────────────
+
+    /**
+     * All localized PDF text plus locale-aware date formatters, resolved once per
+     * export from the user's saved language. Threading a single instance through the
+     * draw methods keeps this singleton use-case free of mutable per-export state.
+     */
+    private class L10n(private val ctx: Context, val locale: Locale) {
+        private fun s(@StringRes id: Int): String = ctx.getString(id)
+
+        val reportTitle    = s(R.string.pdf_report_title)
+        val statSystolic   = s(R.string.pdf_stat_systolic)
+        val statDiastolic  = s(R.string.pdf_stat_diastolic)
+        val statAvg        = s(R.string.pdf_stat_avg)
+        val statMin        = s(R.string.pdf_stat_min)
+        val statMax        = s(R.string.pdf_stat_max)
+        val statMap        = s(R.string.pdf_stat_map)
+        val statPp         = s(R.string.pdf_stat_pp)
+        val colDateTime    = s(R.string.pdf_col_datetime)
+        val colSys         = s(R.string.pdf_col_sys)
+        val colDia         = s(R.string.pdf_col_dia)
+        val colPulse       = s(R.string.pdf_col_pulse)
+        val colCategory    = s(R.string.pdf_col_category)
+        val colNotes       = s(R.string.pdf_col_notes)
+        val disclaimer     = s(R.string.pdf_disclaimer)
+        val tableTitle     = s(R.string.pdf_table_title)
+        val tableTitleCont = s(R.string.pdf_table_title_cont)
+
+        val dateFmt      = SimpleDateFormat("d MMM yyyy", locale)
+        val tableDateFmt = SimpleDateFormat("d MMM yyyy  HH:mm", locale)
+
+        fun rangeHeading(days: Int): String = ctx.getString(
+            when (days) {
+                7  -> R.string.pdf_range_7d
+                30 -> R.string.pdf_range_30d
+                else -> R.string.pdf_range_90d
+            }
+        )
+        fun exported(date: String)    = ctx.getString(R.string.pdf_exported, date)
+        fun refSys(v: Int)            = ctx.getString(R.string.pdf_ref_sys, v)
+        fun refDia(v: Int)            = ctx.getString(R.string.pdf_ref_dia, v)
+        fun readingsCount(n: Int)     = ctx.getString(R.string.pdf_readings_count, n)
+        fun pageXofY(x: Int, y: Int)  = ctx.getString(R.string.pdf_page_x_of_y, x, y)
+        fun category(cat: BPCategory) = ctx.getString(cat.badgeLabelRes())
+        fun tag(tag: BpTag)           = ctx.getString(tag.labelRes())
+    }
+
     // ── Time-range selection ──────────────────────────────────────────────────
 
     private data class ChartRange(val heading: String, val readings: List<BPReading>)
 
-    private fun buildChartRanges(all: List<BPReading>): List<ChartRange> {
+    private fun buildChartRanges(all: List<BPReading>, t: L10n): List<ChartRange> {
         if (all.size < 2) return emptyList()
         val now = System.currentTimeMillis()
         val result  = mutableListOf<ChartRange>()
         var prevIds = emptySet<Long>()
 
-        for ((days, label) in listOf(7 to "Last 7 days", 30 to "Last 30 days")) {
+        for (days in listOf(7, 30, 90)) {
             val slice = all.filter { it.timestamp >= now - days * MS_PER_DAY }
             val ids   = slice.map { it.id }.toSet()
             if (slice.size >= 2 && ids != prevIds) {
-                result += ChartRange("$label  ·  ${dateSpan(slice)}", slice)
+                result += ChartRange("${t.rangeHeading(days)}  ·  ${dateSpan(slice, t)}", slice)
                 prevIds = ids
             }
-        }
-        val allIds = all.map { it.id }.toSet()
-        if (all.size >= 2 && allIds != prevIds) {
-            result += ChartRange("All readings  ·  ${dateSpan(all)}", all)
         }
         return result
     }
 
-    private fun dateSpan(readings: List<BPReading>): String {
-        val a = DATE_FMT.format(Date(readings.first().timestamp))
-        val b = DATE_FMT.format(Date(readings.last().timestamp))
+    private fun dateSpan(readings: List<BPReading>, t: L10n): String {
+        val a = t.dateFmt.format(Date(readings.first().timestamp))
+        val b = t.dateFmt.format(Date(readings.last().timestamp))
         return if (a == b) a else "$a – $b"
     }
 
     // ── Chart page ────────────────────────────────────────────────────────────
 
-    private fun drawChartPage(doc: PdfDocument, pageNum: Int, range: ChartRange) {
+    private fun drawChartPage(doc: PdfDocument, pageNum: Int, range: ChartRange, t: L10n) {
         val page = doc.startPage(PdfDocument.PageInfo.Builder(LW, LH, pageNum).create())
         val c = page.canvas
         c.drawColor(Color.WHITE)
 
         // --- header ---
-        c.drawText("Blood Pressure Report", M, M + TS_TITLE, pTitle)
-        c.drawText(range.heading,           M, M + TS_TITLE + TS_SUB + 10f, pSub)
-        c.drawText("Exported: ${DATE_FMT.format(Date())}", LW - M, M + TS_TITLE, pRight)
+        c.drawText(t.reportTitle, M, M + TS_TITLE, pTitle)
+        c.drawText(range.heading, M, M + TS_TITLE + TS_SUB + 10f, pSub)
+        c.drawText(t.exported(t.dateFmt.format(Date())), LW - M, M + TS_TITLE, pRight)
         val divY = M + TS_TITLE + TS_SUB + 28f
         c.hRule(divY)
 
-        // --- numbered callout assignments (notes OR tags; cap at MAX_CALLOUTS) ---
-        val notedPairs = range.readings
+        // --- tag numbering: each distinct tag in this range gets a number (enum
+        //     order); every tagged reading shows its tags' numbers concatenated,
+        //     e.g. a reading tagged #2, #4 and #7 → badge "247". ---
+        val tagsPresent = BpTag.entries.filter { tag -> range.readings.any { tag in it.tags } }
+        val tagNumber   = tagsPresent.withIndex().associate { (i, tag) -> tag to (i + 1) }
+        val badgeAt: Map<Int, String> = range.readings
             .mapIndexedNotNull { i, r ->
-                if (!r.notes.isNullOrBlank() || r.tags.isNotEmpty()) i to r else null
+                if (r.tags.isEmpty()) null
+                else i to r.tags.mapNotNull { tagNumber[it] }.sorted().joinToString("")
             }
-            .take(MAX_CALLOUTS)
-        val noteNumAt  = notedPairs.mapIndexed { ni, (ri, _) -> ri to (ni + 1) }.toMap()
+            .toMap()
 
         // --- compute vertical zones (bottom-up) ---
         val statsTop    = LH - M - FOOTER_H - STATS_H
-        val legendRows  = ceil(notedPairs.size / NOTE_COLS.toDouble()).toInt()
-        val legendH     = if (notedPairs.isEmpty()) 0f
+        val legendRows  = ceil(tagsPresent.size / NOTE_COLS.toDouble()).toInt()
+        val legendH     = if (tagsPresent.isEmpty()) 0f
                           else legendRows * NOTE_ROW_H + 16f
         val legendTop   = statsTop - legendH
         val chartBottom = legendTop - X_LABEL_H
 
-        drawChart(c, range.readings, noteNumAt,
+        drawChart(c, range.readings, badgeAt,
             left = CHART_L, top = divY + 20f,
-            right = CHART_R, bottom = chartBottom)
-        drawStatsBar(c, range.readings, statsTop)
-        if (notedPairs.isNotEmpty()) drawNoteLegend(c, notedPairs, legendTop)
-        drawFooter(c, LW, LH)
+            right = CHART_R, bottom = chartBottom, t = t)
+        drawStatsBar(c, range.readings, statsTop, t)
+        if (tagsPresent.isNotEmpty()) drawTagLegend(c, tagsPresent, legendTop, t)
+        drawFooter(c, LW, LH, t)
         doc.finishPage(page)
     }
 
     // ── Chart drawing ─────────────────────────────────────────────────────────
 
     private fun drawChart(
-        c: Canvas, readings: List<BPReading>, noteNums: Map<Int, Int>,
-        left: Float, top: Float, right: Float, bottom: Float,
+        c: Canvas, readings: List<BPReading>, badgeAt: Map<Int, String>,
+        left: Float, top: Float, right: Float, bottom: Float, t: L10n,
     ) {
         val n       = readings.size
         val firstTs = readings.first().timestamp
@@ -194,12 +254,12 @@ class ExportPdfUseCase @Inject constructor(
             c.drawLine(left, ry, right, ry, pRefLine)
             c.drawText(label, right + 62f, ry + 5f, pRefLabel)
         }
-        refLine(120.0, "SYS 120")
-        refLine(80.0,  "DIA 80")
+        refLine(120.0, t.refSys(120))
+        refLine(80.0,  t.refDia(80))
 
         // X axis time labels — up to 10, evenly spaced in real time (not by index),
         // rotated 40° to avoid overlap.
-        val xFmt       = xDateFmt(readings)
+        val xFmt       = xDateFmt(readings, t.locale)
         val labelCount = 10.coerceAtMost(n)
         val denom      = (labelCount - 1).coerceAtLeast(1)
         val totalMs    = lastTs - firstTs
@@ -230,8 +290,8 @@ class ExportPdfUseCase @Inject constructor(
             val dy = yC(r.diastolic.toDouble(), yMin, yMax, top, bottom)
             c.drawCircle(cx, sy, dotR, pSysDot)
             c.drawCircle(cx, dy, dotR, pDiaDot)
-            noteNums[i]?.let { num ->
-                badge(c, cx, min(sy, dy) - dotR - BADGE_R - 2f, num)
+            badgeAt[i]?.let { label ->
+                badge(c, cx, min(sy, dy) - dotR - BADGE_R - 2f, label)
             }
         }
 
@@ -240,15 +300,18 @@ class ExportPdfUseCase @Inject constructor(
         c.drawLine(left, bottom, right, bottom, pAxis)
     }
 
-    private fun badge(c: Canvas, cx: Float, cy: Float, number: Int) {
-        c.drawCircle(cx, cy, BADGE_R, pBadgeFill)
-        c.drawCircle(cx, cy, BADGE_R, pBadgeBorder)
-        c.drawText(number.toString(), cx, cy + BADGE_R * 0.38f, pBadgeText)
+    /** Yellow pill badge containing [text]; widens for multi-digit labels. */
+    private fun badge(c: Canvas, cx: Float, cy: Float, text: String) {
+        val halfW = maxOf(BADGE_R, pBadgeText.measureText(text) / 2f + 6f)
+        val rect  = RectF(cx - halfW, cy - BADGE_R, cx + halfW, cy + BADGE_R)
+        c.drawRoundRect(rect, BADGE_R, BADGE_R, pBadgeFill)
+        c.drawRoundRect(rect, BADGE_R, BADGE_R, pBadgeBorder)
+        c.drawText(text, cx, cy + BADGE_R * 0.38f, pBadgeText)
     }
 
     // ── Stats bar ─────────────────────────────────────────────────────────────
 
-    private fun drawStatsBar(c: Canvas, readings: List<BPReading>, top: Float) {
+    private fun drawStatsBar(c: Canvas, readings: List<BPReading>, top: Float, t: L10n) {
         val midY = top + STATS_H / 2f + 4f
         val sw   = 16f
         var x    = CHART_L
@@ -257,42 +320,39 @@ class ExportPdfUseCase @Inject constructor(
             c.drawRect(x, midY - sw / 2f, x + sw, midY + sw / 2f, p)
             x += sw + 6f
         }
-        fun label(t: String)  { c.drawText(t, x, midY + 5f, pStatsLabel); x += pStatsLabel.measureText(t) + 20f }
-        fun value(t: String)  { c.drawText(t, x, midY + 5f, pStatsVal);   x += pStatsVal.measureText(t)   + 28f }
+        fun label(s: String)  { c.drawText(s, x, midY + 5f, pStatsLabel); x += pStatsLabel.measureText(s) + 20f }
+        fun value(s: String)  { c.drawText(s, x, midY + 5f, pStatsVal);   x += pStatsVal.measureText(s)   + 28f }
         fun vline()           { c.drawLine(x, top + 6f, x, top + STATS_H - 6f, pDivider); x += 20f }
 
-        swatch(pSysDot); label("Systolic")
-        swatch(pDiaDot); label("Diastolic")
+        swatch(pSysDot); label(t.statSystolic)
+        swatch(pDiaDot); label(t.statDiastolic)
         vline()
         val sys = readings.map { it.systolic }
         val dia = readings.map { it.diastolic }
-        value("Avg  ${sys.average().roundToInt()} / ${dia.average().roundToInt()}")
-        value("Min  ${sys.min()} / ${dia.min()}")
-        value("Max  ${sys.max()} / ${dia.max()}")
+        value("${t.statAvg}  ${sys.average().roundToInt()} / ${dia.average().roundToInt()}")
+        value("${t.statMin}  ${sys.min()} / ${dia.min()}")
+        value("${t.statMax}  ${sys.max()} / ${dia.max()}")
         vline()
         val mapAvg = readings.map { meanArterialPressure(it.systolic, it.diastolic) }.average().roundToInt()
         val ppAvg  = readings.map { pulsePressure(it.systolic, it.diastolic) }.average().roundToInt()
-        value("MAP  $mapAvg")
-        value("PP  $ppAvg")
+        value("${t.statMap}  $mapAvg")
+        value("${t.statPp}  $ppAvg")
     }
 
-    // ── Note legend ───────────────────────────────────────────────────────────
+    // ── Tag legend ────────────────────────────────────────────────────────────
 
-    private fun drawNoteLegend(c: Canvas, pairs: List<Pair<Int, BPReading>>, top: Float) {
+    /** Maps each badge number back to its tag label (≤ 10 rows, in NOTE_COLS columns). */
+    private fun drawTagLegend(c: Canvas, tags: List<BpTag>, top: Float, t: L10n) {
         c.drawLine(CHART_L, top - 2f, CHART_R, top - 2f, pGrid)
         val colW = (CHART_R - CHART_L) / NOTE_COLS.toFloat()
-        pairs.forEachIndexed { ni, (_, r) ->
-            val col  = ni % NOTE_COLS
-            val row  = ni / NOTE_COLS
+        tags.forEachIndexed { idx, tag ->
+            val col  = idx % NOTE_COLS
+            val row  = idx / NOTE_COLS
             val colX = CHART_L + col * colW
             val rowY = top + NOTE_ROW_H * row + NOTE_ROW_H * 0.72f
-            badge(c, colX + BADGE_R + 2f, rowY - BADGE_R, ni + 1)
-            val tagPart = if (r.tags.isNotEmpty())
-                "[" + r.tags.joinToString(", ") { tagLabel(it) } + "] " else ""
-            val combined = tagPart + (r.notes?.takeIf { it.isNotBlank() } ?: "")
-            val text = if (combined.length > 34) combined.take(31) + "…" else combined
+            badge(c, colX + BADGE_R + 2f, rowY - BADGE_R, (idx + 1).toString())
             c.drawText(
-                "${DATE_FMT.format(Date(r.timestamp))}  —  $text",
+                "${idx + 1} = ${t.tag(tag)}",
                 colX + BADGE_R * 2 + 14f, rowY, pNoteLegend,
             )
         }
@@ -300,7 +360,7 @@ class ExportPdfUseCase @Inject constructor(
 
     // ── Table pages ───────────────────────────────────────────────────────────
 
-    private fun drawTablePages(doc: PdfDocument, firstPage: Int, readings: List<BPReading>) {
+    private fun drawTablePages(doc: PdfDocument, firstPage: Int, readings: List<BPReading>, t: L10n) {
         // Portrait A4 @ 2×
         val w = PW; val h = PH
         // First row starts at: MARGIN + title + divider + column header row
@@ -315,12 +375,11 @@ class ExportPdfUseCase @Inject constructor(
             val c     = page.canvas
             c.drawColor(Color.WHITE)
 
-            val titleText = if (chunk == 0) "Blood Pressure Readings  ·  Last 30 Days"
-                            else            "Blood Pressure Readings  ·  Last 30 Days (cont.)"
+            val titleText = if (chunk == 0) t.tableTitle else t.tableTitleCont
             val rightText = if (chunk == 0)
-                "Exported: ${DATE_FMT.format(Date())}  ·  ${readings.size} readings"
+                "${t.exported(t.dateFmt.format(Date()))}  ·  ${t.readingsCount(readings.size)}"
             else
-                "Page ${chunk + 1} of $total"
+                t.pageXofY(chunk + 1, total)
             c.drawText(titleText, M, M + TS_TITLE, pTitle)
             c.drawText(rightText, w - M, M + TS_TITLE, pRight)
             val divY = M + TS_TITLE + 20f
@@ -329,23 +388,23 @@ class ExportPdfUseCase @Inject constructor(
             // Column headers
             val hdrY = divY + TABLE_ROW_H
             tableRow(c, w, hdrY, isHeader = true, isAlt = false,
-                dt = "Date / Time", sys = "SYS", dia = "DIA",
-                pulse = "Pulse", cat = "Category", notes = "Notes",
+                dt = t.colDateTime, sys = t.colSys, dia = t.colDia,
+                pulse = t.colPulse, cat = t.colCategory, notes = t.colNotes,
                 catColor = Color.rgb(20, 20, 20))
             c.drawLine(M, hdrY + 10f, w - M, hdrY + 10f, pDivider)
 
             batch.forEachIndexed { i, r ->
                 val y = divY + TABLE_ROW_H * (i + 2)
                 tableRow(c, w, y, isHeader = false, isAlt = i % 2 == 0,
-                    dt    = TABLE_DATE_FMT.format(Date(r.timestamp)),
+                    dt    = t.tableDateFmt.format(Date(r.timestamp)),
                     sys   = r.systolic.toString(),
                     dia   = r.diastolic.toString(),
                     pulse = r.pulse?.toString() ?: "—",
-                    cat   = categoryLabel(r.category),
-                    notes = notesCell(r),
+                    cat   = t.category(r.category),
+                    notes = notesCell(r, t),
                     catColor = categoryArgb(r.category))
             }
-            drawFooter(c, w, h)
+            drawFooter(c, w, h, t)
             doc.finishPage(page)
         }
     }
@@ -371,9 +430,9 @@ class ExportPdfUseCase @Inject constructor(
 
     // ── Shared footer ─────────────────────────────────────────────────────────
 
-    private fun drawFooter(c: Canvas, w: Int, h: Int) {
+    private fun drawFooter(c: Canvas, w: Int, h: Int, t: L10n) {
         c.drawLine(M, h - M - FOOTER_H + 4f, w - M, h - M - FOOTER_H + 4f, pDivider)
-        c.drawText(DISCLAIMER, M, h - M, pFooter)
+        c.drawText(t.disclaimer, M, h - M, pFooter)
     }
 
     // ── Math ──────────────────────────────────────────────────────────────────
@@ -387,23 +446,15 @@ class ExportPdfUseCase @Inject constructor(
         if (firstTs == lastTs) (left + right) / 2f
         else left + (ts - firstTs).toFloat() / (lastTs - firstTs).toFloat() * (right - left)
 
-    private fun xDateFmt(readings: List<BPReading>) = SimpleDateFormat(
+    private fun xDateFmt(readings: List<BPReading>, locale: Locale) = SimpleDateFormat(
         when (readings.last().timestamp - readings.first().timestamp) {
             in 0..(14 * MS_PER_DAY)  -> "MMM d"
             in 0..(180 * MS_PER_DAY) -> "M/d"
             else                      -> "MM/yy"
-        }, Locale.getDefault()
+        }, locale
     )
 
     // ── Domain helpers ────────────────────────────────────────────────────────
-
-    private fun categoryLabel(cat: BPCategory) = when (cat) {
-        BPCategory.NORMAL              -> "Normal"
-        BPCategory.ELEVATED            -> "Elevated"
-        BPCategory.STAGE_1             -> "Stage 1"
-        BPCategory.STAGE_2             -> "Stage 2"
-        BPCategory.HYPERTENSIVE_CRISIS -> "Crisis"
-    }
 
     private fun categoryArgb(cat: BPCategory) = when (cat) {
         BPCategory.NORMAL              -> Color.rgb(46, 125, 50)
@@ -413,24 +464,10 @@ class ExportPdfUseCase @Inject constructor(
         BPCategory.HYPERTENSIVE_CRISIS -> Color.rgb(183, 28, 28)
     }
 
-    // English labels for the PDF (the report is English-only by design).
-    private fun tagLabel(tag: BpTag) = when (tag) {
-        BpTag.BEFORE_MEDICATION -> "before meds"
-        BpTag.AFTER_MEDICATION  -> "after meds"
-        BpTag.CAFFEINE          -> "caffeine"
-        BpTag.ALCOHOL           -> "alcohol"
-        BpTag.SALTY_MEAL        -> "salty meal"
-        BpTag.EXERCISE          -> "exercise"
-        BpTag.STRESS            -> "stress"
-        BpTag.POOR_SLEEP        -> "poor sleep"
-        BpTag.RESTING           -> "resting"
-        BpTag.ON_WAKING         -> "on waking"
-    }
-
     /** Notes table cell: prefixes "[tag, tag] " before any note, then truncates. */
-    private fun notesCell(r: BPReading): String {
+    private fun notesCell(r: BPReading, t: L10n): String {
         val tagPart = if (r.tags.isNotEmpty())
-            "[" + r.tags.joinToString(", ") { tagLabel(it) } + "] " else ""
+            "[" + r.tags.joinToString(", ") { t.tag(it) } + "] " else ""
         val full = tagPart + (r.notes ?: "")
         return if (full.length > 52) full.take(49) + "…" else full
     }
@@ -529,8 +566,7 @@ class ExportPdfUseCase @Inject constructor(
         private const val NOTE_ROW_H  = 36f
         private const val TABLE_ROW_H = 46f
 
-        private const val MAX_CALLOUTS = 12   // cap numbered callouts per chart page
-        private const val NOTE_COLS    = 3    // columns in the note legend
+        private const val NOTE_COLS    = 3    // columns in the tag legend
 
         private val SYS_COLOR = Color.rgb(211, 47, 47)
         private val DIA_COLOR = Color.rgb(25, 118, 210)
@@ -543,12 +579,7 @@ class ExportPdfUseCase @Inject constructor(
         private const val COL_CAT   = COL_PULSE + 90
         private const val COL_NOTES = COL_CAT  + 160
 
-        private const val DISCLAIMER =
-            "ⓘ  Informational only — does not constitute medical advice. Consult a qualified healthcare professional."
-
-        private val STAMP_FMT      = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
-        private val DATE_FMT       = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
-        private val TABLE_DATE_FMT = SimpleDateFormat("d MMM yyyy  HH:mm", Locale.getDefault())
+        private val STAMP_FMT = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
 
         private const val MS_PER_DAY = 24L * 60 * 60 * 1000
     }
