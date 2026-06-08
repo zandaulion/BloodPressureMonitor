@@ -25,6 +25,7 @@ import java.util.Date
 import java.util.Locale
 import javax.inject.Inject
 import kotlin.math.ceil
+import kotlin.math.floor
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -153,24 +154,42 @@ class ExportPdfUseCase @Inject constructor(
         left: Float, top: Float, right: Float, bottom: Float,
     ) {
         val n       = readings.size
-        val yMin    = Y_FLOOR.toDouble()
-        val yMax    = Y_CEIL.toDouble()
-        val dotR    = when { n > 100 -> 3f; n > 40 -> 5f; else -> 7f }
         val firstTs = readings.first().timestamp
         val lastTs  = readings.last().timestamp
 
+        // Y-axis bounds — same rule as the in-app Vico chart:
+        //   < 24 h span  → fixed 40–180
+        //   ≥ 24 h span  → pad ±5, snap outward to nearest 10
+        val isMultiDay = (lastTs - firstTs) >= MS_PER_DAY
+        val yMin: Double
+        val yMax: Double
+        if (isMultiDay) {
+            val dataMin = readings.minOf { minOf(it.systolic, it.diastolic) }
+            val dataMax = readings.maxOf { maxOf(it.systolic, it.diastolic) }
+            yMin = floor((dataMin - 5).toDouble() / 10.0) * 10.0
+            yMax = ceil ((dataMax + 5).toDouble() / 10.0) * 10.0
+        } else {
+            yMin = Y_FLOOR.toDouble()
+            yMax = Y_CEIL.toDouble()
+        }
+
+        val dotR      = when { n > 100 -> 3f; n > 40 -> 5f; else -> 7f }
+        // Grid step: ~6-8 lines regardless of range width
+        val gridStep  = if ((yMax - yMin) <= 80) 10 else 20
+
         // grid + Y labels (left and right)
-        var gv = Y_FLOOR
+        var gv = yMin.toInt()
         while (gv <= yMax) {
             val gy = yC(gv.toDouble(), yMin, yMax, top, bottom)
             c.drawLine(left, gy, right, gy, pGrid)
             c.drawText(gv.toString(), left - 8f,  gy + 6f, pAxisLabel)
             c.drawText(gv.toString(), right + 8f, gy + 6f, pAxisLabelRight)
-            gv += 20
+            gv += gridStep
         }
 
-        // reference lines (labels offset further right to clear the axis numbers)
+        // Reference lines — only drawn when the value falls within the Y range.
         fun refLine(yVal: Double, label: String) {
+            if (yVal < yMin || yVal > yMax) return
             val ry = yC(yVal, yMin, yMax, top, bottom)
             c.drawLine(left, ry, right, ry, pRefLine)
             c.drawText(label, right + 62f, ry + 5f, pRefLabel)
