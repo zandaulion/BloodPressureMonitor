@@ -110,6 +110,7 @@ import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
+import com.zandaulion.bpdigitized.presentation.components.InsightsCard
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 import com.zandaulion.bpdigitized.presentation.locale.APP_LANGUAGES
 import com.zandaulion.bpdigitized.presentation.locale.LocalePrefs
@@ -502,7 +503,17 @@ fun DashboardScreen(
                 }
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    // Risk assessment card — always first when there are readings
+                    // Insights card — on-device patterns derived from the full history
+                    if (ui.insights.isNotEmpty()) {
+                        item(key = "insights_card") {
+                            InsightsCard(
+                                insights = ui.insights,
+                                modifier = Modifier
+                                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                            )
+                        }
+                    }
+                    // Risk assessment card
                     ui.healthAssessment?.let { assessment ->
                         item(key = "health_risk_card") {
                             HealthRiskCard(

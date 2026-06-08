@@ -9,6 +9,7 @@ import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.CardiovascularRisk
 import com.zandaulion.bpdigitized.domain.model.HealthNote
+import com.zandaulion.bpdigitized.domain.model.InsightKind
 import com.zandaulion.bpdigitized.presentation.dashboard.ChartRange
 import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
 
@@ -93,6 +94,20 @@ import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
     ExportType.JSON -> R.string.export_type_json
     ExportType.CSV  -> R.string.export_type_csv
     ExportType.PDF  -> R.string.export_type_pdf
+}
+
+/** Maps each InsightKind to its localized sentence template (positional %1$s … args). */
+@StringRes fun InsightKind.templateRes(): Int = when (this) {
+    InsightKind.MORNING_HIGHER  -> R.string.insight_morning_higher
+    InsightKind.EVENING_HIGHER  -> R.string.insight_evening_higher
+    InsightKind.TREND_DOWN      -> R.string.insight_trend_down
+    InsightKind.TREND_UP        -> R.string.insight_trend_up
+    InsightKind.TIME_IN_RANGE   -> R.string.insight_time_in_range
+    InsightKind.STREAK          -> R.string.insight_streak
+    InsightKind.TAG_HIGHER      -> R.string.insight_tag_higher
+    InsightKind.TAG_LOWER       -> R.string.insight_tag_lower
+    InsightKind.WEEKEND_HIGHER  -> R.string.insight_weekend_higher
+    InsightKind.WEEKDAY_HIGHER  -> R.string.insight_weekday_higher
 }
 
 @StringRes fun BpTag.labelRes(): Int = when (this) {

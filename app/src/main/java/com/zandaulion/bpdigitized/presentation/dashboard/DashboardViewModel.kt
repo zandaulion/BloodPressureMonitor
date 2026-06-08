@@ -12,12 +12,14 @@ import androidx.lifecycle.viewModelScope
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.HealthAssessment
+import com.zandaulion.bpdigitized.domain.model.Insight
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import com.zandaulion.bpdigitized.domain.billing.BillingManager
 import com.zandaulion.bpdigitized.domain.usecase.AggregateReadingsUseCase
 import com.zandaulion.bpdigitized.domain.usecase.CalculateHealthRiskUseCase
+import com.zandaulion.bpdigitized.domain.usecase.GenerateInsightsUseCase
 import com.zandaulion.bpdigitized.domain.usecase.ExportCsvUseCase
 import com.zandaulion.bpdigitized.domain.usecase.ExportPdfUseCase
 import com.zandaulion.bpdigitized.domain.usecase.ExportReadingsUseCase
@@ -55,6 +57,8 @@ data class DashboardUi(
     val isProUser: Boolean = false,
     /** True when back-to-back readings are averaged into one smoothed chart point. */
     val smoothBursts: Boolean = true,
+    /** On-device pattern insights derived from the full reading history. */
+    val insights: List<Insight> = emptyList(),
 )
 
 enum class ExportType { JSON, CSV, PDF }
@@ -98,6 +102,7 @@ class DashboardViewModel @Inject constructor(
     private val importReadings: ImportReadingsUseCase,
     private val syncToHealthConnect: SyncToHealthConnectUseCase,
     private val calculateHealthRisk: CalculateHealthRiskUseCase,
+    private val generateInsights: GenerateInsightsUseCase,
 ) : ViewModel() {
 
     private val selectedRange = MutableStateFlow(ChartRange.THIRTY_DAYS)
@@ -117,7 +122,8 @@ class DashboardViewModel @Inject constructor(
         val chart = if (smooth) aggregateReadings(inRange) else inRange.sortedBy { it.timestamp }
         val latest = all.maxByOrNull { it.timestamp }
         val assessment = latest?.let { calculateHealthRisk(it.category, profile) }
-        DashboardUi(all, chart, range, assessment, isPro, smooth)
+        val insights = generateInsights(all)
+        DashboardUi(all, chart, range, assessment, isPro, smooth, insights)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),

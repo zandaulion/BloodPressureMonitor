@@ -135,6 +135,23 @@
     <string name="validation_notes_label">Notes (optional)</string>
     <string name="validation_notes_placeholder">e.g. after exercise, morning</string>
     <string name="validation_save">Save Reading</string>
+    <!-- ── On-device insights ───────────────────────────────────────────── -->
+    <string name="insights_card_title">Insights</string>
+    <!-- %1$d = number of additional insights hidden -->
+    <string name="insights_show_more">%1$d more</string>
+    <string name="insights_show_less">Show less</string>
+    <!-- Insight sentence templates; all numeric args are pre-formatted strings (%1$s etc.) -->
+    <string name="insight_morning_higher">Morning readings average %1$s/%2$s mmHg higher than evenings.</string>
+    <string name="insight_evening_higher">Evening readings average %1$s/%2$s mmHg higher than mornings.</string>
+    <string name="insight_trend_down">Systolic trending down ~%1$s mmHg over the last 30 days.</string>
+    <string name="insight_trend_up">Systolic trending up ~%1$s mmHg over the last 30 days.</string>
+    <string name="insight_time_in_range">%1$s%% of recent readings were in a healthy range.</string>
+    <string name="insight_streak">%1$s readings in a row in a healthy range.</string>
+    <string name="insight_tag_higher">Readings tagged \"%1$s\" average %2$s mmHg higher systolic.</string>
+    <string name="insight_tag_lower">Readings tagged \"%1$s\" average %2$s mmHg lower systolic.</string>
+    <string name="insight_weekend_higher">Weekends run ~%1$s mmHg higher than weekdays.</string>
+    <string name="insight_weekday_higher">Weekdays run ~%1$s mmHg higher than weekends.</string>
+
     <!-- ── Contextual tags ──────────────────────────────────────────────── -->
     <string name="validation_tags_header">What might have affected this reading?</string>
     <string name="edit_tags_title">Edit tags</string>
