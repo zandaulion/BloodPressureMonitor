@@ -114,9 +114,8 @@ private fun InsightRow(insight: Insight) {
         // it to a localized label before formatting the template string.
         val resolvedArgs: Array<Any> = when (insight.kind) {
             InsightKind.TAG_HIGHER, InsightKind.TAG_LOWER -> {
-                val tagLabel = runCatching {
-                    stringResource(BpTag.valueOf(insight.args[0]).labelRes())
-                }.getOrElse { insight.args[0] }
+                val tag = BpTag.entries.firstOrNull { it.name == insight.args[0] }
+                val tagLabel = if (tag != null) stringResource(tag.labelRes()) else insight.args[0]
                 (listOf(tagLabel) + insight.args.drop(1)).toTypedArray()
             }
             else -> insight.args.toTypedArray()
