@@ -1,47 +1,47 @@
 <en-US>
-New: Add contextual tags to any reading — caffeine, salty meal, stress, poor sleep, before/after meds and more — so you can spot what moves your numbers. Tap any point on the chart to see its tags and note; they also appear on each reading, on the PDF report, and in CSV/JSON exports. Your existing history is fully preserved on update.
+New: Add quick context tags to any reading — caffeine, exercise, salty meal, poor sleep and more — to spot what moves your numbers. Tags are now front and center when you log, and you can tap any chart point to see a reading's tags and notes. Your existing history is kept on update.
 </en-US>
 
 <de-DE>
-Neu: Versehen Sie jede Messung mit Kontext-Tags – Koffein, salziges Essen, Stress, schlechter Schlaf, vor/nach Einnahme und mehr – um zu erkennen, was Ihre Werte beeinflusst. Tippen Sie im Diagramm auf einen Punkt, um dessen Tags und Notiz zu sehen; sie erscheinen außerdem bei jeder Messung, im PDF-Bericht und in CSV-/JSON-Exporten. Ihr bisheriger Verlauf bleibt beim Update vollständig erhalten.
+Neu: Versehen Sie jede Messung mit schnellen Kontext-Tags – Koffein, Sport, salziges Essen, schlechter Schlaf und mehr – um zu erkennen, was Ihre Werte beeinflusst. Tags sind beim Erfassen jetzt gut sichtbar, und durch Tippen auf einen Punkt im Diagramm sehen Sie dessen Tags und Notizen. Ihr bisheriger Verlauf bleibt beim Update erhalten.
 </de-DE>
 
 <es-ES>
-Novedad: Añade etiquetas de contexto a cualquier lectura —cafeína, comida salada, estrés, dormir mal, antes/después de medicación y más— para ver qué influye en tus valores. Toca un punto del gráfico para ver sus etiquetas y nota; también aparecen en cada lectura, en el informe PDF y en las exportaciones CSV/JSON. Tu historial existente se conserva por completo al actualizar.
+Novedad: Añade etiquetas de contexto a cualquier lectura —cafeína, ejercicio, comida salada, dormir mal y más— para ver qué influye en tus valores. Las etiquetas ahora destacan al registrar, y puedes tocar cualquier punto del gráfico para ver sus etiquetas y notas. Tu historial se conserva al actualizar.
 </es-ES>
 
 <fr-FR>
-Nouveau : ajoutez des étiquettes de contexte à chaque mesure — caféine, repas salé, stress, mauvais sommeil, avant/après la prise, etc. — pour repérer ce qui influence vos chiffres. Touchez un point du graphique pour voir ses étiquettes et sa note ; elles apparaissent aussi sur chaque mesure, dans le rapport PDF et dans les exports CSV/JSON. Votre historique existant est entièrement conservé lors de la mise à jour.
+Nouveau : ajoutez des étiquettes de contexte à chaque mesure — caféine, exercice, repas salé, mauvais sommeil, etc. — pour repérer ce qui influence vos chiffres. Les étiquettes sont désormais bien visibles à la saisie, et vous pouvez toucher un point du graphique pour voir ses étiquettes et notes. Votre historique est conservé lors de la mise à jour.
 </fr-FR>
 
 <ar>
-جديد: أضف وسوم سياقية لأي قراءة — كافيين، وجبة مالحة، توتر، نوم سيئ، قبل/بعد الدواء وغيرها — لتعرف ما الذي يؤثر على أرقامك. اضغط على أي نقطة في الرسم البياني لرؤية وسومها وملاحظتها؛ كما تظهر مع كل قراءة وفي تقرير PDF وملفات التصدير CSV/JSON. يُحفظ سجلّك الحالي بالكامل عند التحديث.
+جديد: أضف وسوم سياق سريعة لأي قراءة — كافيين، تمارين، وجبة مالحة، نوم سيئ والمزيد — لتعرف ما يؤثر على أرقامك. أصبحت الوسوم بارزة عند التسجيل، ويمكنك الضغط على أي نقطة في الرسم البياني لرؤية وسومها وملاحظاتها. يُحفظ سجلّك الحالي عند التحديث.
 </ar>
 
 <hi-IN>
-नया: किसी भी रीडिंग में संदर्भ टैग जोड़ें — कैफीन, नमकीन भोजन, तनाव, खराब नींद, दवा से पहले/बाद और बहुत कुछ — ताकि आप जान सकें कि आपके आँकड़ों को क्या प्रभावित करता है। चार्ट पर किसी बिंदु को टैप करके उसके टैग और नोट देखें; ये हर रीडिंग पर, PDF रिपोर्ट में और CSV/JSON निर्यात में भी दिखते हैं। अपडेट पर आपका मौजूदा इतिहास पूरी तरह सुरक्षित रहता है।
+नया: किसी भी रीडिंग में त्वरित संदर्भ टैग जोड़ें — कैफीन, व्यायाम, नमकीन भोजन, खराब नींद और बहुत कुछ — ताकि आप जान सकें कि आपके आँकड़ों को क्या प्रभावित करता है। टैग अब लॉग करते समय सामने रहते हैं, और किसी भी चार्ट बिंदु को टैप करके उसके टैग और नोट देख सकते हैं। अपडेट पर आपका इतिहास सुरक्षित रहता है।
 </hi-IN>
 
 <ja-JP>
-新機能：どの記録にもコンテキストタグを追加できます — カフェイン、塩分の多い食事、ストレス、睡眠不足、服薬前後など — 数値に影響する要因を把握できます。グラフ上の点をタップするとそのタグとメモが表示され、各記録・PDFレポート・CSV/JSONエクスポートにも表示されます。更新後も既存の履歴は完全に保持されます。
+新機能：どの記録にもカフェイン・運動・塩分の多い食事・睡眠不足などのコンテキストタグを追加して、数値に影響する要因を把握できます。タグは記録時に見やすくなり、グラフ上の点をタップするとそのタグとメモが表示されます。更新後も既存の履歴は保持されます。
 </ja-JP>
 
 <ko-KR>
-새 기능: 모든 측정값에 상황 태그를 추가하세요 — 카페인, 짠 음식, 스트레스, 수면 부족, 약 복용 전후 등 — 무엇이 수치에 영향을 주는지 파악할 수 있습니다. 차트의 점을 탭하면 해당 태그와 메모가 표시되며, 각 측정값과 PDF 보고서, CSV/JSON 내보내기에도 나타납니다. 업데이트 후에도 기존 기록은 그대로 보존됩니다.
+새 기능: 모든 측정값에 카페인, 운동, 짠 음식, 수면 부족 등 빠른 상황 태그를 추가해 무엇이 수치에 영향을 주는지 파악하세요. 기록할 때 태그가 더 잘 보이며, 차트의 점을 탭하면 해당 태그와 메모가 표시됩니다. 업데이트 후에도 기록은 유지됩니다.
 </ko-KR>
 
 <pt-BR>
-Novo: adicione etiquetas de contexto a qualquer medição — cafeína, refeição salgada, estresse, sono ruim, antes/depois do remédio e mais — para perceber o que altera seus números. Toque em um ponto do gráfico para ver suas etiquetas e nota; elas também aparecem em cada medição, no relatório PDF e nas exportações CSV/JSON. Seu histórico atual é totalmente preservado na atualização.
+Novo: adicione etiquetas de contexto a qualquer leitura — cafeína, exercício, refeição salgada, sono ruim e mais — para perceber o que altera seus números. As etiquetas agora ficam em destaque ao registrar, e você pode tocar em qualquer ponto do gráfico para ver suas etiquetas e notas. Seu histórico é mantido na atualização.
 </pt-BR>
 
 <ro>
-Nou: adaugă etichete de context oricărei măsurători — cofeină, masă sărată, stres, somn slab, înainte/după medicație și altele — ca să vezi ce îți influențează valorile. Atinge un punct din grafic pentru a-i vedea etichetele și nota; apar și la fiecare măsurătoare, în raportul PDF și în exporturile CSV/JSON. Istoricul tău existent este păstrat complet la actualizare.
+Nou: adaugă etichete rapide de context oricărei măsurători — cofeină, mișcare, masă sărată, somn slab și altele — ca să vezi ce îți influențează valorile. Etichetele sunt acum la vedere când înregistrezi, iar atingând un punct din grafic îi vezi etichetele și notele. Istoricul tău este păstrat la actualizare.
 </ro>
 
 <uk>
-Нове: додавайте контекстні теги до будь-якого вимірювання — кофеїн, солона їжа, стрес, поганий сон, до/після ліків тощо — щоб бачити, що впливає на ваші показники. Торкніться точки на графіку, щоб побачити її теги та нотатку; вони також відображаються біля кожного вимірювання, у PDF-звіті та в експортах CSV/JSON. Ваша наявна історія повністю зберігається після оновлення.
+Нове: додавайте швидкі контекстні теги до будь-якого вимірювання — кофеїн, вправи, солона їжа, поганий сон тощо — щоб бачити, що впливає на ваші показники. Теги тепер на видноті під час запису, а торкнувшись точки на графіку, ви побачите її теги й нотатки. Ваша історія зберігається після оновлення.
 </uk>
 
 <zh-CN>
-新功能：为任意记录添加情境标签——咖啡因、高盐饮食、压力、睡眠不佳、服药前/后等——帮助您发现影响数值的因素。点按图表上的某个点即可查看其标签和备注；它们也会显示在每条记录、PDF 报告以及 CSV/JSON 导出中。更新后您的现有历史记录将完整保留。
+新功能：为任意记录添加快捷情境标签——咖啡因、运动、高盐饮食、睡眠不佳等——帮助您发现影响数值的因素。记录时标签更醒目，点按图表上的任意点即可查看其标签和备注。更新后您的历史记录将保留。
 </zh-CN>

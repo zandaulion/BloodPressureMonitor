@@ -1,43 +1,45 @@
 SHORT DESCRIPTION (max 80 chars)
-Snap your BP monitor to log readings. Track trends, share doctor-ready PDFs.
+Log your blood pressure in seconds and track your trends — private and free.
 
 FULL DESCRIPTION (max 4000 chars)
 
-Take control of your blood pressure — in seconds a day.
+Your personal blood pressure log — track your numbers in seconds a day.
 
-Blood pressure matters, but logging it shouldn't be a chore. Add a reading in seconds — free, with no account — then watch your trends take shape and share a clean report with your doctor in one tap. No spreadsheets, no hassle.
+Staying on top of your blood pressure is easier when logging takes seconds, not effort. Add a reading in a moment — free, with no account — then watch your trends take shape and keep all your numbers in one private place. No spreadsheets, no hassle.
 
 ✏️ Log your readings for free, in seconds
-Entering a reading is effortless: fast, tap-friendly sliders let you set systolic, diastolic, and pulse in moments. It's completely free, works offline, and needs no account — start tracking the very first time you open the app.
+Fast, tap-friendly sliders let you set systolic, diastolic, and pulse in moments. Completely free, works offline, and needs no account — start tracking the very first time you open the app.
 
 📷 Or scan your monitor with the camera (Premium)
-Don't want to type at all? Photograph your blood pressure monitor and the numbers are read for you automatically. Camera scanning is an optional Premium feature for those who want the easiest possible entry.
+Don't want to type at all? Photograph your home blood pressure monitor and the numbers are read for you automatically. Camera scanning is an optional Premium feature for the easiest possible entry.
 
-📈 See what your numbers mean
-Every reading is sorted into its blood pressure category, so you instantly know where you stand. Interactive charts reveal your trends over days, weeks, or months. Smart "Avg" smoothing combines back-to-back measurements into a single, honest data point.
+📈 Watch your trends
+Interactive charts reveal how your numbers move over days, weeks, and months. Smart "Avg" smoothing combines back-to-back readings into a single, honest data point — so your trend line reflects reality.
 
-📄 Doctor-ready PDF reports
-Export a clear, professional report of your history — charts and readings included — and share it with your doctor by email, message, or print. Perfect for check-ups and consultations.
+🏷️ Add context to every reading
+Tag a reading with what was going on — caffeine, exercise, a salty meal, poor sleep, stress — and spot what moves your numbers over time.
+
+📄 Keep a clean PDF record
+Export a clear, professional PDF of your history — charts and readings included — to keep for yourself or share with whomever you choose.
 
 🔒 Private by design
-Your health data stays on your device. No account to create, no cloud sign-up required, nothing sold or shared. Your blood pressure is your business — and only yours.
+Your data stays on your device. No account to create, no cloud sign-up, nothing sold or shared. Your numbers are your business — and only yours.
 
 ❤️ Connects with Health Connect
-Sync your readings with Android Health Connect to keep your blood pressure alongside the rest of your health data — on your terms, with your permission.
+Sync your readings with Android Health Connect to keep them alongside your activity, fitness, and other wellness data — on your terms, with your permission.
 
-⏰ Never forget a reading
-Optional gentle reminders help you measure at the same time each morning and evening, so your trends stay accurate and complete.
+⏰ Build a consistent habit
+Optional gentle reminders help you log at the same time each morning and evening, so your trends stay complete.
 
 Features at a glance
-• Free, fast manual entry with sliders — no account needed
-• Optional camera scanning of blood pressure monitors (Premium)
-• Automatic blood pressure categorization
+• Free, fast manual logging with sliders — no account needed
+• Optional camera scanning of home monitors (Premium)
 • Interactive trend charts with averaging
-• Professional PDF export and sharing
+• Context tags to add notes to each reading
+• Clean PDF export and sharing
 • Health Connect integration
 • Customizable morning & evening reminders
-• Optional profile (age, sex) for context
 • Available in 12 languages
 • Your data stays on your device — no account required
 
-Start understanding your blood pressure today. Download now and take the first step toward a healthier heart.
+Start logging today and stay on top of your blood pressure.
