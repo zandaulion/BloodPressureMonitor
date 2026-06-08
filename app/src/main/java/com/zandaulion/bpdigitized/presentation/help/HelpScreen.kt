@@ -22,6 +22,7 @@ import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
 import androidx.compose.material.icons.filled.FileDownload
 import androidx.compose.material.icons.filled.IosShare
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.filled.Person
@@ -67,6 +68,7 @@ private val HELP_SECTIONS = listOf(
     HelpSection(R.string.help_export_title,    R.string.help_export_body, Icons.Default.IosShare),
     HelpSection(R.string.help_import_title,    R.string.help_import_body, Icons.Default.FileDownload),
     HelpSection(R.string.help_hc_title,        R.string.help_hc_body, Icons.Default.MonitorHeart),
+    HelpSection(R.string.help_insights_title,  R.string.help_insights_body, Icons.Default.Lightbulb),
 )
 
 // ── Screen ────────────────────────────────────────────────────────────────────
