@@ -116,6 +116,7 @@
     <string name="validation_notes_placeholder">例：運動後、朝</string>
     <string name="validation_save">記録を保存</string>
     <string name="validation_tags_header">この測定に影響した可能性は？</string>
+    <string name="edit_tags_title">タグを編集</string>
     <string name="tag_before_medication">服薬前</string>
     <string name="tag_after_medication">服薬後</string>
     <string name="tag_caffeine">カフェイン</string>

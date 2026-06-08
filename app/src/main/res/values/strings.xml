@@ -137,6 +137,7 @@
     <string name="validation_save">Save Reading</string>
     <!-- ── Contextual tags ──────────────────────────────────────────────── -->
     <string name="validation_tags_header">What might have affected this reading?</string>
+    <string name="edit_tags_title">Edit tags</string>
     <string name="tag_before_medication">Before meds</string>
     <string name="tag_after_medication">After meds</string>
     <string name="tag_caffeine">Caffeine</string>

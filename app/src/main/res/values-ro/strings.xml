@@ -119,6 +119,7 @@
     <string name="validation_notes_placeholder">ex.: după efort, dimineața</string>
     <string name="validation_save">Salvează măsurătoarea</string>
     <string name="validation_tags_header">Ce ar fi putut influența această măsurătoare?</string>
+    <string name="edit_tags_title">Editează etichetele</string>
     <string name="tag_before_medication">Pre-medicație</string>
     <string name="tag_after_medication">Post-medicație</string>
     <string name="tag_caffeine">Cofeină</string>

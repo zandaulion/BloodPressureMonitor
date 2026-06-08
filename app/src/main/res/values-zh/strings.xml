@@ -116,6 +116,7 @@
     <string name="validation_notes_placeholder">例如：运动后、早晨</string>
     <string name="validation_save">保存记录</string>
     <string name="validation_tags_header">什么可能影响了这次测量？</string>
+    <string name="edit_tags_title">编辑标签</string>
     <string name="tag_before_medication">服药前</string>
     <string name="tag_after_medication">服药后</string>
     <string name="tag_caffeine">咖啡因</string>

@@ -22,4 +22,8 @@ interface BPReadingDao {
 
     @Query("DELETE FROM bp_readings WHERE id = :id")
     suspend fun delete(id: Long)
+
+    /** Replaces only the tags column without touching any other field. */
+    @Query("UPDATE bp_readings SET tags = :tags WHERE id = :id")
+    suspend fun updateTags(id: Long, tags: String)
 }

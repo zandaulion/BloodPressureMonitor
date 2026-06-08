@@ -126,6 +126,7 @@
     <string name="validation_notes_placeholder">مثال: بعد التمرين، صباحًا</string>
     <string name="validation_save">حفظ القراءة</string>
     <string name="validation_tags_header">ما الذي قد يكون أثّر على هذه القراءة؟</string>
+    <string name="edit_tags_title">تعديل الوسوم</string>
     <string name="tag_before_medication">قبل الدواء</string>
     <string name="tag_after_medication">بعد الدواء</string>
     <string name="tag_caffeine">كافيين</string>

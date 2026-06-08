@@ -117,6 +117,7 @@
     <string name="validation_notes_placeholder">ex. après l\'effort, le matin</string>
     <string name="validation_save">Enregistrer la mesure</string>
     <string name="validation_tags_header">Qu\'est-ce qui a pu influencer cette mesure ?</string>
+    <string name="edit_tags_title">Modifier les étiquettes</string>
     <string name="tag_before_medication">Avant la prise</string>
     <string name="tag_after_medication">Après la prise</string>
     <string name="tag_caffeine">Caféine</string>

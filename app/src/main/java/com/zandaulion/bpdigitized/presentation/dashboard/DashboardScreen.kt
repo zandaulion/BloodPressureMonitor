@@ -40,6 +40,9 @@ import com.revenuecat.purchases.ui.revenuecatui.PaywallListener
 import com.revenuecat.purchases.CustomerInfo
 import com.revenuecat.purchases.PurchasesError
 import com.revenuecat.purchases.models.StoreTransaction
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -55,8 +58,11 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.MonitorHeart
 import androidx.compose.material.icons.filled.NotificationsNone
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SmallFloatingActionButton
@@ -83,6 +89,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -112,7 +119,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
 fun DashboardScreen(
     onAddViaCamera: () -> Unit,
@@ -123,6 +130,7 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
+    val tagEditorState by viewModel.tagEditorState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
@@ -509,6 +517,7 @@ fun DashboardScreen(
                         SwipeableReadingRow(
                             reading = reading,
                             onDelete = { viewModel.requestDelete(reading) },
+                            onLongPress = { viewModel.startEditTags(reading) },
                         )
                         HorizontalDivider()
                     }
@@ -539,6 +548,46 @@ fun DashboardScreen(
             }
         }
         } // Box
+    }
+
+    // ── Tag editor bottom sheet (long-press) ──────────────────────────────
+    tagEditorState?.let { state ->
+        ModalBottomSheet(
+            onDismissRequest = viewModel::cancelEditTags,
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 32.dp),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+            ) {
+                Text(
+                    text = stringResource(R.string.edit_tags_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.SemiBold,
+                )
+                FlowRow(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp),
+                ) {
+                    BpTag.entries.forEach { tag ->
+                        FilterChip(
+                            selected = tag in state.selectedTags,
+                            onClick = { viewModel.toggleTagInEditor(tag) },
+                            label = { Text(stringResource(tag.labelRes())) },
+                        )
+                    }
+                }
+                Button(
+                    onClick = viewModel::saveEditedTags,
+                    modifier = Modifier.fillMaxWidth(),
+                ) {
+                    Text(stringResource(R.string.action_save))
+                }
+            }
+        }
     }
 }
 
@@ -581,6 +630,7 @@ private fun RangeChipRow(
 private fun SwipeableReadingRow(
     reading: BPReading,
     onDelete: () -> Unit,
+    onLongPress: () -> Unit,
 ) {
     // Keep a stable reference to the latest onDelete so we can capture it in a
     // remember-once lambda without forcing a new lambda object each recomposition.
@@ -627,12 +677,12 @@ private fun SwipeableReadingRow(
             }
         },
     ) {
-        ReadingRow(reading = reading)
+        ReadingRow(reading = reading, onLongPress = onLongPress)
     }
 }
 
 @Composable
-private fun ReadingRow(reading: BPReading) {
+private fun ReadingRow(reading: BPReading, onLongPress: () -> Unit) {
     // SwipeToDismissBox renders the background (trash icon) at matchParentSize below this
     // composable. Without an opaque background here the icon bleeds through wherever the
     // foreground is transparent — most visibly on tall rows where the icon's CenterEnd
@@ -641,6 +691,10 @@ private fun ReadingRow(reading: BPReading) {
         modifier = Modifier
             .fillMaxWidth()
             .background(MaterialTheme.colorScheme.surface)
+            // pointerInput with detectTapGestures adds only long-press; it does NOT
+            // add tap/click semantics (no ripple on normal tap) and does not interfere
+            // with the parent SwipeToDismissBox horizontal swipe gesture.
+            .pointerInput(Unit) { detectTapGestures(onLongPress = { onLongPress() }) }
             .padding(horizontal = 16.dp, vertical = 12.dp),
     ) {
         Row(

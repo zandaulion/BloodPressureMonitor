@@ -117,6 +117,7 @@
     <string name="validation_notes_placeholder">z.B. nach Sport, morgens</string>
     <string name="validation_save">Messung speichern</string>
     <string name="validation_tags_header">Was könnte diese Messung beeinflusst haben?</string>
+    <string name="edit_tags_title">Tags bearbeiten</string>
     <string name="tag_before_medication">Vor Einnahme</string>
     <string name="tag_after_medication">Nach Einnahme</string>
     <string name="tag_caffeine">Koffein</string>

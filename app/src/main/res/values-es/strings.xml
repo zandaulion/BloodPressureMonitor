@@ -117,6 +117,7 @@
     <string name="validation_notes_placeholder">p. ej. tras ejercicio, mañana</string>
     <string name="validation_save">Guardar lectura</string>
     <string name="validation_tags_header">¿Qué pudo afectar esta lectura?</string>
+    <string name="edit_tags_title">Editar etiquetas</string>
     <string name="tag_before_medication">Pre-medicación</string>
     <string name="tag_after_medication">Post-medicación</string>
     <string name="tag_caffeine">Cafeína</string>

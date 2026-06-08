@@ -50,6 +50,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import kotlin.math.abs
+import kotlin.math.ceil
+import kotlin.math.floor
 
 /** AHA normal-range upper limits shown as dotted reference lines. */
 private const val NORMAL_SYSTOLIC  = 120.0
@@ -76,9 +78,23 @@ fun BPTrendChart(
 
     // True when the entire dataset falls within a single day — in that case labels
     // show only "HH:mm" since showing the date is redundant.
+    // A single reading has no time span, so it counts as sub-day.
     val isSubDayDataset = remember(readings) {
-        readings.size >= 2 &&
+        readings.size < 2 ||
         readings.last().timestamp - readings.first().timestamp < MILLIS_PER_DAY
+    }
+
+    // Y-axis bounds:
+    //   < 24 h span (or single reading) → fixed 40–180, no clutter
+    //   ≥ 24 h span → pad ±5 then snap outward to the nearest 10,
+    //                 so the chart fills the viewport with the actual data range
+    val (yMinY, yMaxY) = if (isSubDayDataset) {
+        40.0 to 180.0
+    } else {
+        val dataMin = readings.minOf { minOf(it.systolic, it.diastolic) }
+        val dataMax = readings.maxOf { maxOf(it.systolic, it.diastolic) }
+        floor((dataMin - 5).toDouble() / 10.0) * 10.0 to
+        ceil((dataMax + 5).toDouble() / 10.0) * 10.0
     }
 
     // Match reference-line colours to the data-series colours (with reduced alpha so they
@@ -257,7 +273,7 @@ fun BPTrendChart(
             zoomState = zoomState,
             chart = rememberCartesianChart(
                 rememberLineCartesianLayer(
-                    rangeProvider = CartesianLayerRangeProvider.fixed(minY = 40.0, maxY = 180.0),
+                    rangeProvider = CartesianLayerRangeProvider.fixed(minY = yMinY, maxY = yMaxY),
                 ),
                 startAxis = VerticalAxis.rememberStart(),
                 bottomAxis = HorizontalAxis.rememberBottom(valueFormatter = bottomFormatter),

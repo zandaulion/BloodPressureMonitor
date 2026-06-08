@@ -116,6 +116,7 @@
     <string name="validation_notes_placeholder">예: 운동 후, 아침</string>
     <string name="validation_save">측정값 저장</string>
     <string name="validation_tags_header">이 측정에 영향을 준 요인은?</string>
+    <string name="edit_tags_title">태그 편집</string>
     <string name="tag_before_medication">약 복용 전</string>
     <string name="tag_after_medication">약 복용 후</string>
     <string name="tag_caffeine">카페인</string>

@@ -121,6 +121,7 @@
     <string name="validation_notes_placeholder">напр. після вправ, зранку</string>
     <string name="validation_save">Зберегти вимірювання</string>
     <string name="validation_tags_header">Що могло вплинути на це вимірювання?</string>
+    <string name="edit_tags_title">Редагувати теги</string>
     <string name="tag_before_medication">До ліків</string>
     <string name="tag_after_medication">Після ліків</string>
     <string name="tag_caffeine">Кофеїн</string>

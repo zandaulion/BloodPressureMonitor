@@ -117,6 +117,7 @@
     <string name="validation_notes_placeholder">जैसे: व्यायाम के बाद, सुबह</string>
     <string name="validation_save">रीडिंग सहेजें</string>
     <string name="validation_tags_header">इस रीडिंग को क्या प्रभावित कर सकता है?</string>
+    <string name="edit_tags_title">टैग संपादित करें</string>
     <string name="tag_before_medication">दवा से पहले</string>
     <string name="tag_after_medication">दवा के बाद</string>
     <string name="tag_caffeine">कैफीन</string>

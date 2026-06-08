@@ -10,6 +10,7 @@ import androidx.health.connect.client.records.HeartRateRecord
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.HealthAssessment
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
@@ -29,9 +30,11 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -55,6 +58,16 @@ data class DashboardUi(
 )
 
 enum class ExportType { JSON, CSV, PDF }
+
+/**
+ * Transient UI state for the long-press tag editor bottom sheet.
+ * [selectedTags] mirrors the user's in-progress selection; it is only
+ * written to the DB when the user taps Save.
+ */
+data class TagEditorState(
+    val reading: BPReading,
+    val selectedTags: Set<BpTag>,
+)
 
 sealed interface DashboardEvent {
     data class ShowUndoSnackbar(val reading: BPReading) : DashboardEvent
@@ -114,6 +127,10 @@ class DashboardViewModel @Inject constructor(
     private val _events = Channel<DashboardEvent>(Channel.BUFFERED)
     val events = _events.receiveAsFlow()
 
+    // ── Tag editor (long-press) ────────────────────────────────────────────
+    private val _tagEditorState = MutableStateFlow<TagEditorState?>(null)
+    val tagEditorState: StateFlow<TagEditorState?> = _tagEditorState.asStateFlow()
+
     fun selectRange(range: ChartRange) {
         selectedRange.value = range
     }
@@ -136,6 +153,35 @@ class DashboardViewModel @Inject constructor(
         viewModelScope.launch {
             repository.insert(reading)
         }
+    }
+
+    /** Opens the tag editor bottom sheet pre-loaded with the reading's current tags. */
+    fun startEditTags(reading: BPReading) {
+        _tagEditorState.value = TagEditorState(reading, reading.tags.toSet())
+    }
+
+    /** Toggles a single tag inside the editor without touching the DB yet. */
+    fun toggleTagInEditor(tag: BpTag) {
+        _tagEditorState.update { current ->
+            current?.let {
+                val updated = if (tag in it.selectedTags) it.selectedTags - tag else it.selectedTags + tag
+                it.copy(selectedTags = updated)
+            }
+        }
+    }
+
+    /** Persists the editor's current selection to the DB and closes the sheet. */
+    fun saveEditedTags() {
+        val state = _tagEditorState.value ?: return
+        viewModelScope.launch {
+            repository.updateTags(state.reading.id, state.selectedTags.sortedBy { it.ordinal })
+            _tagEditorState.value = null
+        }
+    }
+
+    /** Closes the tag editor without saving. */
+    fun cancelEditTags() {
+        _tagEditorState.value = null
     }
 
     fun requestExport() {
