@@ -231,11 +231,13 @@
     <string name="onboarding_welcome_feature_scan">扫描任何血压计</string>
     <string name="onboarding_welcome_feature_trends">查看趋势</string>
     <string name="onboarding_welcome_feature_pdf">医生专用 PDF</string>
+    <string name="onboarding_welcome_feature_tags">情境标签</string>
+    <string name="onboarding_welcome_feature_insights">本地规律</string>
     <string name="onboarding_welcome_privacy">无需账户 — 您的血压数据保留在手机中。</string>
     <string name="onboarding_profile_title">关于您</string>
     <string name="onboarding_profile_subtitle">可选 — 添加出生年份和性别，将您的血压转化为个性化的心脏风险评估。您可以随时在“个人资料”中调整。</string>
     <string name="onboarding_reminders_title">保持规律</string>
-    <string name="onboarding_reminders_body">每天在相同时间测量可建立可靠的趋势 — 需要时可导出为 PDF 或同步到 Health Connect 供医生查看。</string>
+    <string name="onboarding_reminders_body">每天在相同时间测量可建立可靠的趋势，并解锁在设备本地计算的丰富规律——记录越久，规律越精准。需要时可随时导出为 PDF 或同步到 Health Connect。</string>
     <string name="onboarding_reminders_permission_note">需要通知权限。此项为可选 — 您可以随时在应用中启用或调整提醒。</string>
 
     <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>

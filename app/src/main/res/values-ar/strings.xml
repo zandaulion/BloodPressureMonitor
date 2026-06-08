@@ -241,11 +241,13 @@
     <string name="onboarding_welcome_feature_scan">امسح أي جهاز</string>
     <string name="onboarding_welcome_feature_trends">تابع اتجاهاتك</string>
     <string name="onboarding_welcome_feature_pdf">ملف PDF للطبيب</string>
+    <string name="onboarding_welcome_feature_tags">وسوم السياق</string>
+    <string name="onboarding_welcome_feature_insights">أنماط محلية</string>
     <string name="onboarding_welcome_privacy">لا حاجة لحساب — تبقى قراءاتك على هاتفك.</string>
     <string name="onboarding_profile_title">نبذة عنك</string>
     <string name="onboarding_profile_subtitle">اختياري — أضف سنة ميلادك وجنسك لتحويل قراءاتك إلى تقدير شخصي لمخاطر القلب. يمكنك تعديله في أي وقت من الملف الشخصي.</string>
     <string name="onboarding_reminders_title">حافظ على الانتظام</string>
-    <string name="onboarding_reminders_body">القياس في نفس الأوقات كل يوم يبني اتجاهات موثوقة — جاهزة للتصدير كملف PDF أو المزامنة مع Health Connect عندما يحتاجها طبيبك.</string>
+    <string name="onboarding_reminders_body">القياس في نفس الأوقات كل يوم يبني اتجاهات موثوقة ويُفعّل أنماطًا أكثر ثراءً تُحسب على جهازك — كلما طال تسجيلك، كانت الأنماط أدق. بياناتك دائمًا جاهزة للتصدير كملف PDF أو المزامنة مع Health Connect.</string>
     <string name="onboarding_reminders_permission_note">يتطلب إذن الإشعارات. هذا اختياري — يمكنك تفعيل التذكيرات أو تعديلها في أي وقت داخل التطبيق.</string>
 
     <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>

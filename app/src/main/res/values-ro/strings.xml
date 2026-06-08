@@ -234,11 +234,13 @@
     <string name="onboarding_welcome_feature_scan">Scanează orice tensiometru</string>
     <string name="onboarding_welcome_feature_trends">Vezi-ți tendințele</string>
     <string name="onboarding_welcome_feature_pdf">PDF pentru medic</string>
+    <string name="onboarding_welcome_feature_tags">Etichete de context</string>
+    <string name="onboarding_welcome_feature_insights">Tipare locale</string>
     <string name="onboarding_welcome_privacy">Fără cont — valorile rămân pe telefonul tău.</string>
     <string name="onboarding_profile_title">Despre tine</string>
     <string name="onboarding_profile_subtitle">Opțional — adaugă anul nașterii și sexul pentru a transforma valorile într-o estimare personală a riscului cardiac. O poți ajusta oricând în Profil.</string>
     <string name="onboarding_reminders_title">Rămâi consecvent</string>
-    <string name="onboarding_reminders_body">Măsurarea la aceleași ore în fiecare zi creează tendințe fiabile — gata de exportat ca PDF sau de sincronizat cu Health Connect când are nevoie medicul tău.</string>
+    <string name="onboarding_reminders_body">Măsurarea la aceleași ore în fiecare zi creează tendințe fiabile și deblochează tipare mai bogate calculate pe dispozitivul tău — cu cât înregistrezi mai mult, cu atât tiparele devin mai precise. Datele tale sunt mereu gata de exportat ca PDF sau de sincronizat cu Health Connect.</string>
     <string name="onboarding_reminders_permission_note">Necesită permisiunea pentru notificări. Este opțional — poți activa sau ajusta mementourile oricând în aplicație.</string>
 
     <string name="reading_hemodynamics_format">PAM %1$d · PP %2$d mmHg</string>

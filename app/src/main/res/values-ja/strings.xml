@@ -231,11 +231,13 @@
     <string name="onboarding_welcome_feature_scan">どんな血圧計もスキャン</string>
     <string name="onboarding_welcome_feature_trends">傾向を確認</string>
     <string name="onboarding_welcome_feature_pdf">医師向けPDF</string>
+    <string name="onboarding_welcome_feature_tags">コンテキストタグ</string>
+    <string name="onboarding_welcome_feature_insights">端末内の分析</string>
     <string name="onboarding_welcome_privacy">アカウント不要 — 記録は端末に残ります。</string>
     <string name="onboarding_profile_title">あなたについて</string>
     <string name="onboarding_profile_subtitle">任意 — 生年と性別を追加すると、記録があなた専用の心臓リスクの目安になります。プロフィールでいつでも調整できます。</string>
     <string name="onboarding_reminders_title">習慣を続けよう</string>
-    <string name="onboarding_reminders_body">毎日同じ時間に測定すると信頼できる傾向が得られます — 医師が必要なときにPDFで書き出したり、Health Connectに同期したりできます。</string>
+    <string name="onboarding_reminders_body">毎日同じ時間に測定すると信頼できる傾向が得られ、端末内でより豊かなパターンが分析されます — 記録を続けるほどパターンが精緻になります。データはいつでもPDFに書き出したりHealth Connectに同期したりできます。</string>
     <string name="onboarding_reminders_permission_note">通知の許可が必要です。任意です — アプリでいつでもリマインダーを有効化・調整できます。</string>
 
     <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>

@@ -231,11 +231,13 @@
     <string name="onboarding_welcome_feature_scan">모든 혈압계 스캔</string>
     <string name="onboarding_welcome_feature_trends">추세 확인</string>
     <string name="onboarding_welcome_feature_pdf">진료용 PDF</string>
+    <string name="onboarding_welcome_feature_tags">상황 태그</string>
+    <string name="onboarding_welcome_feature_insights">기기 내 패턴</string>
     <string name="onboarding_welcome_privacy">계정 불필요 — 측정값은 휴대폰에 남습니다.</string>
     <string name="onboarding_profile_title">내 정보</string>
     <string name="onboarding_profile_subtitle">선택 사항 — 출생 연도와 성별을 입력하면 측정값이 개인 맞춤 심장 위험도로 바뀝니다. 프로필에서 언제든 수정할 수 있습니다.</string>
     <string name="onboarding_reminders_title">꾸준히 관리하기</string>
-    <string name="onboarding_reminders_body">매일 같은 시간에 측정하면 신뢰할 수 있는 추세가 쌓입니다 — 의사가 필요할 때 PDF로 내보내거나 Health Connect에 동기화할 수 있습니다.</string>
+    <string name="onboarding_reminders_body">매일 같은 시간에 측정하면 신뢰할 수 있는 추세가 쌓이고 기기에서 더 풍부한 패턴이 분석됩니다 — 오래 기록할수록 패턴이 더 정확해집니다. 데이터는 언제든지 PDF로 내보내거나 Health Connect에 동기화할 수 있습니다.</string>
     <string name="onboarding_reminders_permission_note">알림 권한이 필요합니다. 선택 사항이며, 앱에서 언제든지 알림을 켜거나 조정할 수 있습니다.</string>
 
     <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>

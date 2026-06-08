@@ -232,11 +232,13 @@
     <string name="onboarding_welcome_feature_scan">कोई भी मॉनिटर स्कैन करें</string>
     <string name="onboarding_welcome_feature_trends">अपने रुझान देखें</string>
     <string name="onboarding_welcome_feature_pdf">डॉक्टर-तैयार PDF</string>
+    <string name="onboarding_welcome_feature_tags">संदर्भ टैग</string>
+    <string name="onboarding_welcome_feature_insights">ऑन-डिवाइस पैटर्न</string>
     <string name="onboarding_welcome_privacy">खाते की ज़रूरत नहीं — आपकी रीडिंग आपके फ़ोन पर रहती हैं।</string>
     <string name="onboarding_profile_title">आपके बारे में</string>
     <string name="onboarding_profile_subtitle">वैकल्पिक — अपना जन्म वर्ष और लिंग जोड़ें ताकि आपकी रीडिंग एक व्यक्तिगत हृदय-जोखिम चित्र बन सके। आप इसे प्रोफ़ाइल में कभी भी बदल सकते हैं।</string>
     <string name="onboarding_reminders_title">नियमित रहें</string>
-    <string name="onboarding_reminders_body">हर दिन एक ही समय पर मापने से विश्वसनीय रुझान बनते हैं — जब आपके डॉक्टर को ज़रूरत हो, PDF के रूप में निर्यात करने या Health Connect से सिंक करने के लिए तैयार।</string>
+    <string name="onboarding_reminders_body">हर दिन एक ही समय पर मापने से विश्वसनीय रुझान बनते हैं और डिवाइस पर ही समृद्ध पैटर्न सक्रिय होते हैं — आप जितना लंबे समय तक लॉग करते हैं, उतने ही तीखे पैटर्न उभरते हैं। आपका डेटा हमेशा PDF के रूप में निर्यात करने या Health Connect से सिंक करने के लिए तैयार है।</string>
     <string name="onboarding_reminders_permission_note">सूचना अनुमति आवश्यक है। यह वैकल्पिक है — आप ऐप में कभी भी रिमाइंडर सक्षम या समायोजित कर सकते हैं।</string>
 
     <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>

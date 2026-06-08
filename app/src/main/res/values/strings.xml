@@ -270,6 +270,8 @@
     <string name="onboarding_welcome_feature_scan">Scan any monitor</string>
     <string name="onboarding_welcome_feature_trends">See your trends</string>
     <string name="onboarding_welcome_feature_pdf">Doctor-ready PDF</string>
+    <string name="onboarding_welcome_feature_tags">Context tags</string>
+    <string name="onboarding_welcome_feature_insights">On-device insights</string>
     <string name="onboarding_welcome_privacy">No account needed — your readings stay on your phone.</string>
 
     <!-- Page 2: About you (optional profile). Field labels reuse profile_* strings. -->
@@ -278,7 +280,7 @@
 
     <!-- Page 3: Reminders (optional). Card labels reuse reminders_* strings. -->
     <string name="onboarding_reminders_title">Stay consistent</string>
-    <string name="onboarding_reminders_body">Measuring at the same times each day builds reliable trends — ready to export as a PDF or sync to Health Connect whenever your doctor needs them.</string>
+    <string name="onboarding_reminders_body">Measuring at the same times each day builds reliable trends and unlocks richer on-device Insights — the longer you log, the sharper the patterns become. Your data is always ready to export as a PDF or sync to Health Connect.</string>
     <string name="onboarding_reminders_permission_note">Requires notification permission. This is optional — you can enable or adjust reminders anytime in the app.</string>
 
     <!-- ── Hemodynamics (MAP / Pulse Pressure) ──────────────────────────── -->

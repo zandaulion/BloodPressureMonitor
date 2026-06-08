@@ -27,7 +27,9 @@ import androidx.compose.material.icons.automirrored.filled.ShowChart
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Label
 import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.PictureAsPdf
@@ -222,6 +224,22 @@ private fun WelcomePage() {
                 modifier = Modifier.weight(1f),
                 icon = Icons.Default.PictureAsPdf,
                 label = stringResource(R.string.onboarding_welcome_feature_pdf),
+            )
+        }
+        Spacer(Modifier.height(8.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
+        ) {
+            FeatureItem(
+                modifier = Modifier.weight(1f),
+                icon = Icons.Default.Label,
+                label = stringResource(R.string.onboarding_welcome_feature_tags),
+            )
+            FeatureItem(
+                modifier = Modifier.weight(1f),
+                icon = Icons.Default.Lightbulb,
+                label = stringResource(R.string.onboarding_welcome_feature_insights),
             )
         }
 

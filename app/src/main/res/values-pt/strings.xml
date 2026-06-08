@@ -232,11 +232,13 @@
     <string name="onboarding_welcome_feature_scan">Escaneie qualquer aparelho</string>
     <string name="onboarding_welcome_feature_trends">Veja suas tendências</string>
     <string name="onboarding_welcome_feature_pdf">PDF para o médico</string>
+    <string name="onboarding_welcome_feature_tags">Etiquetas de contexto</string>
+    <string name="onboarding_welcome_feature_insights">Padrões no dispositivo</string>
     <string name="onboarding_welcome_privacy">Sem conta — suas leituras ficam no seu telefone.</string>
     <string name="onboarding_profile_title">Sobre você</string>
     <string name="onboarding_profile_subtitle">Opcional — adicione seu ano de nascimento e sexo para transformar suas leituras em uma estimativa de risco cardíaco personalizada. Você pode ajustar quando quiser no Perfil.</string>
     <string name="onboarding_reminders_title">Mantenha o ritmo</string>
-    <string name="onboarding_reminders_body">Medir nos mesmos horários todos os dias cria tendências confiáveis — prontas para exportar como PDF ou sincronizar com o Health Connect quando seu médico precisar.</string>
+    <string name="onboarding_reminders_body">Medir nos mesmos horários todos os dias cria tendências confiáveis e desbloqueia padrões mais ricos calculados no seu dispositivo — quanto mais você registrar, mais precisos os padrões se tornam. Seus dados estão sempre prontos para exportar como PDF ou sincronizar com o Health Connect.</string>
     <string name="onboarding_reminders_permission_note">Requer permissão de notificação. É opcional — você pode ativar ou ajustar os lembretes a qualquer momento no app.</string>
 
     <string name="reading_hemodynamics_format">PAM %1$d · PP %2$d mmHg</string>

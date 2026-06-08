@@ -232,11 +232,13 @@
     <string name="onboarding_welcome_feature_scan">Escanea cualquier tensiómetro</string>
     <string name="onboarding_welcome_feature_trends">Mira tus tendencias</string>
     <string name="onboarding_welcome_feature_pdf">PDF para el médico</string>
+    <string name="onboarding_welcome_feature_tags">Etiquetas de contexto</string>
+    <string name="onboarding_welcome_feature_insights">Patrones locales</string>
     <string name="onboarding_welcome_privacy">Sin cuenta — tus lecturas se quedan en tu teléfono.</string>
     <string name="onboarding_profile_title">Sobre ti</string>
     <string name="onboarding_profile_subtitle">Opcional: añade tu año de nacimiento y sexo para convertir tus lecturas en una estimación de riesgo cardíaco personal. Puedes ajustarlo cuando quieras en Perfil.</string>
     <string name="onboarding_reminders_title">Mantén el ritmo</string>
-    <string name="onboarding_reminders_body">Medir a la misma hora cada día crea tendencias fiables, listas para exportar como PDF o sincronizar con Health Connect cuando tu médico las necesite.</string>
+    <string name="onboarding_reminders_body">Medir a la misma hora cada día crea tendencias fiables y desbloquea patrones más ricos calculados en tu dispositivo — cuanto más registres, más precisos se vuelven. Tus datos están siempre listos para exportar como PDF o sincronizar con Health Connect.</string>
     <string name="onboarding_reminders_permission_note">Requiere permiso de notificaciones. Es opcional: puedes activar o ajustar los recordatorios en cualquier momento en la app.</string>
 
     <string name="reading_hemodynamics_format">MAP %1$d · PP %2$d mmHg</string>
