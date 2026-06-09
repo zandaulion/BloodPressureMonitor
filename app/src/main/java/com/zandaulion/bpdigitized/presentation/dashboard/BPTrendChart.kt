@@ -249,12 +249,15 @@ fun BPTrendChart(
         val modelProducer = remember { CartesianChartModelProducer() }
 
         LaunchedEffect(readings) {
-            // x = seconds elapsed since the first reading, so points close in time
-            // appear close on the chart. Seconds (÷ 1000) satisfies Vico's constraint
-            // of ≤ 4 decimal places; days (÷ 86_400_000) would produce values like
-            // 0.00001157… which triggers IllegalArgumentException in getXDeltaGcd.
+            // x = WHOLE seconds elapsed since the first reading, so points close in time
+            // appear close on the chart. Integer seconds (Long division — no fractional
+            // part) keep Vico's getXDeltaGcd precision check (≤ 4 decimal places) happy.
+            // Fractional seconds from ms-precision timestamps lose precision at large
+            // magnitudes: over the "All" range (~2 years → x ≈ 6.3e7) a double can no
+            // longer represent x to 4 dp, so Vico throws "The x values are too precise".
+            // Days (÷ 86_400_000) would fail immediately for the same reason.
             val firstTs = readings.first().timestamp
-            val xs  = readings.map { (it.timestamp - firstTs).toDouble() / 1_000.0 }
+            val xs  = readings.map { ((it.timestamp - firstTs) / 1_000L).toDouble() }
             val sys = readings.map { it.systolic.toDouble() }
             val dia = readings.map { it.diastolic.toDouble() }
             modelProducer.runTransaction {
