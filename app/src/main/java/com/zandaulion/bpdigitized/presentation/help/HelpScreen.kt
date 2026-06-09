@@ -46,6 +46,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.zandaulion.bpdigitized.Features
 import com.zandaulion.bpdigitized.R
 
 // ── Static help content ───────────────────────────────────────────────────────
@@ -56,20 +57,23 @@ private data class HelpSection(
     val icon: ImageVector? = null,
 )
 
-private val HELP_SECTIONS = listOf(
-    HelpSection(R.string.help_camera_title,    R.string.help_camera_body, Icons.Default.CameraAlt),
-    HelpSection(R.string.help_manual_title,    R.string.help_manual_body, Icons.Default.Edit),
-    HelpSection(R.string.help_trends_title,    R.string.help_trends_body),
-    HelpSection(R.string.help_history_title,   R.string.help_history_body),
-    HelpSection(R.string.help_profile_title,   R.string.help_profile_body, Icons.Default.Person),
-    HelpSection(R.string.help_risk_title,      R.string.help_risk_body),
-    HelpSection(R.string.help_hemo_title,      R.string.help_hemo_body),
-    HelpSection(R.string.help_reminders_title, R.string.help_reminders_body, Icons.Default.NotificationsNone),
-    HelpSection(R.string.help_export_title,    R.string.help_export_body, Icons.Default.IosShare),
-    HelpSection(R.string.help_import_title,    R.string.help_import_body, Icons.Default.FileDownload),
-    HelpSection(R.string.help_hc_title,        R.string.help_hc_body, Icons.Default.MonitorHeart),
-    HelpSection(R.string.help_insights_title,  R.string.help_insights_body, Icons.Default.Lightbulb),
-)
+private val HELP_SECTIONS = buildList {
+    add(HelpSection(R.string.help_camera_title,    R.string.help_camera_body, Icons.Default.CameraAlt))
+    add(HelpSection(R.string.help_manual_title,    R.string.help_manual_body, Icons.Default.Edit))
+    add(HelpSection(R.string.help_trends_title,    R.string.help_trends_body))
+    add(HelpSection(R.string.help_history_title,   R.string.help_history_body))
+    add(HelpSection(R.string.help_profile_title,   R.string.help_profile_body, Icons.Default.Person))
+    // Risk assessment & hemodynamics are clinical surfaces — fitness build hides them.
+    if (Features.CLINICAL) {
+        add(HelpSection(R.string.help_risk_title,  R.string.help_risk_body))
+        add(HelpSection(R.string.help_hemo_title,  R.string.help_hemo_body))
+    }
+    add(HelpSection(R.string.help_reminders_title, R.string.help_reminders_body, Icons.Default.NotificationsNone))
+    add(HelpSection(R.string.help_export_title,    R.string.help_export_body, Icons.Default.IosShare))
+    add(HelpSection(R.string.help_import_title,    R.string.help_import_body, Icons.Default.FileDownload))
+    add(HelpSection(R.string.help_hc_title,        R.string.help_hc_body, Icons.Default.MonitorHeart))
+    add(HelpSection(R.string.help_insights_title,  R.string.help_insights_body, Icons.Default.Lightbulb))
+}
 
 // ── Screen ────────────────────────────────────────────────────────────────────
 

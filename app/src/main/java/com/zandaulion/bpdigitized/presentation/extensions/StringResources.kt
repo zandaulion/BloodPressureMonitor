@@ -1,6 +1,7 @@
 package com.zandaulion.bpdigitized.presentation.extensions
 
 import androidx.annotation.StringRes
+import com.zandaulion.bpdigitized.Features
 import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.ActivityLevel
 import com.zandaulion.bpdigitized.domain.model.BiologicalSex
@@ -65,13 +66,28 @@ import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
     CardiovascularRisk.VERY_HIGH -> R.string.cv_risk_very_high
 }
 
-/** Short badge label shown inside the coloured pill (e.g. "Normal", "Stage 1"). */
-@StringRes fun BPCategory.badgeLabelRes(): Int = when (this) {
+/**
+ * Short badge label shown inside the coloured pill. Defaults to neutral fitness
+ * zone names (Optimal/Elevated/High/Very High/Extreme); the clinical build shows
+ * AHA staging (Normal/Elevated/Stage 1/Stage 2/Crisis) instead.
+ */
+@StringRes fun BPCategory.badgeLabelRes(): Int =
+    if (Features.CLINICAL) clinicalBadgeLabelRes() else zoneBadgeLabelRes()
+
+@StringRes private fun BPCategory.clinicalBadgeLabelRes(): Int = when (this) {
     BPCategory.NORMAL              -> R.string.bp_category_normal
     BPCategory.ELEVATED            -> R.string.bp_category_elevated
     BPCategory.STAGE_1             -> R.string.bp_category_stage1
     BPCategory.STAGE_2             -> R.string.bp_category_stage2
     BPCategory.HYPERTENSIVE_CRISIS -> R.string.bp_category_crisis
+}
+
+@StringRes private fun BPCategory.zoneBadgeLabelRes(): Int = when (this) {
+    BPCategory.NORMAL              -> R.string.bp_zone_optimal
+    BPCategory.ELEVATED            -> R.string.bp_zone_elevated
+    BPCategory.STAGE_1             -> R.string.bp_zone_high
+    BPCategory.STAGE_2             -> R.string.bp_zone_very_high
+    BPCategory.HYPERTENSIVE_CRISIS -> R.string.bp_zone_extreme
 }
 
 /** Full display label used in the Health Risk card (e.g. "Stage 1 Hypertension"). */
@@ -122,3 +138,12 @@ import com.zandaulion.bpdigitized.presentation.dashboard.ExportType
     BpTag.RESTING           -> R.string.tag_resting
     BpTag.ON_WAKING         -> R.string.tag_on_waking
 }
+
+/**
+ * Tags offered in the tag pickers. The medication-timing tags are clinical, so they
+ * are hidden outside the clinical build — existing readings already tagged with them
+ * still render their chips, they just can't be newly applied.
+ */
+val selectableBpTags: List<BpTag>
+    get() = if (Features.CLINICAL) BpTag.entries.toList()
+            else BpTag.entries.filter { it != BpTag.BEFORE_MEDICATION && it != BpTag.AFTER_MEDICATION }

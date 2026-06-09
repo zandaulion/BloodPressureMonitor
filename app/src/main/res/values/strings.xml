@@ -18,6 +18,13 @@
     <string name="bp_category_stage2">Stage 2</string>
     <string name="bp_category_crisis">Crisis</string>
 
+    <!-- Neutral fitness zone labels (shown unless the clinical build is active) -->
+    <string name="bp_zone_optimal">Optimal</string>
+    <string name="bp_zone_elevated">Elevated</string>
+    <string name="bp_zone_high">High</string>
+    <string name="bp_zone_very_high">Very High</string>
+    <string name="bp_zone_extreme">Extreme</string>
+
     <!-- ── BP category display labels (Health Risk card) ──────────────────── -->
     <string name="bp_display_normal">Normal BP</string>
     <string name="bp_display_elevated">Elevated BP</string>
@@ -174,7 +181,7 @@
 
     <!-- ── Profile ────────────────────────────────────────────────────────── -->
     <string name="profile_title">Health Profile</string>
-    <string name="profile_info">This information helps tailor your blood pressure risk assessment. All data stays on your device.</string>
+    <string name="profile_info">These optional details stay on your device and help personalize your experience.</string>
     <string name="profile_section_basic">Basic Information</string>
     <string name="profile_birth_year_label">Birth year</string>
     <string name="profile_birth_year_placeholder">e.g. 1985</string>
@@ -214,7 +221,7 @@
     <string name="profile_restoring">Restoring…</string>
     <string name="profile_restore_success">Purchases restored successfully.</string>
     <string name="profile_restore_error">Failed to restore purchases.</string>
-    <string name="profile_disclaimer">ⓘ  This assessment is informational and does not replace medical advice.</string>
+    <string name="profile_disclaimer">ⓘ  For general wellness tracking only — not medical advice.</string>
 
     <!-- ── Reminders ──────────────────────────────────────────────────────── -->
     <string name="reminders_title">Reminders</string>
@@ -227,7 +234,7 @@
     <string name="reminders_enable_label">Enable Reminders</string>
     <string name="reminders_enable_desc">Morning and evening BP check notifications</string>
     <string name="reminders_morning_label">Morning Check</string>
-    <string name="reminders_morning_desc">Taken ~30 min after waking, before coffee or medication</string>
+    <string name="reminders_morning_desc">Taken ~30 min after waking, before coffee</string>
     <string name="reminders_evening_label">Evening Check</string>
     <string name="reminders_evening_desc">Taken while relaxing in the evening</string>
     <string name="reminders_footer">Tap a time to change it. Reminders fire each day at the chosen time and reschedule automatically.</string>
@@ -266,17 +273,17 @@
     <!-- Page 1: Welcome / hero -->
     <string name="onboarding_welcome_overlay">All-in-one</string>
     <string name="onboarding_welcome_title">Your blood pressure, handled</string>
-    <string name="onboarding_welcome_body">Capture readings in seconds, see what they mean, and share a doctor-ready report — all on your device.</string>
+    <string name="onboarding_welcome_body">Capture readings in seconds, track your trends, and export a beautiful PDF — all on your device.</string>
     <string name="onboarding_welcome_feature_scan">Scan any monitor</string>
     <string name="onboarding_welcome_feature_trends">See your trends</string>
-    <string name="onboarding_welcome_feature_pdf">Doctor-ready PDF</string>
+    <string name="onboarding_welcome_feature_pdf">Shareable PDF</string>
     <string name="onboarding_welcome_feature_tags">Context tags</string>
     <string name="onboarding_welcome_feature_insights">On-device insights</string>
     <string name="onboarding_welcome_privacy">No account needed — your readings stay on your phone.</string>
 
     <!-- Page 2: About you (optional profile). Field labels reuse profile_* strings. -->
     <string name="onboarding_profile_title">About you</string>
-    <string name="onboarding_profile_subtitle">Optional — add your birth year and sex to turn your readings into a personal heart-risk picture. You can refine it anytime in Profile.</string>
+    <string name="onboarding_profile_subtitle">Optional — add a few details to personalize your experience. You can update them anytime in Profile.</string>
 
     <!-- Page 3: Reminders (optional). Card labels reuse reminders_* strings. -->
     <string name="onboarding_reminders_title">Stay consistent</string>
@@ -310,9 +317,9 @@
     <!-- ── Help – section bodies ──────────────────────────────────────────── -->
     <string name="help_camera_body">Camera scanning is a Premium feature, available with an active subscription.\n\nTap the camera button (bottom-right) to open the live preview. Frame your blood pressure monitor\'s display inside the on-screen guide, then tap Capture.\n\nThe photo is sent to Gemini 2.5 Flash, which reads the Systolic, Diastolic, and Pulse values. You can review and correct them on the next screen before saving.\n\nIf you don\'t have an active subscription, tapping the camera button will open the upgrade screen where you can subscribe or restore a previous purchase.</string>
     <string name="help_manual_body">Tap the pencil button to enter a reading without taking a photo. The sliders are pre-filled with your last saved reading (defaults: 120 / 80 / 60 on first launch).\n\nAdjust Systolic, Diastolic, and Pulse using the slider or the ± buttons. Add an optional note, then tap Save Reading.\n\nThe Save button is disabled until Systolic is greater than Diastolic.</string>
-    <string name="help_trends_body">The chart on the Dashboard plots Systolic (red) and Diastolic (blue) readings over time. Use the chips above the chart to filter the view:\n\n• 7d — last 7 days\n• 30d — last 30 days (default)\n• 90d — last 90 days\n• All — complete history\n\nThe Y-axis adapts to your data. With fewer than 24 hours of readings it is fixed at 40–180 mmHg. Once your history spans 24 hours or more, the axis tightens around your actual range (±5 mmHg padding, snapped to the nearest 10) so trends are easier to see. Dashed reference lines for SYS 120 and DIA 80 are hidden automatically if they fall outside the visible range.\n\nThe Avg chip, to the right of the range chips, smooths bursts of readings: when it is on, measurements taken within about 10 minutes of each other are averaged into a single point — the clinical way to read repeated readings. Turn it off to plot every individual reading. This affects only the chart; your reading list always keeps every entry.\n\nRotate the phone to landscape for a full-screen chart view.</string>
-    <string name="help_history_body">All readings are listed below the chart, newest first. Each row shows:\n\n• Date and time\n• SYS / DIA · pulse (bpm)\n• A colour-coded BP category badge (Normal / Elevated / Stage 1 / Stage 2 / Crisis)\n• Context tag chips (if any have been set)\n• Any note you added (shown in italics)\n\nSwipe a row left or right to delete it. A snackbar appears at the bottom with an Undo button — you have 5 seconds to reverse the deletion before it is permanent.\n\nLong-press any row to open the tag editor. Select or deselect any of the ten context tags (Caffeine, Alcohol, Salty meal, Exercise, Stress, Poor sleep, Resting, On waking, Before meds, After meds), then tap Save. Tags let you correlate lifestyle factors with your readings and power the Insights card.</string>
-    <string name="help_profile_body">Tap the Person icon to open your Health Profile. Filling it in allows the app to personalise the Health Risk card.\n\nFields available:\n\n• Birth year — used to compute your age\n• Biological sex\n• Weight (kg) and Height (cm) — live BMI preview shown\n• Current smoker toggle\n• Diabetes / pre-diabetes toggle\n• Physical activity level\n\nAll data stays on-device (DataStore Preferences). The profile is optional; the app works fully without it.</string>
+    <string name="help_trends_body">The chart on the Dashboard plots Systolic (red) and Diastolic (blue) readings over time. Use the chips above the chart to filter the view:\n\n• 7d — last 7 days\n• 30d — last 30 days (default)\n• 90d — last 90 days\n• All — complete history\n\nThe Y-axis adapts to your data. With fewer than 24 hours of readings it is fixed at 40–180 mmHg. Once your history spans 24 hours or more, the axis tightens around your actual range (±5 mmHg padding, snapped to the nearest 10) so trends are easier to see. Dashed reference lines for SYS 120 and DIA 80 are hidden automatically if they fall outside the visible range.\n\nThe Avg chip, to the right of the range chips, smooths bursts of readings: when it is on, measurements taken within about 10 minutes of each other are averaged into a single point — the standard way to read repeated readings. Turn it off to plot every individual reading. This affects only the chart; your reading list always keeps every entry.\n\nRotate the phone to landscape for a full-screen chart view.</string>
+    <string name="help_history_body">All readings are listed below the chart, newest first. Each row shows:\n\n• Date and time\n• SYS / DIA · pulse (bpm)\n• A colour-coded zone badge\n• Context tag chips (if any have been set)\n• Any note you added (shown in italics)\n\nSwipe a row left or right to delete it. A snackbar appears at the bottom with an Undo button — you have 5 seconds to reverse the deletion before it is permanent.\n\nLong-press any row to open the tag editor. Select or deselect the context tags (Caffeine, Alcohol, Salty meal, Exercise, Stress, Poor sleep, Resting, On waking), then tap Save. Tags let you correlate lifestyle factors with your readings and power the Insights card.</string>
+    <string name="help_profile_body">Tap the Person icon to open your profile. Filling it in helps personalise the app.\n\nFields available:\n\n• Birth year\n• Biological sex\n• Weight (kg) and Height (cm) — live BMI preview shown\n• Physical activity level\n\nAll data stays on your device. The profile is optional; the app works fully without it.</string>
     <string name="help_risk_body">When at least one reading exists, a Health Risk card appears at the top of the reading list. It combines your latest BP category with your health profile to surface contextual guidance.\n\nGuidance is drawn from AHA (American Heart Association) guidelines and is prefixed with a disclaimer. It is informational only and does not replace advice from a qualified healthcare professional.\n\nTap \"Edit profile\" on the card to complete or update your health profile.</string>
     <string name="help_reminders_body">Tap the Bell icon to configure daily measurement reminders.\n\n1. Grant the notification permission if prompted.\n2. Enable the master switch.\n3. Set a Morning time (ideally 30 minutes after waking, before coffee or medication).\n4. Set an Evening time (when you are relaxed and at rest).\n\nNotifications include a Log Now shortcut that opens the app, and a Snooze (15m) action. Alarms are re-scheduled automatically each day and survive device reboots.\n\nIf the exact-alarm permission is not available on your device, the app will direct you to the system settings to enable it.</string>
     <string name="help_export_body">Tap the Share icon in the top bar to export your data. A dropdown offers three formats:\n\n• JSON — your complete reading history. Can be imported back into the app.\n• CSV — your complete history in spreadsheet format, compatible with Excel or Google Sheets.\n• PDF — a multi-page document containing:\n  – Landscape trend charts for the last 7, 30, and 90 days. Each chart includes reference lines and a stats bar (avg / min / max). Tagged readings are marked with numbered badges, and a legend below the chart maps each number to its tag — a reading with several tags shows their numbers combined (e.g. 247).\n  – A portrait table of readings from the last 30 days with colour-coded categories and their tags.\n\nThe PDF charts follow the Avg setting from the Dashboard. With Avg on, back-to-back readings are merged into one point on the charts, while the readings table always lists every individual entry.\n\nThe export is shared via Android\'s standard share sheet.</string>

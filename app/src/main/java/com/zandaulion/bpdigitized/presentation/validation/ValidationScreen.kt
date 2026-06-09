@@ -87,11 +87,13 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import coil.compose.AsyncImage
+import com.zandaulion.bpdigitized.Features
 import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
 import com.zandaulion.bpdigitized.domain.model.pulsePressure
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.extensions.selectableBpTags
 import com.zandaulion.bpdigitized.presentation.capture.ocrDumpFileFor
 import com.zandaulion.bpdigitized.presentation.capture.preprocFileFor
 import java.io.File
@@ -233,8 +235,8 @@ fun ValidationScreen(
                 onToggle = viewModel::toggleTag,
             )
 
-            // ── Live MAP / PP readout ─────────────────────────────────────
-            if (state.isValid) {
+            // ── Live MAP / PP readout (clinical build only) ───────────────
+            if (Features.CLINICAL && state.isValid) {
                 HemodynamicsReadout(
                     map = meanArterialPressure(state.systolic, state.diastolic),
                     pulsePressure = pulsePressure(state.systolic, state.diastolic),
@@ -626,7 +628,7 @@ private fun TagPicker(
                 )
             }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                BpTag.entries.forEach { tag ->
+                selectableBpTags.forEach { tag ->
                     FilterChip(
                         selected = tag in selected,
                         onClick = { onToggle(tag) },

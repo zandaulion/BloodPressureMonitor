@@ -44,6 +44,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.zandaulion.bpdigitized.Features
 import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.ActivityLevel
 import com.zandaulion.bpdigitized.domain.model.BiologicalSex
@@ -302,24 +303,27 @@ fun ProfileScreen(
                 }
             }
 
-            Spacer(Modifier.height(8.dp))
+            // Health factors (smoker / diabetes) only feed the clinical risk card.
+            if (Features.CLINICAL) {
+                Spacer(Modifier.height(8.dp))
 
-            // ── Health factors ────────────────────────────────────────────────
-            SectionHeader(stringResource(R.string.profile_section_health))
+                // ── Health factors ────────────────────────────────────────────────
+                SectionHeader(stringResource(R.string.profile_section_health))
 
-            ToggleRow(
-                label = stringResource(R.string.profile_smoker_label),
-                description = stringResource(R.string.profile_smoker_desc),
-                checked = state.isSmoker,
-                onChecked = viewModel::updateSmoker,
-            )
-            HorizontalDivider()
-            ToggleRow(
-                label = stringResource(R.string.profile_diabetes_label),
-                description = stringResource(R.string.profile_diabetes_desc),
-                checked = state.hasDiabetes,
-                onChecked = viewModel::updateDiabetes,
-            )
+                ToggleRow(
+                    label = stringResource(R.string.profile_smoker_label),
+                    description = stringResource(R.string.profile_smoker_desc),
+                    checked = state.isSmoker,
+                    onChecked = viewModel::updateSmoker,
+                )
+                HorizontalDivider()
+                ToggleRow(
+                    label = stringResource(R.string.profile_diabetes_label),
+                    description = stringResource(R.string.profile_diabetes_desc),
+                    checked = state.hasDiabetes,
+                    onChecked = viewModel::updateDiabetes,
+                )
+            }
 
             Spacer(Modifier.height(8.dp))
 

@@ -103,6 +103,7 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import com.zandaulion.bpdigitized.Features
 import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.meanArterialPressure
 import com.zandaulion.bpdigitized.domain.model.pulsePressure
@@ -112,6 +113,7 @@ import com.zandaulion.bpdigitized.presentation.components.CategoryBadge
 import com.zandaulion.bpdigitized.presentation.components.HealthRiskCard
 import com.zandaulion.bpdigitized.presentation.components.InsightsCard
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.extensions.selectableBpTags
 import com.zandaulion.bpdigitized.presentation.locale.APP_LANGUAGES
 import com.zandaulion.bpdigitized.presentation.locale.LocalePrefs
 import kotlinx.coroutines.delay
@@ -583,7 +585,7 @@ fun DashboardScreen(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp),
                 ) {
-                    BpTag.entries.forEach { tag ->
+                    selectableBpTags.forEach { tag ->
                         FilterChip(
                             selected = tag in state.selectedTags,
                             onClick = { viewModel.toggleTagInEditor(tag) },
@@ -726,15 +728,17 @@ private fun ReadingRow(reading: BPReading, onLongPress: () -> Unit) {
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold,
                 )
-                Text(
-                    text = stringResource(
-                        R.string.reading_hemodynamics_format,
-                        reading.meanArterialPressure,
-                        reading.pulsePressure,
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
+                if (Features.CLINICAL) {
+                    Text(
+                        text = stringResource(
+                            R.string.reading_hemodynamics_format,
+                            reading.meanArterialPressure,
+                            reading.pulsePressure,
+                        ),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
             CategoryBadge(category = reading.category)
         }

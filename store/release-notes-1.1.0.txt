@@ -1,47 +1,47 @@
 <en-US>
-Charts now fit your data: with 24h+ of readings the Y-axis tightens around your real range instead of a fixed 40–180, so trends are clearer. Long-press any reading to add or edit its context tags. PDF reports now print in your app language across 7/30/90-day charts, marking tagged readings with numbered badges and a legend. New: an on-device Insights card spots patterns — morning vs evening, 30-day trends, healthy streaks, tag correlations and more. No data ever leaves your phone.
+Charts now fit your data — once you have a day of readings the axis tightens around your real range, so trends are clearer. Long-press any reading to add or edit its context tags. PDF reports export in your app language with numbered tag badges and a legend. New: an on-device Insights card spots patterns — morning vs evening, 30-day trends, healthy streaks, tag correlations and more. Plus stability improvements. No data ever leaves your phone.
 </en-US>
 
 <de-DE>
-Diagramme passen sich Ihren Daten an: ab 24 Std. Messwerten zeigt die Y-Achse Ihren echten Bereich statt fix 40–180 – Trends sind klarer. Eintrag lange drücken, um Kontext-Tags zu bearbeiten. PDF-Berichte erscheinen jetzt in Ihrer App-Sprache, über 7/30/90-Tage-Diagramme, mit nummerierten Tag-Badges und Legende. Neu: eine Insights-Karte erkennt Muster direkt auf dem Gerät – Morgen/Abend, 30-Tage-Trends, gesunde Serien, Tag-Korrelationen u. v. m. Keine Daten verlassen Ihr Telefon.
+Diagramme passen sich Ihren Daten an: ab einem Tag mit Messwerten zeigt die Y-Achse Ihren echten Bereich – Trends sind klarer. Eintrag lange drücken, um Kontext-Tags zu bearbeiten. PDF-Berichte erscheinen in Ihrer App-Sprache, mit nummerierten Tag-Badges und Legende. Neu: eine Insights-Karte erkennt Muster direkt auf dem Gerät – Morgen/Abend, 30-Tage-Trends, gesunde Serien, Tag-Korrelationen u. v. m. Dazu Stabilitätsverbesserungen. Keine Daten verlassen Ihr Telefon.
 </de-DE>
 
 <es-ES>
-Los gráficos se adaptan a tus datos: con 24 h+ de lecturas, el eje Y se ajusta a tu rango real en vez de un fijo 40–180, y las tendencias se ven mejor. Mantén pulsada una lectura para editar sus etiquetas. Los PDF ahora se generan en el idioma de la app, con gráficos de 7/30/90 días e insignias numeradas con leyenda. Nuevo: una tarjeta de Tendencias detecta patrones en tu dispositivo — mañana/tarde, 30 días, rachas, correlaciones y más. Ningún dato sale de tu teléfono.
+Los gráficos se adaptan a tus datos: con un día de lecturas, el eje Y se ajusta a tu rango real y las tendencias se ven mejor. Mantén pulsada una lectura para editar sus etiquetas. Los PDF se generan en el idioma de la app, con insignias numeradas y leyenda. Nuevo: una tarjeta de Tendencias detecta patrones en tu dispositivo — mañana/tarde, 30 días, rachas, correlaciones y más. Además, mejoras de estabilidad. Ningún dato sale de tu teléfono.
 </es-ES>
 
 <fr-FR>
-Les graphiques s'adaptent à vos données : avec 24 h+ de mesures, l'axe Y se cale sur votre plage réelle au lieu d'un 40–180 fixe, pour des tendances plus claires. Appui long sur une mesure pour modifier ses étiquettes. Les PDF sont générés dans la langue de l'app, sur des graphiques 7/30/90 jours, avec badges numérotés et légende. Nouveau : une carte Tendances repère des schémas sur l'appareil — matin/soir, 30 jours, séries saines, corrélations et plus. Aucune donnée ne quitte le téléphone.
+Les graphiques s'adaptent à vos données : avec un jour de mesures, l'axe Y se cale sur votre plage réelle, pour des tendances plus claires. Appui long sur une mesure pour modifier ses étiquettes. Les PDF sont générés dans la langue de l'app, avec badges numérotés et légende. Nouveau : une carte Tendances repère des schémas sur l'appareil — matin/soir, 30 jours, séries saines, corrélations et plus. Plus des améliorations de stabilité. Aucune donnée ne quitte le téléphone.
 </fr-FR>
 
 <ar>
-تتكيّف الرسوم مع بياناتك: مع 24 ساعة فأكثر يضيق محور Y حول نطاقك الفعلي بدل 40–180 الثابت لتوضيح الاتجاهات. اضغط مطولاً على قراءة لتعديل وسومها. تُنشأ تقارير PDF الآن بلغة التطبيق عبر رسوم 7/30/90 يومًا مع شارات مرقّمة ومفتاح. جديد: بطاقة الأنماط تكتشف الأنماط على جهازك — الصباح/المساء، 30 يومًا، السلاسل الصحية، ارتباطات الوسوم والمزيد. لا تغادر بياناتك هاتفك.
+تتكيّف الرسوم مع بياناتك: بعد يوم من القراءات يضيق محور Y حول نطاقك الفعلي لتوضيح الاتجاهات. اضغط مطولاً على قراءة لتعديل وسومها. تُنشأ تقارير PDF بلغة التطبيق مع شارات مرقّمة ومفتاح. جديد: بطاقة الأنماط تكتشف الأنماط على جهازك — الصباح/المساء، 30 يومًا، السلاسل الصحية، ارتباطات الوسوم والمزيد. بالإضافة إلى تحسينات في الاستقرار. لا تغادر بياناتك هاتفك.
 </ar>
 
 <hi-IN>
-चार्ट अब आपके डेटा अनुसार ढलते हैं: 24घं+ रीडिंग पर Y-अक्ष तय 40–180 की बजाय आपकी वास्तविक रेंज दिखाता है, रुझान स्पष्ट होते हैं। टैग बदलने के लिए किसी रीडिंग पर लंबा दबाएं। PDF रिपोर्ट अब आपकी ऐप भाषा में, 7/30/90-दिन चार्ट के साथ, क्रमांकित टैग बैज व लेजेंड सहित बनती है। नया: इनसाइट्स कार्ड डिवाइस पर पैटर्न पहचानता है — सुबह/शाम, 30-दिन रुझान, स्वस्थ स्ट्रीक, टैग सहसंबंध आदि। डेटा फ़ोन से बाहर नहीं जाता।
+चार्ट अब आपके डेटा अनुसार ढलते हैं: एक दिन की रीडिंग के बाद Y-अक्ष आपकी वास्तविक रेंज दिखाता है, रुझान स्पष्ट होते हैं। टैग जोड़ने या बदलने के लिए किसी रीडिंग पर लंबा दबाएं। PDF रिपोर्ट आपकी ऐप भाषा में, क्रमांकित टैग बैज व लेजेंड सहित बनती है। नया: इनसाइट्स कार्ड डिवाइस पर पैटर्न पहचानता है — सुबह/शाम, 30-दिन रुझान, स्वस्थ स्ट्रीक, टैग सहसंबंध आदि। साथ ही स्थिरता सुधार। डेटा फ़ोन से बाहर नहीं जाता।
 </hi-IN>
 
 <ja-JP>
-グラフがデータに合わせて調整されるようになりました：24時間以上の記録がある場合、Y軸は常に40〜180を表示する代わりに実際の範囲に絞り込まれ、傾向が読みやすくなります。記録を長押しすると、後からコンテキストタグを追加・編集できます。PDFエクスポートにも同じ改善されたスケールが適用され、タグ付きの測定値は番号バッジと凡例で示されるようになりました。レポートは選択したアプリの言語で生成されるようになりました。新機能：ダッシュボードのパターンカードがデバイス上で完全にパターンを検出します — 朝と夕方の違い、30日間のトレンド、健康的な連続記録、タグの相関など。データがスマートフォンの外に出ることはありません。
+グラフがデータに合わせて調整されます：1日分の記録があれば、Y軸が実際の範囲に絞り込まれ、傾向が読みやすくなります。記録を長押しすると、後からコンテキストタグを追加・編集できます。PDFレポートはアプリの言語で出力され、番号付きタグバッジと凡例が付きます。新機能：端末内で動くインサイトカードがパターンを検出 — 朝と夕方の違い、30日間のトレンド、健康的な連続記録、タグの相関など。さらに安定性の改善。データが端末の外に出ることはありません。
 </ja-JP>
 
 <ko-KR>
-이제 차트가 데이터에 맞게 조정됩니다: 24시간 이상의 기록이 있으면 Y축이 항상 40–180 대신 실제 범위에 맞게 좁혀져 추세를 읽기 쉬워집니다. 목록에서 기록을 길게 눌러 상황 태그를 나중에 추가하거나 편집할 수 있습니다. PDF 내보내기에도 동일하게 개선된 축척이 적용되며, 태그가 있는 측정값은 이제 번호 배지와 범례로 표시됩니다. 보고서는 이제 선택한 앱 언어로 생성됩니다. 신규: 대시보드의 패턴 카드가 완전히 기기에서 패턴을 감지합니다 — 아침과 저녁의 차이, 30일 추세, 건강한 연속 기록, 태그 상관관계 등. 데이터는 절대 스마트폰 밖으로 나가지 않습니다.
+차트가 데이터에 맞게 조정됩니다: 하루치 기록이 있으면 Y축이 실제 범위에 맞게 좁혀져 추세를 읽기 쉬워집니다. 기록을 길게 눌러 상황 태그를 추가하거나 편집하세요. PDF 보고서는 앱 언어로 생성되며 번호 배지와 범례가 표시됩니다. 신규: 기기에서 작동하는 인사이트 카드가 패턴을 감지합니다 — 아침/저녁 차이, 30일 추세, 건강한 연속 기록, 태그 상관관계 등. 또한 안정성 개선. 데이터는 기기를 벗어나지 않습니다.
 </ko-KR>
 
 <pt-BR>
-Os gráficos se adaptam aos seus dados: com 24 h+ de leituras, o eixo Y se ajusta à sua faixa real em vez de um fixo 40–180, deixando as tendências mais claras. Toque e segure uma leitura para editar suas etiquetas. Os PDF agora saem no idioma do app, com gráficos de 7/30/90 dias, selos numerados e legenda. Novidade: um cartão de Padrões detecta padrões no seu dispositivo — manhã/tarde, 30 dias, sequências saudáveis, correlações e mais. Nenhum dado sai do telefone.
+Os gráficos se adaptam aos seus dados: com um dia de leituras, o eixo Y se ajusta à sua faixa real e as tendências ficam mais claras. Toque e segure uma leitura para editar suas etiquetas. Os PDF saem no idioma do app, com selos numerados e legenda. Novidade: um cartão de Padrões detecta padrões no seu dispositivo — manhã/tarde, 30 dias, sequências saudáveis, correlações e mais. Além de melhorias de estabilidade. Nenhum dado sai do telefone.
 </pt-BR>
 
 <ro>
-Graficele se adaptează la datele tale: cu 24 h+ de măsurători, axa Y se restrânge la intervalul real în loc de 40–180 fix, iar tendințele se văd mai clar. Apasă lung o înregistrare pentru a edita etichetele. Rapoartele PDF apar acum în limba aplicației, cu grafice de 7/30/90 zile, insigne numerotate și legendă. Nou: un card Tipare detectează șabloane pe dispozitiv — dimineață/seară, 30 de zile, serii sănătoase, corelații și altele. Nicio dată nu părăsește telefonul.
+Graficele se adaptează la datele tale: după o zi de măsurători, axa Y se restrânge la intervalul real, iar tendințele se văd mai clar. Apasă lung o înregistrare pentru a edita etichetele. Rapoartele PDF apar în limba aplicației, cu insigne numerotate și legendă. Nou: un card Tipare detectează șabloane pe dispozitiv — dimineață/seară, 30 de zile, serii sănătoase, corelații și altele. În plus, îmbunătățiri de stabilitate. Nicio dată nu părăsește telefonul.
 </ro>
 
 <uk>
-Графіки підлаштовуються під ваші дані: від 24 год вимірювань вісь Y звужується до реального діапазону замість фіксованого 40–180, тенденції чіткіші. Утримуйте запис, щоб змінити теги. PDF-звіти тепер мовою додатка, на графіках 7/30/90 днів, із нумерованими значками тегів і легендою. Нове: картка Закономірності виявляє патерни на пристрої — ранок/вечір, 30-денні тренди, здорові серії, кореляції тегів тощо. Дані не покидають телефон.
+Графіки підлаштовуються під ваші дані: від одного дня вимірювань вісь Y звужується до реального діапазону, тенденції чіткіші. Утримуйте запис, щоб додати чи змінити теги. PDF-звіти створюються мовою додатка, із нумерованими значками тегів і легендою. Нове: картка Закономірності виявляє патерни на пристрої — ранок/вечір, 30-денні тренди, здорові серії, кореляції тегів тощо. А також покращення стабільності. Дані не покидають телефон.
 </uk>
 
 <zh-CN>
-图表现在适应您的数据：超过24小时的记录后，Y轴会收窄至实际范围而非始终显示40–180，趋势一目了然。长按列表中的任意记录，可随时补充或修改情境标签。PDF导出同样采用改进后的坐标轴比例，现在还会用编号徽章和图例标记带标签的读数，并完全以你选择的应用语言生成报告。新功能：仪表板上的规律卡片完全在您的设备上检测模式——早晚差异、30天趋势、健康连续记录、标签相关性等。您的数据永远不会离开手机。
+图表会适应您的数据：有一天的记录后，Y轴会收窄至实际范围，趋势一目了然。长按任意记录即可添加或修改情境标签。PDF报告以您选择的应用语言生成，带编号标签徽章和图例。新功能：设备端的洞察卡片会检测规律——早晚差异、30天趋势、健康连续记录、标签相关性等。另有稳定性改进。您的数据永远不会离开手机。
 </zh-CN>

@@ -9,6 +9,7 @@ import androidx.health.connect.client.records.BloodPressureRecord
 import androidx.health.connect.client.records.HeartRateRecord
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.zandaulion.bpdigitized.Features
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.domain.model.HealthAssessment
@@ -121,7 +122,9 @@ class DashboardViewModel @Inject constructor(
         // Smoothing affects only the chart; the readings list below stays raw.
         val chart = if (smooth) aggregateReadings(inRange) else inRange.sortedBy { it.timestamp }
         val latest = all.maxByOrNull { it.timestamp }
-        val assessment = latest?.let { calculateHealthRisk(it.category, profile) }
+        // Risk assessment is a clinical surface — omitted from the fitness build.
+        val assessment = if (Features.CLINICAL)
+            latest?.let { calculateHealthRisk(it.category, profile) } else null
         val insights = generateInsights(all)
         DashboardUi(all, chart, range, assessment, isPro, smooth, insights)
     }.stateIn(
