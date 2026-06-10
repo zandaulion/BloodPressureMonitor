@@ -132,6 +132,7 @@ dependencies {
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.vertexai)
     implementation(libs.firebase.appcheck.playintegrity)
+    implementation(libs.firebase.appcheck.debug)
 
     // RevenueCat
     implementation(libs.revenuecat.purchases)
