@@ -10,7 +10,7 @@ composeBom = "2026.05.01"
 navigationCompose = "2.8.5"
 
 googleServices = "4.4.2"
-firebaseBom = "33.8.0"
+firebaseBom = "34.14.1"
 revenuecat = "8.13.0"
 
 hilt = "2.59.2"
@@ -67,7 +67,8 @@ camera-lifecycle = { group = "androidx.camera", name = "camera-lifecycle", versi
 camera-view = { group = "androidx.camera", name = "camera-view", version.ref = "cameraX" }
 
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-vertexai = { group = "com.google.firebase", name = "firebase-vertexai" }
+firebase-ai = { group = "com.google.firebase", name = "firebase-ai" }
+firebase-config = { group = "com.google.firebase", name = "firebase-config" }
 firebase-appcheck-playintegrity = { group = "com.google.firebase", name = "firebase-appcheck-playintegrity" }
 firebase-appcheck-debug = { group = "com.google.firebase", name = "firebase-appcheck-debug" }
 

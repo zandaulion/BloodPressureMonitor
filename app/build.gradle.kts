@@ -15,8 +15,8 @@ android {
         applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 16
-        versionName = "1.1.0"
+        versionCode = 17
+        versionName = "1.2.0"
 
         // Clinical mode. When true the app surfaces AHA hypertension staging,
         // the cardiovascular risk assessment, and condition inputs (diabetes,
@@ -128,9 +128,10 @@ dependencies {
     implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.datastore.preferences)
 
-    // Firebase & Vertex AI
+    // Firebase: AI Logic (Gemini via Vertex AI backend), Remote Config, App Check
     implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.vertexai)
+    implementation(libs.firebase.ai)
+    implementation(libs.firebase.config)
     implementation(libs.firebase.appcheck.playintegrity)
     implementation(libs.firebase.appcheck.debug)
 
