@@ -1,0 +1,47 @@
+<en-US>
+Small maintenance release: the AI model behind camera scanning can now be updated remotely, so scans keep working reliably without waiting for an app update. Plus refreshed internal libraries and stability improvements.
+</en-US>
+
+<de-DE>
+Kleines Wartungsupdate: Das KI-Modell hinter dem Kamera-Scan kann jetzt aus der Ferne aktualisiert werden – Scans funktionieren zuverlässig weiter, ohne auf ein App-Update zu warten. Dazu aktualisierte interne Bibliotheken und Stabilitätsverbesserungen.
+</de-DE>
+
+<es-ES>
+Pequeña actualización de mantenimiento: el modelo de IA del escaneo con cámara ahora puede actualizarse de forma remota, así el escaneo sigue funcionando de manera fiable sin esperar una actualización de la app. Además, bibliotecas internas renovadas y mejoras de estabilidad.
+</es-ES>
+
+<fr-FR>
+Petite mise à jour de maintenance : le modèle d'IA du scan par caméra peut désormais être mis à jour à distance — le scan reste fiable sans attendre une mise à jour de l'app. Avec des bibliothèques internes actualisées et des améliorations de stabilité.
+</fr-FR>
+
+<ar>
+تحديث صيانة صغير: يمكن الآن تحديث نموذج الذكاء الاصطناعي الخاص بالمسح بالكاميرا عن بُعد، ليظل المسح يعمل بموثوقية دون انتظار تحديث التطبيق. إضافة إلى تحديث المكتبات الداخلية وتحسينات في الاستقرار.
+</ar>
+
+<hi-IN>
+छोटा रखरखाव अपडेट: कैमरा स्कैनिंग के पीछे का AI मॉडल अब रिमोट रूप से अपडेट हो सकता है — ऐप अपडेट की प्रतीक्षा किए बिना स्कैन भरोसेमंद बने रहते हैं। साथ ही आंतरिक लाइब्रेरी अपडेट और स्थिरता सुधार।
+</hi-IN>
+
+<ja-JP>
+小規模なメンテナンスアップデート：カメラスキャンを支えるAIモデルがリモートで更新できるようになり、アプリの更新を待たずにスキャンの信頼性を維持できます。内部ライブラリの更新と安定性の改善も含まれます。
+</ja-JP>
+
+<ko-KR>
+소규모 유지 보수 업데이트: 카메라 스캔에 사용되는 AI 모델을 이제 원격으로 업데이트할 수 있어, 앱 업데이트를 기다리지 않아도 스캔이 안정적으로 유지됩니다. 내부 라이브러리 업데이트와 안정성 개선도 포함됩니다.
+</ko-KR>
+
+<pt-BR>
+Pequena atualização de manutenção: o modelo de IA por trás do escaneamento com câmera agora pode ser atualizado remotamente, mantendo o escaneamento confiável sem esperar uma atualização do app. Além de bibliotecas internas renovadas e melhorias de estabilidade.
+</pt-BR>
+
+<ro>
+Mică actualizare de întreținere: modelul AI din spatele scanării cu camera poate fi acum actualizat de la distanță — scanarea rămâne fiabilă fără a aștepta o actualizare a aplicației. În plus, biblioteci interne actualizate și îmbunătățiri de stabilitate.
+</ro>
+
+<uk>
+Невелике технічне оновлення: модель ШІ для сканування камерою тепер можна оновлювати віддалено — сканування працює надійно без очікування оновлення додатка. А також оновлені внутрішні бібліотеки та покращення стабільності.
+</uk>
+
+<zh-CN>
+小型维护更新：相机扫描背后的AI模型现在可以远程更新，无需等待应用更新即可保持扫描可靠。同时更新了内部库并改进了稳定性。
+</zh-CN>

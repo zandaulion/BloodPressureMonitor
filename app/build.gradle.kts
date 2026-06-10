@@ -16,7 +16,7 @@ android {
         minSdk = 26
         targetSdk = 35
         versionCode = 17
-        versionName = "1.2.0"
+        versionName = "1.1.1"
 
         // Clinical mode. When true the app surfaces AHA hypertension staging,
         // the cardiovascular risk assessment, and condition inputs (diabetes,
