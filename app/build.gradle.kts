@@ -29,6 +29,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            // Lets Remote Config conditions target dev builds only (Version
+            // contains "-dev"), so model changes can be tested on this machine's
+            // builds before being promoted to the default value for all users.
+            versionNameSuffix = "-dev"
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
