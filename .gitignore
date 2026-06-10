@@ -14,3 +14,8 @@ captures/
 google-services.json
 release/
 SampleData/
+
+# Store-listing media — large binaries kept out of git.
+# Regenerate the graphic via store/make_*.py; screenshots are local captures.
+store/feature-graphic.png
+store/screenshots/
