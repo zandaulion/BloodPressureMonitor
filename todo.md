@@ -1,0 +1,14 @@
+- [x] translate into 20 languages + language button
+- [x] message after export
+- [x] camera icon 50% bigger inside the camera button
+- [x] lock icon 100% bigger and 80% inside the butoon
+- [x] icons inside help screen
+- [x] conversie imperial-metric strică valorile pe metric
+- [x] aliniere casute ft si in
+- [x] aliniere linii din help screen fara icons
+- [x] graficul sa arate cea mai noua valoare
+- [x] when entering a note your are captive unless you minimize the keyboard, which is not intuitive
+- [x] add rate limiter
+- [x] update the help screen with the new changes for the chart
+- [x] reshape notificatiosn screen -> aslk for both permissions when enabling + move the permission cards under the alarm time settings
+- [x] picture in the viewfinder while querying Gemini

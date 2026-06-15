@@ -41,12 +41,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -54,6 +56,7 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
+import coil.compose.AsyncImage
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -129,6 +132,14 @@ private fun CameraContent(
         }
     }
 
+    // The still just captured, frozen on screen while Gemini reads it so the
+    // user sees exactly the shot being analysed rather than a live, drifting
+    // preview. Cleared when processing ends (cancel/error returns to live feed).
+    var capturedUri by remember { mutableStateOf<Uri?>(null) }
+    LaunchedEffect(isProcessing) {
+        if (!isProcessing) capturedUri = null
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
         AndroidView(
             factory = { ctx ->
@@ -169,7 +180,10 @@ private fun CameraContent(
                     takePicture(
                         controller = cameraController,
                         context = context,
-                        onSuccess = onImageCaptured,
+                        onSuccess = { uri, path ->
+                            capturedUri = uri
+                            onImageCaptured(uri, path)
+                        },
                         onError = { /* surface via state in a later pass */ },
                     )
                 }
@@ -184,6 +198,16 @@ private fun CameraContent(
         }
 
         if (isProcessing) {
+            // Freeze the captured frame over the live preview, then dim it with
+            // the processing overlay's scrim.
+            capturedUri?.let { uri ->
+                AsyncImage(
+                    model = uri,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier.fillMaxSize(),
+                )
+            }
             ProcessingOverlay(onCancel = onCancel)
         }
 
