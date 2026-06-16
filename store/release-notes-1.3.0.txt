@@ -1,0 +1,47 @@
+<en-US>
+A new way to see your readings: the dashboard now has a scatter view that plots each reading by systolic and diastolic, coloured by its zone, with 120/80 reference lines. Tap Trend or Scatter to switch — your choice is remembered — and tap any dot for its value and date. Rotate to landscape to see trend and scatter side by side. As always, your data never leaves your phone.
+</en-US>
+
+<de-DE>
+Eine neue Art, Ihre Messwerte zu sehen: Das Dashboard bietet jetzt eine Streuungsansicht, die jede Messung nach systolisch und diastolisch anordnet, nach Zone eingefärbt, mit Referenzlinien bei 120/80. Tippen Sie auf Verlauf oder Streuung zum Wechseln – Ihre Wahl wird gemerkt – und auf einen Punkt für Wert und Datum. Im Querformat sehen Sie Verlauf und Streuung nebeneinander. Ihre Daten verlassen das Telefon nie.
+</de-DE>
+
+<es-ES>
+Una nueva forma de ver tus lecturas: el panel ahora incluye una vista de dispersión que sitúa cada lectura por sistólica y diastólica, coloreada por su zona, con líneas de referencia en 120/80. Toca Tendencia o Dispersión para cambiar — se recuerda tu elección — y toca un punto para ver su valor y fecha. Gira a horizontal para ver tendencia y dispersión a la vez. Tus datos nunca salen del teléfono.
+</es-ES>
+
+<fr-FR>
+Une nouvelle façon de voir vos mesures : le tableau de bord propose une vue Nuage qui place chaque mesure selon la systolique et la diastolique, colorée par zone, avec des lignes de référence à 120/80. Touchez Tendance ou Nuage pour basculer — votre choix est mémorisé — et un point pour voir sa valeur et sa date. En paysage, tendance et nuage s'affichent côte à côte. Vos données ne quittent jamais le téléphone.
+</fr-FR>
+
+<ar>
+طريقة جديدة لرؤية قراءاتك: تتضمن اللوحة الآن عرض تشتّت يرسم كل قراءة حسب الانقباضي والانبساطي، ملوّنة حسب نطاقها، مع خطوط مرجعية عند 120/80. اضغط على الاتجاه أو التشتّت للتبديل — ويُحفظ اختيارك — واضغط على أي نقطة لرؤية قيمتها وتاريخها. أدِر الشاشة أفقيًا لرؤية الاتجاه والتشتّت جنبًا إلى جنب. بياناتك لا تغادر هاتفك أبدًا.
+</ar>
+
+<hi-IN>
+अपनी रीडिंग देखने का नया तरीका: डैशबोर्ड में अब एक बिखराव व्यू है जो हर रीडिंग को सिस्टोलिक और डायस्टोलिक के अनुसार दिखाता है, उसके ज़ोन के रंग में, 120/80 संदर्भ रेखाओं के साथ। बदलने के लिए रुझान या बिखराव पर टैप करें — आपका चयन याद रहता है — और मान व तारीख देखने के लिए किसी बिंदु पर टैप करें। रुझान और बिखराव साथ-साथ देखने के लिए फ़ोन को लैंडस्केप में घुमाएँ। आपका डेटा कभी फ़ोन से बाहर नहीं जाता।
+</hi-IN>
+
+<ja-JP>
+記録を見る新しい方法。ダッシュボードに散布図ビューが加わり、各測定を収縮期と拡張期で配置し、ゾーンごとに色分けして 120/80 の基準線とともに表示します。「推移」または「散布図」をタップで切り替え（選択は保持されます）、点をタップすると値と日付が表示されます。横向きにすると推移と散布図を並べて表示。データが端末の外に出ることはありません。
+</ja-JP>
+
+<ko-KR>
+기록을 보는 새로운 방법. 대시보드에 분산형 보기가 추가되어 각 기록을 수축기와 이완기로 배치하고 구간별 색상과 120/80 기준선으로 표시합니다. 추세 또는 분산형을 탭해 전환하고(선택은 유지됩니다), 점을 탭하면 값과 날짜가 표시됩니다. 가로로 돌리면 추세와 분산형을 나란히 볼 수 있습니다. 데이터는 기기를 벗어나지 않습니다.
+</ko-KR>
+
+<pt-BR>
+Uma nova forma de ver suas leituras: o painel agora tem uma visão de dispersão que posiciona cada leitura por sistólica e diastólica, colorida por zona, com linhas de referência em 120/80. Toque em Tendência ou Dispersão para alternar — sua escolha é lembrada — e toque num ponto para ver seu valor e data. Gire para paisagem para ver tendência e dispersão lado a lado. Seus dados nunca saem do telefone.
+</pt-BR>
+
+<ro>
+Un nou mod de a-ți vedea măsurătorile: panoul are acum o vedere de dispersie care plasează fiecare măsurătoare după sistolică și diastolică, colorată după zonă, cu linii de referință la 120/80. Atinge Tendință sau Dispersie pentru a comuta — alegerea ta este reținută — și atinge un punct pentru valoarea și data sa. Rotește în peisaj pentru tendință și dispersie alăturat. Datele tale nu părăsesc telefonul.
+</ro>
+
+<uk>
+Новий спосіб переглядати вимірювання: на панелі тепер є вигляд розсіювання, що розміщує кожне вимірювання за систолічним і діастолічним, із кольором за зоною та лініями орієнтиру на 120/80. Торкніться «Динаміка» або «Розсіювання», щоб перемкнути (ваш вибір зберігається), і торкніться точки, щоб побачити її значення й дату. Поверніть у ландшафт, щоб бачити динаміку й розсіювання поруч. Ваші дані не залишають телефон.
+</uk>
+
+<zh-CN>
+查看读数的新方式：仪表板现在提供散点图视图，按收缩压和舒张压定位每条读数，按区间着色，并带有 120/80 参考线。点按"趋势"或"散点图"即可切换（您的选择会被记住），点按任意圆点可查看其数值和日期。横屏旋转即可并排查看趋势与散点图。您的数据绝不离开手机。
+</zh-CN>
