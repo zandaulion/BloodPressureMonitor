@@ -300,4 +300,7 @@
     <string name="pdf_col_category">Categoria</string>
     <string name="pdf_col_notes">Notas</string>
     <string name="pdf_disclaimer">ⓘ  Apenas informativo — não constitui aconselhamento médico. Consulte um profissional de saúde qualificado.</string>
+    <string name="pdf_overview_subtitle">Visão geral</string>
+    <string name="pdf_zone_distribution">Tempo em cada zona</string>
+    <string name="pdf_sys_vs_dia">Sistólica vs diastólica</string>
 </resources>

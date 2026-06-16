@@ -304,4 +304,7 @@
     <string name="pdf_col_category">Категорія</string>
     <string name="pdf_col_notes">Нотатки</string>
     <string name="pdf_disclaimer">ⓘ  Лише для інформації — не є медичною порадою. Зверніться до кваліфікованого медичного фахівця.</string>
+    <string name="pdf_overview_subtitle">Огляд</string>
+    <string name="pdf_zone_distribution">Час у кожній зоні</string>
+    <string name="pdf_sys_vs_dia">Систолічний проти діастолічного</string>
 </resources>

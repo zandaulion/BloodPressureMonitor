@@ -300,4 +300,7 @@
     <string name="pdf_col_category">श्रेणी</string>
     <string name="pdf_col_notes">नोट्स</string>
     <string name="pdf_disclaimer">ⓘ  केवल जानकारी के लिए — यह चिकित्सीय सलाह नहीं है। किसी योग्य स्वास्थ्य पेशेवर से परामर्श करें।</string>
+    <string name="pdf_overview_subtitle">अवलोकन</string>
+    <string name="pdf_zone_distribution">हर ज़ोन में समय</string>
+    <string name="pdf_sys_vs_dia">सिस्टोलिक बनाम डायस्टोलिक</string>
 </resources>

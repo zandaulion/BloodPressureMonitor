@@ -299,4 +299,7 @@
     <string name="pdf_col_category">분류</string>
     <string name="pdf_col_notes">메모</string>
     <string name="pdf_disclaimer">ⓘ  정보 제공용일 뿐 의학적 조언이 아닙니다. 자격을 갖춘 의료 전문가와 상담하세요.</string>
+    <string name="pdf_overview_subtitle">개요</string>
+    <string name="pdf_zone_distribution">구간별 비율</string>
+    <string name="pdf_sys_vs_dia">수축기 대 이완기</string>
 </resources>

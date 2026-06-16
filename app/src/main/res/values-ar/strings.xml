@@ -309,4 +309,7 @@
     <string name="pdf_col_category">الفئة</string>
     <string name="pdf_col_notes">ملاحظات</string>
     <string name="pdf_disclaimer">ⓘ  للمعلومات فقط — لا يُعدّ نصيحة طبية. استشر مختصًّا صحيًّا مؤهلًا.</string>
+    <string name="pdf_overview_subtitle">نظرة عامة</string>
+    <string name="pdf_zone_distribution">الوقت في كل نطاق</string>
+    <string name="pdf_sys_vs_dia">الانقباضي مقابل الانبساطي</string>
 </resources>

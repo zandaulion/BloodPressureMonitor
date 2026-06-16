@@ -68,6 +68,11 @@ class ExportPdfUseCase @Inject constructor(
         val doc   = PdfDocument()
         try {
             var pageNum = 1
+            // Lead with an at-a-glance overview (zone mix + Sys/Dia scatter) when
+            // there's enough data for it to be meaningful.
+            if (all.size >= OVERVIEW_MIN) {
+                drawOverviewPage(doc, pageNum++, all, t)
+            }
             buildChartRanges(all, t).forEach { range ->
                 // Smooth the chart's readings (averaging back-to-back sittings); merged
                 // notes are preserved so numbered callouts/labels still appear. The table
@@ -117,6 +122,9 @@ class ExportPdfUseCase @Inject constructor(
         val disclaimer     = s(R.string.pdf_disclaimer)
         val tableTitle     = s(R.string.pdf_table_title)
         val tableTitleCont = s(R.string.pdf_table_title_cont)
+        val overviewSubtitle = s(R.string.pdf_overview_subtitle)
+        val zoneDistribution = s(R.string.pdf_zone_distribution)
+        val sysVsDia         = s(R.string.pdf_sys_vs_dia)
 
         val dateFmt      = SimpleDateFormat("d MMM yyyy", locale)
         val tableDateFmt = SimpleDateFormat("d MMM yyyy  HH:mm", locale)
@@ -205,6 +213,131 @@ class ExportPdfUseCase @Inject constructor(
         if (tagsPresent.isNotEmpty()) drawTagLegend(c, tagsPresent, legendTop, t)
         drawFooter(c, LW, LH, t)
         doc.finishPage(page)
+    }
+
+    // ── Overview page ─────────────────────────────────────────────────────────
+
+    /** At-a-glance summary: zone-distribution donut + Systolic-vs-Diastolic scatter. */
+    private fun drawOverviewPage(doc: PdfDocument, pageNum: Int, readings: List<BPReading>, t: L10n) {
+        val page = doc.startPage(PdfDocument.PageInfo.Builder(LW, LH, pageNum).create())
+        val c = page.canvas
+        c.drawColor(Color.WHITE)
+
+        // header (matches the chart pages)
+        c.drawText(t.reportTitle, M, M + TS_TITLE, pTitle)
+        c.drawText("${t.overviewSubtitle}  ·  ${dateSpan(readings, t)}",
+            M, M + TS_TITLE + TS_SUB + 10f, pSub)
+        c.drawText(t.exported(t.dateFmt.format(Date())), LW - M, M + TS_TITLE, pRight)
+        val divY = M + TS_TITLE + TS_SUB + 28f
+        c.hRule(divY)
+
+        val contentTop    = divY + 46f
+        val contentBottom = LH - M - FOOTER_H - 24f
+        val midY          = (contentTop + contentBottom) / 2f
+
+        // left: zone-distribution donut + legend
+        c.drawText(t.zoneDistribution, CHART_L, contentTop, pSection)
+        drawZoneDonut(c, readings, cx = CHART_L + 232f, cy = midY + 24f, t = t)
+
+        // right: systolic-vs-diastolic scatter
+        val scatterTitleX = 900f
+        c.drawText(t.sysVsDia, scatterTitleX, contentTop, pSection)
+        drawScatter(
+            c, readings,
+            left = scatterTitleX + 86f, top = contentTop + 44f,
+            right = CHART_R, bottom = contentBottom - 56f, t = t,
+        )
+
+        drawFooter(c, LW, LH, t)
+        doc.finishPage(page)
+    }
+
+    /** Donut of the share of readings in each BP zone, with a count/percent legend. */
+    private fun drawZoneDonut(c: Canvas, readings: List<BPReading>, cx: Float, cy: Float, t: L10n) {
+        val total  = readings.size
+        val counts = BPCategory.entries.associateWith { cat -> readings.count { it.category == cat } }
+
+        val outerR    = 150f
+        val thickness = 56f
+        val ringR     = outerR - thickness / 2f
+        val oval      = RectF(cx - ringR, cy - ringR, cx + ringR, cy + ringR)
+        pRing.strokeWidth = thickness
+
+        var start = -90f
+        for (cat in BPCategory.entries) {
+            val cnt = counts[cat] ?: 0
+            if (cnt == 0) continue
+            val sweep = 360f * cnt / total
+            pRing.color = categoryArgb(cat)
+            c.drawArc(oval, start, sweep, false, pRing)
+            start += sweep
+        }
+        // centre total + caption
+        c.drawText(total.toString(), cx, cy + 15f, pDonutCenter)
+        c.drawText(t.readingsCount(total), cx, cy + outerR + 40f, pDonutCaption)
+
+        // legend — only the zones actually present
+        var ly = cy - ringR + 8f
+        val lx = cx + outerR + 34f
+        val sw = 20f
+        for (cat in BPCategory.entries) {
+            val cnt = counts[cat] ?: 0
+            if (cnt == 0) continue
+            val pct = (100.0 * cnt / total).roundToInt()
+            pSwatch.color = categoryArgb(cat)
+            c.drawRect(lx, ly - sw + 3f, lx + sw, ly + 3f, pSwatch)
+            c.drawText("${t.category(cat)}    $cnt  ($pct%)", lx + sw + 12f, ly, pLegendText)
+            ly += 48f
+        }
+    }
+
+    /** Scatter of each reading: diastolic (X) vs systolic (Y), coloured by zone. */
+    private fun drawScatter(
+        c: Canvas, readings: List<BPReading>,
+        left: Float, top: Float, right: Float, bottom: Float, t: L10n,
+    ) {
+        val sysMin = floor((readings.minOf { it.systolic } - 5).toDouble() / 10.0) * 10.0
+        val sysMax = ceil ((readings.maxOf { it.systolic } + 5).toDouble() / 10.0) * 10.0
+        val diaMin = floor((readings.minOf { it.diastolic } - 5).toDouble() / 10.0) * 10.0
+        val diaMax = ceil ((readings.maxOf { it.diastolic } + 5).toDouble() / 10.0) * 10.0
+
+        fun mx(d: Double) = (left + (d - diaMin) / (diaMax - diaMin) * (right - left)).toFloat()
+        fun my(s: Double) = (bottom - (s - sysMin) / (sysMax - sysMin) * (bottom - top)).toFloat()
+
+        // grid + Y labels (systolic)
+        val yStep = if ((sysMax - sysMin) <= 80) 10 else 20
+        var gy = sysMin.toInt()
+        while (gy <= sysMax) {
+            val y = my(gy.toDouble())
+            c.drawLine(left, y, right, y, pGrid)
+            c.drawText(gy.toString(), left - 8f, y + 6f, pAxisLabel)
+            gy += yStep
+        }
+        // grid + X labels (diastolic)
+        val xStep = if ((diaMax - diaMin) <= 80) 10 else 20
+        var gx = diaMin.toInt()
+        while (gx <= diaMax) {
+            val x = mx(gx.toDouble())
+            c.drawLine(x, top, x, bottom, pGrid)
+            c.drawText(gx.toString(), x, bottom + 28f, pXLabelCenter)
+            gx += xStep
+        }
+        // reference lines at 120 / 80 when within range
+        if (sysMin <= 120.0 && 120.0 <= sysMax) { val y = my(120.0); c.drawLine(left, y, right, y, pRefLine) }
+        if (diaMin <= 80.0  && 80.0  <= diaMax) { val x = mx(80.0);  c.drawLine(x, top, x, bottom, pRefLine) }
+
+        // points, coloured by zone
+        for (r in readings) {
+            pScatterDot.color = categoryArgb(r.category)
+            c.drawCircle(mx(r.diastolic.toDouble()), my(r.systolic.toDouble()), 6f, pScatterDot)
+        }
+
+        // axes + titles
+        c.drawLine(left, top, left, bottom, pAxis)
+        c.drawLine(left, bottom, right, bottom, pAxis)
+        c.drawText(t.statDiastolic, (left + right) / 2f, bottom + 64f, pAxisTitle)
+        c.save(); c.translate(left - 58f, (top + bottom) / 2f); c.rotate(-90f)
+        c.drawText(t.statSystolic, 0f, 0f, pAxisTitle); c.restore()
     }
 
     // ── Chart drawing ─────────────────────────────────────────────────────────
@@ -537,6 +670,19 @@ class ExportPdfUseCase @Inject constructor(
                                      bold = true, align = Paint.Align.CENTER)
     private val pAltRow        = fp(Color.rgb(248, 249, 250))
 
+    // overview page
+    private val pSection      = tp(26f, Color.rgb(20, 20, 20), bold = true)
+    private val pDonutCenter  = tp(46f, Color.rgb(20, 20, 20), bold = true, align = Paint.Align.CENTER)
+    private val pDonutCaption = tp(TS_SMALL - 2f, Color.rgb(120, 120, 120), align = Paint.Align.CENTER)
+    private val pLegendText   = tp(TS_SMALL, Color.rgb(40, 40, 40))
+    private val pXLabelCenter = tp(TS_SMALL, Color.rgb(100, 100, 100), align = Paint.Align.CENTER)
+    private val pAxisTitle    = tp(TS_SMALL, Color.rgb(80, 80, 80), align = Paint.Align.CENTER)
+    private val pRing         = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.STROKE; strokeCap = Paint.Cap.BUTT
+    }
+    private val pSwatch       = fp(Color.BLACK)
+    private val pScatterDot   = fp(Color.BLACK)
+
     // ── Constants ─────────────────────────────────────────────────────────────
 
     companion object {
@@ -582,5 +728,7 @@ class ExportPdfUseCase @Inject constructor(
         private val STAMP_FMT = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
 
         private const val MS_PER_DAY = 24L * 60 * 60 * 1000
+
+        private const val OVERVIEW_MIN = 5   // min readings to render the overview page
     }
 }

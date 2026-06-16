@@ -302,4 +302,7 @@
     <string name="pdf_col_category">Categorie</string>
     <string name="pdf_col_notes">Note</string>
     <string name="pdf_disclaimer">ⓘ  Doar informativ — nu constituie sfat medical. Consultați un profesionist medical calificat.</string>
+    <string name="pdf_overview_subtitle">Prezentare generală</string>
+    <string name="pdf_zone_distribution">Timp în fiecare zonă</string>
+    <string name="pdf_sys_vs_dia">Sistolică vs diastolică</string>
 </resources>

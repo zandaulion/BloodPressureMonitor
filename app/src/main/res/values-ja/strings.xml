@@ -299,4 +299,7 @@
     <string name="pdf_col_category">分類</string>
     <string name="pdf_col_notes">メモ</string>
     <string name="pdf_disclaimer">ⓘ  情報提供のみ — 医学的助言ではありません。資格を持つ医療専門家にご相談ください。</string>
+    <string name="pdf_overview_subtitle">概要</string>
+    <string name="pdf_zone_distribution">各ゾーンの割合</string>
+    <string name="pdf_sys_vs_dia">収縮期 対 拡張期</string>
 </resources>

@@ -300,4 +300,7 @@
     <string name="pdf_col_category">Kategorie</string>
     <string name="pdf_col_notes">Notizen</string>
     <string name="pdf_disclaimer">ⓘ  Nur zur Information — kein medizinischer Rat. Konsultieren Sie eine medizinische Fachkraft.</string>
+    <string name="pdf_overview_subtitle">Übersicht</string>
+    <string name="pdf_zone_distribution">Zeit in jeder Zone</string>
+    <string name="pdf_sys_vs_dia">Systolisch vs. diastolisch</string>
 </resources>

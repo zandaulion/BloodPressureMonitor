@@ -299,4 +299,7 @@
     <string name="pdf_col_category">类别</string>
     <string name="pdf_col_notes">备注</string>
     <string name="pdf_disclaimer">ⓘ  仅供参考 — 不构成医疗建议。请咨询合格的医疗专业人员。</string>
+    <string name="pdf_overview_subtitle">概览</string>
+    <string name="pdf_zone_distribution">各区间占比</string>
+    <string name="pdf_sys_vs_dia">收缩压 对 舒张压</string>
 </resources>

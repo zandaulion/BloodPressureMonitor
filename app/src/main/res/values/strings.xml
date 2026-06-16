@@ -353,4 +353,7 @@
     <string name="pdf_col_category">Category</string>
     <string name="pdf_col_notes">Notes</string>
     <string name="pdf_disclaimer">ⓘ  Informational only — does not constitute medical advice. Consult a qualified healthcare professional.</string>
+    <string name="pdf_overview_subtitle">Overview</string>
+    <string name="pdf_zone_distribution">Time in each zone</string>
+    <string name="pdf_sys_vs_dia">Systolic vs diastolic</string>
 </resources>
