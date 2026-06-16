@@ -1,0 +1,47 @@
+<en-US>
+Exports now open with a one-page overview: see at a glance how your last 90 days spread across zones, plus a systolic-vs-diastolic chart. And while the camera reads your monitor, your captured photo now stays on screen so you see exactly what's being scanned. Plus small refinements — and your data never leaves your phone.
+</en-US>
+
+<de-DE>
+PDF-Exporte beginnen jetzt mit einer Übersichtsseite: Sehen Sie auf einen Blick, wie sich Ihre letzten 90 Tage auf die Zonen verteilen, plus ein Systolisch-Diastolisch-Diagramm. Und während die Kamera Ihr Messgerät liest, bleibt Ihr aufgenommenes Foto sichtbar, sodass Sie genau sehen, was gescannt wird. Dazu kleine Verbesserungen – Ihre Daten verlassen das Telefon nie.
+</de-DE>
+
+<es-ES>
+Los PDF ahora empiezan con una página de resumen: ve de un vistazo cómo se reparten tus últimos 90 días por zonas, además de un gráfico sistólica-diastólica. Y mientras la cámara lee tu monitor, la foto capturada permanece en pantalla para que veas exactamente qué se está escaneando. Además, pequeñas mejoras; tus datos nunca salen del teléfono.
+</es-ES>
+
+<fr-FR>
+Les PDF s'ouvrent désormais sur une page d'aperçu : voyez d'un coup d'œil la répartition de vos 90 derniers jours par zones, avec un graphique systolique-diastolique. Et pendant que la caméra lit votre tensiomètre, la photo prise reste à l'écran pour voir exactement ce qui est analysé. Plus de petites améliorations ; vos données ne quittent jamais le téléphone.
+</fr-FR>
+
+<ar>
+تبدأ ملفات PDF الآن بصفحة نظرة عامة: شاهد بلمحة كيف توزّعت آخر 90 يومًا على النطاقات، مع رسم بياني للانقباضي مقابل الانبساطي. وأثناء قراءة الكاميرا لجهازك، تبقى صورتك الملتقطة على الشاشة لترى بالضبط ما يُفحص. بالإضافة إلى تحسينات صغيرة؛ بياناتك لا تغادر هاتفك أبدًا.
+</ar>
+
+<hi-IN>
+PDF अब एक अवलोकन पृष्ठ से शुरू होते हैं: एक नज़र में देखें कि आपके पिछले 90 दिन ज़ोन में कैसे बँटे हैं, साथ ही सिस्टोलिक–डायस्टोलिक चार्ट। और जब कैमरा आपका मॉनिटर पढ़ता है, आपकी ली गई फ़ोटो स्क्रीन पर बनी रहती है ताकि आप ठीक देख सकें कि क्या स्कैन हो रहा है। साथ ही छोटे सुधार; आपका डेटा कभी फ़ोन से बाहर नहीं जाता।
+</hi-IN>
+
+<ja-JP>
+PDFの先頭にサマリーページが追加されました。直近90日が各ゾーンにどう分布しているかを一目で確認でき、収縮期×拡張期のグラフも表示されます。さらに、カメラが測定器を読み取る間、撮影した写真が画面に残り、何がスキャンされているかを正確に確認できます。細かな改善も。データが端末の外に出ることはありません。
+</ja-JP>
+
+<ko-KR>
+이제 PDF가 요약 페이지로 시작합니다. 최근 90일이 각 구간에 어떻게 분포하는지 한눈에 보고, 수축기-이완기 차트도 확인하세요. 또한 카메라가 측정기를 읽는 동안 촬영한 사진이 화면에 남아 무엇이 스캔되는지 정확히 볼 수 있습니다. 작은 개선들도 포함되며, 데이터는 기기를 벗어나지 않습니다.
+</ko-KR>
+
+<pt-BR>
+Os PDF agora começam com uma página de visão geral: veja num relance como seus últimos 90 dias se distribuem pelas zonas, além de um gráfico sistólica-diastólica. E enquanto a câmera lê seu monitor, a foto capturada permanece na tela para você ver exatamente o que está sendo digitalizado. Além de pequenas melhorias; seus dados nunca saem do telefone.
+</pt-BR>
+
+<ro>
+PDF-urile încep acum cu o pagină de prezentare: vezi dintr-o privire cum se distribuie ultimele 90 de zile pe zone, plus un grafic sistolică-diastolică. Iar în timp ce camera îți citește aparatul, fotografia capturată rămâne pe ecran ca să vezi exact ce se scanează. În plus, mici îmbunătățiri; datele tale nu părăsesc niciodată telefonul.
+</ro>
+
+<uk>
+PDF тепер починаються зі сторінки огляду: одним поглядом побачте, як ваші останні 90 днів розподілені за зонами, а також графік систолічний–діастолічний. А поки камера зчитує ваш прилад, зроблене фото залишається на екрані, щоб ви точно бачили, що сканується. Плюс невеликі покращення; ваші дані ніколи не залишають телефон.
+</uk>
+
+<zh-CN>
+PDF 现在以概览页开始：一眼了解最近 90 天在各区间的分布，并附收缩压-舒张压图表。相机读取血压计时，您拍摄的照片会保留在屏幕上，让您清楚看到正在扫描的内容。此外还有一些小改进；您的数据绝不离开手机。
+</zh-CN>

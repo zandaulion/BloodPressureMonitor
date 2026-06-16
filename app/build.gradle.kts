@@ -15,8 +15,8 @@ android {
         applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 17
-        versionName = "1.1.1"
+        versionCode = 18
+        versionName = "1.2.0"
 
         // Clinical mode. When true the app surfaces AHA hypertension staging,
         // the cardiovascular risk assessment, and condition inputs (diabetes,
