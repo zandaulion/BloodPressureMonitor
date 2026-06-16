@@ -68,10 +68,12 @@ class ExportPdfUseCase @Inject constructor(
         val doc   = PdfDocument()
         try {
             var pageNum = 1
-            // Lead with an at-a-glance overview (zone mix + Sys/Dia scatter) when
-            // there's enough data for it to be meaningful.
-            if (all.size >= OVERVIEW_MIN) {
-                drawOverviewPage(doc, pageNum++, all, t)
+            // Lead with an at-a-glance overview (zone mix + Sys/Dia scatter) over
+            // the last 90 days, when there's enough data for it to be meaningful.
+            val overviewCutoff   = System.currentTimeMillis() - 90L * MS_PER_DAY
+            val overviewReadings = all.filter { it.timestamp >= overviewCutoff }
+            if (overviewReadings.size >= OVERVIEW_MIN) {
+                drawOverviewPage(doc, pageNum++, overviewReadings, t)
             }
             buildChartRanges(all, t).forEach { range ->
                 // Smooth the chart's readings (averaging back-to-back sittings); merged
@@ -729,6 +731,6 @@ class ExportPdfUseCase @Inject constructor(
 
         private const val MS_PER_DAY = 24L * 60 * 60 * 1000
 
-        private const val OVERVIEW_MIN = 5   // min readings to render the overview page
+        private const val OVERVIEW_MIN = 5   // min readings (last 90 days) to render the overview page
     }
 }
