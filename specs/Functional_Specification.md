@@ -57,11 +57,15 @@
 
 **Content:**
 - Range chips: `7d / 30d / 90d / All` (default `30d`). Scopes the chart only, not the history list.
-- **Vico line chart:** Systolic and Diastolic as two colour-coded lines.
+- **Chart-view toggle** (portrait only): a two-segment switch — `Trend` / `Scatter` — below the range chips selects which view fills the chart area. The selected view is persisted in DataStore (`chart_mode`) so it survives app restarts; defaults to `Trend`. The range chips and the `Avg` smoothing setting drive both views.
+- **Vico line chart** (Trend view): Systolic and Diastolic as two colour-coded lines.
   - Y-axis fixed at **40–180 mmHg** on both portrait sides.
   - Dashed reference lines at **SYS 120** and **DIA 80** (AHA normal upper limits).
   - X-axis labelled with dates (M/d format).
-  - **Landscape orientation** — chart expands to fill the entire screen; all other UI is hidden.
+- **Scatter plot** (Scatter view): each reading is a dot — diastolic (X) vs systolic (Y) — coloured by its zone, matching the PDF overview scatter.
+  - Axis bounds pad ±5 mmHg and snap outward to the nearest 10; dashed reference lines at **SYS 120** / **DIA 80** drawn when in range.
+  - Tapping a dot reveals its `SYS/DIA · date` in a small tooltip; a legend below lists the zones present in the range.
+- **Landscape orientation** — the dashboard goes full-screen and shows **both** views at once: the Trend chart fills the left **two-thirds** of the width and the Scatter plot the remaining **third**, both full-height. The portrait toggle and all other UI are hidden. The range chips and `Avg` setting drive both charts simultaneously (the saved `chart_mode` is ignored here).
 - `HealthRiskCard` (shown when readings exist): personalised risk assessment based on the latest reading + user profile.
 - `LazyColumn` of all readings, newest first. Each row: date/time, `SYS/DIA · pulse bpm`, category badge, notes (italic). Swipe either direction to delete (5-second undo snackbar).
 

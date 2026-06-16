@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -47,6 +48,9 @@ enum class ChartRange(val days: Int?, val label: String) {
     NINETY_DAYS(90, "90d"),
     ALL(null, "All"),
 }
+
+/** Which visualization the dashboard chart area shows (portrait only; landscape is always TREND). */
+enum class ChartMode { TREND, SCATTER }
 
 data class DashboardUi(
     val readings: List<BPReading>,
@@ -108,6 +112,13 @@ class DashboardViewModel @Inject constructor(
 
     private val selectedRange = MutableStateFlow(ChartRange.THIRTY_DAYS)
 
+    /** Trend vs scatter toggle, persisted in DataStore so it survives app restarts. Kept
+        outside the main [ui] combine to stay within its 5-arg arity; the screen collects
+        it separately. Blank/unknown stored tokens fall back to TREND. */
+    val chartMode: StateFlow<ChartMode> = chartSettings.observeChartMode()
+        .map { token -> runCatching { ChartMode.valueOf(token) }.getOrDefault(ChartMode.TREND) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ChartMode.TREND)
+
     val ui: StateFlow<DashboardUi> = combine(
         repository.observeAll(),
         selectedRange,
@@ -142,6 +153,12 @@ class DashboardViewModel @Inject constructor(
 
     fun selectRange(range: ChartRange) {
         selectedRange.value = range
+    }
+
+    fun selectChartMode(mode: ChartMode) {
+        viewModelScope.launch {
+            chartSettings.setChartMode(mode.name)
+        }
     }
 
     fun setSmoothBursts(enabled: Boolean) {

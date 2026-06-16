@@ -12,7 +12,8 @@ Point your camera at any non-smart digital monitor and let Gemini 2.5 Flash read
 | **AI-Assisted OCR** | Gemini 2.5 Flash reads SYS / DIA / Pulse from a photo of any digital BP monitor |
 | **Manual Entry** | Sliders pre-populated from the last saved reading |
 | **History & Trends** | Vico line chart (40–180 mmHg, Y-axis fixed); 7 d / 30 d / 90 d / All filters; pinch-to-zoom with live scroll; dotted reference lines at 120 / 80 mmHg; X-axis labels switch to `M/d HH:mm` when the visible window is under 24 h |
-| **Landscape mode** | Full-screen trend chart when the device is rotated |
+| **Trend / Scatter views** | In portrait, a toggle switches the dashboard chart between the trend line and a Sys-vs-Dia scatter (diastolic × systolic, dots coloured by zone, 120 / 80 reference lines, tap a dot for its value + date); the range filters drive both, and the chosen view is remembered across restarts |
+| **Landscape mode** | Rotate for a full-screen split — the trend chart (left ⅔) beside the Sys-vs-Dia scatter (right ⅓), both driven by the same range filters at once |
 | **Health Risk Card** | Personalised risk assessment (AHA-based) from the latest reading + user profile |
 | **Reminders** | Two configurable daily alarms (morning + evening) via `AlarmManager`; 15-min snooze action |
 | **Export** | JSON · CSV · multi-page PDF (landscape charts + portrait table of last 30 days) |

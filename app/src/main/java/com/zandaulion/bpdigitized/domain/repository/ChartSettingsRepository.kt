@@ -11,4 +11,13 @@ interface ChartSettingsRepository {
     fun observeSmoothBursts(): Flow<Boolean>
 
     suspend fun setSmoothBursts(enabled: Boolean)
+
+    /**
+     * Emits the persisted dashboard chart-mode token (a `ChartMode` enum name, e.g.
+     * "TREND" or "SCATTER"). Blank when the user has never chosen one; the caller maps
+     * blank/unrecognised tokens to the default mode.
+     */
+    fun observeChartMode(): Flow<String>
+
+    suspend fun setChartMode(mode: String)
 }

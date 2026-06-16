@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -46,6 +47,8 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.material.icons.filled.ScatterPlot
 import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
@@ -66,6 +69,9 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.SmallFloatingActionButton
+import androidx.compose.material3.SegmentedButton
+import androidx.compose.material3.SegmentedButtonDefaults
+import androidx.compose.material3.SingleChoiceSegmentedButtonRow
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -133,6 +139,7 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
     val ui by viewModel.ui.collectAsStateWithLifecycle()
+    val chartMode by viewModel.chartMode.collectAsStateWithLifecycle()
     val tagEditorState by viewModel.tagEditorState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -250,7 +257,7 @@ fun DashboardScreen(
         }
     }
 
-    // Landscape: chart + range chips, full-screen.
+    // Landscape: range chips + side-by-side trend (2/3) and scatter (1/3), full-screen.
     // Wrap in Surface so the chart gets the correct MaterialTheme background colour in
     // both light and dark mode. Without it the raw window background is used, which
     // doesn't follow the Material theme and ignores dynamic dark/light switching.
@@ -271,12 +278,29 @@ fun DashboardScreen(
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
                 )
-                BPTrendChart(
-                    readings = ui.chartReadings,
+                // Landscape shows both views at once (the portrait toggle is hidden):
+                // trend takes two-thirds of the width, scatter the remaining third.
+                // Both read the same range-/Avg-filtered ui.chartReadings, so the
+                // chips drive them together.
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .weight(1f),
-                )
+                    horizontalArrangement = Arrangement.spacedBy(16.dp),
+                ) {
+                    BPTrendChart(
+                        readings = ui.chartReadings,
+                        modifier = Modifier
+                            .weight(2f)
+                            .fillMaxHeight(),
+                    )
+                    BPScatterChart(
+                        readings = ui.chartReadings,
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxHeight(),
+                    )
+                }
             }
         }
         return
@@ -482,13 +506,31 @@ fun DashboardScreen(
                     .padding(horizontal = 16.dp, vertical = 8.dp),
             )
 
-            BPTrendChart(
-                readings = ui.chartReadings,
+            ChartModeToggle(
+                mode = chartMode,
+                onSelect = viewModel::selectChartMode,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(220.dp)
-                    .padding(horizontal = 16.dp),
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 8.dp),
             )
+
+            when (chartMode) {
+                ChartMode.TREND -> BPTrendChart(
+                    readings = ui.chartReadings,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp)
+                        .padding(horizontal = 16.dp),
+                )
+                ChartMode.SCATTER -> BPScatterChart(
+                    readings = ui.chartReadings,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(220.dp)
+                        .padding(horizontal = 16.dp),
+                )
+            }
 
             HorizontalDivider(modifier = Modifier.padding(top = 8.dp))
 
@@ -634,6 +676,56 @@ private fun RangeChipRow(
             selected = smoothBursts,
             onClick = { onToggleSmooth(!smoothBursts) },
             label = { Text(stringResource(R.string.dashboard_smooth_bursts)) },
+        )
+    }
+}
+
+/** Two-segment switch between the trend (line) chart and the scatter plot. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun ChartModeToggle(
+    mode: ChartMode,
+    onSelect: (ChartMode) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    SingleChoiceSegmentedButtonRow(modifier = modifier) {
+        SegmentedButton(
+            selected = mode == ChartMode.TREND,
+            onClick = { onSelect(ChartMode.TREND) },
+            shape = SegmentedButtonDefaults.itemShape(index = 0, count = 2),
+            icon = {},
+            label = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ShowChart,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text(stringResource(R.string.chart_view_trend))
+                }
+            },
+        )
+        SegmentedButton(
+            selected = mode == ChartMode.SCATTER,
+            onClick = { onSelect(ChartMode.SCATTER) },
+            shape = SegmentedButtonDefaults.itemShape(index = 1, count = 2),
+            icon = {},
+            label = {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(6.dp),
+                ) {
+                    Icon(
+                        Icons.Default.ScatterPlot,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp),
+                    )
+                    Text(stringResource(R.string.chart_view_scatter))
+                }
+            },
         )
     }
 }

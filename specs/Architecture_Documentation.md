@@ -67,7 +67,8 @@ com.example.bpdigitizer
 └── presentation/
     ├── capture/            # CaptureScreen, CaptureViewModel, ImagePreprocessor
     ├── components/         # CategoryBadge, HealthRiskCard
-    ├── dashboard/          # DashboardScreen, DashboardViewModel, BPTrendChart
+    ├── dashboard/          # DashboardScreen, DashboardViewModel,
+    │                       # BPTrendChart, BPScatterChart
     ├── profile/            # ProfileScreen, ProfileViewModel
     ├── reminders/          # RemindersScreen, RemindersViewModel
     ├── theme/              # Color, Theme
@@ -106,7 +107,15 @@ Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are p
 
 ---
 
-## 1.6 Trend Chart (BPTrendChart)
+## 1.6 Dashboard Charts (Trend & Scatter)
+
+The dashboard chart area has two views, **Trend** (`BPTrendChart`) and **Scatter** (`BPScatterChart`). Both consume the same `ui.chartReadings` (already range-filtered and `Avg`-smoothed by the ViewModel), so the range chips and smoothing setting drive both.
+
+In **portrait**, a two-segment `SegmentedButton` toggle below the range chips picks which view fills the chart area. The chosen mode is exposed as a separate `chartMode: StateFlow<ChartMode>` on `DashboardViewModel` (kept out of the 5-arg `ui` combine for arity) and **persisted in DataStore** via `ChartSettingsRepository.observeChartMode()/setChartMode()` (key `chart_mode`, storing the `ChartMode` enum name; blank/unknown → `TREND`).
+
+In **landscape**, the screen goes full-screen and shows both views side by side in a weighted `Row` — Trend at `weight(2f)`, Scatter at `weight(1f)` — so trend gets two-thirds of the width and scatter the remaining third. The toggle is hidden and `chart_mode` is ignored; the range/`Avg` chips still drive both.
+
+### Trend chart (BPTrendChart)
 
 **Component:** `presentation/dashboard/BPTrendChart.kt`  
 **Library:** Vico 2.0 (`compose`, `compose-m3`, `core`)
@@ -132,6 +141,15 @@ visibleSpanMs   = readings[endIdx].timestamp − readings[startIdx].timestamp
 `chartWidth` is captured via `Modifier.onSizeChanged` on `CartesianChartHost` and stored in a `MutableFloatState`. Because `chartWidthState.floatValue`, `scrollState.value`, and `scrollState.maxValue` are all `MutableFloatState` reads inside `derivedStateOf`, the label format updates automatically on every pinch-zoom or scroll gesture.
 
 **Why not use `zoomState.value` directly?** Vico's initial zoom is `Zoom.Content` — the factor needed to fit all data — not `1.0`. A formula based on `n / zoom` produces the wrong count from the first frame. The geometry-based formula (`chartWidth / totalContentWidth`) is correct regardless of the starting zoom value.
+
+### Scatter plot (BPScatterChart)
+
+**Component:** `presentation/dashboard/BPScatterChart.kt`  
+**Rendering:** Compose `Canvas` (no Vico) — mirrors the PDF overview scatter so the two surfaces match visually.
+
+Each reading is one dot: **diastolic on X, systolic on Y**, filled with its zone colour (the same `CategoryNormal…CategoryCrisis` palette used by `CategoryBadge` and the PDF). Axis bounds pad ±5 mmHg and snap outward to the nearest 10 — the ±5 pad also guarantees a non-zero span when every reading shares a value. Dashed reference lines at **SYS 120** / **DIA 80** are drawn only when in range. Dot radius scales down as the point count grows to limit overplotting.
+
+Tapping uses `detectTapGestures`: the tap location is mapped back through the same plot geometry to find the nearest reading within a slop radius, which is highlighted with a ring and a `SYS/DIA · date` tooltip (parity with the Trend chart's tap marker). A `FlowRow` legend below the canvas lists only the zones present in the current range, resolved through `badgeLabelRes()` so it follows the neutral fitness labels.
 
 ## 1.7 Reminder System
 

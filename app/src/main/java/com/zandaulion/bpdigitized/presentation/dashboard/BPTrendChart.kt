@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
@@ -68,7 +69,7 @@ fun BPTrendChart(
     if (readings.isEmpty()) {
         Box(modifier = modifier, contentAlignment = Alignment.Center) {
             Text(
-                text = "No readings in this range",
+                text = stringResource(R.string.chart_no_readings),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
