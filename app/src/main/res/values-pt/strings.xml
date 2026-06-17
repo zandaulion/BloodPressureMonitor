@@ -97,7 +97,7 @@
     <string name="capture_status_reading">A IA está lendo o seu monitor…</string>
     <string name="capture_status_extracting">Extraindo valores…</string>
     <string name="capture_status_almost">Quase pronto…</string>
-    <string name="capture_ocr_error">Erro de OCR: %s</string>
+    <string name="capture_error_unreadable">Não foi possível ler o visor. Tire a foto novamente ou insira a leitura manualmente.</string>
     <string name="capture_permission_rationale">O acesso à câmera é necessário para escanear.</string>
     <string name="capture_grant_permission">Conceder permissão de câmera</string>
 
@@ -185,6 +185,7 @@
     <string name="profile_restoring">Restaurando…</string>
     <string name="profile_restore_success">Compras restauradas com sucesso.</string>
     <string name="profile_restore_error">Falha ao restaurar as compras.</string>
+    <string name="profile_restore_none">Nenhuma compra anterior encontrada.</string>
     <string name="profile_disclaimer">ⓘ  Apenas para acompanhamento de bem-estar geral — não é aconselhamento médico.</string>
 
     <string name="reminders_title">Lembretes</string>

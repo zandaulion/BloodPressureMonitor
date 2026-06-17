@@ -122,7 +122,7 @@
     <string name="capture_status_extracting">Extracting values…</string>
     <string name="capture_status_almost">Almost there…</string>
     <!-- %s = error message from the OCR call -->
-    <string name="capture_ocr_error">OCR error: %s</string>
+    <string name="capture_error_unreadable">Couldn\'t read the display. Retake the photo or enter the reading manually.</string>
     <string name="capture_permission_rationale">Camera access is required to scan readings.</string>
     <string name="capture_grant_permission">Grant camera permission</string>
 
@@ -221,6 +221,7 @@
     <string name="profile_restoring">Restoring…</string>
     <string name="profile_restore_success">Purchases restored successfully.</string>
     <string name="profile_restore_error">Failed to restore purchases.</string>
+    <string name="profile_restore_none">No previous purchase found.</string>
     <string name="profile_disclaimer">ⓘ  For general wellness tracking only — not medical advice.</string>
 
     <!-- ── Reminders ──────────────────────────────────────────────────────── -->

@@ -8,6 +8,7 @@ import com.zandaulion.bpdigitized.domain.model.BiologicalSex
 import com.zandaulion.bpdigitized.domain.model.BmiCategory
 import com.zandaulion.bpdigitized.domain.model.UserProfile
 import com.zandaulion.bpdigitized.domain.billing.BillingManager
+import com.zandaulion.bpdigitized.domain.billing.RestoreOutcome
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,7 +23,7 @@ import kotlin.math.roundToInt
 import javax.inject.Inject
 
 /** Outcome of a "Restore Purchases" attempt — resolved to a string in the UI layer. */
-enum class RestoreState { Success, Error }
+enum class RestoreState { Success, NothingToRestore, Error }
 
 /** Measurement unit system for the body-measurement fields. Storage stays metric. */
 enum class UnitSystem { METRIC, IMPERIAL }
@@ -180,11 +181,15 @@ class ProfileViewModel @Inject constructor(
 
     fun restorePurchases() {
         _state.update { it.copy(isRestoring = true, restoreResult = null) }
-        billingManager.restorePurchases { success, _ ->
+        billingManager.restorePurchases { outcome ->
             _state.update {
                 it.copy(
                     isRestoring = false,
-                    restoreResult = if (success) RestoreState.Success else RestoreState.Error,
+                    restoreResult = when (outcome) {
+                        RestoreOutcome.RESTORED          -> RestoreState.Success
+                        RestoreOutcome.NOTHING_TO_RESTORE -> RestoreState.NothingToRestore
+                        RestoreOutcome.ERROR             -> RestoreState.Error
+                    },
                 )
             }
         }

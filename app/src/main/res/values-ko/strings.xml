@@ -96,7 +96,7 @@
     <string name="capture_status_reading">AI가 모니터를 읽는 중…</string>
     <string name="capture_status_extracting">수치 추출 중…</string>
     <string name="capture_status_almost">거의 완료…</string>
-    <string name="capture_ocr_error">OCR 오류: %s</string>
+    <string name="capture_error_unreadable">화면을 읽을 수 없습니다. 사진을 다시 찍거나 수동으로 입력하세요.</string>
     <string name="capture_permission_rationale">측정값을 스캔하려면 카메라 접근 권한이 필요합니다.</string>
     <string name="capture_grant_permission">카메라 권한 허용</string>
 
@@ -184,6 +184,7 @@
     <string name="profile_restoring">복원 중…</string>
     <string name="profile_restore_success">구매가 성공적으로 복원되었습니다.</string>
     <string name="profile_restore_error">구매 복원에 실패했습니다.</string>
+    <string name="profile_restore_none">이전 구매를 찾을 수 없습니다.</string>
     <string name="profile_disclaimer">ⓘ  일반적인 웰니스 기록용일 뿐 의학적 조언이 아닙니다.</string>
 
     <string name="reminders_title">알림</string>

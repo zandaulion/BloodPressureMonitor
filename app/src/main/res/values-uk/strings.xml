@@ -101,7 +101,7 @@
     <string name="capture_status_reading">ШІ читає ваш монітор…</string>
     <string name="capture_status_extracting">Витягування значень…</string>
     <string name="capture_status_almost">Майже готово…</string>
-    <string name="capture_ocr_error">Помилка OCR: %s</string>
+    <string name="capture_error_unreadable">Не вдалося зчитати дисплей. Зробіть фото ще раз або введіть значення вручну.</string>
     <string name="capture_permission_rationale">Для сканування потрібен доступ до камери.</string>
     <string name="capture_grant_permission">Надати доступ до камери</string>
 
@@ -189,6 +189,7 @@
     <string name="profile_restoring">Відновлення…</string>
     <string name="profile_restore_success">Покупки успішно відновлено.</string>
     <string name="profile_restore_error">Не вдалося відновити покупки.</string>
+    <string name="profile_restore_none">Попередніх покупок не знайдено.</string>
     <string name="profile_disclaimer">ⓘ  Лише для загального відстеження самопочуття — не є медичною порадою.</string>
 
     <string name="reminders_title">Нагадування</string>

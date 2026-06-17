@@ -97,7 +97,7 @@
     <string name="capture_status_reading">L\'IA lit votre moniteur…</string>
     <string name="capture_status_extracting">Extraction des valeurs…</string>
     <string name="capture_status_almost">Presque terminé…</string>
-    <string name="capture_ocr_error">Erreur OCR : %s</string>
+    <string name="capture_error_unreadable">Impossible de lire l\'écran. Reprenez la photo ou saisissez la mesure manuellement.</string>
     <string name="capture_permission_rationale">L\'accès à la caméra est requis pour scanner.</string>
     <string name="capture_grant_permission">Autoriser la caméra</string>
 
@@ -185,6 +185,7 @@
     <string name="profile_restoring">Restauration…</string>
     <string name="profile_restore_success">Achats restaurés avec succès.</string>
     <string name="profile_restore_error">Impossible de restaurer les achats.</string>
+    <string name="profile_restore_none">Aucun achat précédent trouvé.</string>
     <string name="profile_disclaimer">ⓘ  Pour le suivi bien-être général uniquement — pas un avis médical.</string>
 
     <string name="reminders_title">Rappels</string>

@@ -99,7 +99,7 @@
     <string name="capture_status_reading">AI-ul citește monitorul tău…</string>
     <string name="capture_status_extracting">Se extrag valorile…</string>
     <string name="capture_status_almost">Aproape gata…</string>
-    <string name="capture_ocr_error">Eroare OCR: %s</string>
+    <string name="capture_error_unreadable">Afișajul nu a putut fi citit. Refă fotografia sau introdu valorile manual.</string>
     <string name="capture_permission_rationale">Accesul la cameră este necesar pentru scanare.</string>
     <string name="capture_grant_permission">Acordă permisiunea camerei</string>
 
@@ -187,6 +187,7 @@
     <string name="profile_restoring">Se restaurează…</string>
     <string name="profile_restore_success">Achizițiile au fost restaurate cu succes.</string>
     <string name="profile_restore_error">Restaurarea achizițiilor a eșuat.</string>
+    <string name="profile_restore_none">Nu a fost găsită nicio achiziție anterioară.</string>
     <string name="profile_disclaimer">ⓘ  Doar pentru urmărirea stării generale de bine — nu este sfat medical.</string>
 
     <string name="reminders_title">Mementouri</string>

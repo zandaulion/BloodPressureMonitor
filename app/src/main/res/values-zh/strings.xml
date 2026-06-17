@@ -96,7 +96,7 @@
     <string name="capture_status_reading">AI正在读取您的血压计…</string>
     <string name="capture_status_extracting">正在提取数值…</string>
     <string name="capture_status_almost">即将完成…</string>
-    <string name="capture_ocr_error">OCR 错误：%s</string>
+    <string name="capture_error_unreadable">无法读取显示屏。请重新拍照或手动输入读数。</string>
     <string name="capture_permission_rationale">扫描需要相机访问权限。</string>
     <string name="capture_grant_permission">授予相机权限</string>
 
@@ -184,6 +184,7 @@
     <string name="profile_restoring">正在恢复…</string>
     <string name="profile_restore_success">购买已成功恢复。</string>
     <string name="profile_restore_error">恢复购买失败。</string>
+    <string name="profile_restore_none">未找到以前的购买记录。</string>
     <string name="profile_disclaimer">ⓘ  仅用于一般健康记录，不构成医疗建议。</string>
 
     <string name="reminders_title">提醒</string>

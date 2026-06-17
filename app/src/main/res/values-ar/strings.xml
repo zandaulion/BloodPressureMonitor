@@ -106,7 +106,7 @@
     <string name="capture_status_reading">الذكاء الاصطناعي يقرأ جهازك…</string>
     <string name="capture_status_extracting">جارٍ استخراج القيم…</string>
     <string name="capture_status_almost">اكتمل تقريبًا…</string>
-    <string name="capture_ocr_error">خطأ OCR: %s</string>
+    <string name="capture_error_unreadable">تعذّرت قراءة الشاشة. أعد التقاط الصورة أو أدخل القراءة يدويًا.</string>
     <string name="capture_permission_rationale">يلزم الوصول إلى الكاميرا لمسح القراءات.</string>
     <string name="capture_grant_permission">منح إذن الكاميرا</string>
 
@@ -194,6 +194,7 @@
     <string name="profile_restoring">جارٍ الاستعادة…</string>
     <string name="profile_restore_success">تمت استعادة المشتريات بنجاح.</string>
     <string name="profile_restore_error">فشلت استعادة المشتريات.</string>
+    <string name="profile_restore_none">لم يتم العثور على عملية شراء سابقة.</string>
     <string name="profile_disclaimer">ⓘ  لتتبّع الصحة العامة فقط — وليس نصيحة طبية.</string>
 
     <string name="reminders_title">التذكيرات</string>

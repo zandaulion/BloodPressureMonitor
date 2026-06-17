@@ -14,6 +14,13 @@ import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Outcome of a restore attempt. A restore that completes without finding an
+ * eligible purchase is [NOTHING_TO_RESTORE] — a normal result, NOT [ERROR] — so
+ * the UI can tell the user "no previous purchase found" instead of "failed".
+ */
+enum class RestoreOutcome { RESTORED, NOTHING_TO_RESTORE, ERROR }
+
 @Singleton
 class BillingManager @Inject constructor(
     private val application: Application
@@ -41,15 +48,19 @@ class BillingManager @Inject constructor(
         _isProUser.value = isPro
     }
 
-    fun restorePurchases(onResult: (Boolean, String?) -> Unit) {
+    fun restorePurchases(onResult: (RestoreOutcome) -> Unit) {
         Purchases.sharedInstance.restorePurchasesWith(
             onError = { error ->
                 Log.e("BillingManager", "Restore error: ${error.message}")
-                onResult(false, error.message)
+                onResult(RestoreOutcome.ERROR)
             },
             onSuccess = { customerInfo ->
                 updateProStatus(customerInfo)
-                onResult(_isProUser.value, null)
+                // Restore succeeded; whether it actually granted Pro decides the message.
+                onResult(
+                    if (_isProUser.value) RestoreOutcome.RESTORED
+                    else RestoreOutcome.NOTHING_TO_RESTORE
+                )
             }
         )
     }

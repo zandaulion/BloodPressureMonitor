@@ -96,7 +96,7 @@
     <string name="capture_status_reading">AIがモニターを読み取り中…</string>
     <string name="capture_status_extracting">数値を抽出中…</string>
     <string name="capture_status_almost">もうすぐ完了…</string>
-    <string name="capture_ocr_error">OCRエラー: %s</string>
+    <string name="capture_error_unreadable">ディスプレイを読み取れませんでした。写真を撮り直すか、手動で入力してください。</string>
     <string name="capture_permission_rationale">スキャンにはカメラへのアクセスが必要です。</string>
     <string name="capture_grant_permission">カメラの使用を許可する</string>
 
@@ -184,6 +184,7 @@
     <string name="profile_restoring">復元中…</string>
     <string name="profile_restore_success">購入が正常に復元されました。</string>
     <string name="profile_restore_error">購入の復元に失敗しました。</string>
+    <string name="profile_restore_none">以前の購入が見つかりませんでした。</string>
     <string name="profile_disclaimer">ⓘ  一般的なウェルネス記録のみを目的としており、医療アドバイスではありません。</string>
 
     <string name="reminders_title">リマインダー</string>

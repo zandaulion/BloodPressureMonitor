@@ -97,7 +97,7 @@
     <string name="capture_status_reading">KI liest deinen Monitor…</string>
     <string name="capture_status_extracting">Werte werden extrahiert…</string>
     <string name="capture_status_almost">Gleich fertig…</string>
-    <string name="capture_ocr_error">OCR-Fehler: %s</string>
+    <string name="capture_error_unreadable">Anzeige konnte nicht gelesen werden. Mach das Foto neu oder gib den Wert manuell ein.</string>
     <string name="capture_permission_rationale">Kamerazugriff wird zum Scannen benötigt.</string>
     <string name="capture_grant_permission">Kamerazugriff erlauben</string>
 
@@ -185,6 +185,7 @@
     <string name="profile_restoring">Wiederherstellung…</string>
     <string name="profile_restore_success">Käufe erfolgreich wiederhergestellt.</string>
     <string name="profile_restore_error">Käufe konnten nicht wiederhergestellt werden.</string>
+    <string name="profile_restore_none">Kein früherer Kauf gefunden.</string>
     <string name="profile_disclaimer">ⓘ  Nur zur allgemeinen Wellness-Aufzeichnung – kein medizinischer Rat.</string>
 
     <string name="reminders_title">Erinnerungen</string>

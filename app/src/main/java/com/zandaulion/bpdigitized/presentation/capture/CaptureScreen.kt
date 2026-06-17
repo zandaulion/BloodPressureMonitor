@@ -221,7 +221,8 @@ private fun CameraContent(
                     .padding(12.dp),
             ) {
                 Text(
-                    text = stringResource(R.string.capture_ocr_error, errorMsg),
+                    // errorMsg is already a complete, localized, user-facing message.
+                    text = errorMsg,
                     color = MaterialTheme.colorScheme.onErrorContainer,
                 )
             }

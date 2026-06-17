@@ -97,7 +97,7 @@
     <string name="capture_status_reading">AI आपका मॉनिटर पढ़ रहा है…</string>
     <string name="capture_status_extracting">मान निकाले जा रहे हैं…</string>
     <string name="capture_status_almost">लगभग हो गया…</string>
-    <string name="capture_ocr_error">OCR त्रुटि: %s</string>
+    <string name="capture_error_unreadable">डिस्प्ले पढ़ा नहीं जा सका। फ़ोटो दोबारा लें या रीडिंग मैन्युअल रूप से दर्ज करें।</string>
     <string name="capture_permission_rationale">रीडिंग स्कैन करने के लिए कैमरा एक्सेस आवश्यक है।</string>
     <string name="capture_grant_permission">कैमरा अनुमति दें</string>
 
@@ -185,6 +185,7 @@
     <string name="profile_restoring">पुनर्स्थापित किया जा रहा है…</string>
     <string name="profile_restore_success">खरीदारी सफलतापूर्वक पुनर्स्थापित की गई।</string>
     <string name="profile_restore_error">खरीदारी पुनर्स्थापित करने में विफल।</string>
+    <string name="profile_restore_none">कोई पिछली खरीद नहीं मिली।</string>
     <string name="profile_disclaimer">ⓘ  केवल सामान्य कल्याण ट्रैकिंग के लिए — चिकित्सा सलाह नहीं।</string>
 
     <string name="reminders_title">रिमाइंडर</string>

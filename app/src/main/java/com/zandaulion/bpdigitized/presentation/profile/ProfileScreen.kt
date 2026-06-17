@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -382,17 +383,28 @@ fun ProfileScreen(
                 )
             }
 
+            // Always confirm the restore outcome in a dialog so the result is never
+            // missed — and so "no previous purchase" reads as information, not failure.
             state.restoreResult?.let { result ->
-                Text(
-                    text = stringResource(
-                        when (result) {
-                            RestoreState.Success -> R.string.profile_restore_success
-                            RestoreState.Error   -> R.string.profile_restore_error
-                        },
-                    ),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.padding(top = 8.dp),
+                AlertDialog(
+                    onDismissRequest = viewModel::dismissRestoreResult,
+                    confirmButton = {
+                        TextButton(onClick = viewModel::dismissRestoreResult) {
+                            Text(stringResource(R.string.action_ok))
+                        }
+                    },
+                    title = { Text(stringResource(R.string.profile_restore_purchases)) },
+                    text = {
+                        Text(
+                            stringResource(
+                                when (result) {
+                                    RestoreState.Success          -> R.string.profile_restore_success
+                                    RestoreState.NothingToRestore -> R.string.profile_restore_none
+                                    RestoreState.Error            -> R.string.profile_restore_error
+                                },
+                            ),
+                        )
+                    },
                 )
             }
 
