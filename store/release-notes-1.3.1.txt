@@ -1,0 +1,47 @@
+<en-US>
+Fixes and polish: Restore Purchases now always confirms the result — including a clear message when there's no previous purchase to restore. And if the camera can't read your monitor clearly, the app now tells you and lets you retake or enter the reading by hand, instead of guessing. As always, your data stays on your device.
+</en-US>
+
+<de-DE>
+Fehlerbehebungen und Feinschliff: „Käufe wiederherstellen" bestätigt jetzt immer das Ergebnis – samt klarer Meldung, wenn es keinen früheren Kauf gibt. Und wenn die Kamera Ihr Messgerät nicht klar lesen kann, sagt die App es Ihnen und lässt Sie das Foto wiederholen oder den Wert manuell eingeben, statt zu raten. Ihre Daten bleiben wie immer auf dem Gerät.
+</de-DE>
+
+<es-ES>
+Correcciones y mejoras: «Restaurar compras» ahora siempre confirma el resultado, incluido un mensaje claro cuando no hay ninguna compra anterior. Y si la cámara no puede leer bien tu monitor, la app te avisa y te deja repetir la foto o introducir la lectura a mano, en vez de adivinar. Como siempre, tus datos permanecen en tu dispositivo.
+</es-ES>
+
+<fr-FR>
+Corrections et améliorations : « Restaurer les achats » confirme désormais toujours le résultat, avec un message clair s'il n'y a aucun achat à restaurer. Et si l'appareil photo ne lit pas bien votre tensiomètre, l'app vous le signale et vous laisse reprendre la photo ou saisir la mesure à la main, au lieu de deviner. Comme toujours, vos données restent sur votre appareil.
+</fr-FR>
+
+<ar>
+إصلاحات وتحسينات: أصبح خيار «استعادة المشتريات» يؤكد النتيجة دائمًا، مع رسالة واضحة عند عدم وجود عملية شراء سابقة. وإذا تعذّر على الكاميرا قراءة جهازك بوضوح، يخبرك التطبيق ويتيح لك إعادة التقاط الصورة أو إدخال القراءة يدويًا بدلًا من التخمين. وكالعادة، تبقى بياناتك على جهازك.
+</ar>
+
+<hi-IN>
+सुधार और परिष्करण: «खरीद पुनर्स्थापित करें» अब हमेशा परिणाम की पुष्टि करता है — जिसमें कोई पिछली खरीद न होने पर स्पष्ट संदेश भी शामिल है। और अगर कैमरा आपके मॉनिटर को साफ़ नहीं पढ़ पाता, तो ऐप आपको बताता है और अनुमान लगाने के बजाय फ़ोटो दोबारा लेने या रीडिंग मैन्युअल रूप से दर्ज करने देता है। हमेशा की तरह, आपका डेटा आपके डिवाइस पर रहता है।
+</hi-IN>
+
+<ja-JP>
+修正と改善: 「購入の復元」が常に結果を表示するようになり、復元できる購入がない場合も分かりやすいメッセージが出ます。また、カメラが測定器をはっきり読み取れない場合は、推測せずにその旨を知らせ、撮り直しか手入力を選べます。データはこれまで通り端末内に保存されます。
+</ja-JP>
+
+<ko-KR>
+수정 및 개선: 「구매 복원」이 이제 항상 결과를 알려 주며, 복원할 이전 구매가 없을 때도 명확한 메시지를 표시합니다. 또한 카메라가 측정기를 선명하게 읽지 못하면 추측하지 않고 이를 알려 주어 다시 찍거나 직접 입력할 수 있습니다. 데이터는 언제나처럼 기기에 보관됩니다.
+</ko-KR>
+
+<pt-BR>
+Correções e melhorias: «Restaurar compras» agora sempre confirma o resultado, incluindo uma mensagem clara quando não há compra anterior. E se a câmera não conseguir ler seu monitor com clareza, o app avisa e deixa você refazer a foto ou inserir a leitura à mão, em vez de adivinhar. Como sempre, seus dados permanecem no seu dispositivo.
+</pt-BR>
+
+<ro>
+Corecții și îmbunătățiri: «Restaurează achizițiile» confirmă acum mereu rezultatul, inclusiv un mesaj clar când nu există nicio achiziție anterioară. Iar dacă aparatul foto nu îți poate citi clar dispozitivul, aplicația te anunță și te lasă să refaci poza sau să introduci valorile manual, în loc să ghicească. Ca întotdeauna, datele tale rămân pe dispozitiv.
+</ro>
+
+<uk>
+Виправлення та вдосконалення: «Відновити покупки» тепер завжди підтверджує результат, зокрема чітким повідомленням, коли попередніх покупок немає. А якщо камера не може чітко зчитати ваш прилад, застосунок повідомляє про це й дає змогу перезняти фото або ввести значення вручну, замість того щоб вгадувати. Як завжди, ваші дані залишаються на пристрої.
+</uk>
+
+<zh-CN>
+修复与优化：「恢复购买」现在始终会确认结果——包括在没有以往购买记录时给出清晰提示。此外，如果相机无法清晰读取您的血压计，应用会主动告知，并让您重新拍照或手动输入读数，而不是凭空猜测。一如既往，您的数据始终保留在设备上。
+</zh-CN>
