@@ -1,0 +1,47 @@
+<en-US>
+The scatter view is now 3D — your readings plotted by systolic, diastolic and pulse. It opens as the familiar flat chart; drag with one finger to rotate it and explore pulse as depth, then tap Scatter again to snap back. And the trend lines now shift colour by zone — green for lower readings, warming through to red for higher ones — so highs stand out at a glance. As always, your data stays on your device.
+</en-US>
+
+<de-DE>
+Die Streuungsansicht ist jetzt 3D – Ihre Messwerte nach Systole, Diastole und Puls. Sie öffnet wie das gewohnte flache Diagramm; mit einem Finger ziehen, um sie zu drehen und den Puls als Tiefe zu erkunden, dann erneut auf Streuung tippen, um zurückzukehren. Und die Verlaufslinien wechseln nun die Farbe je nach Zone – grün bei niedrigeren, übergehend zu Rot bei höheren Werten – damit hohe auffallen. Ihre Daten bleiben auf dem Gerät.
+</de-DE>
+
+<es-ES>
+La vista de dispersión ahora es 3D: tus lecturas según sistólica, diastólica y pulso. Se abre como el gráfico plano de siempre; arrastra con un dedo para girarla y explorar el pulso como profundidad, y toca Dispersión otra vez para volver. Además, las líneas de tendencia cambian de color por zona —verde en lecturas más bajas, pasando a rojo en las más altas— para que los valores altos destaquen. Tus datos siguen en tu dispositivo.
+</es-ES>
+
+<fr-FR>
+La vue Nuage est désormais en 3D : vos mesures selon la systolique, la diastolique et le pouls. Elle s'ouvre comme le graphique plat habituel ; glissez un doigt pour la pivoter et explorer le pouls en profondeur, puis touchez de nouveau Nuage pour revenir. Et les courbes de tendance changent de couleur selon la zone — vert pour les valeurs basses, virant au rouge pour les plus élevées. Vos données restent sur votre appareil.
+</fr-FR>
+
+<ar>
+أصبح عرض التشتّت ثلاثي الأبعاد الآن — قراءاتك حسب الانقباضي والانبساطي والنبض. يفتح كالمخطط المسطّح المعتاد؛ اسحب بإصبع واحد لتدويره واستكشاف النبض كعمق، ثم اضغط على التشتّت مجددًا للعودة. كما تتغير خطوط الاتجاه الآن بالألوان حسب المنطقة — أخضر للقيم المنخفضة وصولًا إلى الأحمر للأعلى — لتبرز القيم المرتفعة. تبقى بياناتك على جهازك كالعادة.
+</ar>
+
+<hi-IN>
+बिखराव व्यू अब 3D है — आपकी रीडिंग सिस्टोलिक, डायस्टोलिक और पल्स के अनुसार। यह सामान्य सपाट चार्ट की तरह खुलता है; एक उँगली से खींचकर इसे घुमाएँ और पल्स को गहराई के रूप में देखें, फिर वापस आने के लिए बिखराव पर दोबारा टैप करें। और रुझान रेखाएँ अब ज़ोन के अनुसार रंग बदलती हैं — कम रीडिंग पर हरा, अधिक पर लाल — ताकि ऊँची रीडिंग साफ़ दिखें। आपका डेटा हमेशा की तरह आपके डिवाइस पर रहता है।
+</hi-IN>
+
+<ja-JP>
+散布図ビューが3Dになりました — 収縮期・拡張期・脈拍で測定値を表示します。最初はおなじみの平面グラフで開き、指1本でドラッグすると回転して脈拍を奥行きとして確認できます。もう一度「散布図」をタップすると元に戻ります。また、推移の線がゾーンごとに色分けされ、低い値では緑、高くなるにつれて赤へ変化するので、高い値がひと目で分かります。データはこれまで通り端末内に保存されます。
+</ja-JP>
+
+<ko-KR>
+분산형 보기가 이제 3D입니다 — 수축기, 이완기, 맥박으로 기록을 표시합니다. 익숙한 평면 차트로 열리며, 한 손가락으로 끌어 회전하면 맥박을 깊이로 살펴볼 수 있고, 분산형을 다시 탭하면 돌아옵니다. 또한 추세 선이 이제 구간별로 색이 바뀌어 — 낮은 값은 초록, 높을수록 빨강 — 높은 값이 한눈에 띕니다. 데이터는 언제나처럼 기기에 보관됩니다.
+</ko-KR>
+
+<pt-BR>
+A visão de dispersão agora é 3D — suas leituras por sistólica, diastólica e pulsação. Abre como o gráfico plano de sempre; arraste com um dedo para girá-la e explorar a pulsação como profundidade, e toque em Dispersão novamente para voltar. E as linhas de tendência agora mudam de cor por zona — verde nas leituras mais baixas, passando a vermelho nas mais altas — para os valores altos se destacarem. Seus dados continuam no seu dispositivo.
+</pt-BR>
+
+<ro>
+Vizualizarea de dispersie este acum 3D — măsurătorile tale după sistolică, diastolică și puls. Se deschide ca graficul plat obișnuit; trage cu un deget pentru a o roti și a explora pulsul ca adâncime, apoi atinge din nou Dispersie pentru a reveni. Iar liniile de tendință își schimbă acum culoarea în funcție de zonă — verde la valori mai mici, trecând la roșu la cele mari — ca valorile mari să iasă în evidență. Datele tale rămân pe dispozitiv.
+</ro>
+
+<uk>
+Вигляд розсіювання тепер 3D — ваші вимірювання за систолічним, діастолічним і пульсом. Відкривається як звичний плаский графік; проведіть одним пальцем, щоб обертати його й розглянути пульс як глибину, потім торкніться «Розсіювання» ще раз, щоб повернутися. А лінії динаміки тепер змінюють колір за зоною — зелений для нижчих значень, переходячи в червоний для вищих — щоб високі значення впадали в око. Ваші дані залишаються на пристрої.
+</uk>
+
+<zh-CN>
+散点图视图现在是 3D — 按收缩压、舒张压和脉搏展示读数。它会以熟悉的平面图打开；用一根手指拖动即可旋转，将脉搏作为深度查看，再次点按"散点图"即可返回。此外，趋势线现在按区间变色——较低读数为绿色，升高时转为红色——让偏高的读数一目了然。一如既往，您的数据始终保留在设备上。
+</zh-CN>
