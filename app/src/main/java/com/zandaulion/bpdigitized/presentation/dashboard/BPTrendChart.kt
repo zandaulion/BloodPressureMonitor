@@ -15,6 +15,7 @@ import androidx.compose.runtime.snapshotFlow
 import kotlinx.coroutines.flow.first
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,12 +23,18 @@ import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.BPReading
 import com.zandaulion.bpdigitized.domain.model.BpTag
 import com.zandaulion.bpdigitized.presentation.extensions.labelRes
+import com.zandaulion.bpdigitized.presentation.theme.CategoryCrisis
+import com.zandaulion.bpdigitized.presentation.theme.CategoryElevated
+import com.zandaulion.bpdigitized.presentation.theme.CategoryNormal
+import com.zandaulion.bpdigitized.presentation.theme.CategoryStage1
+import com.zandaulion.bpdigitized.presentation.theme.CategoryStage2
 import com.patrykandpatrick.vico.compose.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.compose.cartesian.marker.rememberDefaultCartesianMarker
 import com.patrykandpatrick.vico.compose.common.component.rememberShapeComponent
 import com.patrykandpatrick.vico.core.cartesian.marker.DefaultCartesianMarker
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberBottom
 import com.patrykandpatrick.vico.compose.cartesian.axis.rememberStart
+import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLine
 import com.patrykandpatrick.vico.compose.cartesian.layer.rememberLineCartesianLayer
 import com.patrykandpatrick.vico.compose.cartesian.rememberCartesianChart
 import com.patrykandpatrick.vico.compose.cartesian.rememberVicoScrollState
@@ -45,7 +52,10 @@ import com.patrykandpatrick.vico.core.cartesian.data.CartesianLayerRangeProvider
 import com.patrykandpatrick.vico.core.cartesian.data.CartesianValueFormatter
 import com.patrykandpatrick.vico.core.cartesian.data.lineSeries
 import com.patrykandpatrick.vico.core.cartesian.decoration.HorizontalLine
+import com.patrykandpatrick.vico.core.cartesian.layer.LineCartesianLayer
+import com.patrykandpatrick.vico.core.common.Fill
 import com.patrykandpatrick.vico.core.common.Position
+import com.patrykandpatrick.vico.core.common.shader.ShaderProvider
 import com.patrykandpatrick.vico.core.common.shape.DashedShape
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -60,6 +70,44 @@ private const val NORMAL_DIASTOLIC = 80.0
 
 private const val MILLIS_PER_DAY    = 24L * 60 * 60 * 1_000
 private const val MAX_VISIBLE_SECS  = 10.0 * 24 * 3600   // cap: never open wider than 10 days
+
+// Zone colour stops (bpValue → ARGB) for the severity gradient — green (optimal) up through
+// crimson (extreme), using the same palette as the badges / scatter. Systolic and diastolic
+// have their own thresholds.
+private val SYS_ZONE_STOPS = listOf(
+    110f to CategoryNormal.toArgb(),
+    120f to CategoryElevated.toArgb(),
+    130f to CategoryStage1.toArgb(),
+    140f to CategoryStage2.toArgb(),
+    180f to CategoryCrisis.toArgb(),
+)
+private val DIA_ZONE_STOPS = listOf(
+    70f  to CategoryNormal.toArgb(),
+    80f  to CategoryElevated.toArgb(),
+    90f  to CategoryStage1.toArgb(),
+    100f to CategoryStage2.toArgb(),
+    120f to CategoryCrisis.toArgb(),
+)
+
+/**
+ * Builds a vertical colour gradient (top = high BP / severe) for a line, mapping the given
+ * (bpValue → ARGB) zone stops onto the chart's [yMin, yMax] range. Positions are clamped to
+ * [0, 1] and kept strictly increasing, with the edge colours extended to the chart top/bottom.
+ */
+private fun severityGradient(stops: List<Pair<Float, Int>>, yMin: Float, yMax: Float): ShaderProvider {
+    val mapped = stops
+        .map { (v, c) -> ((yMax - v) / (yMax - yMin)).coerceIn(0f, 1f) to c }
+        .sortedBy { it.first }
+    val pos = ArrayList<Float>(); val col = ArrayList<Int>()
+    for ((p, c) in mapped) {
+        val pp = if (pos.isEmpty()) p else maxOf(p, pos.last() + 1e-3f)
+        if (pp <= 1f) { pos.add(pp); col.add(c) }
+    }
+    if (pos.isEmpty()) { pos.add(0f); col.add(stops.last().second) }
+    if (pos.first() > 0f) { pos.add(0, 0f); col.add(0, col.first()) }
+    if (pos.last() < 1f) { pos.add(1f); col.add(col.last()) }
+    return ShaderProvider.verticalGradient(col.toIntArray(), pos.toFloatArray())
+}
 
 @Composable
 fun BPTrendChart(
@@ -269,6 +317,20 @@ fun BPTrendChart(
             }
         }
 
+        // Severity-coloured lines: a vertical gradient (green→amber→orange→red→crimson) keyed
+        // to each line's zone thresholds, so the line shifts colour smoothly with the reading's
+        // severity (its height on the BP axis). Rebuilt when the Y range changes.
+        val sysLineFill = remember(yMinY, yMaxY) {
+            LineCartesianLayer.LineFill.single(
+                Fill(severityGradient(SYS_ZONE_STOPS, yMinY.toFloat(), yMaxY.toFloat())))
+        }
+        val diaLineFill = remember(yMinY, yMaxY) {
+            LineCartesianLayer.LineFill.single(
+                Fill(severityGradient(DIA_ZONE_STOPS, yMinY.toFloat(), yMaxY.toFloat())))
+        }
+        val sysLine = LineCartesianLayer.rememberLine(fill = sysLineFill, areaFill = null)
+        val diaLine = LineCartesianLayer.rememberLine(fill = diaLineFill, areaFill = null)
+
         CartesianChartHost(
             modelProducer = modelProducer,
             modifier = modifier,
@@ -277,6 +339,7 @@ fun BPTrendChart(
             zoomState = zoomState,
             chart = rememberCartesianChart(
                 rememberLineCartesianLayer(
+                    lineProvider = LineCartesianLayer.LineProvider.series(sysLine, diaLine),
                     rangeProvider = CartesianLayerRangeProvider.fixed(minY = yMinY, maxY = yMaxY),
                 ),
                 startAxis = VerticalAxis.rememberStart(),

@@ -103,6 +103,7 @@ import androidx.core.content.FileProvider
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -148,6 +149,9 @@ fun DashboardScreen(
     var exportMenuExpanded by remember { mutableStateOf(false) }
     var languageMenuExpanded by remember { mutableStateOf(false) }
     var displayPaywall by remember { mutableStateOf(false) }
+    // Bumped each time the Scatter toggle is tapped (even when already selected) to snap
+    // the 3D scatter back to its head-on orientation.
+    var scatterResetKey by remember { mutableStateOf(0) }
     val currentLocaleCode = remember { LocalePrefs.getLocale(context) }
     // Set when an export completes; promoted to exportedMessage on the next ON_RESUME
     // (i.e. when the user dismisses the Android share sheet and returns to the app).
@@ -294,7 +298,7 @@ fun DashboardScreen(
                             .weight(2f)
                             .fillMaxHeight(),
                     )
-                    BPScatterChart(
+                    BPScatter3DChart(
                         readings = ui.chartReadings,
                         modifier = Modifier
                             .weight(1f)
@@ -508,7 +512,11 @@ fun DashboardScreen(
 
             ChartModeToggle(
                 mode = chartMode,
-                onSelect = viewModel::selectChartMode,
+                onSelect = { selected ->
+                    // Tapping Scatter always resets the 3D view, even if it was already on.
+                    if (selected == ChartMode.SCATTER) scatterResetKey++
+                    viewModel.selectChartMode(selected)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
@@ -523,11 +531,12 @@ fun DashboardScreen(
                         .height(220.dp)
                         .padding(horizontal = 16.dp),
                 )
-                ChartMode.SCATTER -> BPScatterChart(
+                ChartMode.SCATTER -> BPScatter3DChart(
                     readings = ui.chartReadings,
+                    resetKey = scatterResetKey,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(220.dp)
+                        .height(280.dp)
                         .padding(horizontal = 16.dp),
                 )
             }
@@ -724,6 +733,15 @@ private fun ChartModeToggle(
                         modifier = Modifier.size(18.dp),
                     )
                     Text(stringResource(R.string.chart_view_scatter))
+                    // Tiny "3D" badge to hint the scatter is a rotatable 3D view.
+                    Text(
+                        text = "3D",
+                        style = MaterialTheme.typography.labelSmall,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 9.sp,
+                        color = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.offset(y = (-5).dp),
+                    )
                 }
             },
         )
