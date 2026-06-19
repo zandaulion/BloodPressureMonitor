@@ -17,7 +17,7 @@ Fast, tap-friendly sliders let you set systolic, diastolic, and pulse in moments
 Don't want to type at all? Photograph your home monitor and the numbers are read for you automatically. Camera scanning is an optional Premium feature for the easiest possible entry.
 
 📈 Watch your trends
-Interactive charts reveal how your numbers move over days, weeks, and months. Smart "Avg" smoothing combines back-to-back readings into a single, honest data point — so your trend line reflects reality.
+See how your numbers move over days, weeks, and months. Switch between a colour-coded trend line — so higher readings stand out at a glance — and a 3D scatter you can spin with a finger to explore systolic, diastolic, and pulse together. Smart "Avg" smoothing merges back-to-back readings into a single, honest data point, so your trend reflects reality.
 
 🏷️ See what moves your numbers
 Tag any reading with context — exercise, caffeine, a salty meal, poor sleep, stress — and discover how your activity and lifestyle shape your blood pressure over time.
@@ -37,7 +37,7 @@ Your data stays on your device. No account to create, no cloud sign-up, nothing 
 Features at a glance
 • Free, fast manual logging with sliders — no account needed
 • Optional camera scanning of home monitors (Premium)
-• Interactive trend charts with averaging
+• Trend and rotatable 3D scatter charts — colour-coded, with smart averaging
 • Context tags that link readings to your activity and lifestyle
 • Health Connect integration — alongside your activity & fitness data
 • Clean PDF export and sharing
