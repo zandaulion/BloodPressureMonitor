@@ -26,7 +26,7 @@ Tag any reading with context — exercise, caffeine, a salty meal, poor sleep, s
 Sync with Android Health Connect to keep your blood pressure right alongside your activity, workouts, and other fitness data — on your terms, with your permission.
 
 📄 Keep your own records
-Export a simple PDF of your history — charts and readings included — to keep for yourself.
+Export a simple PDF of your history — charts and readings included.
 
 ⏰ Build a consistent habit
 Optional gentle reminders help you log at the same time each morning and evening, so your trends stay complete.
@@ -40,7 +40,7 @@ Features at a glance
 • Trend and rotatable 3D scatter charts with smart averaging
 • Context tags that link readings to your activity and lifestyle
 • Health Connect integration — alongside your activity & fitness data
-• Simple PDF export for your own records
+• Simple PDF export
 • Customizable morning & evening reminders
 • Available in 12 languages
 • Your data stays on your device — no account required
