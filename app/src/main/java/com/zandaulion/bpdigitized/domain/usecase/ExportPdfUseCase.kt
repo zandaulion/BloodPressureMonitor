@@ -568,6 +568,8 @@ class ExportPdfUseCase @Inject constructor(
     private fun drawFooter(c: Canvas, w: Int, h: Int, t: L10n) {
         c.drawLine(M, h - M - FOOTER_H + 4f, w - M, h - M - FOOTER_H + 4f, pDivider)
         c.drawText(t.disclaimer, M, h - M, pFooter)
+        // Unintrusive link to the app's web page, right-aligned just above the disclaimer.
+        c.drawText(SITE_URL, w - M, h - M - 20f, pFooterRight)
     }
 
     // ── Math ──────────────────────────────────────────────────────────────────
@@ -653,6 +655,7 @@ class ExportPdfUseCase @Inject constructor(
     private val pStatsVal   = tp(TS_SMALL, Color.rgb(20, 20, 20), mono = true)
     private val pNoteLegend = tp(TS_SMALL - 2f, Color.rgb(50, 50, 50))
     private val pFooter     = tp(TS_SMALL - 4f, Color.rgb(150, 150, 150))
+    private val pFooterRight = tp(TS_SMALL - 4f, Color.rgb(150, 150, 150), align = Paint.Align.RIGHT)
     private val pTblHeader  = tp(TS_SMALL, Color.rgb(20, 20, 20), bold = true)
     private val pTblRow     = tp(TS_SMALL, Color.rgb(50, 50, 50))
 
@@ -710,6 +713,7 @@ class ExportPdfUseCase @Inject constructor(
         private const val BADGE_R     = 13f
         private const val STATS_H     = 52f
         private const val FOOTER_H    = 40f
+        private const val SITE_URL    = "zandaulion.com/bpdigitizer.html"
         private const val X_LABEL_H   = 55f   // space for rotated X-axis labels
         private const val NOTE_ROW_H  = 36f
         private const val TABLE_ROW_H = 46f
