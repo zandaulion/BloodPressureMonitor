@@ -1,0 +1,47 @@
+<en-US>
+Small refinements: your exported PDF now includes a link to the app's web page in its footer, plus tidier wording in a few places. Your data stays on your device, as always.
+</en-US>
+
+<de-DE>
+Kleine Verbesserungen: Ihr exportiertes PDF enthält jetzt unten einen Link zur Web-Seite der App, dazu klarere Formulierungen an einigen Stellen. Ihre Daten bleiben wie immer auf dem Gerät.
+</de-DE>
+
+<es-ES>
+Pequeñas mejoras: tu PDF exportado ahora incluye un enlace a la página web de la app en el pie, además de textos más claros en algunos lugares. Tus datos siguen en tu dispositivo, como siempre.
+</es-ES>
+
+<fr-FR>
+Petites améliorations : votre PDF exporté inclut désormais un lien vers la page web de l'application en bas de page, ainsi que des formulations plus claires par endroits. Vos données restent sur votre appareil, comme toujours.
+</fr-FR>
+
+<ar>
+تحسينات صغيرة: يتضمّن ملف PDF المُصدَّر الآن رابطًا إلى صفحة الويب الخاصة بالتطبيق في التذييل، مع صياغة أوضح في بعض المواضع. تبقى بياناتك على جهازك كالعادة.
+</ar>
+
+<hi-IN>
+छोटे सुधार: आपके निर्यात किए गए PDF के फ़ुटर में अब ऐप के वेब पेज का लिंक शामिल है, साथ ही कुछ जगहों पर बेहतर शब्द। आपका डेटा हमेशा की तरह आपके डिवाइस पर रहता है।
+</hi-IN>
+
+<ja-JP>
+細かな改善: 書き出したPDFのフッターにアプリのウェブページへのリンクが追加され、一部の表現も整えました。データはこれまで通り端末内に保存されます。
+</ja-JP>
+
+<ko-KR>
+소소한 개선: 내보낸 PDF 하단에 앱 웹페이지 링크가 추가되었고, 일부 문구를 다듬었습니다. 데이터는 언제나처럼 기기에 보관됩니다.
+</ko-KR>
+
+<pt-BR>
+Pequenas melhorias: seu PDF exportado agora inclui um link para a página da web do app no rodapé, além de textos mais claros em alguns pontos. Seus dados continuam no seu dispositivo, como sempre.
+</pt-BR>
+
+<ro>
+Mici îmbunătățiri: PDF-ul exportat include acum un link către pagina web a aplicației în subsol, plus formulări mai clare în câteva locuri. Datele tale rămân pe dispozitiv, ca întotdeauna.
+</ro>
+
+<uk>
+Невеликі вдосконалення: у нижньому колонтитулі експортованого PDF тепер є посилання на вебсторінку застосунку, а також краще формулювання в кількох місцях. Ваші дані залишаються на пристрої, як завжди.
+</uk>
+
+<zh-CN>
+小幅优化：导出的 PDF 页脚现在包含应用网页的链接，并在多处优化了文案。您的数据一如既往地保留在设备上。
+</zh-CN>
