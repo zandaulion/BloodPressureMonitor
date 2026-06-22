@@ -5,7 +5,7 @@ FULL DESCRIPTION (max 4000 chars)
 
 Your blood pressure, part of your fitness routine.
 
-A strong heart powers an active life, and your blood pressure is one of its clearest signs. This app makes it effortless to log your numbers, watch your trends, and see how your workouts, rest, and habits move them — in seconds a day, free, with no account.
+Keep your blood pressure in view alongside the rest of your active life. This app makes it effortless to log your numbers, watch your trends over time, and see how your workouts, rest, and daily habits line up with them — in seconds a day, free, with no account.
 
 🏃 Built for an active lifestyle
 Blood pressure is a core wellness metric, right alongside your steps, workouts, and sleep. Log it in seconds and keep it part of the routine that keeps you moving.
@@ -13,20 +13,20 @@ Blood pressure is a core wellness metric, right alongside your steps, workouts, 
 ✏️ Log your readings for free, in seconds
 Fast, tap-friendly sliders let you set systolic, diastolic, and pulse in moments. Completely free, works offline, and needs no account — start tracking the very first time you open the app.
 
-📷 Or scan your monitor with the camera (Premium)
-Don't want to type at all? Photograph your home monitor and the numbers are read for you automatically. Camera scanning is an optional Premium feature for the easiest possible entry.
+📷 Or scan with the camera (Premium)
+Don't want to type? Snap a photo of your monitor's display and the numbers are entered for you. Camera scanning is an optional Premium feature for the easiest possible entry.
 
 📈 Watch your trends
-See how your numbers move over days, weeks, and months. Switch between a colour-coded trend line — so higher readings stand out at a glance — and a 3D scatter you can spin with a finger to explore systolic, diastolic, and pulse together. Smart "Avg" smoothing merges back-to-back readings into a single, honest data point, so your trend reflects reality.
+See how your numbers move over days, weeks, and months. Switch between a trend line and a 3D scatter you can spin with a finger to explore systolic, diastolic, and pulse together. Smart "Avg" smoothing merges back-to-back readings into a single, honest data point, so your trend reflects reality.
 
 🏷️ See what moves your numbers
-Tag any reading with context — exercise, caffeine, a salty meal, poor sleep, stress — and discover how your activity and lifestyle shape your blood pressure over time.
+Tag any reading with context — exercise, caffeine, a salty meal, poor sleep, stress — and discover how your activity and lifestyle shape your numbers over time.
 
 ❤️ Connects with Health Connect
 Sync with Android Health Connect to keep your blood pressure right alongside your activity, workouts, and other fitness data — on your terms, with your permission.
 
-📄 Keep a clean PDF record
-Export a clear, professional PDF of your history — charts and readings included — to keep for yourself or share with whomever you choose.
+📄 Keep your own records
+Export a simple PDF of your history — charts and readings included — to keep for yourself.
 
 ⏰ Build a consistent habit
 Optional gentle reminders help you log at the same time each morning and evening, so your trends stay complete.
@@ -37,10 +37,10 @@ Your data stays on your device. No account to create, no cloud sign-up, nothing 
 Features at a glance
 • Free, fast manual logging with sliders — no account needed
 • Optional camera scanning of home monitors (Premium)
-• Trend and rotatable 3D scatter charts — colour-coded, with smart averaging
+• Trend and rotatable 3D scatter charts with smart averaging
 • Context tags that link readings to your activity and lifestyle
 • Health Connect integration — alongside your activity & fitness data
-• Clean PDF export and sharing
+• Simple PDF export for your own records
 • Customizable morning & evening reminders
 • Available in 12 languages
 • Your data stays on your device — no account required
