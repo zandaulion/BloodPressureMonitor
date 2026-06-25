@@ -35,12 +35,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalConfiguration
-import com.revenuecat.purchases.ui.revenuecatui.PaywallDialog
-import com.revenuecat.purchases.ui.revenuecatui.PaywallDialogOptions
-import com.revenuecat.purchases.ui.revenuecatui.PaywallListener
-import com.revenuecat.purchases.CustomerInfo
-import com.revenuecat.purchases.PurchasesError
-import com.revenuecat.purchases.models.StoreTransaction
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -148,7 +142,6 @@ fun DashboardScreen(
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     var exportMenuExpanded by remember { mutableStateOf(false) }
     var languageMenuExpanded by remember { mutableStateOf(false) }
-    var displayPaywall by remember { mutableStateOf(false) }
     // Bumped each time the Scatter toggle is tapped (even when already selected) to snap
     // the 3D scatter back to its head-on orientation.
     var scatterResetKey by remember { mutableStateOf(0) }
@@ -433,65 +426,20 @@ fun DashboardScreen(
                         modifier = Modifier.size(36.dp),
                     )
                 }
-                Box {
-                    FloatingActionButton(
-                        onClick = {
-                            if (ui.isProUser) {
-                                onAddViaCamera()
-                            } else {
-                                displayPaywall = true
-                            }
-                        },
-                        modifier = Modifier.size(84.dp),
-                    ) {
-                        Icon(
-                            Icons.Default.CameraAlt,
-                            contentDescription = stringResource(R.string.dashboard_cd_scan),
-                            modifier = Modifier.size(54.dp),
-                        )
-                    }
-                    if (!ui.isProUser) {
-                        Icon(
-                            imageVector = Icons.Default.Lock,
-                            contentDescription = stringResource(R.string.dashboard_cd_premium),
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier
-                                .align(Alignment.TopEnd)
-                                .offset(x = 8.dp, y = (-8).dp)
-                                .size(40.dp)
-                                .clip(CircleShape)
-                                .background(MaterialTheme.colorScheme.primary)
-                                .border(3.dp, MaterialTheme.colorScheme.onPrimary, CircleShape)
-                                .padding(6.dp),
-                        )
-                    }
+                FloatingActionButton(
+                    onClick = onAddViaCamera,
+                    modifier = Modifier.size(84.dp),
+                ) {
+                    Icon(
+                        Icons.Default.CameraAlt,
+                        contentDescription = stringResource(R.string.dashboard_cd_scan),
+                        modifier = Modifier.size(54.dp),
+                    )
                 }
             }
         },
         snackbarHost = { SnackbarHost(snackbarHostState) },
     ) { inner ->
-        if (displayPaywall) {
-            PaywallDialog(
-                paywallDialogOptions = PaywallDialogOptions.Builder()
-                    .setRequiredEntitlementIdentifier("pro")
-                    .setShouldDisplayDismissButton(true)
-                    .setDismissRequest { displayPaywall = false }
-                    .setListener(object : PaywallListener {
-                        override fun onPurchaseStarted(rcPackage: com.revenuecat.purchases.Package) {}
-                        override fun onPurchaseCompleted(customerInfo: CustomerInfo, storeTransaction: StoreTransaction) {
-                            displayPaywall = false
-                            onAddViaCamera()
-                        }
-                        override fun onPurchaseError(error: PurchasesError) {}
-                        override fun onPurchaseCancelled() {}
-                        override fun onRestoreStarted() {}
-                        override fun onRestoreCompleted(customerInfo: CustomerInfo) {}
-                        override fun onRestoreError(error: PurchasesError) {}
-                    })
-                    .build()
-            )
-        }
-        
         Box(
             modifier = Modifier
                 .fillMaxSize()

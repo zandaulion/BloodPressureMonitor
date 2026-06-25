@@ -1,13 +1,5 @@
 package com.zandaulion.bpdigitized.domain.billing
 
-import android.app.Application
-import android.util.Log
-import com.revenuecat.purchases.CustomerInfo
-import com.revenuecat.purchases.Purchases
-import com.revenuecat.purchases.PurchasesConfiguration
-import com.revenuecat.purchases.interfaces.UpdatedCustomerInfoListener
-import com.revenuecat.purchases.restorePurchasesWith
-import com.revenuecat.purchases.getCustomerInfoWith
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,53 +7,27 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Outcome of a restore attempt. A restore that completes without finding an
- * eligible purchase is [NOTHING_TO_RESTORE] — a normal result, NOT [ERROR] — so
- * the UI can tell the user "no previous purchase found" instead of "failed".
+ * Outcome of a restore attempt. Retained for the Profile "Restore Purchases"
+ * action, though the directly-distributed build has nothing to restore.
  */
 enum class RestoreOutcome { RESTORED, NOTHING_TO_RESTORE, ERROR }
 
+/**
+ * Billing is disabled for direct (sideloaded) distribution: there is no Play
+ * Billing outside the Store, so the former "Premium" gate is permanently
+ * unlocked — every install gets the full app, including camera scanning.
+ * RevenueCat is intentionally kept out of the runtime path.
+ */
 @Singleton
-class BillingManager @Inject constructor(
-    private val application: Application
-) {
-    private val _isProUser = MutableStateFlow(false)
+class BillingManager @Inject constructor() {
+    private val _isProUser = MutableStateFlow(true)
     val isProUser: StateFlow<Boolean> = _isProUser.asStateFlow()
 
-    fun initialize(apiKey: String) {
-        Purchases.debugLogsEnabled = true
-        Purchases.configure(PurchasesConfiguration.Builder(application, apiKey).build())
-        
-        Purchases.sharedInstance.updatedCustomerInfoListener = UpdatedCustomerInfoListener { customerInfo ->
-            updateProStatus(customerInfo)
-        }
-        
-        Purchases.sharedInstance.getCustomerInfoWith(
-            onError = { error -> Log.e("BillingManager", "Failed to get customer info: ${error.message}") },
-            onSuccess = { customerInfo -> updateProStatus(customerInfo) }
-        )
-    }
+    /** No-op: nothing to configure when billing is disabled. */
+    fun initialize(apiKey: String) = Unit
 
-    private fun updateProStatus(customerInfo: CustomerInfo) {
-        // Assume the entitlement is named "pro" in RevenueCat dashboard
-        val isPro = customerInfo.entitlements["pro"]?.isActive == true
-        _isProUser.value = isPro
-    }
-
+    /** Everything is already unlocked, so a restore is trivially a success. */
     fun restorePurchases(onResult: (RestoreOutcome) -> Unit) {
-        Purchases.sharedInstance.restorePurchasesWith(
-            onError = { error ->
-                Log.e("BillingManager", "Restore error: ${error.message}")
-                onResult(RestoreOutcome.ERROR)
-            },
-            onSuccess = { customerInfo ->
-                updateProStatus(customerInfo)
-                // Restore succeeded; whether it actually granted Pro decides the message.
-                onResult(
-                    if (_isProUser.value) RestoreOutcome.RESTORED
-                    else RestoreOutcome.NOTHING_TO_RESTORE
-                )
-            }
-        )
+        onResult(RestoreOutcome.RESTORED)
     }
 }
