@@ -15,14 +15,15 @@ android {
         applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 22
-        versionName = "1.4.1"
+        versionCode = 24
+        versionName = "1.5.0"
 
         // Clinical mode. When true the app surfaces AHA hypertension staging,
         // the cardiovascular risk assessment, and condition inputs (diabetes,
-        // smoker, MAP/PP, medication tags). Shipped false so the published build
-        // presents as a neutral fitness blood-pressure logger. See Features.kt.
-        buildConfigField("boolean", "CLINICAL_MODE", "false")
+        // smoker, MAP/PP, medication tags). Enabled for the directly-distributed
+        // (sideloaded) build — Google Play's "Diseases & Conditions" policy does
+        // not apply outside the Store. See Features.kt.
+        buildConfigField("boolean", "CLINICAL_MODE", "true")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables { useSupportLibrary = true }
