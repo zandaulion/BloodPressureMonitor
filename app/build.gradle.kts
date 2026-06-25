@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
@@ -10,6 +13,14 @@ plugins {
 android {
     namespace = "com.zandaulion.bpdigitized"
     compileSdk = 36
+
+    // Release signing is driven by an untracked keystore.properties at the repo
+    // root (see keystore.properties.template). When the file is absent (fresh
+    // clone, CI), release builds are simply left unsigned instead of failing.
+    val keystorePropsFile = rootProject.file("keystore.properties")
+    val keystoreProps = Properties().apply {
+        if (keystorePropsFile.exists()) FileInputStream(keystorePropsFile).use { load(it) }
+    }
 
     defaultConfig {
         applicationId = "com.zandaulion.bpdigitized"
@@ -29,6 +40,17 @@ android {
         vectorDrawables { useSupportLibrary = true }
     }
 
+    signingConfigs {
+        create("release") {
+            if (keystorePropsFile.exists()) {
+                storeFile = file(keystoreProps.getProperty("storeFile"))
+                storePassword = keystoreProps.getProperty("storePassword")
+                keyAlias = keystoreProps.getProperty("keyAlias")
+                keyPassword = keystoreProps.getProperty("keyPassword")
+            }
+        }
+    }
+
     buildTypes {
         debug {
             // Lets Remote Config conditions target dev builds only (Version
@@ -37,6 +59,11 @@ android {
             versionNameSuffix = "-dev"
         }
         release {
+            // Sign with the release key only when keystore.properties is present;
+            // otherwise the build stays unsigned rather than breaking.
+            if (keystorePropsFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

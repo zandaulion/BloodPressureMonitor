@@ -11,6 +11,8 @@ captures/
 *.apk
 *.aab
 *.keystore
+*.jks
+keystore.properties
 google-services.json
 release/
 SampleData/
