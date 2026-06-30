@@ -39,6 +39,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -46,13 +47,19 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
 import androidx.compose.ui.text.rememberTextMeasurer
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zandaulion.bpdigitized.R
 import com.zandaulion.bpdigitized.domain.model.BPReading
+import com.zandaulion.bpdigitized.domain.model.BpTag
+import com.zandaulion.bpdigitized.presentation.extensions.labelRes
 import com.zandaulion.bpdigitized.presentation.theme.CategoryStage2
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import kotlin.math.PI
 import kotlin.math.abs
 import kotlin.math.ceil
@@ -89,8 +96,8 @@ private const val REF_DIA = 80f
 private val RECENCY_OLD = Color(0xFF90CAF9)  // light blue — oldest
 private val RECENCY_NEW = Color(0xFF0D47A1)  // deep blue — newest
 
-/** A projected point ready to draw: screen position, post-rotation depth, and dot colour. */
-private class Proj(val x: Float, val y: Float, val depth: Float, val color: Color)
+/** A projected point ready to draw: its reading, screen position, post-rotation depth, colour. */
+private class Proj(val reading: BPReading, val x: Float, val y: Float, val depth: Float, val color: Color)
 
 /** Round tick values inside [lo, hi], with a "nice" step (1/2/5 × 10ⁿ) aiming for ~4 intervals. */
 private fun niceTicks(lo: Float, hi: Float): List<Float> {
@@ -212,6 +219,20 @@ fun BPScatter3DChart(
         (when { points.size > 150 -> 1.75f; points.size > 60 -> 2.25f; else -> 2.75f }).dp.toPx()
     }
 
+    // ── Touch-for-details ──────────────────────────────────────────────────────
+    // Latest projected dot positions, captured during draw for hit-testing. A plain list
+    // (not snapshot state), so updating it mid-draw doesn't trigger recomposition.
+    val projected = remember { mutableListOf<Proj>() }
+    var selected by remember { mutableStateOf<BPReading?>(null) }
+    LaunchedEffect(points) { selected = null }   // clear selection when the range/data changes
+    val hitRadiusPx    = with(density) { 24.dp.toPx() }
+    val selectionColor = MaterialTheme.colorScheme.onSurface
+    val ringStrokePx   = with(density) { 2.dp.toPx() }
+    val ringGapPx      = with(density) { 3.dp.toPx() }
+    // Localized tag labels by ordinal + a compact date format for the detail strip.
+    val tagLabels = BpTag.entries.map { stringResource(it.labelRes()) }
+    val detailDateFmt = remember { SimpleDateFormat("d MMM HH:mm", Locale.getDefault()) }
+
     Column(modifier = modifier) {
       Box(modifier = Modifier.fillMaxWidth().weight(1f)) {
         Canvas(
@@ -228,7 +249,17 @@ fun BPScatter3DChart(
                     )
                 }
                 .pointerInput(Unit) {
-                    detectTapGestures(onDoubleTap = { settle() })
+                    detectTapGestures(
+                        // Tap a dot → select it (details show below); tap empty space → clear.
+                        // On overlapping dots, pick the frontmost (greatest depth).
+                        onTap = { pos ->
+                            selected = projected
+                                .filter { (Offset(it.x, it.y) - pos).getDistance() <= hitRadiusPx }
+                                .maxByOrNull { it.depth }
+                                ?.reading
+                        },
+                        onDoubleTap = { settle() },
+                    )
                 },
         ) {
             val w = size.width; val h = size.height
@@ -366,8 +397,11 @@ fun BPScatter3DChart(
                     norm(r.pulse!!.toFloat(),   pulMin, pulMax),
                 )
                 val p = pers(rz)
-                Proj(cx + rx * p * fit, cy - ry * p * fit, rz, timeColor(r.timestamp))
+                Proj(r, cx + rx * p * fit, cy - ry * p * fit, rz, timeColor(r.timestamp))
             }
+            // Capture for tap hit-testing (plain list → no recomposition).
+            projected.clear(); projected.addAll(proj)
+
             val dMin = proj.minOf { it.depth }; val dMax = proj.maxOf { it.depth }
             for (pt in proj.sortedBy { it.depth }) {
                 val t = if (dMax > dMin) (pt.depth - dMin) / (dMax - dMin) else 1f   // 0 far → 1 near
@@ -377,6 +411,18 @@ fun BPScatter3DChart(
                     radius = baseR * pers(pt.depth),
                     center = Offset(pt.x, pt.y),
                 )
+            }
+            // Ring the selected dot (drawn last, so it sits on top).
+            val sel = selected
+            if (sel != null) {
+                proj.firstOrNull { it.reading === sel }?.let { pt ->
+                    drawCircle(
+                        color = selectionColor,
+                        radius = baseR * pers(pt.depth) + ringGapPx,
+                        center = Offset(pt.x, pt.y),
+                        style = Stroke(width = ringStrokePx),
+                    )
+                }
             }
         }
 
@@ -394,24 +440,57 @@ fun BPScatter3DChart(
         )
       } // Box
 
-        // Recency legend — colour encodes how recent each reading is (older → newer).
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Box(
-                Modifier
-                    .height(9.dp)
-                    .width(72.dp)
-                    .clip(RoundedCornerShape(4.dp))
-                    .background(Brush.horizontalGradient(listOf(RECENCY_OLD, RECENCY_NEW))),
-            )
-            Spacer(Modifier.width(8.dp))
-            Text(
-                text = stringResource(R.string.scatter_colour_time),
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
+        // Below the chart: the tapped reading's details, or — when nothing is selected —
+        // the recency colour key.
+        val detail = selected
+        if (detail != null) {
+            val line = buildString {
+                append(detailDateFmt.format(Date(detail.timestamp)))
+                append("    ${detail.systolic}/${detail.diastolic}")
+                detail.pulse?.let { append("  ·  $it bpm") }
+                if (detail.tags.isNotEmpty()) {
+                    append("  ·  ")
+                    append(detail.tags.joinToString(", ") { tagLabels[it.ordinal] })
+                }
+            }
+            Column(modifier = Modifier.fillMaxWidth().padding(top = 6.dp)) {
+                Text(
+                    text = line,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                )
+                detail.notes?.takeIf { it.isNotBlank() }?.let { note ->
+                    Text(
+                        text = note,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                    )
+                }
+            }
+        } else {
+            // Recency legend — colour encodes how recent each reading is (older → newer).
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Box(
+                    Modifier
+                        .height(9.dp)
+                        .width(72.dp)
+                        .clip(RoundedCornerShape(4.dp))
+                        .background(Brush.horizontalGradient(listOf(RECENCY_OLD, RECENCY_NEW))),
+                )
+                Spacer(Modifier.width(8.dp))
+                Text(
+                    text = stringResource(R.string.scatter_colour_time),
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
         }
     }
 }
