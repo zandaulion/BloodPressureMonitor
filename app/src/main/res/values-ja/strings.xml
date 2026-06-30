@@ -309,4 +309,5 @@
     <string name="chart_cd_view_mode">グラフの種類</string>
     <string name="chart_no_readings">この期間の記録はありません</string>
     <string name="scatter_cd_rotate">グラフを回転</string>
+    <string name="scatter_colour_time">色: 古い → 新しい</string>
 </resources>

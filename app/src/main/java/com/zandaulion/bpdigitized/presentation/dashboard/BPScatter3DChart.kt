@@ -8,19 +8,17 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ControlCamera
 import androidx.compose.material3.Icon
@@ -38,8 +36,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.lerp
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -49,13 +49,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.zandaulion.bpdigitized.R
-import com.zandaulion.bpdigitized.domain.model.BPCategory
 import com.zandaulion.bpdigitized.domain.model.BPReading
-import com.zandaulion.bpdigitized.presentation.extensions.badgeLabelRes
-import com.zandaulion.bpdigitized.presentation.theme.CategoryCrisis
-import com.zandaulion.bpdigitized.presentation.theme.CategoryElevated
-import com.zandaulion.bpdigitized.presentation.theme.CategoryNormal
-import com.zandaulion.bpdigitized.presentation.theme.CategoryStage1
 import com.zandaulion.bpdigitized.presentation.theme.CategoryStage2
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -89,15 +83,13 @@ private var peekedThisLaunch = false
 private const val REF_SYS = 120f
 private const val REF_DIA = 80f
 
-private fun zoneColor(category: BPCategory): Color = when (category) {
-    BPCategory.NORMAL              -> CategoryNormal
-    BPCategory.ELEVATED            -> CategoryElevated
-    BPCategory.STAGE_1             -> CategoryStage1
-    BPCategory.STAGE_2             -> CategoryStage2
-    BPCategory.HYPERTENSIVE_CRISIS -> CategoryCrisis
-}
+// Scatter dots are coloured by recency (oldest → newest). Position already shows where a
+// reading sits (severity, reinforced by the 120/80 reference lines), so colour is free to
+// encode *when* each reading was taken — a second, independent dimension.
+private val RECENCY_OLD = Color(0xFF90CAF9)  // light blue — oldest
+private val RECENCY_NEW = Color(0xFF0D47A1)  // deep blue — newest
 
-/** A projected point ready to draw: screen position, post-rotation depth, zone colour. */
+/** A projected point ready to draw: screen position, post-rotation depth, and dot colour. */
 private class Proj(val x: Float, val y: Float, val depth: Float, val color: Color)
 
 /** Round tick values inside [lo, hi], with a "nice" step (1/2/5 × 10ⁿ) aiming for ~4 intervals. */
@@ -116,12 +108,11 @@ private fun niceTicks(lo: Float, hi: Float): List<Float> {
 
 /**
  * 3D scatter of each reading as diastolic (X) × systolic (Y) × pulse/BPM (Z), coloured by
- * zone. Rendered with a hand-rolled orthographic projection (no 3D dependency). The head-on
+ * recency. Rendered with a hand-rolled orthographic projection (no 3D dependency). The head-on
  * view is the familiar 2D scatter — a SYS×DIA reference grid with dashed SYS 120 / DIA 80
  * lines — and a one-finger drag tilts it to reveal pulse as the depth axis (double-tap
  * resets). Axes snap to round values; depth is reinforced with mild fog + size.
  */
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun BPScatter3DChart(
     readings: List<BPReading>,
@@ -150,6 +141,12 @@ fun BPScatter3DChart(
     val (sysMin, sysMax) = axisBounds(points.minOf { it.systolic }, points.maxOf { it.systolic })
     val (diaMin, diaMax) = axisBounds(points.minOf { it.diastolic }, points.maxOf { it.diastolic })
     val (pulMin, pulMax) = axisBounds(points.minOf { it.pulse!! }, points.maxOf { it.pulse!! })
+
+    // Recency ramp: map each reading's timestamp to a colour (oldest → newest).
+    val tMin = remember(points) { points.minOf { it.timestamp } }
+    val tMax = remember(points) { points.maxOf { it.timestamp } }
+    fun timeColor(ts: Long): Color =
+        lerp(RECENCY_OLD, RECENCY_NEW, if (tMax > tMin) (ts - tMin).toFloat() / (tMax - tMin) else 1f)
 
     fun norm(v: Float, l: Float, h: Float) = if (h > l) (v - l) / (h - l) - 0.5f else 0f
 
@@ -369,7 +366,7 @@ fun BPScatter3DChart(
                     norm(r.pulse!!.toFloat(),   pulMin, pulMax),
                 )
                 val p = pers(rz)
-                Proj(cx + rx * p * fit, cy - ry * p * fit, rz, zoneColor(r.category))
+                Proj(cx + rx * p * fit, cy - ry * p * fit, rz, timeColor(r.timestamp))
             }
             val dMin = proj.minOf { it.depth }; val dMax = proj.maxOf { it.depth }
             for (pt in proj.sortedBy { it.depth }) {
@@ -397,26 +394,24 @@ fun BPScatter3DChart(
         )
       } // Box
 
-        // Zone legend — only the zones present in this range.
-        val present = remember(points) {
-            BPCategory.entries.filter { cat -> points.any { it.category == cat } }
-        }
-        FlowRow(
+        // Recency legend — colour encodes how recent each reading is (older → newer).
+        Row(
             modifier = Modifier.fillMaxWidth().padding(top = 6.dp),
-            horizontalArrangement = Arrangement.spacedBy(14.dp),
-            verticalArrangement = Arrangement.spacedBy(2.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            present.forEach { cat ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(Modifier.size(9.dp).clip(CircleShape).background(zoneColor(cat)))
-                    Spacer(Modifier.width(5.dp))
-                    Text(
-                        text = stringResource(cat.badgeLabelRes()),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-            }
+            Box(
+                Modifier
+                    .height(9.dp)
+                    .width(72.dp)
+                    .clip(RoundedCornerShape(4.dp))
+                    .background(Brush.horizontalGradient(listOf(RECENCY_OLD, RECENCY_NEW))),
+            )
+            Spacer(Modifier.width(8.dp))
+            Text(
+                text = stringResource(R.string.scatter_colour_time),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
         }
     }
 }

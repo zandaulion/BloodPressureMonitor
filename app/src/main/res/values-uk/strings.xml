@@ -314,4 +314,5 @@
     <string name="chart_cd_view_mode">Тип графіка</string>
     <string name="chart_no_readings">Немає вимірювань у цьому діапазоні</string>
     <string name="scatter_cd_rotate">Обертати графік</string>
+    <string name="scatter_colour_time">Колір: давніше → новіше</string>
 </resources>

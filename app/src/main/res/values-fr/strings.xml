@@ -310,4 +310,5 @@
     <string name="chart_cd_view_mode">Type de graphique</string>
     <string name="chart_no_readings">Aucune mesure dans cette période</string>
     <string name="scatter_cd_rotate">Faire pivoter le graphique</string>
+    <string name="scatter_colour_time">Couleur : plus ancien → plus récent</string>
 </resources>

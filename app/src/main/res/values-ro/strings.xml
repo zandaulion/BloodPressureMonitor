@@ -312,4 +312,5 @@
     <string name="chart_cd_view_mode">Tip de grafic</string>
     <string name="chart_no_readings">Nicio măsurătoare în acest interval</string>
     <string name="scatter_cd_rotate">Rotește graficul</string>
+    <string name="scatter_colour_time">Culoare: mai vechi → mai nou</string>
 </resources>

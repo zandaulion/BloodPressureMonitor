@@ -363,4 +363,5 @@
     <string name="chart_cd_view_mode">Chart type</string>
     <string name="chart_no_readings">No readings in this range</string>
     <string name="scatter_cd_rotate">Rotate the chart</string>
+    <string name="scatter_colour_time">Colour: older → newer</string>
 </resources>

@@ -319,4 +319,5 @@
     <string name="chart_cd_view_mode">نوع الرسم البياني</string>
     <string name="chart_no_readings">لا توجد قراءات في هذا النطاق</string>
     <string name="scatter_cd_rotate">تدوير الرسم البياني</string>
+    <string name="scatter_colour_time">اللون: من الأقدم إلى الأحدث</string>
 </resources>

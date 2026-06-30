@@ -309,4 +309,5 @@
     <string name="chart_cd_view_mode">图表类型</string>
     <string name="chart_no_readings">此范围内无记录</string>
     <string name="scatter_cd_rotate">旋转图表</string>
+    <string name="scatter_colour_time">颜色：较早 → 较新</string>
 </resources>

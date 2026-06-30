@@ -310,4 +310,5 @@
     <string name="chart_cd_view_mode">चार्ट प्रकार</string>
     <string name="chart_no_readings">इस अवधि में कोई रीडिंग नहीं</string>
     <string name="scatter_cd_rotate">चार्ट घुमाएँ</string>
+    <string name="scatter_colour_time">रंग: पुराना → नया</string>
 </resources>

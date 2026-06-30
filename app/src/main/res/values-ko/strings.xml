@@ -309,4 +309,5 @@
     <string name="chart_cd_view_mode">차트 종류</string>
     <string name="chart_no_readings">이 기간에 기록이 없습니다</string>
     <string name="scatter_cd_rotate">차트 회전</string>
+    <string name="scatter_colour_time">색상: 오래됨 → 최근</string>
 </resources>
