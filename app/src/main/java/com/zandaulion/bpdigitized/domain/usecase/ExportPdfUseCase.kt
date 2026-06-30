@@ -4,7 +4,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.DashPathEffect
+import android.graphics.LinearGradient
 import android.graphics.Paint
+import android.graphics.Shader
 import android.graphics.Path
 import android.graphics.RectF
 import android.graphics.Typeface
@@ -127,6 +129,7 @@ class ExportPdfUseCase @Inject constructor(
         val overviewSubtitle = s(R.string.pdf_overview_subtitle)
         val zoneDistribution = s(R.string.pdf_zone_distribution)
         val sysVsDia         = s(R.string.pdf_sys_vs_dia)
+        val colourByTime     = s(R.string.scatter_colour_time)
 
         val dateFmt      = SimpleDateFormat("d MMM yyyy", locale)
         val tableDateFmt = SimpleDateFormat("d MMM yyyy  HH:mm", locale)
@@ -244,9 +247,10 @@ class ExportPdfUseCase @Inject constructor(
         // right: systolic-vs-diastolic scatter
         val scatterTitleX = 900f
         c.drawText(t.sysVsDia, scatterTitleX, contentTop, pSection)
+        drawRecencyKey(c, x = scatterTitleX, y = contentTop + 14f, t = t)
         drawScatter(
             c, readings,
-            left = scatterTitleX + 86f, top = contentTop + 44f,
+            left = scatterTitleX + 86f, top = contentTop + 64f,
             right = CHART_R, bottom = contentBottom - 56f, t = t,
         )
 
@@ -293,7 +297,7 @@ class ExportPdfUseCase @Inject constructor(
         }
     }
 
-    /** Scatter of each reading: diastolic (X) vs systolic (Y), coloured by zone. */
+    /** Scatter of each reading: diastolic (X) vs systolic (Y), coloured by recency. */
     private fun drawScatter(
         c: Canvas, readings: List<BPReading>,
         left: Float, top: Float, right: Float, bottom: Float, t: L10n,
@@ -328,9 +332,12 @@ class ExportPdfUseCase @Inject constructor(
         if (sysMin <= 120.0 && 120.0 <= sysMax) { val y = my(120.0); c.drawLine(left, y, right, y, pRefLine) }
         if (diaMin <= 80.0  && 80.0  <= diaMax) { val x = mx(80.0);  c.drawLine(x, top, x, bottom, pRefLine) }
 
-        // points, coloured by zone
+        // points, coloured by recency (oldest → newest); position already shows severity
+        val tMin = readings.minOf { it.timestamp }
+        val tMax = readings.maxOf { it.timestamp }
         for (r in readings) {
-            pScatterDot.color = categoryArgb(r.category)
+            val tt = if (tMax > tMin) (r.timestamp - tMin).toFloat() / (tMax - tMin) else 1f
+            pScatterDot.color = lerpArgb(RECENCY_OLD_ARGB, RECENCY_NEW_ARGB, tt)
             c.drawCircle(mx(r.diastolic.toDouble()), my(r.systolic.toDouble()), 6f, pScatterDot)
         }
 
@@ -599,6 +606,30 @@ class ExportPdfUseCase @Inject constructor(
         BPCategory.STAGE_1             -> Color.rgb(239, 108, 0)
         BPCategory.STAGE_2             -> Color.rgb(211, 47, 47)
         BPCategory.HYPERTENSIVE_CRISIS -> Color.rgb(183, 28, 28)
+    }
+
+    // Recency ramp for the scatter dots: oldest light → newest deep (encodes time, not severity).
+    private val RECENCY_OLD_ARGB = Color.rgb(0x90, 0xCA, 0xF9)
+    private val RECENCY_NEW_ARGB = Color.rgb(0x0D, 0x47, 0xA1)
+
+    /** Linear blend between two ARGB colours, t in [0, 1]. */
+    private fun lerpArgb(a: Int, b: Int, t: Float): Int {
+        val tt = t.coerceIn(0f, 1f)
+        return Color.rgb(
+            (Color.red(a)   + (Color.red(b)   - Color.red(a))   * tt).roundToInt(),
+            (Color.green(a) + (Color.green(b) - Color.green(a)) * tt).roundToInt(),
+            (Color.blue(a)  + (Color.blue(b)  - Color.blue(a))  * tt).roundToInt(),
+        )
+    }
+
+    /** Small gradient swatch + caption explaining the scatter's recency colouring. */
+    private fun drawRecencyKey(c: Canvas, x: Float, y: Float, t: L10n) {
+        val barW = 90f; val barH = 12f
+        val p = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            shader = LinearGradient(x, y, x + barW, y, RECENCY_OLD_ARGB, RECENCY_NEW_ARGB, Shader.TileMode.CLAMP)
+        }
+        c.drawRect(x, y, x + barW, y + barH, p)
+        c.drawText(t.colourByTime, x + barW + 12f, y + barH - 1f, pLegendText)
     }
 
     /** Notes table cell: prefixes "[tag, tag] " before any note, then truncates. */
