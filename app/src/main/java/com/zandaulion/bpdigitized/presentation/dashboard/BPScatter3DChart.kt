@@ -117,8 +117,8 @@ private fun niceTicks(lo: Float, hi: Float): List<Float> {
  * 3D scatter of each reading as diastolic (X) × systolic (Y) × pulse/BPM (Z), coloured by
  * recency. Rendered with a hand-rolled orthographic projection (no 3D dependency). The head-on
  * view is the familiar 2D scatter — a SYS×DIA reference grid with dashed SYS 120 / DIA 80
- * lines — and a one-finger drag tilts it to reveal pulse as the depth axis (double-tap
- * resets). Axes snap to round values; depth is reinforced with mild fog + size.
+ * lines — and a one-finger drag tilts it to reveal pulse as the depth axis (the Scatter
+ * button resets it). Axes snap to round values; depth is reinforced with mild fog + size.
  */
 @Composable
 fun BPScatter3DChart(
@@ -249,17 +249,15 @@ fun BPScatter3DChart(
                     )
                 }
                 .pointerInput(Unit) {
-                    detectTapGestures(
-                        // Tap a dot → select it (details show below); tap empty space → clear.
-                        // On overlapping dots, pick the frontmost (greatest depth).
-                        onTap = { pos ->
-                            selected = projected
-                                .filter { (Offset(it.x, it.y) - pos).getDistance() <= hitRadiusPx }
-                                .maxByOrNull { it.depth }
-                                ?.reading
-                        },
-                        onDoubleTap = { settle() },
-                    )
+                    // Tap a dot → select it (details show below); tap empty space → clear.
+                    // On overlapping dots, pick the frontmost (greatest depth). No double-tap
+                    // handler, so selection is instant (the Scatter button resets the view).
+                    detectTapGestures { pos ->
+                        selected = projected
+                            .filter { (Offset(it.x, it.y) - pos).getDistance() <= hitRadiusPx }
+                            .maxByOrNull { it.depth }
+                            ?.reading
+                    }
                 },
         ) {
             val w = size.width; val h = size.height
