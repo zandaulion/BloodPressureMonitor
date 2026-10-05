@@ -38,6 +38,17 @@ cd BloodPressureMonitor
 ./gradlew assembleDebug
 ```
 
+### Firebase & signing (not included)
+The repository does not ship any project credentials. To build and run it yourself:
+
+- **Firebase:** create your own Firebase project, register the Android app
+  (`com.zandaulion.bpdigitized`, or your own `applicationId`), and place its
+  `google-services.json` in `app/`. Camera scanning uses Firebase AI Logic (Gemini)
+  protected by App Check; the model name comes from Remote Config (`gemini_model`,
+  `gemini_location`), with an in-app default.
+- **Release signing:** copy `keystore.properties.template` to `keystore.properties`
+  and point it at your own keystore. Without it, release builds are left unsigned.
+
 ---
 
 ## Architecture
@@ -71,3 +82,21 @@ See [`specs/Architecture_Documentation.md`](specs/Architecture_Documentation.md)
 
 ---
 
+
+## License
+
+Copyright (C) 2026 Zandaulion
+
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, either version 3 of the
+License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+[GNU General Public License](LICENSE) for more details.
+
+SPDX-License-Identifier: `GPL-3.0-or-later`
+
+**Not a medical device.** This app is for personal record-keeping only. It does not diagnose,
+treat or prevent any condition; always consult a qualified healthcare professional about your
+blood pressure.
