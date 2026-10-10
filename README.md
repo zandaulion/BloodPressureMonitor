@@ -53,6 +53,17 @@ See [all ten screenshots](store/screenshots), or open the
 
 ---
 
+## Install
+
+BP Digitizer has been submitted to F-Droid and is waiting for review in
+[fdroiddata merge request !51961](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/51961).
+Once it is accepted, F-Droid will build every tagged release from this repository.
+
+Until then, build it yourself (below). Release APKs need an ARM64 phone running
+Android 8.0 or later.
+
+---
+
 ## Getting Started
 
 ### Prerequisites
@@ -84,6 +95,22 @@ does not fetch anything.
 
 - **Release signing:** copy `keystore.properties.template` to `keystore.properties`
   and point it at your own keystore. Without it, release builds are left unsigned.
+
+### Releasing
+
+F-Droid builds each release from its Git tag, using the recipe in
+[`fdroid/`](fdroid/com.zandaulion.bpdigitized.yml) and the store text in
+[`fastlane/`](fastlane/metadata/android). For each release:
+
+1. Bump `versionCode` and `versionName` in `app/build.gradle.kts`.
+2. Add `fastlane/metadata/android/<locale>/changelogs/<versionCode>.txt` for each
+   of the 12 locales (500 characters or fewer). A missing locale falls back to English.
+3. Add the release to [`docs/Release_Notes.md`](docs/Release_Notes.md).
+4. Build and test: `./gradlew clean :app:assembleRelease :app:testDebugUnitTest`.
+5. Push to `main`, then push an annotated tag `vX.Y.Z` on that commit.
+   F-Droid notices new tags automatically; no new fdroiddata merge request is needed.
+
+Never move or reuse a published tag; release a new version instead.
 
 ---
 

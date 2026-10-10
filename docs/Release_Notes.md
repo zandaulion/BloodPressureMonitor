@@ -13,7 +13,9 @@
 
 Validation: an unsigned release built on OpenJDK 17 without a keystore; release
 vital lint and all 17 JVM tests passed. The release APK keeps ARM64-only native
-libraries.
+libraries. `fdroid scanner` (source and APK) and `fdroid lint` reported no
+problems, and F-Droid's own CI pipeline built `v1.6.3` from the submitted
+recipe ([fdroiddata !51961](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/51961)).
 
 ## 1.6.2 — Smaller ARM64 release
 
