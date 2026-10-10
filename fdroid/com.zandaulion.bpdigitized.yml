@@ -12,6 +12,7 @@ AntiFeatures:
     en-US: Optional Health Connect sync needs Google's proprietary Health Connect
       app on Android 13 and below.
 Categories:
+  - Health Manager
   - Sports & Health
 License: AGPL-3.0-only
 AuthorName: Zandaulion
