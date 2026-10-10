@@ -1,0 +1,4 @@
+Versiune ARM64 mai mică
+• APK-urile release includ doar bibliotecile native ARM64, ceea ce reduce descărcarea cu 60% (53,7 MB). Este necesar în continuare Android 8.0+; dispozitivele ARM pe 32 de biți și x86 nu mai sunt suportate.
+• Meniul Export funcționează și fără valori salvate, așa că poți salva doar profilul de sănătate ca JSON.
+• Funcționarea offline, modelele OCR și valorile salvate nu s-au schimbat.

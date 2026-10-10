@@ -1,0 +1,4 @@
+Smaller ARM64 release
+• Release APKs include only ARM64 native libraries, cutting the download by 60% (53.7 MB). Android 8.0+ is still required; 32-bit ARM and x86 devices are no longer supported.
+• The Export menu now works with an empty history, so you can back up just your health profile as JSON.
+• Offline operation, OCR models and stored readings are unchanged.

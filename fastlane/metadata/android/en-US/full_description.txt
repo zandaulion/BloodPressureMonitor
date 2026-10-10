@@ -1,0 +1,25 @@
+BP Digitizer is a private, local-first log for your blood pressure readings. Point the camera at your digital monitor and the numbers are read on your phone, or enter them by hand.
+
+<b>Works offline, no account</b>
+The app has no Internet permission. There is no account, subscription, cloud service or model download. Readings and your profile stay in the app's local storage, and automatic cloud backup and device transfer are disabled for app data.
+
+<b>Features</b>
+<ul>
+<li>On-device camera scanning: the bundled Hearth models read SYS, DIA and pulse from an upright digital monitor with three rows. You always review the values before saving.</li>
+<li>Manual entry with sliders, starting from your last reading</li>
+<li>Trend chart with 7-day, 30-day, 90-day and all-time ranges, pinch-to-zoom, and a rotatable 3D scatter of systolic, diastolic and pulse</li>
+<li>Landscape view with the trend chart and scatter side by side</li>
+<li>Context tags such as caffeine, exercise, a salty meal or medication</li>
+<li>Two daily reminders with snooze</li>
+<li>Export as JSON backup, CSV or a multi-page PDF report; import Android and BP Digitizer web app backups</li>
+<li>Optional health profile used to show AHA-based reference categories</li>
+<li>12 languages: English, Arabic, Chinese, French, German, Hindi, Japanese, Korean, Portuguese, Romanian, Spanish and Ukrainian</li>
+</ul>
+
+<b>Health Connect (optional)</b>
+You can copy your readings to Health Connect from the dashboard. This is never required. On Android 14 and later Health Connect is part of the system; on Android 13 and below it needs Google's proprietary Health Connect app.
+
+<b>Requirements</b>
+Release builds support ARM64 (arm64-v8a) phones running Android 8.0 or later.
+
+<b>Not a medical device.</b> This app is for personal record-keeping only. It does not diagnose, treat or prevent any condition. Always consult a qualified healthcare professional about your blood pressure.

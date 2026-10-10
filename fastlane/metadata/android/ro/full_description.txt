@@ -1,0 +1,25 @@
+BP Digitizer este un jurnal privat, local, pentru valorile tensiunii arteriale. Îndreaptă camera spre tensiometrul digital și cifrele sunt citite direct pe telefon, sau introdu-le manual.
+
+<b>Funcționează offline, fără cont</b>
+Aplicația nu are permisiune de Internet. Nu există cont, abonament, serviciu cloud sau descărcare de modele. Valorile și profilul rămân în stocarea locală a aplicației, iar backupul automat în cloud și transferul între dispozitive sunt dezactivate pentru datele aplicației.
+
+<b>Funcții</b>
+<ul>
+<li>Scanare cu camera pe dispozitiv: modelele Hearth incluse citesc SYS, DIA și pulsul de pe un tensiometru digital vertical cu trei rânduri. Verifici întotdeauna valorile înainte de salvare.</li>
+<li>Introducere manuală cu glisoare, pornind de la ultima valoare</li>
+<li>Grafic de evoluție pentru 7 zile, 30 de zile, 90 de zile sau tot istoricul, cu zoom și un grafic 3D rotativ pentru sistolică, diastolică și puls</li>
+<li>Mod peisaj cu graficul de evoluție și cel 3D alăturate</li>
+<li>Etichete de context, de exemplu cafea, efort, masă sărată sau medicamente</li>
+<li>Două mementouri zilnice, cu amânare</li>
+<li>Export ca backup JSON, CSV sau raport PDF pe mai multe pagini; import din backupuri Android și din aplicația web BP Digitizer</li>
+<li>Profil de sănătate opțional, folosit pentru categoriile de referință AHA</li>
+<li>12 limbi: engleză, arabă, chineză, franceză, germană, hindi, japoneză, coreeană, portugheză, română, spaniolă și ucraineană</li>
+</ul>
+
+<b>Health Connect (opțional)</b>
+Poți copia valorile în Health Connect din ecranul principal. Nu este niciodată obligatoriu. Pe Android 14 și versiunile ulterioare, Health Connect face parte din sistem; pe Android 13 și mai vechi necesită aplicația proprietară Health Connect de la Google.
+
+<b>Cerințe</b>
+Versiunile release funcționează pe telefoane ARM64 (arm64-v8a) cu Android 8.0 sau mai nou.
+
+<b>Nu este un dispozitiv medical.</b> Aplicația servește doar la evidența personală. Nu diagnostichează, nu tratează și nu previne nicio afecțiune. Consultă întotdeauna un specialist despre tensiunea ta arterială.

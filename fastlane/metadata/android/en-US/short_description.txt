@@ -1,0 +1,1 @@
+Log blood pressure offline: scan your monitor on-device or enter it by hand
