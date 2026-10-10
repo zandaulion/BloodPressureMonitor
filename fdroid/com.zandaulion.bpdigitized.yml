@@ -5,6 +5,9 @@
 # is part of the system; on Android 13 and below it needs Google's proprietary
 # Health Connect app. NonFreeDep can be removed if reviewers agree it's not needed.
 #
+# License: fdroiddata accepts one SPDX id. The app code is GPL-3.0-or-later and the
+# bundled Hearth models and ports are AGPL-3.0-only, so the combined app is AGPL.
+#
 # prebuild: gradle-daemon-jvm.properties asks Gradle for a JetBrains JDK 21, and
 # the foojay resolver plugin in settings.gradle.kts can download one. The scanner
 # flags that plugin, so both are removed and the build server's own JDK is used.
@@ -14,7 +17,7 @@ AntiFeatures:
       app on Android 13 and below.
 Categories:
   - Sports & Health
-License: GPL-3.0-or-later AND AGPL-3.0-only
+License: AGPL-3.0-only
 AuthorName: Zandaulion
 SourceCode: https://github.com/zandaulion/BloodPressureMonitor
 IssueTracker: https://github.com/zandaulion/BloodPressureMonitor/issues
