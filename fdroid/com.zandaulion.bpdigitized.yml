@@ -1,0 +1,40 @@
+# Draft for an F-Droid inclusion request: copy to metadata/ in fdroiddata.
+# This file is not used by the app's own build.
+#
+# AntiFeatures: Health Connect sync is optional. On Android 14+ Health Connect
+# is part of the system; on Android 13 and below it needs Google's proprietary
+# Health Connect app. NonFreeDep can be removed if reviewers agree it's not needed.
+#
+# prebuild: gradle-daemon-jvm.properties asks Gradle for a JetBrains JDK 21 and
+# lets it download one from foojay. Deleting the file makes the build use the
+# build server's own JDK instead of downloading a binary toolchain.
+AntiFeatures:
+  NonFreeDep:
+    en-US: Optional Health Connect sync needs Google's proprietary Health Connect
+      app on Android 13 and below.
+Categories:
+  - Sports & Health
+License: GPL-3.0-or-later AND AGPL-3.0-only
+AuthorName: Zandaulion
+SourceCode: https://github.com/zandaulion/BloodPressureMonitor
+IssueTracker: https://github.com/zandaulion/BloodPressureMonitor/issues
+Changelog: https://github.com/zandaulion/BloodPressureMonitor/blob/main/docs/Release_Notes.md
+
+AutoName: BP Digitizer
+
+RepoType: git
+Repo: https://github.com/zandaulion/BloodPressureMonitor.git
+
+Builds:
+  - versionName: 1.6.2
+    versionCode: 29
+    commit: v1.6.2
+    subdir: app
+    gradle:
+      - yes
+    prebuild: rm ../gradle/gradle-daemon-jvm.properties
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags
+CurrentVersion: 1.6.2
+CurrentVersionCode: 29
