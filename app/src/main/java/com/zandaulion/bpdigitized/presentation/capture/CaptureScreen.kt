@@ -132,7 +132,7 @@ private fun CameraContent(
         }
     }
 
-    // The still just captured, frozen on screen while Gemini reads it so the
+    // The still just captured, frozen on screen while the on-device reader reads it so the
     // user sees exactly the shot being analysed rather than a live, drifting
     // preview. Cleared when processing ends (cancel/error returns to live feed).
     var capturedUri by remember { mutableStateOf<Uri?>(null) }
@@ -235,7 +235,7 @@ private fun CameraContent(
 }
 
 // ── Processing overlay ────────────────────────────────────────────────────────
-// Shown while Gemini processes the image. Keeps the user informed and gives
+// Shown while the on-device reader processes the image. Keeps the user informed and gives
 // them an escape hatch so they never feel trapped waiting.
 
 private val statusMessages = listOf(

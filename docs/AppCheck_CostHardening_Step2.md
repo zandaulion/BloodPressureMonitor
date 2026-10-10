@@ -1,3 +1,7 @@
+> **Historical documentation:** applies to the former Firebase/Gemini builds.
+> Version 1.6.0 removed these services and their configuration requirements.
+> See [native offline OCR](Hearth_OCR.md) for the current implementation.
+
 # Step 2 — Cost backstop for the Vertex AI / Gemini scanning
 
 **Goal:** bound and monitor the spend on the camera OCR calls. Step 1

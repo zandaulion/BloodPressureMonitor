@@ -117,8 +117,8 @@
     <!-- ── Capture ────────────────────────────────────────────────────────── -->
     <string name="capture_cd_capture">Capture</string>
     <string name="capture_reading_numbers">Reading numbers…</string>
-    <string name="capture_status_sending">Sending image to Gemini…</string>
-    <string name="capture_status_reading">AI is reading your monitor…</string>
+    <string name="capture_status_sending">Preparing on-device reader…</string>
+    <string name="capture_status_reading">Reading your monitor on this device…</string>
     <string name="capture_status_extracting">Extracting values…</string>
     <string name="capture_status_almost">Almost there…</string>
     <!-- %s = error message from the OCR call -->
@@ -215,13 +215,6 @@
     <string name="profile_diabetes_desc">Significantly raises risk when combined with high BP</string>
     <string name="profile_section_activity">Physical Activity</string>
     <string name="profile_activity_level_label">Typical exercise level</string>
-    <string name="profile_section_subscriptions">Subscriptions</string>
-    <string name="profile_subscriptions_desc">Manage your Pro subscription to unlock the AI Camera Scanner.</string>
-    <string name="profile_restore_purchases">Restore Purchases</string>
-    <string name="profile_restoring">Restoring…</string>
-    <string name="profile_restore_success">Purchases restored successfully.</string>
-    <string name="profile_restore_error">Failed to restore purchases.</string>
-    <string name="profile_restore_none">No previous purchase found.</string>
     <string name="profile_disclaimer">ⓘ  For general wellness tracking only — not medical advice.</string>
 
     <!-- ── Reminders ──────────────────────────────────────────────────────── -->
@@ -316,15 +309,15 @@
     <string name="help_insights_title">Insights</string>
 
     <!-- ── Help – section bodies ──────────────────────────────────────────── -->
-    <string name="help_camera_body">Camera scanning is a Premium feature, available with an active subscription.\n\nTap the camera button (bottom-right) to open the live preview. Frame your blood pressure monitor\'s display inside the on-screen guide, then tap Capture.\n\nThe photo is sent to Gemini 2.5 Flash, which reads the Systolic, Diastolic, and Pulse values. You can review and correct them on the next screen before saving.\n\nIf you don\'t have an active subscription, tapping the camera button will open the upgrade screen where you can subscribe or restore a previous purchase.</string>
+    <string name="help_camera_body">Tap the camera button (bottom-right) to open the live preview. Frame your blood pressure monitor\'s display inside the on-screen guide, then tap Capture.\n\nThe photo is read on your device without an internet connection. Review and correct all three values on the next screen before saving.</string>
     <string name="help_manual_body">Tap the pencil button to enter a reading without taking a photo. The sliders are pre-filled with your last saved reading (defaults: 120 / 80 / 60 on first launch).\n\nAdjust Systolic, Diastolic, and Pulse using the slider or the ± buttons. Add an optional note, then tap Save Reading.\n\nThe Save button is disabled until Systolic is greater than Diastolic.</string>
     <string name="help_trends_body">The chart on the Dashboard plots Systolic and Diastolic readings over time. Use the chips above the chart to filter the view:\n\n• 7d — last 7 days\n• 30d — last 30 days (default)\n• 90d — last 90 days\n• All — complete history\n\nThe Y-axis adapts to your data. With fewer than 24 hours of readings it is fixed at 40–180 mmHg. Once your history spans 24 hours or more, the axis tightens around your actual range (±5 mmHg padding, snapped to the nearest 10) so trends are easier to see.\n\nThe Avg chip, to the right of the range chips, smooths bursts of readings: when it is on, measurements taken within about 10 minutes of each other are averaged into a single point — the standard way to read repeated readings. Turn it off to plot every individual reading. This affects only the chart; your reading list always keeps every entry.\n\nRotate the phone to landscape for a full-screen chart view.\n\nThe Trend / Scatter switch below the filters changes how readings are drawn. Trend shows them over time; Scatter is a 3D plot — diastolic and systolic on the front face and pulse as depth. Drag with one finger to rotate it and reveal the pulse axis; tap Scatter again to snap back to the front view. The range filters apply to both views, and your choice is remembered the next time you open the app.</string>
     <string name="help_history_body">All readings are listed below the chart, newest first. Each row shows:\n\n• Date and time\n• SYS / DIA · pulse (bpm)\n• A colour-coded zone badge\n• Context tag chips (if any have been set)\n• Any note you added (shown in italics)\n\nSwipe a row left or right to delete it. A snackbar appears at the bottom with an Undo button — you have 5 seconds to reverse the deletion before it is permanent.\n\nLong-press any row to open the tag editor. Select or deselect the context tags (Caffeine, Alcohol, Salty meal, Exercise, Stress, Poor sleep, Resting, On waking), then tap Save. Tags let you correlate lifestyle factors with your readings and power the Insights card.</string>
     <string name="help_profile_body">Tap the Person icon to open your profile. Filling it in helps personalise the app.\n\nFields available:\n\n• Birth year\n• Biological sex\n• Weight (kg) and Height (cm) — live BMI preview shown\n• Physical activity level\n\nAll data stays on your device. The profile is optional; the app works fully without it.</string>
     <string name="help_risk_body">When at least one reading exists, a Health Risk card appears at the top of the reading list. It combines your latest BP category with your health profile to surface contextual guidance.\n\nGuidance is drawn from AHA (American Heart Association) guidelines and is prefixed with a disclaimer. It is informational only and does not replace advice from a qualified healthcare professional.\n\nTap \"Edit profile\" on the card to complete or update your health profile.</string>
     <string name="help_reminders_body">Tap the Bell icon to configure daily measurement reminders.\n\n1. Grant the notification permission if prompted.\n2. Enable the master switch.\n3. Set a Morning time (ideally 30 minutes after waking, before coffee or medication).\n4. Set an Evening time (when you are relaxed and at rest).\n\nNotifications include a Log Now shortcut that opens the app, and a Snooze (15m) action. Alarms are re-scheduled automatically each day and survive device reboots.\n\nIf the exact-alarm permission is not available on your device, the app will direct you to the system settings to enable it.</string>
-    <string name="help_export_body">Tap the Share icon in the top bar to export your data. A dropdown offers three formats:\n\n• JSON — your complete reading history. Can be imported back into the app.\n• CSV — your complete history in spreadsheet format, compatible with Excel or Google Sheets.\n• PDF — a multi-page document containing:\n  – Landscape trend charts for the last 7, 30, and 90 days. Each chart includes reference lines and a stats bar (avg / min / max). Tagged readings are marked with numbered badges, and a legend below the chart maps each number to its tag — a reading with several tags shows their numbers combined (e.g. 247).\n  – A portrait table of readings from the last 30 days with colour-coded categories and their tags.\n\nThe PDF charts follow the Avg setting from the Dashboard. With Avg on, back-to-back readings are merged into one point on the charts, while the readings table always lists every individual entry.\n\nThe export is shared via Android\'s standard share sheet.</string>
-    <string name="help_import_body">Tap the Download icon (top bar) to import readings from a JSON file previously exported from this app.\n\nThe app opens a file picker. Select your JSON export file. Only readings whose timestamps do not already exist in the database are inserted — re-importing the same file is safe.\n\nA snackbar confirms how many new readings were added, or tells you there was nothing new to import.</string>
+    <string name="help_export_body">Tap the Share icon in the top bar to export your data. A dropdown offers three formats:\n\n• JSON — your complete reading history. Can be imported back into the app.\n• CSV — your complete history in spreadsheet format, compatible with Excel or Google Sheets.\n• PDF — a multi-page document containing:\n  – Landscape trend charts for the last 7, 30, and 90 days. Each chart includes reference lines and a stats bar (avg / min / max). Tagged readings are marked with numbered badges, and a legend below the chart maps each number to its tag — a reading with several tags shows their numbers combined (e.g. 247).\n  – A portrait table of readings from the last 30 days with colour-coded categories and their tags.\n\nThe PDF charts follow the Avg setting from the Dashboard. With Avg on, back-to-back readings are merged into one point on the charts, while the readings table always lists every individual entry.\n\nThe export is shared via Android\'s standard share sheet.\n\nJSON also includes your health profile, even if there are no readings. CSV and PDF are reading reports.</string>
+    <string name="help_import_body">Tap the Download icon to select a JSON backup from this app or the PWA. Older Android reading-only exports are also supported. If the file contains a profile, choose Profile and readings to restore it, Readings only to keep your current profile, or Cancel. Only new timestamps are added; existing readings are not replaced. The confirmation reports imported readings and whether the profile was restored.</string>
     <string name="help_hc_body">Health Connect is Google\'s on-device health data platform. This app can write your readings as Blood Pressure and Heart Rate records.\n\nBulk sync: tap the heart-monitor icon in the top bar. You will be asked to grant write permissions the first time. All existing readings are uploaded (safe to repeat — existing records are updated, not duplicated).\n\nIf Health Connect is not installed on your device, the app will offer a link to the Play Store to install it.</string>
     <string name="help_insights_body">When you have enough readings, an Insights card appears on the dashboard above the reading list. It surfaces patterns detected entirely on your device — no data ever leaves your phone.\n\nPattern types:\n\n• Morning vs evening — whether your morning or evening readings consistently run higher\n• 30-day trend — whether your systolic is drifting up or down over the last month\n• Time in range — the share of recent readings that fell in a healthy range\n• Healthy streak — how many readings in a row landed in a healthy range\n• Weekday vs weekend — whether there is a consistent gap between work days and rest days\n• Tag correlation — which context tag is most strongly linked to higher or lower readings\n\nEach insight is colour-coded: green means positive, amber means something to watch, grey is neutral. Tap "N more" to expand all detected insights; tap "Show less" to collapse.\n\nInsights require a minimum number of readings before they appear — a few days of data is usually enough to start seeing your first patterns.</string>
 
@@ -336,20 +329,20 @@
     <string name="pdf_exported">Exported: %1$s</string>
     <string name="pdf_readings_count">%1$d readings</string>
     <string name="pdf_page_x_of_y">Page %1$d of %2$d</string>
-    <string name="pdf_ref_sys">SYS %1$d</string>
-    <string name="pdf_ref_dia">DIA %1$d</string>
+    <string name="pdf_ref_sys" translatable="false">SYS %1$d</string>
+    <string name="pdf_ref_dia" translatable="false">DIA %1$d</string>
     <string name="pdf_stat_systolic">Systolic</string>
     <string name="pdf_stat_diastolic">Diastolic</string>
     <string name="pdf_stat_avg">Avg</string>
     <string name="pdf_stat_min">Min</string>
     <string name="pdf_stat_max">Max</string>
-    <string name="pdf_stat_map">MAP</string>
-    <string name="pdf_stat_pp">PP</string>
+    <string name="pdf_stat_map" translatable="false">MAP</string>
+    <string name="pdf_stat_pp" translatable="false">PP</string>
     <string name="pdf_table_title">Blood Pressure Readings  ·  Last 30 Days</string>
     <string name="pdf_table_title_cont">Blood Pressure Readings  ·  Last 30 Days (cont.)</string>
     <string name="pdf_col_datetime">Date / Time</string>
-    <string name="pdf_col_sys">SYS</string>
-    <string name="pdf_col_dia">DIA</string>
+    <string name="pdf_col_sys" translatable="false">SYS</string>
+    <string name="pdf_col_dia" translatable="false">DIA</string>
     <string name="pdf_col_pulse">Pulse</string>
     <string name="pdf_col_category">Category</string>
     <string name="pdf_col_notes">Notes</string>
@@ -364,4 +357,10 @@
     <string name="chart_no_readings">No readings in this range</string>
     <string name="scatter_cd_rotate">Rotate the chart</string>
     <string name="scatter_colour_time">Colour: older → newer</string>
+    <string name="capture_error_local_reader">The on-device reader could not process this photo. Please try again or use manual entry.</string>
+    <string name="backup_import_title">Import profile too?</string>
+    <string name="backup_import_body">This backup contains a profile. Importing it replaces matching fields in your saved profile. Readings are merged and existing timestamps are skipped.</string>
+    <string name="backup_import_all">Profile and readings</string>
+    <string name="backup_import_readings">Readings only</string>
+    <string name="backup_profile_imported">Profile imported.</string>
 </resources>

@@ -7,8 +7,6 @@ import com.zandaulion.bpdigitized.domain.model.ActivityLevel
 import com.zandaulion.bpdigitized.domain.model.BiologicalSex
 import com.zandaulion.bpdigitized.domain.model.BmiCategory
 import com.zandaulion.bpdigitized.domain.model.UserProfile
-import com.zandaulion.bpdigitized.domain.billing.BillingManager
-import com.zandaulion.bpdigitized.domain.billing.RestoreOutcome
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -22,8 +20,6 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 import javax.inject.Inject
 
-/** Outcome of a "Restore Purchases" attempt — resolved to a string in the UI layer. */
-enum class RestoreState { Success, NothingToRestore, Error }
 
 /** Measurement unit system for the body-measurement fields. Storage stays metric. */
 enum class UnitSystem { METRIC, IMPERIAL }
@@ -37,9 +33,6 @@ private const val IN_PER_FT = 12
 private fun fmtUs(value: Float): String = "%.1f".format(java.util.Locale.US, value)
 
 data class ProfileFormState(
-    // ── Billing ───────────────────────────────────────────────────────────────
-    val isRestoring: Boolean = false,
-    val restoreResult: RestoreState? = null,
     // ── Health profile ────────────────────────────────────────────────────────
     val birthYearText: String = "",
     val sex: BiologicalSex = BiologicalSex.PREFER_NOT_TO_SAY,
@@ -149,7 +142,6 @@ sealed interface ProfileEvent {
 class ProfileViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: UserProfileRepository,
-    private val billingManager: BillingManager,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ProfileFormState())
@@ -178,24 +170,6 @@ class ProfileViewModel @Inject constructor(
             }
         }
     }
-
-    fun restorePurchases() {
-        _state.update { it.copy(isRestoring = true, restoreResult = null) }
-        billingManager.restorePurchases { outcome ->
-            _state.update {
-                it.copy(
-                    isRestoring = false,
-                    restoreResult = when (outcome) {
-                        RestoreOutcome.RESTORED          -> RestoreState.Success
-                        RestoreOutcome.NOTHING_TO_RESTORE -> RestoreState.NothingToRestore
-                        RestoreOutcome.ERROR             -> RestoreState.Error
-                    },
-                )
-            }
-        }
-    }
-
-    fun dismissRestoreResult() = _state.update { it.copy(restoreResult = null) }
 
     fun updateBirthYear(v: String) = _state.update { it.copy(birthYearText = v.filter(Char::isDigit).take(4)) }
     fun updateSex(v: BiologicalSex) = _state.update { it.copy(sex = v) }

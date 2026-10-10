@@ -92,8 +92,8 @@
 
     <string name="capture_cd_capture">拍摄</string>
     <string name="capture_reading_numbers">正在读取数值…</string>
-    <string name="capture_status_sending">正在将图像发送到Gemini…</string>
-    <string name="capture_status_reading">AI正在读取您的血压计…</string>
+    <string name="capture_status_sending">正在准备本地读取器…</string>
+    <string name="capture_status_reading">正在此设备上读取血压计…</string>
     <string name="capture_status_extracting">正在提取数值…</string>
     <string name="capture_status_almost">即将完成…</string>
     <string name="capture_error_unreadable">无法读取显示屏。请重新拍照或手动输入读数。</string>
@@ -178,13 +178,6 @@
     <string name="profile_diabetes_desc">与高血压并存时显著增加风险</string>
     <string name="profile_section_activity">身体活动</string>
     <string name="profile_activity_level_label">日常运动水平</string>
-    <string name="profile_section_subscriptions">订阅</string>
-    <string name="profile_subscriptions_desc">管理您的 Pro 订阅以解锁 AI 相机扫描器。</string>
-    <string name="profile_restore_purchases">恢复购买</string>
-    <string name="profile_restoring">正在恢复…</string>
-    <string name="profile_restore_success">购买已成功恢复。</string>
-    <string name="profile_restore_error">恢复购买失败。</string>
-    <string name="profile_restore_none">未找到以前的购买记录。</string>
     <string name="profile_disclaimer">ⓘ  仅用于一般健康记录，不构成医疗建议。</string>
 
     <string name="reminders_title">提醒</string>
@@ -261,15 +254,15 @@
     <string name="help_hc_title">Health Connect</string>
     <string name="help_insights_title">规律</string>
 
-    <string name="help_camera_body">相机扫描是高级功能，需要有效订阅。\n\n点击相机按钮（右下角）打开实时预览。将血压计显示屏对准屏幕引导框，然后点击拍摄。\n\n照片将发送至 Gemini 2.5 Flash，读取收缩压、舒张压和脉搏值。您可以在下一屏幕查看并修正后再保存。\n\n如果您没有有效订阅，点击相机按钮将打开升级页面，您可以在此订阅或恢复之前的购买。</string>
+    <string name="help_camera_body">点击相机按钮（右下角）打开实时预览。将血压计显示屏对准屏幕引导框，然后点击拍摄。\n\n照片在您的设备上读取，无需互联网连接。保存前，请在下一屏幕核对并修正全部三个数值。</string>
     <string name="help_manual_body">点击铅笔按钮即可无需拍照输入记录。滑块会预填您上次保存的记录（首次启动默认值：120 / 80 / 60）。\n\n使用滑块或 ± 按钮调整收缩压、舒张压和脉搏。添加可选备注，然后点击保存记录。\n\n在收缩压大于舒张压之前，保存按钮将被禁用。</string>
     <string name="help_trends_body">仪表板上的图表按时间显示收缩压和舒张压。使用图表上方的筛选器更改视图：\n\n• 7天 — 最近 7 天\n• 30天 — 最近 30 天（默认）\n• 90天 — 最近 90 天\n• 全部 — 完整历史\n\nY 轴会适应您的数据。记录少于 24 小时时固定为 40–180 mmHg；一旦历史跨度达到 24 小时或以上，轴会收窄至实际范围（±5 mmHg 边距，取整至最近的 10），让趋势更清晰。\n\n图表上方时间范围筹码右侧的「Avg」筹码可平滑连续读数：开启时，相隔约 10 分钟内的测量会合并为一个点——符合标准的重复读数读取方式。关闭后将绘制每一条单独读数。此设置仅影响图表；您的读数列表始终保留每一条记录。\n\n将手机旋转为横向以查看全屏图表。\n\n筛选器下方的“趋势 / 散点图”开关可更改读数的呈现方式。趋势按时间显示读数；散点图是3D视图——正面为舒张压和收缩压，深度为脉搏。用一根手指拖动即可旋转并显示脉搏轴；再次点按“散点图”可返回正面视图。筛选器对两种视图均生效，您的选择会在下次打开应用时保留。</string>
     <string name="help_history_body">所有记录列在图表下方，最新的在前。每行显示：\n\n• 日期和时间\n• 收缩压 / 舒张压 · 脉搏（次/分）\n• 彩色编码的血压类别标签\n• 情境标签（如已设置）\n• 您添加的任何备注（以斜体显示）\n\n向左或向右滑动一行即可删除。底部会出现带撤销按钮的提示条 — 您有 5 秒时间撤销删除。\n\n长按任意行可打开标签编辑器。选择或取消选择情境标签（咖啡因、饮酒、高盐饮食、运动、压力、睡眠不佳、休息中、起床时），然后点击保存。标签可帮助您将生活方式因素与记录关联，并为规律卡片提供数据。</string>
     <string name="help_profile_body">点击人物图标打开您的档案。填写后有助于个性化应用。\n\n可用字段：\n\n• 出生年份\n• 生理性别\n• 体重 (kg) 和身高 (cm) — 显示实时 BMI 预览\n• 身体活动水平\n\n所有数据均保存在设备上。档案为可选项；不填写应用也可完整使用。</string>
     <string name="help_risk_body">当存在至少一条记录时，记录列表顶部会出现健康风险卡片。它结合您最新的血压类别与健康档案，提供情境指导。\n\n指导基于 AHA（美国心脏协会）指南，仅供参考，不能替代合格医疗专业人员的建议。\n\n点击卡片上的"编辑档案"以完善或更新您的健康档案。</string>
     <string name="help_reminders_body">点击铃铛图标配置每日测量提醒。\n\n1. 如有提示，请授予通知权限。\n2. 启用主开关。\n3. 设置早晨时间（理想为起床后 30 分钟，喝咖啡或服药前）。\n4. 设置晚间时间（放松休息时）。\n\n通知包含打开应用的"立即记录"快捷方式和"稍后提醒（15分钟）"操作。闹钟每天自动重新安排并在设备重启后保留。\n\n如果您的设备不支持精确闹钟权限，应用会引导您前往系统设置启用。</string>
-    <string name="help_export_body">点击顶栏的分享图标导出数据。下拉菜单提供三种格式：\n\n• JSON — 您的完整记录历史，可重新导入应用。\n• CSV — 电子表格格式的完整历史，兼容 Excel 或 Google 表格。\n• PDF — 包含趋势图表（最近 7、30 和 90 天）和记录表格的多页文档。图表上带标签的读数以编号徽章标记，每个图表下方的图例将编号对应到标签；同一条读数的多个标签会合并为一个编号（如 247）。\n\nPDF 图表遵循仪表板上的「Avg」设置。开启 Avg 时，连续读数会在图表上合并为一个点（保留其备注），而读数表格始终列出每一条单独记录。\n\n导出通过 Android 标准分享面板共享。</string>
-    <string name="help_import_body">点击下载图标（顶栏）从之前从本应用导出的 JSON 文件导入记录。\n\n应用会打开文件选择器。选择您的 JSON 导出文件。仅插入数据库中尚不存在时间戳的记录 — 重新导入同一文件是安全的。\n\n提示条会确认添加了多少条新记录，或告知没有可导入的新内容。</string>
+    <string name="help_export_body">点击顶栏的分享图标导出数据。下拉菜单提供三种格式：\n\n• JSON — 您的完整记录历史，可重新导入应用。\n• CSV — 电子表格格式的完整历史，兼容 Excel 或 Google 表格。\n• PDF — 包含趋势图表（最近 7、30 和 90 天）和记录表格的多页文档。图表上带标签的读数以编号徽章标记，每个图表下方的图例将编号对应到标签；同一条读数的多个标签会合并为一个编号（如 247）。\n\nPDF 图表遵循仪表板上的「Avg」设置。开启 Avg 时，连续读数会在图表上合并为一个点（保留其备注），而读数表格始终列出每一条单独记录。\n\n导出通过 Android 标准分享面板共享。\n\nJSON 还包含健康资料，即使没有测量记录。CSV 和 PDF 是测量报告。</string>
+    <string name="help_import_body">点击下载图标，选择本应用或 PWA 的 JSON 备份。也支持旧版 Android 的纯测量记录导出文件。如果包含个人资料，可选择“资料和测量记录”进行恢复、“仅测量记录”保留当前资料，或取消。仅添加新时间戳的记录，不会替换已有记录。完成提示会显示导入记录及资料恢复情况。</string>
     <string name="help_insights_body">当您有足够的记录时，仪表板上记录列表上方会出现规律卡片。它显示完全在您设备上检测到的规律——数据永远不会离开您的手机。\n\n规律类型：\n\n• 早晨与傍晚 — 您的早晨或傍晚读数是否持续偏高\n• 30 天趋势 — 过去一个月收缩压是否呈上升或下降趋势\n• 在范围内的时间 — 近期记录中落在健康范围内的比例\n• 健康连续记录 — 连续落在健康范围内的记录次数\n• 工作日与周末 — 工作日和休息日之间是否存在持续差异\n• 标签相关性 — 哪个情境标签与较高或较低读数关联最强\n\n每条规律均有颜色标注：绿色为正面，琥珀色为需要关注，灰色为中性。点击「再显示 N 条」展开所有规律；点击「收起」折叠。\n\n规律需要最少数量的记录才会出现——通常几天的数据就足以看到第一批规律。</string>
     <string name="help_hc_body">Health Connect 是 Google 的设备端健康数据平台。本应用可将您的记录写入为血压和心率记录。\n\n批量同步：点击顶栏的心率监测图标。首次会要求您授予写入权限。所有现有记录都会上传（可安全重复 — 现有记录会更新而非重复）。\n\n自动推送：每次保存新记录时，只要您已授予权限，它都会在后台自动推送到 Health Connect。无需额外操作。\n\n如果您的设备未安装 Health Connect，应用会提供前往 Play 商店安装的链接。</string>
 
@@ -310,4 +303,11 @@
     <string name="chart_no_readings">此范围内无记录</string>
     <string name="scatter_cd_rotate">旋转图表</string>
     <string name="scatter_colour_time">颜色：较早 → 较新</string>
+    <string name="capture_error_local_reader">本地读取器无法处理此照片。请重试或手动输入数值。</string>
+    <string name="dashboard_smooth_bursts">平均</string>
+    <string name="backup_import_title">同时导入个人资料？</string>
+    <string name="backup_import_body">此备份包含个人资料。导入会替换已保存资料中的对应字段。测量记录将合并，已有时间戳的记录将跳过。</string>
+    <string name="backup_import_all">资料和测量记录</string>
+    <string name="backup_import_readings">仅测量记录</string>
+    <string name="backup_profile_imported">个人资料已导入。</string>
 </resources>

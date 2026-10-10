@@ -103,9 +103,9 @@ class ValidationViewModel @Inject constructor(
     }
 
     companion object {
-        val SYS_RANGE = 60..250
-        val DIA_RANGE = 40..160
-        val PUL_RANGE = 30..200
+        val SYS_RANGE = 50..280
+        val DIA_RANGE = 25..180
+        val PUL_RANGE = 20..250
         const val DEFAULT_SYS = 120
         const val DEFAULT_DIA = 80
         const val DEFAULT_PUL = 60

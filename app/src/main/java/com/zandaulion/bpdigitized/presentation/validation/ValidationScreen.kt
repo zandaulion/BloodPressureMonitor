@@ -68,6 +68,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -265,6 +266,7 @@ fun ValidationScreen(
                 }
 
                 val context = LocalContext.current
+                val resources = LocalResources.current
                 val ocrDumpFile = remember(state.imagePath) {
                     ocrDumpFileFor(state.imagePath!!).takeIf { it.exists() }
                 }
@@ -273,7 +275,7 @@ fun ValidationScreen(
                         onClick = {
                             shareDiagnosticFile(
                                 context, ocrDumpFile, "text/plain",
-                                context.getString(R.string.validation_debug_ocr),
+                                resources.getString(R.string.validation_debug_ocr),
                             )
                         },
                         modifier = Modifier.fillMaxWidth(),
@@ -289,7 +291,7 @@ fun ValidationScreen(
                         onClick = {
                             shareDiagnosticFile(
                                 context, preprocFile, "image/jpeg",
-                                context.getString(R.string.validation_debug_preproc),
+                                resources.getString(R.string.validation_debug_preproc),
                             )
                         },
                         modifier = Modifier.fillMaxWidth(),

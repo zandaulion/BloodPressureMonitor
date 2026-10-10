@@ -1,0 +1,58 @@
+{
+  "version": "v2-adaptive3",
+  "size": 512,
+  "minScore": 0.2,
+  "acceptScore": 0.25,
+  "digitMinScore": 0.5,
+  "classNames": [
+    "0",
+    "1",
+    "row",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
+  ],
+  "scope": "Upright common home monitors with three SYS/DIA/pulse rows",
+  "scoreNotice": "Detection and recognition scores are not calibrated correctness probabilities",
+  "portraitCropFallback": {
+    "enabled": true,
+    "minimumAspectRatio": 1.2,
+    "views": [
+      [
+        0.15,
+        0.25,
+        0.7,
+        0.6
+      ],
+      [
+        0.25,
+        0.32,
+        0.6,
+        0.5
+      ]
+    ],
+    "acceptance": "Only after no plausible full-frame reading; both views must be candidates with identical SYS/DIA/pulse; scores are not calibrated probabilities"
+  },
+  "adaptiveCropFallback": {
+    "enabled": true,
+    "after": "No plausible full-frame or agreeing central-crop reading",
+    "normalizationFractions": [
+      0.04,
+      0.05
+    ],
+    "acceptance": "Two plausible complete readings must agree. Both must be candidates for candidate output; any low-confidence view keeps Please review status. Scores are not correctness probabilities."
+  },
+  "displayRectificationFallback": {
+    "enabled": true,
+    "experimental": true,
+    "after": "No plausible full-frame, central-crop or adaptive normalized reading",
+    "acceptance": "At least two perspective-corrected views must agree and no plausible view may disagree. Every recovered reading is returned for manual review."
+  },
+  "detectorSha256": "8a7dafaed0aa9056308171d57d024343049cff4ba1a9adfc54d274c38a31fb07",
+  "digitsSha256": "f41a41f9138c7c80d7e7fa1c3ed5afe93c3f5beacb3efd861ba3222b597cd732"
+}

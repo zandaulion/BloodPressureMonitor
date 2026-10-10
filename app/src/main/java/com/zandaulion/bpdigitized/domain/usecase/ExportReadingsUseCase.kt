@@ -1,62 +1,23 @@
 package com.zandaulion.bpdigitized.domain.usecase
 
 import android.content.Context
-import com.zandaulion.bpdigitized.domain.model.BPCategory
-import com.zandaulion.bpdigitized.domain.model.BpTag
+import com.zandaulion.bpdigitized.domain.backup.BackupCodec
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
+import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.withContext
 import java.io.File
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 class ExportReadingsUseCase @Inject constructor(
     @ApplicationContext private val context: Context,
     private val repository: BPRepository,
-    private val json: Json,
+    private val profiles: UserProfileRepository,
 ) {
-    suspend operator fun invoke(): File {
-        val readings = repository.getAll()
-        val entries  = readings.map { r ->
-            ExportEntry(
-                id        = r.id,
-                dateTime  = ISO_FORMAT.format(Date(r.timestamp)),
-                timestamp = r.timestamp,
-                systolic  = r.systolic,
-                diastolic = r.diastolic,
-                pulse     = r.pulse,
-                category  = r.category,
-                notes     = r.notes,
-                tags      = r.tags,
-            )
-        }
-        val payload = json.encodeToString(entries)
-        val stamp   = FILE_TIMESTAMP_FORMAT.format(Date())
-        val file    = File(context.cacheDir, "bp_export_$stamp.json")
-        file.writeText(payload)
-        return file
-    }
-
-    /** JSON shape — includes both a human-readable dateTime and the raw epoch timestamp. */
-    @Serializable
-    private data class ExportEntry(
-        val id: Long,
-        val dateTime: String,
-        val timestamp: Long,
-        val systolic: Int,
-        val diastolic: Int,
-        val pulse: Int?,
-        val category: BPCategory,
-        val notes: String?,
-        val tags: List<BpTag> = emptyList(),
-    )
-
-    private companion object {
-        val ISO_FORMAT           = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
-        val FILE_TIMESTAMP_FORMAT = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US)
+    suspend operator fun invoke(): File = withContext(Dispatchers.IO) {
+        val payload = BackupCodec.encode(repository.getAll(), profiles.observe().first())
+        File(context.cacheDir, "bp_export_${System.currentTimeMillis()}.json").apply { writeText(payload) }
     }
 }

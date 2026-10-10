@@ -1,3 +1,7 @@
+> **Historical documentation:** applies to the former Firebase/Gemini builds.
+> Version 1.6.0 removed these services and their configuration requirements.
+> See [native offline OCR](Hearth_OCR.md) for the current implementation.
+
 # Securing AI Usage with Firebase App Check (Play Integrity)
 
 **Goal:** Restrict the app's AI calls (Firebase Vertex AI / "AI Logic" — used for the camera OCR via Gemini) so that **only the genuine, Play-distributed app** can call them. This protects the AI quota/billing from abuse by anyone who extracts the API config.

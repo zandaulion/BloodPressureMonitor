@@ -18,7 +18,6 @@ import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
 import com.zandaulion.bpdigitized.domain.repository.OnboardingRepository
 import com.zandaulion.bpdigitized.domain.repository.ReminderRepository
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
-import com.zandaulion.bpdigitized.data.ocr.TesseractRecognizer
 import kotlinx.serialization.json.Json
 import dagger.Binds
 import dagger.Module
@@ -48,11 +47,6 @@ object DataModule {
 
     @Provides
     fun provideDao(db: BPDatabase): BPReadingDao = db.readingDao()
-
-    @Provides
-    @Singleton
-    fun provideTesseractRecognizer(@ApplicationContext context: Context): TesseractRecognizer =
-        TesseractRecognizer(context)
 
     @Provides
     @Singleton

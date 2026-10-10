@@ -1,1 +1,2 @@
-# Default ProGuard rules; add app-specific rules here.
+# ONNX Runtime uses JNI to access its Java API.
+-keep class ai.onnxruntime.** { *; }

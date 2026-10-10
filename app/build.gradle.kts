@@ -7,12 +7,13 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
-    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "com.zandaulion.bpdigitized"
     compileSdk = 36
+    // Allow device checks against the exact signed release that will be installed.
+    testBuildType = providers.gradleProperty("ocrTestBuildType").orElse("debug").get()
 
     // Release signing is driven by an untracked keystore.properties at the repo
     // root (see keystore.properties.template). When the file is absent (fresh
@@ -26,8 +27,8 @@ android {
         applicationId = "com.zandaulion.bpdigitized"
         minSdk = 26
         targetSdk = 35
-        versionCode = 26
-        versionName = "1.5.2"
+        versionCode = 29
+        versionName = "1.6.2"
 
         // Clinical mode. When true the app surfaces AHA hypertension staging,
         // the cardiovascular risk assessment, and condition inputs (diabetes,
@@ -53,12 +54,15 @@ android {
 
     buildTypes {
         debug {
-            // Lets Remote Config conditions target dev builds only (Version
-            // contains "-dev"), so model changes can be tested on this machine's
-            // builds before being promoted to the default value for all users.
             versionNameSuffix = "-dev"
+            // Opt-in device tests install beside the user's normal app and database.
+            if (providers.gradleProperty("isolatedOcrTest").orNull == "true") {
+                applicationIdSuffix = ".ocrtest"
+            }
         }
         release {
+            // Sideload releases target ARM64 phones; debug keeps emulator support.
+            ndk { abiFilters += "arm64-v8a" }
             // Sign with the release key only when keystore.properties is present;
             // otherwise the build stays unsigned rather than breaking.
             if (keystorePropsFile.exists()) {
@@ -112,6 +116,7 @@ ksp {
 }
 
 dependencies {
+    implementation(libs.onnxruntime.android)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
@@ -141,13 +146,6 @@ dependencies {
     implementation(libs.camera.lifecycle)
     implementation(libs.camera.view)
 
-    implementation(libs.tesseract4android) {
-        // The main artifact transitively depends on tesseract4android-openmp which
-        // contains identical classes → duplicate class conflict.  Exclude it and
-        // use the standard (non-OpenMP) native libraries only.
-        exclude(group = "com.github.adaptech-cz.Tesseract4Android", module = "tesseract4android-openmp")
-    }
-
     implementation(libs.vico.compose)
     implementation(libs.vico.compose.m3)
     implementation(libs.vico.core)
@@ -162,18 +160,10 @@ dependencies {
     implementation(libs.androidx.exifinterface)
     implementation(libs.androidx.datastore.preferences)
 
-    // Firebase: AI Logic (Gemini via Vertex AI backend), Remote Config, App Check
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.firebase.ai)
-    implementation(libs.firebase.config)
-    implementation(libs.firebase.appcheck.playintegrity)
-    implementation(libs.firebase.appcheck.debug)
-
-    // RevenueCat
-    implementation(libs.revenuecat.purchases)
-    implementation(libs.revenuecat.purchases.ui)
 
     testImplementation(libs.junit)
+    // Desktop JNI is used only by local JVM tests; Android packages only the Android AAR.
+    testRuntimeOnly(libs.onnxruntime.jvm)
     androidTestImplementation(libs.androidx.test.junit)
     androidTestImplementation(libs.androidx.test.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

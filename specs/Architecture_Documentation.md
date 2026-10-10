@@ -1,7 +1,7 @@
 # Architecture Documentation: BP Digitizer App
 
-**Objective:** Native Android application that scans blood pressure readings from non-smart digital monitors via an AI vision API, allows user validation, calculates health risk, stores history, and visualises trends.
-**Target Platform:** Android (API 26+)
+**Objective:** Native Android application that scans blood pressure readings from non-smart digital monitors using bundled on-device Hearth models, allows user validation, calculates health risk, stores history, and visualises trends.
+**Target Platform:** Android (API 26+); release APKs target ARM64 from 1.6.2
 **Language:** Kotlin
 
 ---
@@ -23,7 +23,7 @@ The application follows **MVVM + Clean Architecture** with Single Source of Trut
 |---|---|
 | UI | Jetpack Compose BOM 2026.05+, Material 3 |
 | Camera | CameraX (`camera2`, `lifecycle`, `view`) |
-| AI OCR | Gemini 2.5 Flash REST API (vision) |
+| OCR models | Bundled Hearth detector and DigitNet ONNX exports |
 | Local DB | Room 2.8+ |
 | Charts | Vico 2.0 (`compose`, `compose-m3`, `core`) |
 | Serialisation | `kotlinx.serialization-json` |
@@ -31,7 +31,7 @@ The application follows **MVVM + Clean Architecture** with Single Source of Trut
 | DI | Hilt 2.59+ |
 | Navigation | Navigation Compose 2.8+ |
 | Preferences | AndroidX DataStore Preferences 1.1+ |
-| AI / OCR | Vertex AI (Gemini 2.5 Flash) |
+| OCR runtime | Bundled native ONNX Runtime Android 1.24.3 (CPU) |
 | Health | AndroidX Health Connect 1.1-rc+ |
 | Permissions | Accompanist Permissions 0.36+ |
 | Image | Coil Compose 2.7, ExifInterface 1.3 |
@@ -43,10 +43,10 @@ The application follows **MVVM + Clean Architecture** with Single Source of Trut
 ## 1.3 Folder Structure
 
 ```text
-com.example.bpdigitizer
+com.zandaulion.bpdigitized
 ├── data/
 │   ├── local/              # Room Database, DAOs, Entities
-│   ├── ocr/                # GeminiOcrRecognizer, TesseractRecognizer
+│   ├── ocr/                # HearthOcrRecognizer, native Hearth processing core
 │   ├── reminder/           # ReminderType, ReminderScheduler, NotificationHelper
 │   │                       # ReminderReceiver, BootReceiver, SnoozeReceiver
 │   └── repository/         # BPRepositoryImpl, UserProfileRepositoryImpl,
@@ -54,13 +54,14 @@ com.example.bpdigitizer
 ├── di/
 │   └── AppModule.kt        # Hilt modules (DataModule, RepositoryModule)
 ├── domain/
+│   ├── backup/             # BackupCodec: PWA-compatible JSON and profile patches
 │   ├── model/              # BPReading, BPCategory, UserProfile, HealthAssessment,
 │   │                       # ReminderSettings
 │   ├── repository/         # BPRepository, UserProfileRepository,
 │   │                       # ReminderRepository
-│   └── usecase/            # ParseOcrTextUseCase, CalculateBPZoneUseCase,
+│   └── usecase/            # ParsedReading, CalculateBPZoneUseCase,
 │                           # ExportReadingsUseCase (JSON), ExportCsvUseCase,
-│                           # ExportPdfUseCase, ImportReadingsUseCase,
+│                           # ExportPdfUseCase, ImportReadingsUseCase, RestoreBackupUseCase,
 │                           # SyncToHealthConnectUseCase,
 │                           # PushReadingToHealthConnectUseCase,
 │                           # CalculateHealthRiskUseCase
@@ -68,7 +69,7 @@ com.example.bpdigitizer
     ├── capture/            # CaptureScreen, CaptureViewModel, ImagePreprocessor
     ├── components/         # CategoryBadge, HealthRiskCard
     ├── dashboard/          # DashboardScreen, DashboardViewModel,
-    │                       # BPTrendChart, BPScatterChart
+    │                       # BPTrendChart, BPScatter3DChart
     ├── profile/            # ProfileScreen, ProfileViewModel
     ├── reminders/          # RemindersScreen, RemindersViewModel
     ├── theme/              # Color, Theme
@@ -81,13 +82,13 @@ com.example.bpdigitizer
 ## 1.4 Data Flow: Camera Scan → Database
 
 1. **CameraX** takes a still photo and saves it to internal storage.
-2. **`ImagePreprocessor.preprocessLight()`** EXIF-orients and downscales to max 1024 px.
-3. **`GeminiOcrRecognizer.recognize()`** base64-encodes the JPEG and POSTs it to the Gemini 2.5 Flash REST endpoint with a structured prompt asking for `{"systolic", "diastolic", "pulse"}`.
-4. The JSON response is parsed into a **`ParsedReading`** (nulls for any value Gemini couldn't read with confidence).
-5. **`CaptureViewModel`** emits a `ParseComplete` event → Navigation pushes to Validation.
+2. **`ImagePreprocessor.preprocessForHearth()`** applies EXIF orientation, retains RGB, and limits the longest edge to 1920 px.
+3. **`HearthOcrRecognizer.recognize()`** runs the bundled detector and DigitNet on a background executor using native ONNX Runtime. No image upload, WebView or runtime download occurs.
+4. Kotlin assembly and agreement-based portrait, lighting and perspective fallbacks produce a complete plausible triplet or a refusal.
+5. **`CaptureViewModel`** emits a `ParseComplete` event only for a usable triplet; otherwise it stays on the camera and offers a retake/manual entry.
 6. **`ValidationScreen`** pre-populates sliders from OCR values (or from the last saved reading on the manual path). User corrects if needed.
 7. **`ValidationViewModel.save()`** computes `BPCategory`, builds a `BPReading`, inserts via **`BPRepository`** → Room.
-8. **`PushReadingToHealthConnectUseCase`** is launched in a child coroutine immediately after the DB insert — see §1.7.
+8. Saving writes only to the local database. Health Connect export is explicitly initiated by the user from the dashboard.
 
 ### Manual-Entry Data Flow
 Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are pre-populated from the last saved reading (default 120/80/60 on first launch). Steps 1–4 are skipped entirely.
@@ -109,7 +110,7 @@ Dashboard "pencil" FAB navigates to Validation with no OCR values. Sliders are p
 
 ## 1.6 Dashboard Charts (Trend & Scatter)
 
-The dashboard chart area has two views, **Trend** (`BPTrendChart`) and **Scatter** (`BPScatterChart`). Both consume the same `ui.chartReadings` (already range-filtered and `Avg`-smoothed by the ViewModel), so the range chips and smoothing setting drive both.
+The dashboard chart area has two views, **Trend** (`BPTrendChart`) and **Scatter** (`BPScatter3DChart`). Both consume the same `ui.chartReadings` (already range-filtered and `Avg`-smoothed by the ViewModel), so the range chips and smoothing setting drive both.
 
 In **portrait**, a two-segment `SegmentedButton` toggle below the range chips picks which view fills the chart area. The chosen mode is exposed as a separate `chartMode: StateFlow<ChartMode>` on `DashboardViewModel` (kept out of the 5-arg `ui` combine for arity) and **persisted in DataStore** via `ChartSettingsRepository.observeChartMode()/setChartMode()` (key `chart_mode`, storing the `ChartMode` enum name; blank/unknown → `TREND`).
 
@@ -142,14 +143,15 @@ visibleSpanMs   = readings[endIdx].timestamp − readings[startIdx].timestamp
 
 **Why not use `zoomState.value` directly?** Vico's initial zoom is `Zoom.Content` — the factor needed to fit all data — not `1.0`. A formula based on `n / zoom` produces the wrong count from the first frame. The geometry-based formula (`chartWidth / totalContentWidth`) is correct regardless of the starting zoom value.
 
-### Scatter plot (BPScatterChart)
+### Scatter plot (BPScatter3DChart)
 
-**Component:** `presentation/dashboard/BPScatterChart.kt`  
+**Component:** `presentation/dashboard/BPScatter3DChart.kt`
 **Rendering:** Compose `Canvas` (no Vico) — mirrors the PDF overview scatter so the two surfaces match visually.
 
-Each reading is one dot: **diastolic on X, systolic on Y**, filled with its zone colour (the same `CategoryNormal…CategoryCrisis` palette used by `CategoryBadge` and the PDF). Axis bounds pad ±5 mmHg and snap outward to the nearest 10 — the ±5 pad also guarantees a non-zero span when every reading shares a value. Dashed reference lines at **SYS 120** / **DIA 80** are drawn only when in range. Dot radius scales down as the point count grows to limit overplotting.
-
-Tapping uses `detectTapGestures`: the tap location is mapped back through the same plot geometry to find the nearest reading within a slop radius, which is highlighted with a ring and a `SYS/DIA · date` tooltip (parity with the Trend chart's tap marker). A `FlowRow` legend below the canvas lists only the zones present in the current range, resolved through `badgeLabelRes()` so it follows the neutral fitness labels.
+Each reading is one dot: **diastolic on X, systolic on Y and pulse on Z**.
+The initial view is head-on; drag to rotate and reveal pulse depth. Dots are
+coloured by recency, with an oldest-to-newest legend. Dashed reference lines
+mark SYS 120 and DIA 80. Tap a dot for its reading details and timestamp.
 
 ## 1.7 Reminder System
 
@@ -179,13 +181,10 @@ Upserts all local readings as `BloodPressureRecord` + `HeartRateRecord` entries 
 
 Permission flow: `DashboardViewModel` checks `getSdkStatus()` → requests `WRITE_BLOOD_PRESSURE` + `WRITE_HEART_RATE` via `PermissionController.createRequestPermissionResultContract()`.
 
-### Per-Reading Auto-Push (`PushReadingToHealthConnectUseCase`)
-Called from `ValidationViewModel.save()` immediately after the new reading is persisted to Room.
-
-- Launched as a **child coroutine** of the save job — navigation back to Dashboard is not delayed.
-- **Best-effort, silent:** checks `getSdkStatus()` and `getGrantedPermissions()` before attempting to write; swallows all exceptions.
-- No permission prompting — if permissions have not yet been granted the push is silently skipped. Prompting is handled exclusively by the manual sync button.
-- Uses the same stable `clientRecordId` scheme as the bulk sync, so a subsequent bulk sync will upsert rather than duplicate.
+### Explicit export only
+Saving a reading writes to Room only. Health Connect receives readings when the
+user chooses the dashboard sync action and grants its permissions. The core app
+works without Health Connect installed or authorized.
 
 ### Manifest requirements
 `<queries>` block for package visibility (API 30+); `VIEW_PERMISSION_USAGE + HEALTH_PERMISSIONS` intent filter (API 34+).
@@ -194,7 +193,7 @@ Called from `ValidationViewModel.save()` immediately after the new reading is pe
 
 ## 1.9 AI / OCR Backend
 
-OCR is powered by **Vertex AI (Gemini 2.5 Flash)** as a paid service. No user-supplied API key is required or accepted. `GeminiOcrRecognizer` calls the Vertex AI endpoint directly using application credentials baked into the server-side configuration.
+OCR runs entirely on-device with both model files and native ONNX Runtime packaged in the APK. Internet permissions are explicitly removed from the merged manifest; no account, subscription, key, browser, Google Play Services or model download is required. Automatic cloud backup and device transfer exclude app data. See [native OCR architecture and validation](../docs/Hearth_OCR.md).
 
 ---
 
@@ -260,3 +259,29 @@ A range page is omitted when:
 - Alternating row background; category labels are colour-coded to match the app theme.
 - Notes truncated at 52 characters.
 - "Last 30 Days" indicated in the page title.
+
+
+## 1.12 JSON Backup and Restoration
+
+`ExportReadingsUseCase` reads the health profile from DataStore and the full
+reading history from Room, then uses `BackupCodec` to create the PWA-compatible
+version-1 JSON envelope. Profile-only exports are supported.
+
+`ImportReadingsUseCase` decodes and validates the entire file before any writes.
+`DashboardViewModel` holds the pending backup in memory and asks whether to
+restore its profile as well as readings. Cancel makes no changes.
+`RestoreBackupUseCase` merges readings by exact timestamp, then applies the
+selected profile patch: omitted fields preserve local values, explicit null
+clears optional values. Storage failures propagate to the UI. Room and DataStore
+are separate stores, so a failed restore may require a retry; timestamp
+deduplication makes retrying a partial reading merge safe.
+
+See [JSON Backups](../docs/JSON_Backups.md) for the schema and compatibility rules.
+
+## 1.13 Release Packaging
+
+Release builds filter native libraries to `arm64-v8a`; debug builds keep their
+default ABI support for emulator testing. Both ONNX models and native CPU
+inference remain bundled. Code shrinking is disabled. Version 1.6.2 is 53.7 MB
+versus 135.0 MB for 1.6.1; 32-bit ARM and x86 devices need a separately built APK.
+See [release notes](../docs/Release_Notes.md) for validation and compatibility.

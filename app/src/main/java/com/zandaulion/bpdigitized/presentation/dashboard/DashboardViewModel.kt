@@ -1,5 +1,7 @@
 package com.zandaulion.bpdigitized.presentation.dashboard
 
+import com.zandaulion.bpdigitized.domain.backup.BackupData
+import kotlinx.coroutines.CancellationException
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -17,7 +19,6 @@ import com.zandaulion.bpdigitized.domain.model.Insight
 import com.zandaulion.bpdigitized.domain.repository.BPRepository
 import com.zandaulion.bpdigitized.domain.repository.ChartSettingsRepository
 import com.zandaulion.bpdigitized.domain.repository.UserProfileRepository
-import com.zandaulion.bpdigitized.domain.billing.BillingManager
 import com.zandaulion.bpdigitized.domain.usecase.AggregateReadingsUseCase
 import com.zandaulion.bpdigitized.domain.usecase.CalculateHealthRiskUseCase
 import com.zandaulion.bpdigitized.domain.usecase.GenerateInsightsUseCase
@@ -58,8 +59,6 @@ data class DashboardUi(
     val selectedRange: ChartRange,
     /** Risk assessment for the most recent reading, null when there are no readings. */
     val healthAssessment: HealthAssessment?,
-    /** True if the user has purchased the pro subscription. */
-    val isProUser: Boolean = false,
     /** True when back-to-back readings are averaged into one smoothed chart point. */
     val smoothBursts: Boolean = true,
     /** On-device pattern insights derived from the full reading history. */
@@ -82,7 +81,7 @@ sealed interface DashboardEvent {
     data class ShowUndoSnackbar(val reading: BPReading) : DashboardEvent
     data class ShareExport(val file: File, val mimeType: String, val exportType: ExportType) : DashboardEvent
     data object ExportFailed : DashboardEvent
-    data class ImportSucceeded(val count: Int) : DashboardEvent
+    data class ImportSucceeded(val count: Int, val profileImported: Boolean) : DashboardEvent
     data object ImportFailed : DashboardEvent
     /** Tell the screen to launch the HC permission dialog with these permission strings. */
     data class RequestHealthConnectPermissions(val permissions: Set<String>) : DashboardEvent
@@ -99,7 +98,6 @@ class DashboardViewModel @Inject constructor(
     private val repository: BPRepository,
     private val profileRepository: UserProfileRepository,
     private val chartSettings: ChartSettingsRepository,
-    private val billingManager: BillingManager,
     private val aggregateReadings: AggregateReadingsUseCase,
     private val exportReadings: ExportReadingsUseCase,
     private val exportCsv: ExportCsvUseCase,
@@ -112,9 +110,7 @@ class DashboardViewModel @Inject constructor(
 
     private val selectedRange = MutableStateFlow(ChartRange.THIRTY_DAYS)
 
-    /** Trend vs scatter toggle, persisted in DataStore so it survives app restarts. Kept
-        outside the main [ui] combine to stay within its 5-arg arity; the screen collects
-        it separately. Blank/unknown stored tokens fall back to TREND. */
+    /** Trend vs scatter toggle, persisted in DataStore so it survives app restarts. The screen collects it separately from the reading history. Blank/unknown stored tokens fall back to TREND. */
     val chartMode: StateFlow<ChartMode> = chartSettings.observeChartMode()
         .map { token -> runCatching { ChartMode.valueOf(token) }.getOrDefault(ChartMode.TREND) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), ChartMode.TREND)
@@ -123,9 +119,8 @@ class DashboardViewModel @Inject constructor(
         repository.observeAll(),
         selectedRange,
         profileRepository.observe(),
-        billingManager.isProUser,
         chartSettings.observeSmoothBursts(),
-    ) { all, range, profile, isPro, smooth ->
+    ) { all, range, profile, smooth ->
         val inRange = range.days?.let { days ->
             val cutoff = System.currentTimeMillis() - days * MILLIS_PER_DAY
             all.filter { it.timestamp >= cutoff }
@@ -137,11 +132,11 @@ class DashboardViewModel @Inject constructor(
         val assessment = if (Features.CLINICAL)
             latest?.let { calculateHealthRisk(it.category, profile) } else null
         val insights = generateInsights(all)
-        DashboardUi(all, chart, range, assessment, isPro, smooth, insights)
+        DashboardUi(all, chart, range, assessment, smooth, insights)
     }.stateIn(
         viewModelScope,
         SharingStarted.WhileSubscribed(5_000),
-        DashboardUi(emptyList(), emptyList(), ChartRange.THIRTY_DAYS, null, false),
+        DashboardUi(emptyList(), emptyList(), ChartRange.THIRTY_DAYS, null),
     )
 
     private val _events = Channel<DashboardEvent>(Channel.BUFFERED)
@@ -234,12 +229,51 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    private val _pendingImport = MutableStateFlow<BackupData?>(null)
+    val pendingImport: StateFlow<BackupData?> = _pendingImport
+    private var importBusy = false
+
     fun requestImport(uri: Uri) {
+        if (importBusy || _pendingImport.value != null) return
+        importBusy = true
         viewModelScope.launch {
-            runCatching { importReadings(uri) }
-                .onSuccess { count -> _events.send(DashboardEvent.ImportSucceeded(count)) }
-                .onFailure { _events.send(DashboardEvent.ImportFailed) }
+            try {
+                val backup = importReadings.read(uri)
+                if (backup.profile != null) _pendingImport.value = backup
+                else restoreImport(backup, includeProfile = false)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                _events.send(DashboardEvent.ImportFailed)
+            } finally {
+                importBusy = false
+            }
         }
+    }
+
+    fun cancelImport() { _pendingImport.value = null }
+
+    fun confirmImport(includeProfile: Boolean) {
+        if (importBusy) return
+        val backup = _pendingImport.value ?: return
+        _pendingImport.value = null
+        importBusy = true
+        viewModelScope.launch {
+            try {
+                restoreImport(backup, includeProfile)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (_: Exception) {
+                _events.send(DashboardEvent.ImportFailed)
+            } finally {
+                importBusy = false
+            }
+        }
+    }
+
+    private suspend fun restoreImport(backup: BackupData, includeProfile: Boolean) {
+        val result = importReadings(backup, includeProfile)
+        _events.send(DashboardEvent.ImportSucceeded(result.count, result.profileImported))
     }
 
     /** Called when the user taps the Health Connect sync button. */

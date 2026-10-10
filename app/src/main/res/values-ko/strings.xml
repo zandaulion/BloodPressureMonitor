@@ -92,8 +92,8 @@
 
     <string name="capture_cd_capture">촬영</string>
     <string name="capture_reading_numbers">숫자 읽는 중…</string>
-    <string name="capture_status_sending">Gemini에 이미지 전송 중…</string>
-    <string name="capture_status_reading">AI가 모니터를 읽는 중…</string>
+    <string name="capture_status_sending">기기 내 판독기 준비 중…</string>
+    <string name="capture_status_reading">이 기기에서 혈압계 판독 중…</string>
     <string name="capture_status_extracting">수치 추출 중…</string>
     <string name="capture_status_almost">거의 완료…</string>
     <string name="capture_error_unreadable">화면을 읽을 수 없습니다. 사진을 다시 찍거나 수동으로 입력하세요.</string>
@@ -178,13 +178,6 @@
     <string name="profile_diabetes_desc">고혈압과 결합 시 위험을 크게 높임</string>
     <string name="profile_section_activity">신체 활동</string>
     <string name="profile_activity_level_label">일반적인 운동 수준</string>
-    <string name="profile_section_subscriptions">구독</string>
-    <string name="profile_subscriptions_desc">AI 카메라 스캐너를 잠금 해제하려면 Pro 구독을 관리하세요.</string>
-    <string name="profile_restore_purchases">구매 복원</string>
-    <string name="profile_restoring">복원 중…</string>
-    <string name="profile_restore_success">구매가 성공적으로 복원되었습니다.</string>
-    <string name="profile_restore_error">구매 복원에 실패했습니다.</string>
-    <string name="profile_restore_none">이전 구매를 찾을 수 없습니다.</string>
     <string name="profile_disclaimer">ⓘ  일반적인 웰니스 기록용일 뿐 의학적 조언이 아닙니다.</string>
 
     <string name="reminders_title">알림</string>
@@ -261,15 +254,15 @@
     <string name="help_hc_title">Health Connect</string>
     <string name="help_insights_title">패턴</string>
 
-    <string name="help_camera_body">카메라 스캔은 활성 구독으로 사용할 수 있는 프리미엄 기능입니다.\n\n카메라 버튼(오른쪽 하단)을 탭하여 실시간 미리보기를 엽니다. 혈압계 디스플레이를 화면 가이드 안에 맞춘 후 촬영을 탭하세요.\n\n사진은 Gemini 2.5 Flash로 전송되어 수축기, 이완기, 맥박 값을 읽습니다. 저장하기 전에 다음 화면에서 확인하고 수정할 수 있습니다.\n\n활성 구독이 없으면 카메라 버튼을 탭할 때 업그레이드 화면이 열리며, 구독하거나 이전 구매를 복원할 수 있습니다.</string>
+    <string name="help_camera_body">카메라 버튼(오른쪽 하단)을 탭하여 실시간 미리보기를 엽니다. 혈압계 디스플레이를 화면 가이드 안에 맞춘 후 촬영을 탭하세요.\n\n사진은 인터넷 연결 없이 기기에서 판독됩니다. 저장하기 전에 다음 화면에서 세 값을 모두 확인하고 수정하세요.</string>
     <string name="help_manual_body">사진 없이 측정값을 입력하려면 연필 버튼을 탭하세요. 슬라이더는 마지막으로 저장한 측정값으로 미리 채워집니다(첫 실행 시 기본값: 120 / 80 / 60).\n\n슬라이더 또는 ± 버튼으로 수축기, 이완기, 맥박을 조정합니다. 선택 메모를 추가한 후 측정값 저장을 탭하세요.\n\n수축기가 이완기보다 클 때까지 저장 버튼은 비활성화됩니다.</string>
     <string name="help_trends_body">대시보드의 차트는 시간에 따른 수축기와 이완기 측정값을 표시합니다. 차트 위의 칩으로 보기를 필터링하세요:\n\n• 7일 — 최근 7일\n• 30일 — 최근 30일 (기본값)\n• 90일 — 최근 90일\n• 전체 — 전체 기록\n\nY축은 데이터에 맞게 조정됩니다. 24시간 미만의 기록이 있으면 40~180 mmHg로 고정됩니다. 기록이 24시간 이상이 되면 축이 실제 범위에 맞게 좁혀집니다(±5 mmHg 여백, 10 단위로 반올림).\n\n기간 칩 오른쪽의 \'Avg\' 칩은 연속된 측정값을 매끄럽게 합칩니다. 켜면 약 10분 이내에 측정한 값이 하나의 점으로 평균화됩니다 — 반복 측정값을 읽는 표준 방식입니다. 끄면 모든 개별 측정값이 표시됩니다. 이는 차트에만 영향을 주며, 측정 목록에는 항상 모든 항목이 유지됩니다.\n\n전체 화면 차트를 보려면 휴대폰을 가로로 돌리세요.\n\n필터 아래의 추세 / 분산형 스위치로 기록을 그리는 방식을 바꿀 수 있습니다. 추세는 시간순으로 보여 주고, 분산형은 3D 보기입니다 — 앞면에 이완기와 수축기, 깊이에 맥박을 배치합니다. 한 손가락으로 끌어 회전하면 맥박 축이 나타납니다. 분산형을 다시 탭하면 정면 보기로 돌아갑니다. 필터는 두 보기 모두에 적용되며, 선택은 다음에 앱을 열 때도 유지됩니다.</string>
     <string name="help_history_body">모든 측정값은 차트 아래에 최신순으로 나열됩니다. 각 행은 다음을 표시합니다:\n\n• 날짜 및 시간\n• 수축기 / 이완기 · 맥박 (bpm)\n• 색상으로 구분된 혈압 분류 배지\n• 상황 태그 칩 (설정된 경우)\n• 추가한 메모 (기울임꼴)\n\n행을 왼쪽 또는 오른쪽으로 스와이프하여 삭제합니다. 하단에 실행 취소 버튼이 있는 스낵바가 나타나며 — 5초 동안 삭제를 취소할 수 있습니다.\n\n태그 편집기를 열려면 행을 길게 누르세요. 상황 태그를 선택하거나 해제하고(카페인, 음주, 짠 음식, 운동, 스트레스, 수면 부족, 안정 시, 기상 시) 저장을 탭하세요. 태그는 생활 습관과 측정값의 상관관계를 파악하고 패턴 카드에 정보를 제공합니다.</string>
     <string name="help_profile_body">사람 아이콘을 탭하여 프로필을 엽니다. 작성하면 앱을 맞춤화하는 데 도움이 됩니다.\n\n사용 가능한 항목:\n\n• 출생 연도\n• 생물학적 성별\n• 체중(kg) 및 키(cm) — 실시간 BMI 미리보기 표시\n• 신체 활동 수준\n\n모든 데이터는 기기에 보관됩니다. 프로필은 선택 사항이며 없어도 앱이 완전히 작동합니다.</string>
     <string name="help_risk_body">측정값이 하나 이상 있으면 측정 목록 상단에 건강 위험 카드가 나타납니다. 최신 혈압 분류와 건강 프로필을 결합하여 상황별 안내를 제공합니다.\n\n안내는 AHA(미국심장협회) 지침을 기반으로 하며 참고용일 뿐 자격을 갖춘 의료 전문가의 조언을 대체하지 않습니다.\n\n카드의 "프로필 편집"을 탭하여 건강 프로필을 완성하거나 업데이트하세요.</string>
     <string name="help_reminders_body">종 아이콘을 탭하여 매일 측정 알림을 구성하세요.\n\n1. 메시지가 표시되면 알림 권한을 허용합니다.\n2. 기본 스위치를 켭니다.\n3. 아침 시간을 설정합니다(이상적으로 기상 30분 후, 커피나 약 복용 전).\n4. 저녁 시간을 설정합니다(편안한 휴식 시).\n\n알림에는 앱을 여는 지금 기록 바로가기와 다시 알림(15분) 작업이 포함됩니다. 알람은 매일 자동으로 다시 예약되며 기기 재부팅 후에도 유지됩니다.\n\n기기에서 정확한 알람 권한을 사용할 수 없는 경우 앱이 시스템 설정으로 안내합니다.</string>
-    <string name="help_export_body">상단 바의 공유 아이콘을 탭하여 데이터를 내보냅니다. 드롭다운에서 세 가지 형식을 제공합니다:\n\n• JSON — 전체 측정 기록. 앱으로 다시 가져올 수 있습니다.\n• CSV — 스프레드시트 형식의 전체 기록, Excel 또는 Google Sheets와 호환.\n• PDF — 추세 차트(최근 7일·30일·90일)와 측정 표가 포함된 여러 페이지 문서. 차트에서 태그가 있는 측정값은 번호 배지로 표시되며, 각 차트 아래의 범례가 번호와 태그를 연결합니다. 한 측정값에 태그가 여러 개이면 번호가 하나로 합쳐집니다(예: 247).\n\nPDF 차트는 대시보드의 \'Avg\' 설정을 따릅니다. Avg가 켜져 있으면 연속된 측정값이 차트에서 하나의 점으로 합쳐지며(메모는 유지됨), 측정 표에는 항상 모든 개별 항목이 나열됩니다.\n\n내보내기는 Android 표준 공유 시트를 통해 공유됩니다.</string>
-    <string name="help_import_body">이 앱에서 이전에 내보낸 JSON 파일에서 측정값을 가져오려면 다운로드 아이콘(상단 바)을 탭하세요.\n\n앱이 파일 선택기를 엽니다. JSON 내보내기 파일을 선택하세요. 데이터베이스에 타임스탬프가 아직 없는 측정값만 삽입됩니다 — 같은 파일을 다시 가져와도 안전합니다.\n\n스낵바가 추가된 새 측정값 수를 확인하거나 가져올 새 항목이 없음을 알려줍니다.</string>
+    <string name="help_export_body">상단 바의 공유 아이콘을 탭하여 데이터를 내보냅니다. 드롭다운에서 세 가지 형식을 제공합니다:\n\n• JSON — 전체 측정 기록. 앱으로 다시 가져올 수 있습니다.\n• CSV — 스프레드시트 형식의 전체 기록, Excel 또는 Google Sheets와 호환.\n• PDF — 추세 차트(최근 7일·30일·90일)와 측정 표가 포함된 여러 페이지 문서. 차트에서 태그가 있는 측정값은 번호 배지로 표시되며, 각 차트 아래의 범례가 번호와 태그를 연결합니다. 한 측정값에 태그가 여러 개이면 번호가 하나로 합쳐집니다(예: 247).\n\nPDF 차트는 대시보드의 \'Avg\' 설정을 따릅니다. Avg가 켜져 있으면 연속된 측정값이 차트에서 하나의 점으로 합쳐지며(메모는 유지됨), 측정 표에는 항상 모든 개별 항목이 나열됩니다.\n\n내보내기는 Android 표준 공유 시트를 통해 공유됩니다.\n\nJSON에는 측정 기록이 없어도 건강 프로필이 포함됩니다. CSV와 PDF는 측정 보고서입니다.</string>
+    <string name="help_import_body">다운로드 아이콘을 눌러 이 앱이나 PWA의 JSON 백업을 선택하세요. 이전 Android의 측정 기록 전용 내보내기도 지원합니다. 프로필이 있으면 프로필 및 측정 기록으로 복원하거나, 측정 기록만으로 현재 프로필을 유지하거나, 취소할 수 있습니다. 새로운 시간의 기록만 추가하며 기존 기록은 바꾸지 않습니다. 완료 안내에 가져온 측정 기록과 프로필 복원 여부가 표시됩니다.</string>
     <string name="help_insights_body">충분한 기록이 있으면 대시보드의 측정 목록 위에 패턴 카드가 나타납니다. 완전히 기기에서 감지된 패턴을 표시합니다 — 어떤 데이터도 스마트폰 밖으로 나가지 않습니다.\n\n패턴 유형:\n\n• 아침과 저녁 — 아침 또는 저녁 측정값이 지속적으로 더 높은지\n• 30일 추세 — 지난 달 수축기가 오르거나 내리는 경향인지\n• 범위 내 시간 — 최근 측정값 중 건강한 범위에 속한 비율\n• 건강한 연속 기록 — 건강한 범위에 연속으로 속한 측정 횟수\n• 평일과 주말 — 근무일과 휴일 사이에 일관된 차이가 있는지\n• 태그 상관관계 — 높거나 낮은 측정값과 가장 강하게 연결된 상황 태그\n\n각 패턴은 색상으로 구분됩니다: 녹색은 긍정적, 황색은 주의가 필요, 회색은 중립입니다. \"N개 더\"를 탭하여 모든 패턴을 펼치고 \"간략히 보기\"로 접으세요.\n\n패턴이 표시되려면 최소한의 측정 횟수가 필요합니다 — 며칠간의 데이터면 보통 첫 패턴을 볼 수 있습니다.</string>
     <string name="help_hc_body">Health Connect는 Google의 기기 내 건강 데이터 플랫폼입니다. 이 앱은 측정값을 혈압 및 심박수 기록으로 기록할 수 있습니다.\n\n일괄 동기화: 상단 바의 심박 모니터 아이콘을 탭합니다. 처음에는 쓰기 권한을 요청합니다. 모든 기존 측정값이 업로드됩니다(반복해도 안전 — 기존 기록은 중복되지 않고 업데이트됨).\n\n자동 푸시: 새 측정값을 저장할 때마다 권한을 이미 허용한 경우 백그라운드에서 Health Connect로 자동 전송됩니다. 추가 작업이 필요 없습니다.\n\n기기에 Health Connect가 설치되어 있지 않으면 앱이 Play 스토어 설치 링크를 제공합니다.</string>
 
@@ -310,4 +303,11 @@
     <string name="chart_no_readings">이 기간에 기록이 없습니다</string>
     <string name="scatter_cd_rotate">차트 회전</string>
     <string name="scatter_colour_time">색상: 오래됨 → 최근</string>
+    <string name="capture_error_local_reader">기기 내 판독기가 이 사진을 처리하지 못했습니다. 다시 시도하거나 값을 직접 입력하세요.</string>
+    <string name="dashboard_smooth_bursts">평균</string>
+    <string name="backup_import_title">프로필도 가져올까요?</string>
+    <string name="backup_import_body">이 백업에는 프로필이 포함되어 있습니다. 가져오면 저장된 프로필의 해당 항목이 바뀝니다. 측정 기록은 병합되며 기존 기록과 시간이 같으면 건너뜁니다.</string>
+    <string name="backup_import_all">프로필 및 측정 기록</string>
+    <string name="backup_import_readings">측정 기록만</string>
+    <string name="backup_profile_imported">프로필을 가져왔습니다.</string>
 </resources>

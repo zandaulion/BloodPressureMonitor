@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
@@ -360,53 +359,6 @@ fun ProfileScreen(
             )
 
             Spacer(Modifier.height(8.dp))
-
-            // ── Subscriptions ─────────────────────────────────────────────────
-            SectionHeader(stringResource(R.string.profile_section_subscriptions))
-
-            Text(
-                text = stringResource(R.string.profile_subscriptions_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-            Spacer(Modifier.height(8.dp))
-            Button(
-                onClick = viewModel::restorePurchases,
-                enabled = !state.isRestoring,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    stringResource(
-                        if (state.isRestoring) R.string.profile_restoring
-                        else R.string.profile_restore_purchases,
-                    ),
-                )
-            }
-
-            // Always confirm the restore outcome in a dialog so the result is never
-            // missed — and so "no previous purchase" reads as information, not failure.
-            state.restoreResult?.let { result ->
-                AlertDialog(
-                    onDismissRequest = viewModel::dismissRestoreResult,
-                    confirmButton = {
-                        TextButton(onClick = viewModel::dismissRestoreResult) {
-                            Text(stringResource(R.string.action_ok))
-                        }
-                    },
-                    title = { Text(stringResource(R.string.profile_restore_purchases)) },
-                    text = {
-                        Text(
-                            stringResource(
-                                when (result) {
-                                    RestoreState.Success          -> R.string.profile_restore_success
-                                    RestoreState.NothingToRestore -> R.string.profile_restore_none
-                                    RestoreState.Error            -> R.string.profile_restore_error
-                                },
-                            ),
-                        )
-                    },
-                )
-            }
 
             Spacer(Modifier.height(24.dp))
 

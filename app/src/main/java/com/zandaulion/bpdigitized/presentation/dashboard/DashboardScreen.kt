@@ -30,6 +30,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.mutableStateOf
@@ -90,6 +92,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
@@ -133,12 +136,14 @@ fun DashboardScreen(
     onHelp: () -> Unit,
     viewModel: DashboardViewModel = hiltViewModel(),
 ) {
+    val pendingImport by viewModel.pendingImport.collectAsStateWithLifecycle()
     val ui by viewModel.ui.collectAsStateWithLifecycle()
     val chartMode by viewModel.chartMode.collectAsStateWithLifecycle()
     val tagEditorState by viewModel.tagEditorState.collectAsStateWithLifecycle()
     val snackbarHostState = remember { SnackbarHostState() }
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+    val resources by rememberUpdatedState(LocalResources.current)
     val isLandscape = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE
     var exportMenuExpanded by remember { mutableStateOf(false) }
     var languageMenuExpanded by remember { mutableStateOf(false) }
@@ -184,8 +189,8 @@ fun DashboardScreen(
             when (event) {
                 is DashboardEvent.ShowUndoSnackbar -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = context.getString(R.string.dashboard_snack_deleted),
-                        actionLabel = context.getString(R.string.dashboard_snack_undo),
+                        message = resources.getString(R.string.dashboard_snack_deleted),
+                        actionLabel = resources.getString(R.string.dashboard_snack_undo),
                         withDismissAction = true,
                     )
                     if (result == SnackbarResult.ActionPerformed) {
@@ -193,45 +198,49 @@ fun DashboardScreen(
                     }
                 }
                 is DashboardEvent.ShareExport -> {
-                    pendingExportMessage = context.getString(
+                    pendingExportMessage = resources.getString(
                         R.string.dashboard_snack_export_success,
-                        context.getString(event.exportType.labelRes()),
+                        resources.getString(event.exportType.labelRes()),
                     )
                     shareFile(context, event.file, event.mimeType)
                 }
                 DashboardEvent.ExportFailed -> {
-                    snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_export_failed))
+                    snackbarHostState.showSnackbar(resources.getString(R.string.dashboard_snack_export_failed))
                 }
                 is DashboardEvent.ImportSucceeded -> {
-                    val msg = if (event.count == 0) {
-                        context.getString(R.string.dashboard_snack_import_none)
+                    val readingMessage = if (event.count == 0) {
+                        resources.getString(R.string.dashboard_snack_import_none)
                     } else {
-                        context.resources.getQuantityString(
+                        resources.getQuantityString(
                             R.plurals.dashboard_snack_imported, event.count, event.count,
                         )
                     }
+                    val msg = if (event.profileImported) {
+                        val profileMessage = resources.getString(R.string.backup_profile_imported)
+                        if (event.count == 0) profileMessage else "$readingMessage $profileMessage"
+                    } else readingMessage
                     snackbarHostState.showSnackbar(message = msg)
                 }
                 DashboardEvent.ImportFailed -> {
-                    snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_import_failed))
+                    snackbarHostState.showSnackbar(resources.getString(R.string.dashboard_snack_import_failed))
                 }
                 is DashboardEvent.RequestHealthConnectPermissions -> {
                     hcPermLauncher.launch(event.permissions)
                 }
                 is DashboardEvent.SyncToHealthConnectSucceeded -> {
                     snackbarHostState.showSnackbar(
-                        context.resources.getQuantityString(
+                        resources.getQuantityString(
                             R.plurals.dashboard_snack_synced, event.count, event.count,
                         ),
                     )
                 }
                 DashboardEvent.SyncToHealthConnectFailed -> {
-                    snackbarHostState.showSnackbar(context.getString(R.string.dashboard_snack_hc_sync_failed))
+                    snackbarHostState.showSnackbar(resources.getString(R.string.dashboard_snack_hc_sync_failed))
                 }
                 DashboardEvent.HealthConnectInstallRequired -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = context.getString(R.string.dashboard_snack_hc_unavailable),
-                        actionLabel = context.getString(R.string.dashboard_snack_hc_install),
+                        message = resources.getString(R.string.dashboard_snack_hc_unavailable),
+                        actionLabel = resources.getString(R.string.dashboard_snack_hc_install),
                     )
                     if (result == SnackbarResult.ActionPerformed) {
                         val intent = Intent(Intent.ACTION_VIEW,
@@ -242,8 +251,8 @@ fun DashboardScreen(
                 }
                 DashboardEvent.HealthConnectPermissionsDenied -> {
                     val result = snackbarHostState.showSnackbar(
-                        message = context.getString(R.string.dashboard_snack_hc_permission),
-                        actionLabel = context.getString(R.string.action_open_settings),
+                        message = resources.getString(R.string.dashboard_snack_hc_permission),
+                        actionLabel = resources.getString(R.string.action_open_settings),
                         withDismissAction = true,
                     )
                     if (result == SnackbarResult.ActionPerformed) {
@@ -252,6 +261,27 @@ fun DashboardScreen(
                 }
             }
         }
+    }
+
+    if (pendingImport != null) {
+        AlertDialog(
+            onDismissRequest = viewModel::cancelImport,
+            title = { Text(stringResource(R.string.backup_import_title)) },
+            text = { Text(stringResource(R.string.backup_import_body)) },
+            confirmButton = {
+                TextButton(onClick = { viewModel.confirmImport(includeProfile = true) }) {
+                    Text(stringResource(R.string.backup_import_all))
+                }
+            },
+            dismissButton = {
+                Column {
+                    TextButton(onClick = { viewModel.confirmImport(includeProfile = false) }) {
+                        Text(stringResource(R.string.backup_import_readings))
+                    }
+                    TextButton(onClick = viewModel::cancelImport) { Text(stringResource(R.string.action_cancel)) }
+                }
+            },
+        )
     }
 
     // Landscape: range chips + side-by-side trend (2/3) and scatter (1/3), full-screen.
@@ -337,7 +367,6 @@ fun DashboardScreen(
                     Box {
                         IconButton(
                             onClick = { exportMenuExpanded = true },
-                            enabled = ui.readings.isNotEmpty(),
                         ) {
                             Icon(Icons.Default.IosShare, contentDescription = stringResource(R.string.dashboard_cd_export))
                         }

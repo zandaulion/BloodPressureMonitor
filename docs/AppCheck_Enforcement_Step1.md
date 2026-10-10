@@ -1,3 +1,7 @@
+> **Historical documentation:** applies to the former Firebase/Gemini builds.
+> Version 1.6.0 removed these services and their configuration requirements.
+> See [native offline OCR](Hearth_OCR.md) for the current implementation.
+
 # Step 1 — Flip App Check to Enforce for AI Logic / Vertex AI
 
 **Goal:** make Firebase App Check actually *block* unverified calls to the Gemini/Vertex AI

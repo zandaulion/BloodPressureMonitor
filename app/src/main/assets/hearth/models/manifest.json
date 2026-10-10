@@ -1,0 +1,14 @@
+{
+  "version": "v2-adaptive3",
+  "license": "AGPL-3.0-only",
+  "files": {
+    "bp-detector.onnx": {
+      "bytes": 10512570,
+      "sha256": "8a7dafaed0aa9056308171d57d024343049cff4ba1a9adfc54d274c38a31fb07"
+    },
+    "bp-digits.onnx": {
+      "bytes": 424258,
+      "sha256": "f41a41f9138c7c80d7e7fa1c3ed5afe93c3f5beacb3efd861ba3222b597cd732"
+    }
+  }
+}

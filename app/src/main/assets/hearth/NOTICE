@@ -1,0 +1,15 @@
+Hearth BP monitor OCR
+Copyright (C) 2026 zandaulion
+
+Original source code, documentation and generated app icons are licensed
+under the GNU Affero General Public License, version 3 only (AGPL-3.0-only).
+This software is provided WITHOUT ANY WARRANTY; see LICENSE.
+
+Third-party dependencies and their license/notice files retain their own terms.
+See prototype/THIRD_PARTY.md. Dataset images, starter code and trained weights
+are not included in this repository.
+
+Android integration: the preceding text is the upstream project notice.
+This distribution includes the two Hearth ONNX exports identified by
+models/manifest.json and native Kotlin ports of the inference algorithms.
+ONNX Runtime Android 1.24.3 has separate license and third-party notices in vendor/.
