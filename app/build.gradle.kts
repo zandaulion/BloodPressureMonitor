@@ -100,6 +100,13 @@ android {
     packaging {
         resources.excludes += "/META-INF/{AL2.0,LGPL2.1}"
     }
+
+    // Keep AGP's dependency list, encrypted for Google Play, out of APKs and
+    // bundles. F-Droid asks for this, and reproducible builds depend on it.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
 }
 
 kotlin {
