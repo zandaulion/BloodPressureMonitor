@@ -1,7 +1,7 @@
 BP Digitizer este un jurnal privat, local, pentru valorile tensiunii arteriale. Îndreaptă camera spre tensiometrul digital și cifrele sunt citite direct pe telefon, sau introdu-le manual.
 
 <b>Funcționează offline, fără cont</b>
-Aplicația nu are permisiune de Internet. Nu există cont, abonament, serviciu cloud sau descărcare de modele. Valorile și profilul rămân în stocarea locală a aplicației, iar backupul automat în cloud și transferul între dispozitive sunt dezactivate pentru datele aplicației.
+Aplicația nu are permisiune de Internet. Nu există cont, abonament, serviciu cloud sau descărcare de modele. Backupul propriu al Android în Google Drive și transferul de pe un telefon pe altul sunt dezactivate pentru această aplicație, așa că valorile și profilul rămân doar pe acest telefon. Pentru a păstra o copie sau a trece pe un telefon nou, exportă un backup JSON.
 
 <b>Funcții</b>
 <ul>

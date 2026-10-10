@@ -1,7 +1,7 @@
 BP Digitizer is a private, local-first log for your blood pressure readings. Point the camera at your digital monitor and the numbers are read on your phone, or enter them by hand.
 
 <b>Works offline, no account</b>
-The app has no Internet permission. There is no account, subscription, cloud service or model download. Readings and your profile stay in the app's local storage, and automatic cloud backup and device transfer are disabled for app data.
+The app has no Internet permission. There is no account, subscription, cloud service or model download. Android's own backup to Google Drive and its phone-to-phone transfer are turned off for this app, so your readings and profile stay only on this phone. To keep a copy or move to a new phone, export a JSON backup.
 
 <b>Features</b>
 <ul>

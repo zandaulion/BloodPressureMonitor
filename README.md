@@ -5,11 +5,13 @@ Point your camera at an upright digital monitor with three SYS / DIA / pulse row
 
 The app requires no account, subscription, cloud service, or first-run model
 download. Internet permission is explicitly removed, including permissions
-from library manifests. Firebase and RevenueCat are not bundled. Automatic
-cloud backup and device transfer exclude app data; readings and profile data
-stay in local app storage. Export/share and Health Connect are optional,
-user-triggered transfers: a chosen receiving app controls its own subsequent
-handling of the copied data. Keep local exports if you need a backup.
+from library manifests. Firebase and RevenueCat are not bundled.
+
+Android's own backup to Google Drive and its phone-to-phone transfer are turned
+off for this app, so your readings and profile stay only on this phone. To keep
+a copy or move to a new phone, export a JSON backup. Export/share and Health
+Connect are optional, user-triggered transfers: the receiving app controls what
+happens to the copied data.
 
 The APK bundles native ONNX Runtime and both OCR models. Scanning needs no
 WebView, browser, Google Play Services, or separately installed model runtime.
