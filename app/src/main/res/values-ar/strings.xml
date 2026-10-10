@@ -61,7 +61,6 @@
     <string name="language_system">لغة النظام</string>
     <string name="dashboard_cd_add_manually">إضافة قراءة يدويًا</string>
     <string name="dashboard_cd_scan">مسح القراءة بالكاميرا</string>
-    <string name="dashboard_cd_premium">ميزة مميّزة</string>
     <string name="dashboard_cd_delete">حذف</string>
     <string name="dashboard_export_json">تصدير بصيغة JSON</string>
     <string name="dashboard_export_csv">تصدير بصيغة CSV</string>

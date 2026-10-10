@@ -61,7 +61,6 @@
     <string name="language_system">系统默认</string>
     <string name="dashboard_cd_add_manually">手动添加记录</string>
     <string name="dashboard_cd_scan">用相机扫描记录</string>
-    <string name="dashboard_cd_premium">高级功能</string>
     <string name="dashboard_cd_delete">删除</string>
     <string name="dashboard_export_json">导出为 JSON</string>
     <string name="dashboard_export_csv">导出为 CSV</string>

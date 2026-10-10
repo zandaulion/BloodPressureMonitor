@@ -61,7 +61,6 @@
     <string name="language_system">Systemsprache</string>
     <string name="dashboard_cd_add_manually">Messung manuell hinzufügen</string>
     <string name="dashboard_cd_scan">Messung mit Kamera scannen</string>
-    <string name="dashboard_cd_premium">Premium-Funktion</string>
     <string name="dashboard_cd_delete">Löschen</string>
     <string name="dashboard_export_json">Als JSON exportieren</string>
     <string name="dashboard_export_csv">Als CSV exportieren</string>

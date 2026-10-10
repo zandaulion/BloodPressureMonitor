@@ -61,7 +61,6 @@
     <string name="language_system">시스템 기본값</string>
     <string name="dashboard_cd_add_manually">수동으로 측정값 추가</string>
     <string name="dashboard_cd_scan">카메라로 측정값 스캔</string>
-    <string name="dashboard_cd_premium">프리미엄 기능</string>
     <string name="dashboard_cd_delete">삭제</string>
     <string name="dashboard_export_json">JSON으로 내보내기</string>
     <string name="dashboard_export_csv">CSV로 내보내기</string>

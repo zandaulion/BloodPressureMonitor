@@ -61,7 +61,6 @@
     <string name="language_system">システムのデフォルト</string>
     <string name="dashboard_cd_add_manually">手動で記録を追加</string>
     <string name="dashboard_cd_scan">カメラでスキャン</string>
-    <string name="dashboard_cd_premium">プレミアム機能</string>
     <string name="dashboard_cd_delete">削除</string>
     <string name="dashboard_export_json">JSONでエクスポート</string>
     <string name="dashboard_export_csv">CSVでエクスポート</string>

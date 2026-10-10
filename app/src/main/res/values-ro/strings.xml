@@ -61,7 +61,6 @@
     <string name="language_system">Limba sistemului</string>
     <string name="dashboard_cd_add_manually">Adaugă măsurătoare manual</string>
     <string name="dashboard_cd_scan">Scanează cu camera</string>
-    <string name="dashboard_cd_premium">Funcție Premium</string>
     <string name="dashboard_cd_delete">Șterge</string>
     <string name="dashboard_export_json">Exportă ca JSON</string>
     <string name="dashboard_export_csv">Exportă ca CSV</string>

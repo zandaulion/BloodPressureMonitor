@@ -61,7 +61,6 @@
     <string name="language_system">Langue du système</string>
     <string name="dashboard_cd_add_manually">Ajouter manuellement</string>
     <string name="dashboard_cd_scan">Scanner avec la caméra</string>
-    <string name="dashboard_cd_premium">Fonction Premium</string>
     <string name="dashboard_cd_delete">Supprimer</string>
     <string name="dashboard_export_json">Exporter en JSON</string>
     <string name="dashboard_export_csv">Exporter en CSV</string>

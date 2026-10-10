@@ -61,7 +61,6 @@
     <string name="language_system">Padrão do sistema</string>
     <string name="dashboard_cd_add_manually">Adicionar medição manualmente</string>
     <string name="dashboard_cd_scan">Escanear medição com câmera</string>
-    <string name="dashboard_cd_premium">Recurso Premium</string>
     <string name="dashboard_cd_delete">Excluir</string>
     <string name="dashboard_export_json">Exportar como JSON</string>
     <string name="dashboard_export_csv">Exportar como CSV</string>

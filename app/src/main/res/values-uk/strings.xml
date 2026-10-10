@@ -61,7 +61,6 @@
     <string name="language_system">Мова системи</string>
     <string name="dashboard_cd_add_manually">Додати вимірювання вручну</string>
     <string name="dashboard_cd_scan">Сканувати камерою</string>
-    <string name="dashboard_cd_premium">Преміум-функція</string>
     <string name="dashboard_cd_delete">Видалити</string>
     <string name="dashboard_export_json">Експорт у JSON</string>
     <string name="dashboard_export_csv">Експорт у CSV</string>

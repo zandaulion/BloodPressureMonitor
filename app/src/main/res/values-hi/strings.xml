@@ -61,7 +61,6 @@
     <string name="language_system">सिस्टम डिफ़ॉल्ट</string>
     <string name="dashboard_cd_add_manually">मैन्युअल रूप से रीडिंग जोड़ें</string>
     <string name="dashboard_cd_scan">कैमरे से रीडिंग स्कैन करें</string>
-    <string name="dashboard_cd_premium">प्रीमियम सुविधा</string>
     <string name="dashboard_cd_delete">हटाएं</string>
     <string name="dashboard_export_json">JSON के रूप में निर्यात करें</string>
     <string name="dashboard_export_csv">CSV के रूप में निर्यात करें</string>
