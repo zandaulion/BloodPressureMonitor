@@ -1,5 +1,20 @@
 # Release notes
 
+## 1.6.3 — Build and packaging cleanup
+
+- APKs and bundles no longer include AGP's dependency metadata block, an
+  encrypted dependency list readable only by Google. F-Droid asks for this.
+- The build no longer downloads a JDK: the foojay toolchain resolver and the
+  Gradle daemon JDK criteria were removed. Gradle runs on `JAVA_HOME` or the
+  `java` on `PATH`, which must be a full JDK 17 or newer.
+- Removed an unused "Premium feature" accessibility string from all languages.
+- Added F-Droid metadata (`fastlane/`, `fdroid/`) and model provenance notes.
+  App behaviour, OCR models and the database schema are unchanged.
+
+Validation: an unsigned release built on OpenJDK 17 without a keystore; release
+vital lint and all 17 JVM tests passed. The release APK keeps ARM64-only native
+libraries.
+
 ## 1.6.2 — Smaller ARM64 release
 
 - Release APKs include only ARM64 native libraries. Android API 26+ is still

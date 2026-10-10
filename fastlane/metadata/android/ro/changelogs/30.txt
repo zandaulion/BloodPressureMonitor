@@ -1,0 +1,5 @@
+Curățenie la build și împachetare
+• APK-urile nu mai includ blocul criptat de metadate despre dependențe destinat Google.
+• Build-ul nu mai descarcă propriul JDK; folosește JDK-ul sistemului (17 sau mai nou).
+• A fost eliminată o etichetă „Premium” nefolosită, rămasă din versiunile vechi.
+• Funcțiile aplicației, modelele OCR și valorile salvate nu s-au schimbat.

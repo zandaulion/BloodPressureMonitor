@@ -1,0 +1,5 @@
+Build and packaging cleanup
+• APKs no longer include Google's encrypted dependency metadata block.
+• The build no longer downloads its own JDK; it uses the system JDK (17 or newer).
+• Removed an unused "Premium" label left over from older versions.
+• App features, OCR models and stored readings are unchanged.

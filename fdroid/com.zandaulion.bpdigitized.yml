@@ -7,10 +7,6 @@
 #
 # License: fdroiddata accepts one SPDX id. The app code is GPL-3.0-or-later and the
 # bundled Hearth models and ports are AGPL-3.0-only, so the combined app is AGPL.
-#
-# prebuild: gradle-daemon-jvm.properties asks Gradle for a JetBrains JDK 21, and
-# the foojay resolver plugin in settings.gradle.kts can download one. The scanner
-# flags that plugin, so both are removed and the build server's own JDK is used.
 AntiFeatures:
   NonFreeDep:
     en-US: Optional Health Connect sync needs Google's proprietary Health Connect
@@ -29,17 +25,14 @@ RepoType: git
 Repo: https://github.com/zandaulion/BloodPressureMonitor.git
 
 Builds:
-  - versionName: 1.6.2
-    versionCode: 29
-    commit: v1.6.2
+  - versionName: 1.6.3
+    versionCode: 30
+    commit: v1.6.3
     subdir: app
     gradle:
       - yes
-    prebuild:
-      - rm ../gradle/gradle-daemon-jvm.properties
-      - sed -i -e '/foojay-resolver/d' ../settings.gradle.kts
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.6.2
-CurrentVersionCode: 29
+CurrentVersion: 1.6.3
+CurrentVersionCode: 30

@@ -155,4 +155,4 @@ The native camera and confirmation screen use the pipeline from
 
 See [JSON backup compatibility](docs/JSON_Backups.md) for profile restoration,
 PWA imports and merge behavior, and [release notes](docs/Release_Notes.md) for
-versions 1.6.0–1.6.2.
+versions 1.6.0–1.6.3.
