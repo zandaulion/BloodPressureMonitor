@@ -1,12 +1,3 @@
-# Draft for an F-Droid inclusion request: copy to metadata/ in fdroiddata.
-# This file is not used by the app's own build.
-#
-# AntiFeatures: Health Connect sync is optional. On Android 14+ Health Connect
-# is part of the system; on Android 13 and below it needs Google's proprietary
-# Health Connect app. NonFreeDep can be removed if reviewers agree it's not needed.
-#
-# License: fdroiddata accepts one SPDX id. The app code is GPL-3.0-or-later and the
-# bundled Hearth models and ports are AGPL-3.0-only, so the combined app is AGPL.
 AntiFeatures:
   NonFreeDep:
     en-US: Optional Health Connect sync needs Google's proprietary Health Connect
@@ -18,7 +9,8 @@ License: AGPL-3.0-only
 AuthorName: Zandaulion
 SourceCode: https://github.com/zandaulion/BloodPressureMonitor
 IssueTracker: https://github.com/zandaulion/BloodPressureMonitor/issues
-Changelog: https://github.com/zandaulion/BloodPressureMonitor/blob/HEAD/docs/Release_Notes.md
+Changelog: 
+  https://github.com/zandaulion/BloodPressureMonitor/blob/HEAD/docs/Release_Notes.md
 
 AutoName: BP Digitizer
 
