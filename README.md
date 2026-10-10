@@ -130,6 +130,17 @@ even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE
 
 SPDX-License-Identifier: `GPL-3.0-or-later`
 
+### F-Droid
+
+The app's own code is GPL-3.0-or-later. The bundled Hearth OCR models and the Kotlin ports
+of Hearth's algorithms are AGPL-3.0-only (see `app/src/main/assets/hearth/LICENSE`), so the
+distributed app is licensed as:
+
+`GPL-3.0-or-later AND AGPL-3.0-only`
+
+See [model provenance](docs/Hearth_OCR.md#model-provenance-for-f-droid-reviewers) for how
+the models were trained and what can be reproduced.
+
 **Not a medical device.** This app is for personal record-keeping only. It does not diagnose,
 treat or prevent any condition; always consult a qualified healthcare professional about your
 blood pressure.

@@ -20,6 +20,33 @@ The original JavaScript algorithms live only in `test/hearth/reference/` for
 comparison tests and are not packaged in the APK. No dataset images, private
 photos, readings or device identifiers are included in tests.
 
+## Model provenance (for F-Droid reviewers)
+
+The APK bundles two prebuilt ONNX models from
+[hearth-bp-ocr](https://github.com/zandaulion/hearth-bp-ocr). Both are licensed
+**AGPL-3.0-only**, and `manifest.json` pins their SHA-256 checksums:
+
+| File | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `bp-detector.onnx` (YOLO11n row/digit detector) | 10,512,570 | `8a7dafaed0aa9056308171d57d024343049cff4ba1a9adfc54d274c38a31fb07` |
+| `bp-digits.onnx` (DigitNet digit recognizer) | 424,258 | `f41a41f9138c7c80d7e7fa1c3ed5afe93c3f5beacb3efd861ba3222b597cd732` |
+
+The training and export code is public in the Hearth repository:
+`prototype/train_detector.py` (detector), `prototype/train_digits.py` (digit
+recognizer) and `docs/RUNPOD_TRAINING.md` (a scripted retraining run from public
+data only). The detector is fine-tuned from Ultralytics' pretrained YOLO11n
+weights, which are also AGPL-3.0.
+
+The training data is the
+[Blood Pressure Monitor Display, Final Project, version 1](https://universe.roboflow.com/final-project-cwtfb/blood-pressure-monitor-display/dataset/1)
+dataset on Roboflow Universe (CC BY 4.0), plus eight private monitor photos.
+Their owner cleared the release of the trained weights, but not of the photos.
+The bundled weights therefore cannot be reproduced bit for bit. Retraining from
+the public dataset alone is documented and produces replacement models; the
+dataset download needs a free Roboflow API key. See Hearth's
+[data licences](https://github.com/zandaulion/hearth-bp-ocr/blob/main/docs/DATA_LICENSES.md)
+and [model card](https://github.com/zandaulion/hearth-bp-ocr/blob/main/docs/MODEL_CARD.md).
+
 ## Processing and lifecycle
 
 * Decode with bounded resolution, handle all eight EXIF orientations, retain RGB
