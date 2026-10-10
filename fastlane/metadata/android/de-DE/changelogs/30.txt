@@ -1,0 +1,5 @@
+Aufräumarbeiten an Build und Paket
+• APKs enthalten keinen verschlüsselten Block mit Abhängigkeits-Metadaten für Google mehr.
+• Der Build lädt kein eigenes JDK mehr herunter, sondern nutzt das JDK des Systems (17 oder neuer).
+• Ein ungenutztes „Premium“-Label aus älteren Versionen wurde entfernt.
+• Funktionen, OCR-Modelle und gespeicherte Messwerte bleiben unverändert.

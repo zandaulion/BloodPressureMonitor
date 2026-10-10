@@ -1,0 +1,25 @@
+BP Digitizer ist ein privates, lokales Protokoll für deine Blutdruckwerte. Richte die Kamera auf dein digitales Messgerät, und die Werte werden direkt auf deinem Handy gelesen – oder gib sie von Hand ein.
+
+<b>Offline, ohne Konto</b>
+Die App hat keine Internetberechtigung. Es gibt kein Konto, kein Abo, keinen Cloud-Dienst und keinen Modell-Download. Androids eigene Sicherung in Google Drive und die Übertragung von Handy zu Handy sind für diese App ausgeschaltet. Deine Messwerte und dein Profil bleiben also nur auf diesem Handy. Um eine Kopie zu behalten oder auf ein neues Handy umzuziehen, exportiere eine JSON-Sicherung.
+
+<b>Funktionen</b>
+<ul>
+<li>Kamera-Scan auf dem Gerät: Die mitgelieferten Hearth-Modelle lesen SYS, DIA und Puls von einem aufrecht stehenden Digitalmessgerät mit drei Zeilen. Du prüfst die Werte immer vor dem Speichern.</li>
+<li>Manuelle Eingabe mit Schiebereglern, ausgehend von deinem letzten Messwert</li>
+<li>Verlaufsdiagramm für 7 Tage, 30 Tage, 90 Tage oder alles, mit Zoom per Fingergeste, dazu ein drehbares 3D-Streudiagramm aus systolisch, diastolisch und Puls</li>
+<li>Querformat mit Verlaufsdiagramm und Streudiagramm nebeneinander</li>
+<li>Kontext-Tags wie Koffein, Sport, salziges Essen oder Medikamente</li>
+<li>Zwei tägliche Erinnerungen mit Schlummerfunktion</li>
+<li>Export als JSON-Sicherung, CSV oder mehrseitiger PDF-Bericht; Import von Sicherungen aus Android und der BP-Digitizer-Web-App</li>
+<li>Optionales Gesundheitsprofil für Referenzkategorien nach AHA</li>
+<li>12 Sprachen: Arabisch, Chinesisch, Deutsch, Englisch, Französisch, Hindi, Japanisch, Koreanisch, Portugiesisch, Rumänisch, Spanisch und Ukrainisch</li>
+</ul>
+
+<b>Health Connect (optional)</b>
+Du kannst deine Messwerte vom Dashboard aus in Health Connect kopieren. Das ist nie erforderlich. Ab Android 14 ist Health Connect Teil des Systems; unter Android 13 und älter braucht es die proprietäre Health-Connect-App von Google.
+
+<b>Voraussetzungen</b>
+Release-Versionen laufen auf ARM64-Handys (arm64-v8a) mit Android 8.0 oder neuer.
+
+<b>Kein Medizinprodukt.</b> Diese App dient nur der persönlichen Aufzeichnung. Sie stellt keine Diagnose und behandelt oder verhindert keine Erkrankung. Sprich über deinen Blutdruck immer mit einer qualifizierten medizinischen Fachkraft.

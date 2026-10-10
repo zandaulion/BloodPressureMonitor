@@ -1,0 +1,25 @@
+BP Digitizer é um registro privado e local das suas medições de pressão arterial. Aponte a câmera para o seu monitor digital e os números são lidos no próprio celular, ou digite-os à mão.
+
+<b>Funciona offline, sem conta</b>
+O app não tem permissão de Internet. Não há conta, assinatura, serviço de nuvem nem download de modelos. O backup do próprio Android no Google Drive e a transferência de um celular para outro estão desativados para este app, então suas medições e seu perfil ficam só neste celular. Para guardar uma cópia ou trocar de celular, exporte um backup JSON.
+
+<b>Recursos</b>
+<ul>
+<li>Leitura pela câmera no próprio aparelho: os modelos Hearth incluídos leem SYS, DIA e pulso de um monitor digital vertical com três linhas. Você sempre confere os valores antes de salvar.</li>
+<li>Registro manual com controles deslizantes, a partir da sua última medição</li>
+<li>Gráfico de tendência de 7 dias, 30 dias, 90 dias ou todo o histórico, com zoom de pinça, e um gráfico de dispersão 3D giratório (sistólica, diastólica e pulso)</li>
+<li>Modo paisagem com o gráfico de tendência e o de dispersão lado a lado</li>
+<li>Etiquetas de contexto como cafeína, exercício, refeição salgada ou medicação</li>
+<li>Dois lembretes diários com soneca</li>
+<li>Exportação como backup JSON, CSV ou relatório PDF de várias páginas; importação de backups do Android e do app web BP Digitizer</li>
+<li>Perfil de saúde opcional, usado para mostrar categorias de referência da AHA</li>
+<li>12 idiomas: alemão, árabe, chinês, coreano, espanhol, francês, hindi, inglês, japonês, português, romeno e ucraniano</li>
+</ul>
+
+<b>Health Connect (opcional)</b>
+Você pode copiar suas medições para o Health Connect pelo painel. Isso nunca é obrigatório. A partir do Android 14, o Health Connect faz parte do sistema; no Android 13 e anteriores, ele precisa do app proprietário Health Connect do Google.
+
+<b>Requisitos</b>
+As versões de lançamento funcionam em celulares ARM64 (arm64-v8a) com Android 8.0 ou mais recente.
+
+<b>Não é um dispositivo médico.</b> Este app serve apenas para registro pessoal. Ele não diagnostica, trata nem previne nenhuma condição. Sempre consulte um profissional de saúde qualificado sobre a sua pressão arterial.

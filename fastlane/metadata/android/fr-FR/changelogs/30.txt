@@ -1,0 +1,5 @@
+Nettoyage de la compilation et du paquet
+• Les APK n'incluent plus le bloc chiffré de métadonnées de dépendances destiné à Google.
+• La compilation ne télécharge plus son propre JDK : elle utilise celui du système (17 ou plus récent).
+• Suppression d'une étiquette « Premium » inutilisée, héritée d'anciennes versions.
+• Fonctionnalités, modèles OCR et mesures enregistrées inchangés.

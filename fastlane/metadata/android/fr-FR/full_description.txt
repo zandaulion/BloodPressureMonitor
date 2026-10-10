@@ -1,0 +1,25 @@
+BP Digitizer est un journal privé et local de vos mesures de tension artérielle. Pointez l'appareil photo vers votre tensiomètre numérique et les chiffres sont lus directement sur votre téléphone, ou saisissez-les à la main.
+
+<b>Hors ligne, sans compte</b>
+L'application n'a pas l'autorisation d'accéder à Internet. Aucun compte, aucun abonnement, aucun service cloud, aucun téléchargement de modèle. La sauvegarde Android vers Google Drive et le transfert d'un téléphone à l'autre sont désactivés pour cette application : vos mesures et votre profil restent uniquement sur ce téléphone. Pour en garder une copie ou changer de téléphone, exportez une sauvegarde JSON.
+
+<b>Fonctionnalités</b>
+<ul>
+<li>Scan par l'appareil photo, sur l'appareil : les modèles Hearth intégrés lisent SYS, DIA et pouls sur un tensiomètre numérique vertical à trois lignes. Vous vérifiez toujours les valeurs avant d'enregistrer.</li>
+<li>Saisie manuelle avec des curseurs, à partir de votre dernière mesure</li>
+<li>Graphique d'évolution sur 7 jours, 30 jours, 90 jours ou tout l'historique, avec zoom par pincement, et nuage de points 3D orientable (systolique, diastolique, pouls)</li>
+<li>Mode paysage avec le graphique d'évolution et le nuage de points côte à côte</li>
+<li>Étiquettes de contexte : caféine, exercice, repas salé, médicaments…</li>
+<li>Deux rappels quotidiens, avec report</li>
+<li>Export en sauvegarde JSON, CSV ou rapport PDF de plusieurs pages ; import des sauvegardes Android et de l'application web BP Digitizer</li>
+<li>Profil de santé facultatif, utilisé pour afficher des catégories de référence AHA</li>
+<li>12 langues : allemand, anglais, arabe, chinois, coréen, espagnol, français, hindi, japonais, portugais, roumain et ukrainien</li>
+</ul>
+
+<b>Health Connect (facultatif)</b>
+Vous pouvez copier vos mesures dans Health Connect depuis le tableau de bord. Ce n'est jamais obligatoire. À partir d'Android 14, Health Connect fait partie du système ; sur Android 13 et versions antérieures, il nécessite l'application propriétaire Health Connect de Google.
+
+<b>Configuration requise</b>
+Les versions publiées fonctionnent sur les téléphones ARM64 (arm64-v8a) sous Android 8.0 ou ultérieur.
+
+<b>Ceci n'est pas un dispositif médical.</b> Cette application sert uniquement au suivi personnel. Elle ne diagnostique, ne traite ni ne prévient aucune maladie. Consultez toujours un professionnel de santé qualifié au sujet de votre tension artérielle.

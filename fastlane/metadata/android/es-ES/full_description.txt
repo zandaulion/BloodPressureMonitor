@@ -1,0 +1,25 @@
+BP Digitizer es un registro privado y local de tus mediciones de tensión arterial. Apunta la cámara a tu tensiómetro digital y los números se leen en tu propio móvil, o introdúcelos a mano.
+
+<b>Sin conexión y sin cuenta</b>
+La app no tiene permiso de Internet. No hay cuenta, suscripción, servicio en la nube ni descarga de modelos. La copia de seguridad propia de Android en Google Drive y la transferencia de un móvil a otro están desactivadas para esta app, así que tus mediciones y tu perfil se quedan solo en este móvil. Para guardar una copia o pasarte a un móvil nuevo, exporta una copia de seguridad JSON.
+
+<b>Funciones</b>
+<ul>
+<li>Escaneo con la cámara en el dispositivo: los modelos Hearth incluidos leen SYS, DIA y pulso de un tensiómetro digital vertical con tres filas. Siempre revisas los valores antes de guardar.</li>
+<li>Introducción manual con controles deslizantes, partiendo de tu última medición</li>
+<li>Gráfico de evolución de 7 días, 30 días, 90 días o todo el historial, con zoom con dos dedos, y un gráfico de dispersión 3D que se puede girar (sistólica, diastólica y pulso)</li>
+<li>Vista horizontal con el gráfico de evolución y el de dispersión uno al lado del otro</li>
+<li>Etiquetas de contexto como cafeína, ejercicio, comida salada o medicación</li>
+<li>Dos recordatorios diarios con posponer</li>
+<li>Exportación como copia de seguridad JSON, CSV o informe PDF de varias páginas; importación de copias de Android y de la app web BP Digitizer</li>
+<li>Perfil de salud opcional, usado para mostrar categorías de referencia de la AHA</li>
+<li>12 idiomas: alemán, árabe, chino, coreano, español, francés, hindi, inglés, japonés, portugués, rumano y ucraniano</li>
+</ul>
+
+<b>Health Connect (opcional)</b>
+Puedes copiar tus mediciones a Health Connect desde el panel principal. Nunca es obligatorio. Desde Android 14, Health Connect forma parte del sistema; en Android 13 y anteriores necesita la app propietaria Health Connect de Google.
+
+<b>Requisitos</b>
+Las versiones publicadas funcionan en móviles ARM64 (arm64-v8a) con Android 8.0 o posterior.
+
+<b>No es un dispositivo médico.</b> Esta app es solo para llevar un registro personal. No diagnostica, trata ni previene ninguna enfermedad. Consulta siempre a un profesional sanitario cualificado sobre tu tensión arterial.

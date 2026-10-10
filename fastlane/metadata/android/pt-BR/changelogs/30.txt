@@ -1,0 +1,5 @@
+Limpeza de compilação e empacotamento
+• Os APKs não incluem mais o bloco criptografado de metadados de dependências destinado ao Google.
+• A compilação não baixa mais o próprio JDK; usa o JDK do sistema (17 ou mais recente).
+• Removido um rótulo "Premium" sem uso, herdado de versões antigas.
+• Recursos, modelos de OCR e medições salvas não mudaram.
