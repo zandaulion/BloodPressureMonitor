@@ -1,0 +1,80 @@
+{
+  "app": "BP Digitizer",
+  "version": "1.6.2",
+  "sourceRevision": "2b17800654b9d9353bd245a4977303db18bcaf20",
+  "deviceModel": "Samsung Galaxy A52",
+  "language": "English",
+  "data": "Fictional profile and synthetic readings only",
+  "screenshots": [
+    {
+      "file": "01-welcome.png",
+      "title": "Welcome",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "7bc693c685e98bbff256784e65bbaa953474a604fc667c47d67a8a5caa80d2e2"
+    },
+    {
+      "file": "02-dashboard.png",
+      "title": "Weekly trends and demo history",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "35a0446407b0342657af193ce4a979e3ff22ad329e915be9d701536d7d80c442"
+    },
+    {
+      "file": "03-scatter.png",
+      "title": "90-day 3D scatter",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "4bd0c8e020e5311dc39738e1a90a7b1ede9f934d25fb43a53619f4cf422ae6ed"
+    },
+    {
+      "file": "04-reading-entry.png",
+      "title": "Reading entry and context tags",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "264a4aadd4e89a423295e7d731e6a8340e322bd7b140ae51c01f720ff9e31fb6"
+    },
+    {
+      "file": "05-health-profile.png",
+      "title": "Health profile",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "0790284e651681a6b6ca688951c8076be5e16941065b993c2dde43e113fd69b0"
+    },
+    {
+      "file": "06-reminders.png",
+      "title": "Daily reminders",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "25ef4dd83270a9cfce883d66dbc415f0ef4c9bed41cd0ec43ee4d850dc33935b"
+    },
+    {
+      "file": "07-export.png",
+      "title": "JSON, CSV and PDF export",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "ea02edd168efbe127de4fbc919e5862afa750c0b195b1acf6ede6cac5e0b02cf"
+    },
+    {
+      "file": "08-backup-help.png",
+      "title": "Profile and reading backups",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "ad9e0a17776cbaed786f51f97fb0d2ea7e244f2dbfd9a780e60310953d008564"
+    },
+    {
+      "file": "09-offline-scanning.png",
+      "title": "Offline camera scanning",
+      "width": 1080,
+      "height": 2400,
+      "sha256": "a34669d62d455b571fbb919a9d3529b4b9738b901b39db8ffd9787fbfc3e300a"
+    },
+    {
+      "file": "10-landscape-charts.png",
+      "title": "Landscape charts",
+      "width": 2400,
+      "height": 1080,
+      "sha256": "8b06a9758cdbb3af8348098e563309f659c12a5f8520b205b9b9a61f24260181"
+    }
+  ]
+}

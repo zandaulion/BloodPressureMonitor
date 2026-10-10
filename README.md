@@ -36,6 +36,21 @@ WebView, browser, Google Play Services, or separately installed model runtime.
 
 ---
 
+## Screenshots
+
+Version 1.6.2, captured from the Android app. All displayed readings and profile
+values are fictional demo data.
+
+<p>
+  <img src="store/screenshots/02-dashboard.png" alt="Weekly trends and synthetic reading history" width="240">
+  <img src="store/screenshots/05-health-profile.png" alt="Fictional health profile" width="240">
+</p>
+
+See [all ten screenshots](store/screenshots), or open the
+[offline gallery](store/screenshots/index.html) locally after cloning the repo.
+
+---
+
 ## Getting Started
 
 ### Prerequisites
