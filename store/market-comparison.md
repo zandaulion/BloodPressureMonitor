@@ -17,9 +17,9 @@ This document maps our app against the market report's benchmarks and sorts the 
 |---|---|
 | Storage | Local-first (Room SQLite), **no account required** |
 | Data entry — manual | Slider cards (Sys/Dia/Pulse) — **free** |
-| Data entry — camera | OCR of a normal monitor's display via Firebase Vertex AI — **premium (RevenueCat "pro")** |
+| Data entry — camera | On-device OCR of a normal monitor's display (bundled Hearth ONNX models, offline) — **free** |
 | Data entry — Bluetooth cuff | **Not supported** (no BLE pairing) |
-| Health Connect | Read/write `BloodPressureRecord` + heart rate — **free** |
+| Health Connect | Writes `BloodPressureRecord` + heart rate on request (no reads) — **free** |
 | BP categorization | AHA/ACC 5 zones (Normal → Crisis), color-coded — **fixed to AHA** |
 | Personalized risk | Profile-aware cardiovascular risk card (age, sex, BMI, smoking, diabetes, activity) |
 | Charts | Interactive Vico trend chart (7/30/90/All, pinch-zoom), **"Avg" burst-smoothing** |
