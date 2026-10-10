@@ -54,7 +54,8 @@ See [all ten screenshots](store/screenshots), or open the
 ## Getting Started
 
 ### Prerequisites
-- JDK 21, Android SDK 36, and the included Gradle wrapper (9.5.0)
+- A full JDK 17 or newer (with `javac`), Android SDK 36, and the included Gradle wrapper (9.5.0).
+  Gradle runs on `JAVA_HOME` or the `java` on your `PATH`; it does not download a JDK.
 - Android device or emulator running API 26+; release APKs require ARM64
 
 Release APKs from version 1.6.2 target **ARM64 (`arm64-v8a`)** phones, including
