@@ -26,3 +26,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "BloodPressureMonitor"
 include(":app")
+include(":mlkitbenchmark")

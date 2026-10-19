@@ -16,6 +16,9 @@ keystore.properties
 google-services.json
 release/
 SampleData/
+benchmark-data/
+mlkit-report*.json
+mlkitbenchmark/src/main/assets/benchmark/
 
 # Store-listing media — large binaries kept out of git.
 # Regenerate the graphic via store/make_*.py; screenshots are local captures.
