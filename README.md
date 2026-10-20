@@ -18,6 +18,14 @@ WebView, browser, Google Play Services, or separately installed model runtime.
 
 ---
 
+
+[Build from source](#getting-started) · [Install status](#install)
+· [Release notes](docs/Release_Notes.md) · [Project overview](https://zandaulion.com/bpdigitizer.html)
+
+The repository name is BloodPressureMonitor; the product name is **BP Digitizer**.
+The install section records the current distribution route. Do not treat the
+presence of Android source or store metadata as a downloadable published release.
+
 ## Features
 
 | Feature | Details |
@@ -185,3 +193,12 @@ The native camera and confirmation screen use the pipeline from
 See [JSON backup compatibility](docs/JSON_Backups.md) for profile restoration,
 PWA imports and merge behavior, and [release notes](docs/Release_Notes.md) for
 versions 1.6.0–1.6.3.
+
+
+## Support and contributions
+
+Use this repository’s Issues for reproducible bugs and focused feature requests. Include the version, relevant runtime/browser, expected behavior and a minimal synthetic example. Remove credentials, personal records, device identifiers and deployment-specific values before sharing logs or screenshots.
+
+For code changes, run `./gradlew :app:testDebugUnitTest` with the documented Android toolchain. Follow the release guide for signed builds; use fictional health data in all tests and screenshots.
+
+Keep changes focused and update the affected documentation. Security-sensitive reports should follow [SECURITY.md](SECURITY.md).
