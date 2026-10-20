@@ -19,12 +19,11 @@ WebView, browser, Google Play Services, or separately installed model runtime.
 ---
 
 
-[Build from source](#getting-started) · [Install status](#install)
+[Download APK](https://github.com/zandaulion/BloodPressureMonitor/releases/latest) · [Build from source](#getting-started)
 · [Release notes](docs/Release_Notes.md) · [Project overview](https://zandaulion.com/bpdigitizer.html)
 
 The repository name is BloodPressureMonitor; the product name is **BP Digitizer**.
-The install section records the current distribution route. Do not treat the
-presence of Android source or store metadata as a downloadable published release.
+The install section explains direct APK installation and update compatibility.
 
 ## Features
 
@@ -63,12 +62,24 @@ See [all ten screenshots](store/screenshots), or open the
 
 ## Install
 
-BP Digitizer has been submitted to F-Droid and is waiting for review in
-[fdroiddata merge request !51961](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/51961).
-Once it is accepted, F-Droid will build every tagged release from this repository.
+Download the signed APK from the [latest GitHub release](https://github.com/zandaulion/BloodPressureMonitor/releases/latest).
+Release APKs need an **ARM64 phone running Android 8.0 or later**; 32-bit ARM
+and x86 devices are not supported. Open the APK on your phone and allow
+installation from the browser or file manager when Android asks.
 
-Until then, build it yourself (below). Release APKs need an ARM64 phone running
-Android 8.0 or later.
+Each release includes `SHA256SUMS`, installation notes, and the signing
+certificate fingerprint. Download the `.apk` asset to install; the source-code
+ZIP and TAR archives are for building from source. No account or model download
+is needed after installation.
+
+Updates must have the same application ID and signing certificate as the installed
+app. A Play, F-Droid, debug, or self-built installation may use a different key.
+Export your JSON backup before changing distribution channels; uninstalling
+deletes the local readings and profile. Android's automatic backup is disabled.
+
+F-Droid distribution is tracked in
+[fdroiddata merge request !51961](https://gitlab.com/fdroid/fdroiddata/-/merge_requests/51961).
+You can also [build from source](#getting-started).
 
 ---
 
@@ -119,6 +130,13 @@ F-Droid builds each release from its Git tag, using the recipe in
    F-Droid notices new tags automatically; no new fdroiddata merge request is needed.
 
 Never move or reuse a published tag; release a new version instead.
+
+For a direct GitHub download, build the tagged source with the distribution
+signing key, run the unit and device checks, and verify the APK signature and
+contents. Publish the signed release APK and its `SHA256SUMS` in a GitHub Release
+for that existing tag. Include Android/ABI requirements, the signing certificate
+fingerprint, update/backup guidance, and the checks performed in the release notes.
+Do not upload unsigned, debug, instrumentation-test APKs, or signing material.
 
 ---
 
