@@ -3,6 +3,7 @@
 version: 2
 updates:
 - package-ecosystem: github-actions
+  assignees: ["zandaulion"]
   directory: /
   schedule:
     interval: weekly
@@ -15,6 +16,7 @@ updates:
       - minor
       - patch
 - package-ecosystem: gradle
+  assignees: ["zandaulion"]
   directory: /
   schedule:
     interval: weekly
