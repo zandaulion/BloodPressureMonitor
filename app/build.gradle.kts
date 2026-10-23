@@ -11,7 +11,7 @@ plugins {
 
 android {
     namespace = "com.zandaulion.bpdigitized"
-    compileSdk = 36
+    compileSdk = 37
     // Allow device checks against the exact signed release that will be installed.
     testBuildType = providers.gradleProperty("ocrTestBuildType").orElse("debug").get()
 
