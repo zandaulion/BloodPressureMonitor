@@ -1,8 +1,8 @@
 [versions]
 onnxruntime = "1.31.1"
-agp = "9.5.0"
+agp = "9.5.1"
 kotlin = "2.4.21"
-ksp = "2.3.12"
+ksp = "2.3.13"
 
 coreKtx = "1.19.1"
 lifecycle = "2.8.7"
