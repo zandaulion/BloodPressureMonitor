@@ -1,0 +1,4 @@
+Smaller, optimized build
+• The app is now shrunk and optimized with R8.
+• Updated the libraries the app is built with.
+• App features, OCR models and stored readings are unchanged.

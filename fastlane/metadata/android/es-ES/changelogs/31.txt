@@ -1,0 +1,4 @@
+Compilación más ligera y optimizada
+• La app ahora se reduce y optimiza con R8.
+• Se han actualizado las bibliotecas con las que se compila la app.
+• Las funciones, los modelos OCR y las lecturas guardadas no cambian.

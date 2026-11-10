@@ -1,0 +1,4 @@
+Build mai mic și optimizat
+• Aplicația este acum micșorată și optimizată cu R8.
+• Au fost actualizate bibliotecile folosite la construirea aplicației.
+• Funcțiile aplicației, modelele OCR și valorile salvate nu s-au schimbat.

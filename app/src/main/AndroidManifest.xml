@@ -90,5 +90,12 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <!-- ONNX Runtime 1.31 starts a usage-telemetry client from its own
+             manifest. Remove it: the app has no network access and sends nothing. -->
+        <provider
+            android:name="ai.onnxruntime.TelemetryInitializer"
+            android:authorities="${applicationId}.onnxruntime_telemetry_initializer"
+            tools:node="remove" />
     </application>
 </manifest>

@@ -1,0 +1,4 @@
+Build menor e otimizado
+• O app agora é reduzido e otimizado com o R8.
+• As bibliotecas usadas para compilar o app foram atualizadas.
+• Os recursos, os modelos de OCR e as medições salvas não mudaram.

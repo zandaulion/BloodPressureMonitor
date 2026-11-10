@@ -18,14 +18,14 @@ RepoType: git
 Repo: https://github.com/zandaulion/BloodPressureMonitor.git
 
 Builds:
-  - versionName: 1.6.3
-    versionCode: 30
-    commit: v1.6.3
+  - versionName: 1.6.4
+    versionCode: 31
+    commit: v1.6.4
     subdir: app
     gradle:
       - yes
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags
-CurrentVersion: 1.6.3
-CurrentVersionCode: 30
+CurrentVersion: 1.6.4
+CurrentVersionCode: 31

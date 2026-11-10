@@ -1,0 +1,4 @@
+Build plus léger et optimisé
+• L'application est désormais réduite et optimisée avec R8.
+• Mise à jour des bibliothèques utilisées pour construire l'application.
+• Les fonctions, les modèles OCR et les mesures enregistrées sont inchangés.

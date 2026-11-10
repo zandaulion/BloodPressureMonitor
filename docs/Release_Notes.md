@@ -1,5 +1,24 @@
 # Release notes
 
+## 1.6.4 — R8 shrinking
+
+- Release builds are shrunk and optimized with R8 (code and resources), as
+  asked by the F-Droid review. The signed ARM64 APK is 47,333,864
+  bytes (47.3 MB), down 11.8% from 53,692,556 bytes for 1.6.3.
+- Updated dependencies, including ONNX Runtime 1.24.3 → 1.31.1. That version
+  registers a usage-telemetry initializer in its manifest; the app manifest
+  removes it, so nothing starts at launch. The app still has no INTERNET
+  permission. Health Connect client is now 1.2.0-alpha06.
+- App features, OCR models and the database schema are unchanged.
+
+Validation: release built on OpenJDK 17 and installed over 1.6.3 on a
+Motorola Edge 30 Neo (Android 14). Manual entry, trend and scatter charts,
+JSON/CSV/PDF export, reminders, health profile and the Health Connect screen
+worked, and a camera capture loaded both OCR models, passed their integrity
+check and ran the detector, with no crash in logcat. Instrumented tests can't
+run against the shrunk release (R8 removes library classes the test runner
+needs from the app), so they were not run for this build.
+
 ## 1.6.3 — Build and packaging cleanup
 
 - APKs and bundles no longer include AGP's dependency metadata block, an
