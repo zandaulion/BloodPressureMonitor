@@ -1,13 +1,13 @@
 [versions]
 onnxruntime = "1.32.0"
-agp = "9.5.1"
+agp = "9.5.3"
 kotlin = "2.4.21"
 ksp = "2.3.14"
 
 coreKtx = "1.19.1"
 lifecycle = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2026.09.00"
+composeBom = "2026.11.01"
 navigationCompose = "2.10.2"
 
 
@@ -16,7 +16,7 @@ hiltNavigationCompose = "1.4.0"
 
 room = "2.8.5"
 
-cameraX = "1.4.1"
+cameraX = "1.7.0"
 
 vico = "2.5.2"
 
